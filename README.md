@@ -1,4 +1,4 @@
-# Group 5 - Roommates{Short snappy Title of your project}
+# Group 5 - Roommates
 
 - Your title can change over time.
 
@@ -60,13 +60,11 @@ Notify people if groceries are running low, chores need to be done, etc.
 - Person 1: one sentence about you!
 - Person 2: one sentence about you!
 - Person 3: one sentence about you!
-- Person 4: one sentence about you!
+- Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
 
 ## Images
 
-{You should use this area to add a screenshot of your app or website }
-
-<img src ="images/test.png" width="100px">
+<img src ="images/prototype.png">
 
 ## References
 
