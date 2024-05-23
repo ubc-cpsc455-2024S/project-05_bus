@@ -40,7 +40,7 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 ## Team Members
 
 - Person 1: one sentence about you!
-- Person 2: one sentence about you!
+- Jennifer Wong: 4th year BCS student with a black cat.
 - Jocelyn Bachmann: 4th year BUCS student.
 - Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
 
