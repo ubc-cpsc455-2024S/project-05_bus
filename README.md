@@ -4,25 +4,7 @@
 
 ## Describe your topic/interest in about 150-200 words
 
-{Add your stuff here}
-
-## Who is it for?
-Anyone looking for an easy, consolidated way to manage their household chores, whether they’re living alone or with roommates/family.
-## What will it do? (What “human activity” will it support?)
-Help roommates track groceries and expiring food, meal plan out based on groceries, and fairly divide up chores
-Notify people if groceries are running low, chores need to be done, etc.
-## What type of data will it store?
-- User profile information
-- Rooms
-- Content of chore calendar
-- Fridge contents
-## What will users be able to do with this data?
-- Create and manage their household/group, and their individual account
-- Create and interact with events and chores in the calendar
-- Add and remove fridge and grocery items
-## What is some additional functionality you can add/remove based on time constraints?
-- A budgeting section (like splitwise) where users can divide expenses between members of their household
-- AI image recognition for fridge items to help with the meal planning expiration tracking
+The Roommates app helps users track groceries and expiring food, meal plan based on groceries, and fairly divide up chores. Anyone looking for an easy, consolidated way to manage their household chores, whether living alone or with roommates/family, can use the Roommates app to get timely notifications on things like groceries running low or expiring, or chores that need to be done. The app stores data related to user profile information, households/groups, calendar details, and fridge contents. With this data, users will be able to create and manage their household/group and individual account, create and interact with events and chores in the calendar (including sending chore reminders to roommates), and add and remove fridge and grocery items. Some additional functionality may include a budgeting section (like splitwise) where users can divide expenses between members of their household, or AI image recognition for fridge items to help with the meal planning expiration tracking.
 
 # Project task requirements
 ### 3-5 minimal requirements (will definitely complete)
@@ -59,7 +41,7 @@ Notify people if groceries are running low, chores need to be done, etc.
 
 - Person 1: one sentence about you!
 - Person 2: one sentence about you!
-- Person 3: one sentence about you!
+- Jocelyn Bachmann: 4th year BUCS student.
 - Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
 
 ## Images
