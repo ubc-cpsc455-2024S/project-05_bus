@@ -8,22 +8,22 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 
 # Project task requirements
 ### 3-5 minimal requirements (will definitely complete)
-- User creation and deletion with authentication
-- Ability to create a unit of living space and ability to add other users
-- Basic grocery list
-- Basic calendar implementation + ability to assign users chores
+- Account creation and authentication
+- Users can create a unit of living space (a.k.a. groups), and add other users to this unit
+- Users can create a list of items in their fridge
+- Users can view a simple calendar implementation and assign events, such as when users' chores should be complete
 ### 3-7 “standard” requirements (will most likely complete)
 - Notifications for upcoming chores
-- Notifications for expiring groceries (grocery list synced with calendar)
+- Notifications for expiring fridge items (fridge item expiration dates synced with calendar)
 - User preferences (e.g. turn off notifications)
 - AI grocery budget planning 
 - Filling in nutritional gaps based on profile of users living together within allocated budget
-- AI meal planning
+- Users can ask AI to help with meal planning (e.g. what meals to cook with certain grocery items)
 ### 2-3 stretch requirements (plan to complete at least 1!)
 - AI image recognition for processing refrigerator items
-- Budgeting (think Splitwise)
-- Ability to create floorplan
-- Ability to “nudge” a roommate to complete a chore
+- Budgeting functionality (similar to Splitwise)
+- Ability for users to create floorplan/ accessorize their unit of living space
+- Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
 ## Pick 2 of your minimal requirements and break each of them down into ~2-5 smaller tasks!
 ### User creation and deletion with authentication
