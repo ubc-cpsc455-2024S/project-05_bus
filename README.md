@@ -21,7 +21,6 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 - Notifications for upcoming chores
 - Notifications for expiring fridge items (fridge item expiration dates synced with calendar)
 - User preferences (e.g. turn off notifications)
-- AI grocery budget planning 
 - Filling in nutritional gaps based on profile of users living together within allocated budget
 - Users can ask AI to help with meal planning (e.g. what meals to cook with certain grocery items)
 ### Stretch Requirements
