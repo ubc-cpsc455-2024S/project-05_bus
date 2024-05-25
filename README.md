@@ -31,7 +31,7 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 - Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
 ## Team Members
-- Person 1: one sentence about you!
+- Amy Chen: 4th year BCS student
 - Jennifer Wong: 4th year BCS student with a black cat.
 - Jocelyn Bachmann: 4th year BUCS student.
 - Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
