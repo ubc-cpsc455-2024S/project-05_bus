@@ -1,0 +1,23 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+}
+
+.login-sidebar {
+    float: left;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form {
+    float: right;
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 350px 0 0px;
+}
