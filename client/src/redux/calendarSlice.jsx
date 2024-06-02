@@ -34,8 +34,35 @@ const calendarSlice = createSlice({
         (event) => event.id !== action.payload
       );
     },
+    editEvent: {
+      reducer: (state, action) => {
+        const index = state.events.findIndex(
+          (event) => event.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.events[index] = {
+            ...state.events[index],
+            ...action.payload,
+            extendedProps: {
+              ...state.events[index].extendedProps,
+              ...action.payload.extendedProps,
+            },
+          };
+        }
+      },
+      prepare: (event) => {
+        const serializableDate =
+          event.start instanceof Date ? event.start.toISOString() : event.start;
+        return {
+          payload: {
+            ...event,
+            start: serializableDate,
+          },
+        };
+      },
+    },
   },
 });
 
-export const { addEvent, removeEvent } = calendarSlice.actions;
+export const { addEvent, removeEvent, editEvent } = calendarSlice.actions;
 export default calendarSlice.reducer;

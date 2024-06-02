@@ -1,12 +1,12 @@
+import { Box } from "@chakra-ui/react";
 import Calendar from "./Calendar";
 import CalendarChores from "./CalendarChores";
-import "./CalendarPage.css";
 
 export default function CalendarPage() {
   return (
-    <div className="calendar-page">
+    <Box display="flex" flex-direction="row" w="100%" h="100vh" className="calendar-page">
       <Calendar />
       <CalendarChores />
-    </div>
+    </Box>
   );
 }

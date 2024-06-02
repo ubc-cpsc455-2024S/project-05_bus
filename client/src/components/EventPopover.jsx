@@ -12,16 +12,21 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Select,
 } from "@chakra-ui/react";
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
 
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
     title: event.title,
     start: event.start.toISOString().slice(0, 16),
     end: event.end ? event.end.toISOString().slice(0, 16) : "",
+    choreId: event.extendedProps.choreId,
+    memberId: event.extendedProps.memberId,
   });
-
+  const chores = useSelector((state) => state.chores.chores);
+  const members = useSelector((state) => state.members.members);
   const popoverRef = useRef();
 
   useEffect(() => {
@@ -43,34 +48,45 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
 
   return (
     <Popover isOpen onClose={onClose}>
-      <PopoverContent ref={popoverRef}>
+      <PopoverContent shadow="md" borderWidth="1px" ref={popoverRef}>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Edit Event</PopoverHeader>
+        <PopoverHeader>Edit Chore</PopoverHeader>
         <PopoverBody>
-          <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input
+          <FormControl pb={2}>
+            <FormLabel>Person</FormLabel>
+            <Select
+              name="memberId"
+              value={eventDetails.memberId}
+              onChange={handleChange}
+            >
+              {members.map((member) => (
+                <option key={member.id} value={member.id}>
+                  {member.name}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl pb={2}>
+            <FormLabel>Type of Chore</FormLabel>
+            <Select
               name="title"
               value={eventDetails.title}
               onChange={handleChange}
-            />
+            >
+              {chores.map((chore) => (
+                <option key={chore.id} value={chore.title}>
+                  {chore.title}
+                </option>
+              ))}
+            </Select>
           </FormControl>
           <FormControl>
-            <FormLabel>Start Date</FormLabel>
+            <FormLabel>Date</FormLabel>
             <Input
               type="datetime-local"
               name="start"
               value={eventDetails.start}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>End Date</FormLabel>
-            <Input
-              type="datetime-local"
-              name="end"
-              value={eventDetails.end}
               onChange={handleChange}
             />
           </FormControl>

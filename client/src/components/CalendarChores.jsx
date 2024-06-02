@@ -1,27 +1,25 @@
 import { useRef, useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Box,
   Heading,
   VStack,
   Text,
-  IconButton,
   HStack,
-  useColorModeValue
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
 import { Draggable } from "@fullcalendar/interaction";
-import { removeChore } from "../redux/choresSlice";
 import CreateChore from "./CreateChore";
 import CalendarPeople from "./CalendarPeople";
+import EventList from "./EventList";
+import DeleteAlert from "./DeleteAlert";
 
 export default function CalendarChores() {
   const eventsRef = useRef(null);
-  const dispatch = useDispatch();
   const chores = useSelector((state) => state.chores.chores);
   const [canDrag, setCanDrag] = useState(false);
-  const [selectedMember, setSelectedMember] = useState([]);
-  const sidebarBg = useColorModeValue('gray.100', 'gray.700');
+  const [selectedMember, setSelectedMember] = useState(null);
+  const sidebarBg = useColorModeValue("gray.100", "gray.700");
 
   useEffect(() => {
     if (canDrag) {
@@ -29,13 +27,14 @@ export default function CalendarChores() {
       const draggable = new Draggable(containerEl, {
         itemSelector: ".event",
         eventData: (eventEl) => {
-          const choreId = parseInt(eventEl.getAttribute("data-chore-id"), 10);
+          const choreId = Number(eventEl.getAttribute("data-chore-id"));
+          const eventTitleEl = eventEl.querySelector(".event-title");
           return {
-            title: eventEl.querySelector(".event-title").innerText,
+            title: eventTitleEl.innerText,
             backgroundColor: eventEl.style.backgroundColor,
             extendedProps: {
-              choreId,
-              memberId: selectedMember?.id,
+              choreId: choreId,
+              memberId: selectedMember.id,
             },
           };
         },
@@ -47,60 +46,64 @@ export default function CalendarChores() {
     }
   }, [canDrag, chores, selectedMember]);
 
-  const removeExistingChore = (id) => {
-    dispatch(removeChore(id));
-  };
-
   const handleSelectionChange = useCallback((selectedMemberDetails) => {
     setSelectedMember(selectedMemberDetails);
-    setCanDrag(selectedMemberDetails.length > 0);
+    setCanDrag(!!selectedMemberDetails);
   }, []);
 
   return (
-    <Box
-      bg={sidebarBg}
-      w="30%"
-      p="4"
-      borderRadius="md"
-      boxShadow="0 2px 4px rgba(0,0,0,0.1)"
-    >
-      <Heading mb={4}>Chores</Heading>
-      <VStack id="events" ref={eventsRef} spacing={4}>
-        {chores.map((chore, index) => (
-          <HStack
-            key={index}
-            className="event"
-            style={{
-              backgroundColor: chore.color,
-              padding: "8px",
-              borderRadius: "4px",
-              width: "100%",
-              justifyContent: "space-between",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            <Text
-              fontSize="md"
-              className="event-title"
+    <Box bg={sidebarBg} flex="3" p="4" overflowY="auto" height="100vh">
+      <Box
+        p={5}
+        shadow="md"
+        borderWidth="1px"
+        flex="1"
+        borderRadius="md"
+        marginBottom={4}
+      >
+        <CalendarPeople onSelectionChange={handleSelectionChange} />
+      </Box>
+      <Box
+        p={5}
+        shadow="md"
+        borderWidth="1px"
+        flex="1"
+        borderRadius="md"
+        marginBottom={4}
+      >
+        <Heading mb={4}>Chores</Heading>
+        <VStack id="events" ref={eventsRef} spacing={4}>
+          {chores.map((chore, index) => (
+            <HStack
+              key={index}
+              className="event"
+              data-chore-id={chore.id}
               style={{
-                color: "white",
-                textShadow: "0.5px 0.5px 1px black",
+                backgroundColor: chore.color,
+                padding: "8px",
+                borderRadius: "4px",
+                width: "100%",
+                justifyContent: "space-between",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               }}
             >
-              {chore.title}
-            </Text>
-            <IconButton
-              size="xs"
-              colorScheme="red"
-              onClick={() => removeExistingChore(chore.id)}
-              icon={<DeleteIcon />}
-              aria-label="Remove chore"
-            />
-          </HStack>
-        ))}
-      </VStack>
-      <CreateChore />
-      <CalendarPeople onSelectionChange={handleSelectionChange} />
+              <Text
+                fontSize="md"
+                className="event-title"
+                style={{
+                  color: "white", 
+                  mixBlendMode: "difference",
+                }}
+              >
+                {chore.title}
+              </Text>
+              <DeleteAlert id={chore.id} />
+            </HStack>
+          ))}
+          <CreateChore />
+        </VStack>
+      </Box>
+      <EventList />
     </Box>
   );
 }

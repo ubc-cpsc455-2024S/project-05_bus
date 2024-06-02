@@ -2,14 +2,15 @@ import { useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import "./Calendar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvent, removeEvent } from "../redux/calendarSlice";
 import EventPopover from "./EventPopover";
 import { Box } from "@chakra-ui/react";
+import { editEvent } from "../redux/calendarSlice";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
+  const chores = useSelector((state) => state.chores.chores);
   const dispatch = useDispatch();
 
   const [popoverInfo, setPopoverInfo] = useState({
@@ -42,21 +43,80 @@ export default function Calendar() {
     }
   };
 
+  const handleDragEvent = (info) => {
+    dispatch(editEvent(
+      {
+        id: Number(info.event.id),
+        title: info.event.title,
+        start: info.event.start,
+        allDay: true,
+        backgroundColor: info.event.backgroundColor,
+        borderColor: info.event.backgroundColor,
+        textColor: info.event.textColor,
+        extendedProps: info.event.extendedProps,
+      }
+    ));
+  };
+
   const handleEditEvent = (eventDetails) => {
     if (popoverInfo.event) {
-      popoverInfo.event.setProp("title", eventDetails.title);
-      popoverInfo.event.setStart(eventDetails.start);
-      popoverInfo.event.setEnd(eventDetails.end);
-      closePopover();
+      const chore = chores.find((ch) => ch.title === eventDetails.title);
+      if (chore) {
+        dispatch(
+          editEvent({
+            id: Number(popoverInfo.event.id),
+            title: eventDetails.title,
+            start: eventDetails.start,
+            end: eventDetails.end,
+            backgroundColor: chore.color,
+            borderColor: chore.color,
+            extendedProps: {
+              choreId: Number(chore.id),
+              memberId: Number(eventDetails.memberId),
+            },
+          })
+        );
+        closePopover();
+      }
     }
   };
 
+  const renderEventContent = (eventInfo) => {
+    return (
+      <div className="event-wrapper">
+        <div className="event-background" style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backgroundColor: eventInfo.event.backgroundColor,
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+        }}></div>
+        <div className="event-title" style={{
+          color: 'white',
+          mixBlendMode: 'difference',
+          position: 'relative',
+          padding: '2px 5px',
+        }}>
+          {eventInfo.event.title}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <Box p={5} boxShadow="base" bg="white" w="70%" className="calendar-container">
+    <Box
+      p={5}
+      flex="7"
+      boxShadow="base"
+      bg="white"
+      className="calendar-container"
+      height="100vh"
+    >
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
-        editable
+        eventStartEditable={true}
+        eventDurationEditable={false}
         droppable
         events={events}
         eventReceive={(info) => {
@@ -64,16 +124,18 @@ export default function Calendar() {
             addEvent({
               title: info.event.title,
               start: info.event.start,
-              end: info.event.end,
               allDay: true,
               backgroundColor: info.event.backgroundColor,
               borderColor: info.event.backgroundColor,
               textColor: info.event.textColor,
+              extendedProps: info.event.extendedProps,
             })
           );
         }}
-        eventResizableFromStart={true}
         eventClick={handleEventClick}
+        eventDrop={handleDragEvent}
+        eventContent={renderEventContent}
+        height="100%"
       />
       {popoverInfo.visible && (
         <EventPopover

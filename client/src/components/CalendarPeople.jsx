@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Radio, RadioGroup, VStack, Text, Box } from "@chakra-ui/react";
+import { Radio, RadioGroup, VStack, Heading, Box } from "@chakra-ui/react";
 
 export default function CalendarPeople({ onSelectionChange }) {
   const members = useSelector((state) => state.members.members);
   const [selectedMemberIndex, setSelectedMemberIndex] = useState("");
 
   useEffect(() => {
-    const selectedMemberDetails = selectedMemberIndex !== "" ? [members[selectedMemberIndex]] : [];
+    const selectedMemberDetails = selectedMemberIndex !== "" ? members[selectedMemberIndex] : null;
     onSelectionChange(selectedMemberDetails);
   }, [selectedMemberIndex, members, onSelectionChange]);
 
@@ -17,9 +17,9 @@ export default function CalendarPeople({ onSelectionChange }) {
 
   return (
     <Box mb={4}>
-      <Text fontSize="lg" mb={2}>
-        Household Members
-      </Text>
+      <Heading mb={2}>
+        Roommates
+      </Heading>
       <RadioGroup onChange={handleRadioChange} value={selectedMemberIndex}>
         <VStack align="start">
           {members.map((member, index) => (
