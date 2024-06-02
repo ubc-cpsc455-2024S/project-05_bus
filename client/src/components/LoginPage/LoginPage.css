@@ -5,7 +5,7 @@
 
 .login-sidebar {
     float: left;
-    width: 40%;
+    flex: 1;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -14,10 +14,10 @@
 
 .login-form {
     float: right;
-    width: 60%;
+    flex: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0 350px 0 0px;
+    padding: 0 100px 0 0px;
 }

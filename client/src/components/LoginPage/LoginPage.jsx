@@ -2,7 +2,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import LoginSidebar from '../LoginSidebar/LoginSidebar';
 import './LoginPage.css';
 
-const LoginPage = () => {
+export default function LoginPage() {
 
   return (
     <div className="login-container">
@@ -15,5 +15,3 @@ const LoginPage = () => {
     </div>
   );
 };
-
-export default LoginPage;
