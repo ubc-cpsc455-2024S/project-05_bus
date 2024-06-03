@@ -13,6 +13,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Checkbox,
 } from "@chakra-ui/react";
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
@@ -24,6 +25,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
     end: event.end ? event.end.toISOString().slice(0, 16) : "",
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
+    done: event.extendedProps.done,
   });
   const chores = useSelector((state) => state.chores.chores);
   const members = useSelector((state) => state.members.members);
@@ -38,8 +40,9 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   }, [coordinates]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEventDetails({ ...eventDetails, [name]: value });
+    const { name, value, type, checked } = e.target;
+    const updatedValue = type === "checkbox" ? checked : value;
+    setEventDetails({ ...eventDetails, [name]: updatedValue });
   };
 
   const handleSubmit = () => {
@@ -84,9 +87,9 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
           <FormControl>
             <FormLabel>Date</FormLabel>
             <Input
-              type="datetime-local"
+              type="date"
               name="start"
-              value={eventDetails.start}
+              value={eventDetails.start.split("T")[0]}
               onChange={handleChange}
             />
           </FormControl>
@@ -107,6 +110,13 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             >
               Save
             </Button>
+            <Checkbox
+              name="done"
+              isChecked={eventDetails.done}
+              onChange={handleChange}
+            >
+              Done
+            </Checkbox>
           </ButtonGroup>
         </PopoverFooter>
       </PopoverContent>

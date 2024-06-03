@@ -13,8 +13,8 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { removeChore } from "../redux/choresSlice";
-import { removeEvent } from "../redux/calendarSlice";
+import { removeChore } from "../../redux/choresSlice";
+import { removeEvent } from "../../redux/calendarSlice";
 
 export default function DeleteAlert({ id }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

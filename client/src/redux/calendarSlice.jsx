@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from 'moment-timezone';
 
 const initialState = {
   events: [],
   id: 0,
+  filter: false,
 };
 
 const calendarSlice = createSlice({
@@ -20,7 +22,8 @@ const calendarSlice = createSlice({
       },
       prepare: (event) => {
         const serializableDate =
-          event.start instanceof Date ? event.start.toISOString() : event.start;
+          event.start instanceof Date ? moment(event.start).format() : event.start;
+          console.log(serializableDate)
         return {
           payload: {
             ...event,
@@ -52,7 +55,7 @@ const calendarSlice = createSlice({
       },
       prepare: (event) => {
         const serializableDate =
-          event.start instanceof Date ? event.start.toISOString() : event.start;
+          event.start instanceof Date ? moment(event.start).format() : event.start;
         return {
           payload: {
             ...event,
@@ -61,8 +64,11 @@ const calendarSlice = createSlice({
         };
       },
     },
+    toggleFilter: (state) => {
+      state.filter = !state.filter;
+    }
   },
 });
 
-export const { addEvent, removeEvent, editEvent } = calendarSlice.actions;
+export const { addEvent, removeEvent, editEvent, toggleFilter } = calendarSlice.actions;
 export default calendarSlice.reducer;

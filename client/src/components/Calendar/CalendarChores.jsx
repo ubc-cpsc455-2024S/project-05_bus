@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   Text,
   HStack,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Draggable } from "@fullcalendar/interaction";
 import CreateChore from "./CreateChore";
@@ -17,12 +18,11 @@ import DeleteAlert from "./DeleteAlert";
 export default function CalendarChores() {
   const eventsRef = useRef(null);
   const chores = useSelector((state) => state.chores.chores);
-  const [canDrag, setCanDrag] = useState(false);
-  const [selectedMember, setSelectedMember] = useState(null);
+  const selectedMember = useSelector((state) => state.members.selectedMember);
   const sidebarBg = useColorModeValue("gray.100", "gray.700");
 
   useEffect(() => {
-    if (canDrag) {
+    if (selectedMember) {
       const containerEl = eventsRef.current;
       const draggable = new Draggable(containerEl, {
         itemSelector: ".event",
@@ -35,6 +35,7 @@ export default function CalendarChores() {
             extendedProps: {
               choreId: choreId,
               memberId: selectedMember.id,
+              done: false,
             },
           };
         },
@@ -44,12 +45,7 @@ export default function CalendarChores() {
         draggable.destroy();
       };
     }
-  }, [canDrag, chores, selectedMember]);
-
-  const handleSelectionChange = useCallback((selectedMemberDetails) => {
-    setSelectedMember(selectedMemberDetails);
-    setCanDrag(!!selectedMemberDetails);
-  }, []);
+  }, [chores, selectedMember]);
 
   return (
     <Box bg={sidebarBg} flex="3" p="4" overflowY="auto" height="100vh">
@@ -61,7 +57,7 @@ export default function CalendarChores() {
         borderRadius="md"
         marginBottom={4}
       >
-        <CalendarPeople onSelectionChange={handleSelectionChange} />
+        <CalendarPeople />
       </Box>
       <Box
         p={5}
@@ -87,16 +83,21 @@ export default function CalendarChores() {
                 boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               }}
             >
-              <Text
-                fontSize="md"
-                className="event-title"
-                style={{
-                  color: "white", 
-                  mixBlendMode: "difference",
-                }}
-              >
-                {chore.title}
-              </Text>
+              <Tooltip label={chore.title}>
+                <Text
+                  fontSize="md"
+                  className="event-title"
+                  style={{
+                    color: "white",
+                    mixBlendMode: "difference",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {chore.title}
+                </Text>
+              </Tooltip>
               <DeleteAlert id={chore.id} />
             </HStack>
           ))}

@@ -3,14 +3,18 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvent, removeEvent } from "../redux/calendarSlice";
+import { addEvent, removeEvent } from "../../redux/calendarSlice";
 import EventPopover from "./EventPopover";
-import { Box } from "@chakra-ui/react";
-import { editEvent } from "../redux/calendarSlice";
+import { Box, Tooltip } from "@chakra-ui/react";
+import { editEvent } from "../../redux/calendarSlice";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
+  const members = useSelector((state) => state.members.members);
+  const selectedMember = useSelector((state) => state.members.selectedMember)
+  const isFiltered = useSelector((state) => state.events.filter)
+
   const dispatch = useDispatch();
 
   const [popoverInfo, setPopoverInfo] = useState({
@@ -44,18 +48,18 @@ export default function Calendar() {
   };
 
   const handleDragEvent = (info) => {
-    dispatch(editEvent(
-      {
+    dispatch(
+      editEvent({
         id: Number(info.event.id),
         title: info.event.title,
         start: info.event.start,
-        allDay: true,
+        end: info.event.end,
         backgroundColor: info.event.backgroundColor,
         borderColor: info.event.backgroundColor,
         textColor: info.event.textColor,
         extendedProps: info.event.extendedProps,
-      }
-    ));
+      })
+    );
   };
 
   const handleEditEvent = (eventDetails) => {
@@ -73,6 +77,7 @@ export default function Calendar() {
             extendedProps: {
               choreId: Number(chore.id),
               memberId: Number(eventDetails.memberId),
+              done: eventDetails.done,
             },
           })
         );
@@ -82,23 +87,39 @@ export default function Calendar() {
   };
 
   const renderEventContent = (eventInfo) => {
+    const member = members.find(
+      (member) => member.id === eventInfo.event.extendedProps.memberId
+    );
+    const isDone = eventInfo.event.extendedProps.done;
+
     return (
       <div className="event-wrapper">
-        <div className="event-background" style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          backgroundColor: eventInfo.event.backgroundColor,
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
-        }}></div>
-        <div className="event-title" style={{
-          color: 'white',
-          mixBlendMode: 'difference',
-          position: 'relative',
-          padding: '2px 5px',
-        }}>
-          {eventInfo.event.title}
-        </div>
+        <div
+          className="event-background"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            borderRadius: "4px",
+            backgroundColor: eventInfo.event.backgroundColor,
+            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
+          }}
+        ></div>
+        <Tooltip label={eventInfo.event.title}>
+          <div
+            className="event-title"
+            style={{
+              color: "white",
+              mixBlendMode: "difference",
+              position: "relative",
+              padding: "2px 2px 0px 4px",
+              textDecoration: isDone ? "line-through" : "none",
+              overflow: "hidden",
+            }}
+          >
+            {member.name.concat(" - ", eventInfo.event.title)}
+          </div>
+        </Tooltip>
       </div>
     );
   };
@@ -118,19 +139,20 @@ export default function Calendar() {
         eventStartEditable={true}
         eventDurationEditable={false}
         droppable
-        events={events}
+        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMember.id) : events}
         eventReceive={(info) => {
           dispatch(
             addEvent({
               title: info.event.title,
               start: info.event.start,
-              allDay: true,
+              end: info.event.end,
               backgroundColor: info.event.backgroundColor,
-              borderColor: info.event.backgroundColor,
+              borderColor: "none",
               textColor: info.event.textColor,
               extendedProps: info.event.extendedProps,
             })
           );
+          console.log(info.event)
         }}
         eventClick={handleEventClick}
         eventDrop={handleDragEvent}
