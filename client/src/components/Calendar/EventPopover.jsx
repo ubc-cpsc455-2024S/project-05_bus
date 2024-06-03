@@ -17,12 +17,13 @@ import {
 } from "@chakra-ui/react";
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
     title: event.title,
-    start: event.start.toISOString().slice(0, 16),
-    end: event.end ? event.end.toISOString().slice(0, 16) : "",
+    start: moment(event.start).format('YYYY-MM-DDTHH:mm'),
+    end: event.end ? moment(event.end).format('YYYY-MM-DDTHH:mm') : '',
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     done: event.extendedProps.done,
