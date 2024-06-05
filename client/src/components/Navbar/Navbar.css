@@ -26,11 +26,11 @@ nav {
   align-items: center;
 }
 
-button {
+.page-button {
   margin: 10px;
 }
 
-button:hover, .profile-button:hover {
+.page-button:hover, .profile-button:hover {
   background-color: #ddd; 
 }
 
@@ -45,6 +45,10 @@ button:hover, .profile-button:hover {
 .profile-popover-header {
   display: flex;
   align-items: center;
+}
+
+.profile-popover-close {
+  color: #cbcaca;
 }
 
 .profile-popover-content {
