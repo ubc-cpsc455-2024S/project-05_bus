@@ -27,16 +27,11 @@ nav {
 }
 
 button {
-  /* width: 70%; */
   margin: 10px;
 }
 
 button:hover {
   background-color: #ddd; 
-}
-
-.profile-button {
-  width: 70%;
 }
 
 .profile-button:hover {
@@ -45,4 +40,8 @@ button:hover {
 
 .profile-button:focus {
   outline: none;
+}
+
+.default-user-icon {
+  color: black;
 }
