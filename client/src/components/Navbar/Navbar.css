@@ -30,18 +30,39 @@ button {
   margin: 10px;
 }
 
-button:hover {
+button:hover, .profile-button:hover {
   background-color: #ddd; 
 }
 
-.profile-button:hover {
-  background-color: #ddd; 
-}
-
-.profile-button:focus {
-  outline: none;
+.profile-button {
+  margin-bottom: 15px;
 }
 
 .default-user-icon {
   color: black;
+}
+
+.profile-popover-header {
+  display: flex;
+  align-items: center;
+}
+
+.profile-popover-content {
+  width: fit-content !important;
+}
+
+.profile-popover-avatar {
+  margin-right: 10px;
+}
+
+.profile-popover-name {
+  margin: 0px 40px 0px 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profile-popover-links {
+  display: flex;
+  flex-direction: column;
+  font-weight: 200;
 }
