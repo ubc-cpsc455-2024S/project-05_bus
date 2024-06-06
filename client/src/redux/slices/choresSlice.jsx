@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   chores: [
-    { "id": 0, "title": "Wash the dishes", "color": "#FF6F61" },
+    { "id": 0, "title": "Wash the dishes", "color": "#ff9d94" },
     { "id": 1, "title": "Empty the garbage", "color": "#9DC183" },
     { "id": 2, "title": "Buy groceries", "color": "#89CFF0" },
     { "id": 3, "title": "Water the plants", "color": "#88B7B5" },

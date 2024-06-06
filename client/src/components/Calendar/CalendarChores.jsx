@@ -1,14 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  Box,
-  Heading,
-  VStack,
-  Text,
-  HStack,
-  useColorModeValue,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Box, Heading, VStack, Text, HStack, Tooltip } from "@chakra-ui/react";
 import { Draggable } from "@fullcalendar/interaction";
 import CreateChore from "./CreateChore";
 import CalendarPeople from "./CalendarPeople";
@@ -19,7 +11,6 @@ export default function CalendarChores() {
   const eventsRef = useRef(null);
   const chores = useSelector((state) => state.chores.chores);
   const selectedMember = useSelector((state) => state.members.selectedMember);
-  const sidebarBg = useColorModeValue("gray.100", "gray.700");
 
   useEffect(() => {
     if (selectedMember) {
@@ -48,26 +39,30 @@ export default function CalendarChores() {
   }, [chores, selectedMember]);
 
   return (
-    <Box bg={sidebarBg} flex="3" p="4" overflowY="auto" height="100vh">
+    <Box bg="teal" flex="3" p="4" overflowY="auto" height="100vh">
       <Box
         p={5}
-        shadow="md"
         borderWidth="1px"
+        borderColor="teal.600"
         flex="1"
         borderRadius="md"
         marginBottom={4}
+        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
       >
         <CalendarPeople />
       </Box>
       <Box
         p={5}
-        shadow="md"
         borderWidth="1px"
+        borderColor="teal.600"
         flex="1"
         borderRadius="md"
         marginBottom={4}
+        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
       >
-        <Heading mb={4}>Chores</Heading>
+        <Heading size="lg" mb={4} color="white">
+          Chores
+        </Heading>
         <VStack id="events" ref={eventsRef} spacing={4}>
           {chores.map((chore, index) => (
             <HStack
@@ -80,7 +75,7 @@ export default function CalendarChores() {
                 borderRadius: "4px",
                 width: "100%",
                 justifyContent: "space-between",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
               }}
             >
               <Tooltip label={chore.title}>

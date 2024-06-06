@@ -1,5 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Radio, RadioGroup, VStack, Heading, Box, FormControl, Switch, FormLabel } from "@chakra-ui/react";
+import {
+  Radio,
+  RadioGroup,
+  VStack,
+  Heading,
+  Box,
+  FormControl,
+  Switch,
+  FormLabel,
+  Text,
+} from "@chakra-ui/react";
 import { setSelectedMember } from "../../redux/slices/membersSlice";
 import { toggleFilter } from "../../redux/slices/calendarSlice";
 
@@ -20,7 +30,7 @@ export default function CalendarPeople() {
 
   return (
     <Box p={0}>
-      <Heading mb={4} size="lg">
+      <Heading mb={4} size="lg" color="white">
         Roommates
       </Heading>
       <RadioGroup
@@ -33,21 +43,30 @@ export default function CalendarPeople() {
               key={member.id}
               value={Number(member.id)}
               size="lg"
-              colorScheme="purple"
-              _hover={{ bg: "purple.100" }}
+              colorScheme="whiteAlpha"
+              _hover={{ bg: "teal.100" }}
+              _checked={{
+                bg: "teal.500",
+                borderColor: "teal.500",
+                color: "white",
+              }}
+              _focus={{
+                boxShadow: "0 0 0 3px rgba(56, 178, 172, 0.6)",
+              }}
+              color="white"
             >
-              {member.name}
+              <Text color="white">{member.name}</Text>
             </Radio>
           ))}
         </VStack>
       </RadioGroup>
       <FormControl display="flex" alignItems="center" mt={4}>
-        <FormLabel htmlFor="calendar-filter" mb="0">
+        <FormLabel htmlFor="calendar-filter" mb="0" color="white">
           Filter Calendar
         </FormLabel>
         <Switch
           id="calendar-filter"
-          colorScheme="purple"
+          colorScheme="teal"
           size="lg"
           isChecked={isFiltered}
           onChange={handleToggleChange}
