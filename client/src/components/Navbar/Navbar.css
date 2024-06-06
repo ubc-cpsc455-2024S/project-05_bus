@@ -2,6 +2,7 @@
   height: 100%;
   width: 10%;
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
   background-color: teal; 
@@ -9,6 +10,13 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.page-name {
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
+  padding-top: 10px;
 }
 
 .page-buttons {

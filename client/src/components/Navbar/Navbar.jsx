@@ -10,11 +10,22 @@ import {
   PopoverBody,
   PopoverCloseButton,
 } from '@chakra-ui/react'
+import { useLocation } from 'react-router-dom'
 import { Home, CalendarMonth, Restaurant, Person } from '@mui/icons-material'
 
 const Navbar = () => {
+  const location = useLocation();
+
+  const getPageName = (pathname) => {
+    const pageName = pathname.split('/').filter(Boolean)[0] || 'Home';
+    return pageName.charAt(0).toUpperCase() + pageName.slice(1);
+  }
+
+  const pageName = getPageName(location.pathname);
+
   return (
     <div className="container">
+      <h1 className="page-name">{pageName}</h1>
       <ButtonGroup className="page-buttons">
         <nav>
           <IconButton className="page-button" as="a" href="/" icon={<Home sx={{fontSize: 30}}/>} size="lg" />
