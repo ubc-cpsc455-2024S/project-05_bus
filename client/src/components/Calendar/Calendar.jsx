@@ -3,10 +3,10 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvent, removeEvent } from "../../redux/calendarSlice";
+import { addEvent, removeEvent } from "../../redux/slices/calendarSlice";
 import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
-import { editEvent } from "../../redux/calendarSlice";
+import { editEvent } from "../../redux/slices/calendarSlice";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);

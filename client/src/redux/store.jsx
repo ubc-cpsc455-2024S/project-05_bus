@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
-import calendarReducer  from './calendarSlice'
-import choresReducer from './choresSlice';
-import membersReducer from './membersSlice';
+import calendarReducer  from './slices/calendarSlice'
+import choresReducer from './slices/choresSlice';
+import membersReducer from './slices/membersSlice';
 
 const store = configureStore({
   reducer: {

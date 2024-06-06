@@ -14,7 +14,7 @@ import {
   PopoverCloseButton,
 } from "@chakra-ui/react";
 import { HexColorPicker } from "react-colorful";
-import { addChore } from "../../redux/choresSlice";
+import { addChore } from "../../redux/slices/choresSlice";
 import { useDispatch } from "react-redux";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
 

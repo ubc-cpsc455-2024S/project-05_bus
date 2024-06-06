@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Radio, RadioGroup, VStack, Heading, Box, FormControl, Switch, FormLabel } from "@chakra-ui/react";
-import { setSelectedMember } from "../../redux/membersSlice";
-import { toggleFilter } from "../../redux/calendarSlice";
+import { setSelectedMember } from "../../redux/slices/membersSlice";
+import { toggleFilter } from "../../redux/slices/calendarSlice";
 
 export default function CalendarPeople() {
   const dispatch = useDispatch();
