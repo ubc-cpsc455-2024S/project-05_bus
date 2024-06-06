@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
-import Calendar from "./Calendar/Calendar";
-import CalendarChores from "./Calendar/CalendarChores";
+import Calendar from "../components/Calendar/Calendar";
+import CalendarChores from "../components/Calendar/CalendarChores";
 
 export default function CalendarPage() {
   return (
