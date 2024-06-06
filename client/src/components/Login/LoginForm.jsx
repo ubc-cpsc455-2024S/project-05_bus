@@ -1,7 +1,5 @@
 import React from 'react';
-import { Icon, Input, InputGroup, InputRightElement, InputLeftElement, Button, Stack } from '@chakra-ui/react';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import LockIcon from '@mui/icons-material/Lock';
+import { Input, InputGroup, InputRightElement, InputLeftElement, Button, Stack } from '@chakra-ui/react';
 import './LoginForm.css';
 
 export default function LoginForm() {
@@ -11,7 +9,7 @@ export default function LoginForm() {
             <div>
                 <InputGroup>
                     <InputLeftElement pointerEvents='none'>
-                        <Icon as={PersonOutlineIcon} color='gray.300'/>
+                        <span className='login-icon material-symbols-outlined'>person</span>
                     </InputLeftElement>
                     <Input type='text' placeholder='Enter email' />
                 </InputGroup>
@@ -27,7 +25,7 @@ export default function LoginForm() {
             <div>
                 <InputGroup size='md'>
                     <InputLeftElement pointerEvents='none'>
-                        <Icon as={LockIcon} color='gray.300' />
+                        <span class='login-icon material-symbols-outlined'>lock</span>
                     </InputLeftElement>
                     <Input
                         pr='4.5rem'
