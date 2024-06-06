@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@chakra-ui/react';
 import './LoginSidebar.css';
 
@@ -8,4 +7,4 @@ export default function LoginSidebar({ value }) {
       <b>{value}</b>
     </Box>
   );
-};
+}

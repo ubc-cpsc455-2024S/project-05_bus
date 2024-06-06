@@ -1,6 +1,6 @@
-import React from 'react';
-import { Input, InputGroup, InputRightElement, InputLeftElement, Button, Stack } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightElement, InputLeftElement, Button } from '@chakra-ui/react';
 import './LoginForm.css';
+import { useState } from 'react';
 
 export default function LoginForm() {
 
@@ -18,14 +18,14 @@ export default function LoginForm() {
     }
     
     function PasswordInput() {
-        const [show, setShow] = React.useState(false);
+        const [show, setShow] = useState(false);
         const handleClick = () => setShow(!show);
 
         return (
             <div>
                 <InputGroup size='md'>
                     <InputLeftElement pointerEvents='none'>
-                        <span class='login-icon material-symbols-outlined'>lock</span>
+                        <span className='login-icon material-symbols-outlined'>lock</span>
                     </InputLeftElement>
                     <Input
                         pr='4.5rem'
@@ -56,7 +56,7 @@ export default function LoginForm() {
             </div>
             <Button className='forgot-password' variant="link">Forgot Password?</Button>
             <Button className='login-button' colorScheme='teal'>Login</Button>
-            <Button className='register-link' variant="link">Don't have an account?&nbsp;<b>Register</b></Button>
+            <Button className='register-link' variant="link">{"Don't have an account?"}&nbsp;<b>Register</b></Button>
         </div>
     );
 }
