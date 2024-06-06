@@ -23,7 +23,6 @@ const calendarSlice = createSlice({
       prepare: (event) => {
         const serializableDate =
           event.start instanceof Date ? moment(event.start).format() : event.start;
-          console.log(serializableDate)
         return {
           payload: {
             ...event,

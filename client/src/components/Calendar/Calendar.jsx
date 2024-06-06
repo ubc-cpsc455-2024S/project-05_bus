@@ -152,7 +152,6 @@ export default function Calendar() {
               extendedProps: info.event.extendedProps,
             })
           );
-          console.log(info.event)
         }}
         eventClick={handleEventClick}
         eventDrop={handleDragEvent}
