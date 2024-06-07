@@ -30,7 +30,7 @@ export default function CalendarPeople() {
 
   return (
     <Box p={0}>
-      <Heading mb={4} size="lg" color="white">
+      <Heading mb={4} size="lg" color="black">
         Roommates
       </Heading>
       <RadioGroup
@@ -53,15 +53,15 @@ export default function CalendarPeople() {
               _focus={{
                 boxShadow: "0 0 0 3px rgba(56, 178, 172, 0.6)",
               }}
-              color="white"
+              color="black"
             >
-              <Text color="white">{member.name}</Text>
+              <Text color="black">{member.name}</Text>
             </Radio>
           ))}
         </VStack>
       </RadioGroup>
       <FormControl display="flex" alignItems="center" mt={4}>
-        <FormLabel htmlFor="calendar-filter" mb="0" color="white">
+        <FormLabel htmlFor="calendar-filter" mb="0" color="black">
           Filter Calendar
         </FormLabel>
         <Switch

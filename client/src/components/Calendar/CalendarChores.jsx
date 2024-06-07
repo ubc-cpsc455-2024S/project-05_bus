@@ -39,11 +39,9 @@ export default function CalendarChores() {
   }, [chores, selectedMember]);
 
   return (
-    <Box bg="teal" flex="3" p="4" overflowY="auto" height="100vh">
+    <Box bg="white" flex="3" p="4" overflowY="auto" height="100vh">
       <Box
         p={5}
-        borderWidth="1px"
-        borderColor="teal.600"
         flex="1"
         borderRadius="md"
         marginBottom={4}
@@ -53,14 +51,12 @@ export default function CalendarChores() {
       </Box>
       <Box
         p={5}
-        borderWidth="1px"
-        borderColor="teal.600"
         flex="1"
         borderRadius="md"
         marginBottom={4}
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
       >
-        <Heading size="lg" mb={4} color="white">
+        <Heading size="lg" mb={4} color="black">
           Chores
         </Heading>
         <VStack id="events" ref={eventsRef} spacing={4}>

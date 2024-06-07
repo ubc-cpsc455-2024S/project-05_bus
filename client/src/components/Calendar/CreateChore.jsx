@@ -40,8 +40,8 @@ export default function CreateChore() {
         placeholder="New Chore"
         marginRight={2}
         flexGrow={1}
-        _placeholder={{ color: "teal.50" }}
-        color="teal.50"
+        _placeholder={{ color: "gray.600" }}
+        color="gray.700"
       />
       <Popover
         isOpen={isOpen}
@@ -67,7 +67,7 @@ export default function CreateChore() {
       </Popover>
       <Button
         onClick={addNewChore}
-        colorScheme="whiteAlpha"
+        colorScheme="teal"
         ml={2}
         p={4}
         boxShadow="0 2px 6px rgba(0, 0, 0, 0.3)"
