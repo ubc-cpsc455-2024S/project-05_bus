@@ -8,7 +8,7 @@ import GroceriesPage from './pages/GroceriesPage'
 import ProfilePage from './pages/ProfilePage'
 import SettingsPage from './pages/SettingsPage'
 
-function Layout() {
+export default function Layout() {
   const location = useLocation();
   const noNavbarPaths = ['/login', '/signup'];
 
@@ -29,5 +29,3 @@ function Layout() {
     </>
   );
 }
-
-export default Layout;
