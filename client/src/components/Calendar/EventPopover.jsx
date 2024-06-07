@@ -53,21 +53,21 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   return (
     <Popover isOpen onClose={onClose}>
       <PopoverContent
-        bg="teal.500"
+        bg="gray.100"
         border="none"
         ref={popoverRef}
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
       >
         <PopoverArrow />
-        <PopoverCloseButton color="white" />
-        <PopoverHeader color="white">Edit Chore</PopoverHeader>
+        <PopoverCloseButton color="black" />
+        <PopoverHeader color="black">Edit Chore</PopoverHeader>
         <PopoverBody>
           <FormControl pb={2}>
-            <FormLabel color="white">Person</FormLabel>
+            <FormLabel color="black">Person</FormLabel>
             <Select
               variant="filled"
               border="none"
-              bg="teal.50"
+              bg="white"
               name="memberId"
               value={eventDetails.memberId}
               onChange={handleChange}
@@ -80,11 +80,11 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             </Select>
           </FormControl>
           <FormControl pb={2}>
-            <FormLabel color="white">Type of Chore</FormLabel>
+            <FormLabel color="black">Type of Chore</FormLabel>
             <Select
               variant="filled"
               border="none"
-              bg="teal.50"
+              bg="white"
               name="title"
               value={eventDetails.title}
               onChange={handleChange}
@@ -97,11 +97,11 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             </Select>
           </FormControl>
           <FormControl>
-            <FormLabel color="white">Date</FormLabel>
+            <FormLabel color="black">Date</FormLabel>
             <Input
               type="date"
               name="start"
-              bg="teal.50"
+              bg="white"
               value={eventDetails.start.split("T")[0]}
               onChange={handleChange}
             />
@@ -111,21 +111,21 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
           <ButtonGroup spacing={4}>
             <Button
               leftIcon={<DeleteIcon />}
-              colorScheme="purple"
+              colorScheme="red"
               onClick={onDelete}
             >
               Delete
             </Button>
             <Button
               rightIcon={<CheckIcon />}
-              colorScheme="blue"
+              colorScheme="teal"
               onClick={handleSubmit}
             >
               Save
             </Button>
             <Checkbox
               name="done"
-              color="white"
+              color="black"
               isChecked={eventDetails.done}
               onChange={handleChange}
             >

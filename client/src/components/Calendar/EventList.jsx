@@ -13,12 +13,14 @@ import {
   Circle,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
+import { editEvent } from "../../redux/slices/calendarSlice";
 
 export default function ChoresList() {
   const events = useSelector((state) => state.events.events);
   const members = useSelector((state) => state.members.members);
+  const dispatch = useDispatch();
 
   const groupedChores = events.reduce((acc, event) => {
     const memberId = event.extendedProps.memberId;
@@ -42,6 +44,18 @@ export default function ChoresList() {
       }, {});
   };
 
+  const markAsDone = (chore) => {
+    dispatch(
+      editEvent({
+        ...chore,
+        extendedProps: {
+          ...chore.extendedProps,
+          done: !chore.extendedProps.done,
+        },
+      })
+    );
+  };
+
   return (
     <Box
       p={5}
@@ -49,7 +63,7 @@ export default function ChoresList() {
       borderRadius="md"
       boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
     >
-      <Heading size="lg" my={2} color="white">
+      <Heading size="lg" my={2} color="black">
         Chores by Member
       </Heading>
       <Accordion
@@ -62,10 +76,10 @@ export default function ChoresList() {
             <AccordionItem key={memberId}>
               <h2>
                 <AccordionButton
-                  _expanded={{ bg: "cyan.600", color: "white" }}
-                  bg="cyan.700"
+                  _expanded={{ bg: "teal.700", color: "white" }}
+                  bg="teal.600"
                   color="white"
-                  _hover={{ bg: "cyan.500" }}
+                  _hover={{ bg: "teal.500" }}
                   borderRadius="md"
                   px={4}
                   py={2}
@@ -98,7 +112,7 @@ export default function ChoresList() {
                             textAlign="left"
                             fontSize="lg"
                             fontWeight="semibold"
-                            color="white"
+                            color="black"
                           >
                             {date}
                           </Box>
@@ -112,10 +126,12 @@ export default function ChoresList() {
                               key={chore.id}
                               display="flex"
                               alignItems="center"
-                              bg="teal.100"
+                              bg="teal.50"
                               p={2}
                               borderRadius="md"
                               boxShadow="xs"
+                              cursor="pointer"
+                              onClick={() => markAsDone(chore)}
                             >
                               {chore.extendedProps.done ? (
                                 <ListIcon
