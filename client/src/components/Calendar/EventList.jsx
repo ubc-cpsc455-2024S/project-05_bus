@@ -33,7 +33,7 @@ export default function ChoresList() {
     return chores
       .sort((a, b) => moment(a.start).diff(moment(b.start)))
       .reduce((acc, chore) => {
-        const date = moment(chore.start).format('MMMM D, YYYY');
+        const date = moment(chore.start).format("MMMM D, YYYY");
         if (!acc[date]) {
           acc[date] = [];
         }
@@ -43,8 +43,13 @@ export default function ChoresList() {
   };
 
   return (
-    <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
-      <Heading size="lg" my={4}>
+    <Box
+      p={5}
+      flex="1"
+      borderRadius="md"
+      boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+    >
+      <Heading size="lg" my={2} color="white">
         Chores by Member
       </Heading>
       <Accordion
@@ -57,9 +62,10 @@ export default function ChoresList() {
             <AccordionItem key={memberId}>
               <h2>
                 <AccordionButton
-                  _expanded={{ bg: "blue.600", color: "white" }}
-                  bg="blue.100"
-                  _hover={{ bg: "blue.200" }}
+                  _expanded={{ bg: "cyan.600", color: "white" }}
+                  bg="cyan.700"
+                  color="white"
+                  _hover={{ bg: "cyan.500" }}
                   borderRadius="md"
                   px={4}
                   py={2}
@@ -92,6 +98,7 @@ export default function ChoresList() {
                             textAlign="left"
                             fontSize="lg"
                             fontWeight="semibold"
+                            color="white"
                           >
                             {date}
                           </Box>
@@ -105,7 +112,7 @@ export default function ChoresList() {
                               key={chore.id}
                               display="flex"
                               alignItems="center"
-                              bg="white"
+                              bg="teal.100"
                               p={2}
                               borderRadius="md"
                               boxShadow="xs"
@@ -120,13 +127,11 @@ export default function ChoresList() {
                                   size="16px"
                                   border="2px"
                                   mr={2}
-                                  borderColor="gray.200"
+                                  borderColor="teal.400"
                                 />
                               )}
                               <Box flex="1" ml={3}>
-                                <Text fontSize="md">
-                                  {chore.title}
-                                </Text>
+                                <Text fontSize="md">{chore.title}</Text>
                               </Box>
                             </ListItem>
                           ))}

@@ -22,8 +22,8 @@ import moment from "moment";
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
     title: event.title,
-    start: moment(event.start).format('YYYY-MM-DDTHH:mm'),
-    end: event.end ? moment(event.end).format('YYYY-MM-DDTHH:mm') : '',
+    start: moment(event.start).format("YYYY-MM-DDTHH:mm"),
+    end: event.end ? moment(event.end).format("YYYY-MM-DDTHH:mm") : "",
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     done: event.extendedProps.done,
@@ -52,14 +52,22 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
 
   return (
     <Popover isOpen onClose={onClose}>
-      <PopoverContent shadow="md" borderWidth="1px" ref={popoverRef}>
+      <PopoverContent
+        bg="teal.500"
+        border="none"
+        ref={popoverRef}
+        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+      >
         <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>Edit Chore</PopoverHeader>
+        <PopoverCloseButton color="white" />
+        <PopoverHeader color="white">Edit Chore</PopoverHeader>
         <PopoverBody>
           <FormControl pb={2}>
-            <FormLabel>Person</FormLabel>
+            <FormLabel color="white">Person</FormLabel>
             <Select
+              variant="filled"
+              border="none"
+              bg="teal.50"
               name="memberId"
               value={eventDetails.memberId}
               onChange={handleChange}
@@ -72,8 +80,11 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             </Select>
           </FormControl>
           <FormControl pb={2}>
-            <FormLabel>Type of Chore</FormLabel>
+            <FormLabel color="white">Type of Chore</FormLabel>
             <Select
+              variant="filled"
+              border="none"
+              bg="teal.50"
               name="title"
               value={eventDetails.title}
               onChange={handleChange}
@@ -86,10 +97,11 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             </Select>
           </FormControl>
           <FormControl>
-            <FormLabel>Date</FormLabel>
+            <FormLabel color="white">Date</FormLabel>
             <Input
               type="date"
               name="start"
+              bg="teal.50"
               value={eventDetails.start.split("T")[0]}
               onChange={handleChange}
             />
@@ -99,7 +111,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
           <ButtonGroup spacing={4}>
             <Button
               leftIcon={<DeleteIcon />}
-              colorScheme="red"
+              colorScheme="purple"
               onClick={onDelete}
             >
               Delete
@@ -113,6 +125,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             </Button>
             <Checkbox
               name="done"
+              color="white"
               isChecked={eventDetails.done}
               onChange={handleChange}
             >

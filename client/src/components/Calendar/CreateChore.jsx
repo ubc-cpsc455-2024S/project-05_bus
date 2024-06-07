@@ -40,6 +40,8 @@ export default function CreateChore() {
         placeholder="New Chore"
         marginRight={2}
         flexGrow={1}
+        _placeholder={{ color: "teal.50" }}
+        color="teal.50"
       />
       <Popover
         isOpen={isOpen}
@@ -48,18 +50,28 @@ export default function CreateChore() {
         placement="bottom"
       >
         <PopoverTrigger>
-          <IconButton
-            icon={<EditIcon />}
-            bg={newColor}
-          />
+          <IconButton icon={<EditIcon />} bg={newColor} />
         </PopoverTrigger>
-        <PopoverContent p={2} boxShadow="lg" borderRadius="lg" w="auto">
-          <PopoverArrow />
+        <PopoverContent
+          p={2}
+          boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+          borderRadius="lg"
+          w="auto"
+          bg="teal"
+          borderColor="teal"
+        >
+          <PopoverArrow bg="teal" borderColor="teal" />
           <PopoverCloseButton />
           <HexColorPicker color={newColor} onChange={setNewColor} />
         </PopoverContent>
       </Popover>
-      <Button onClick={addNewChore} colorScheme="teal" ml={2} p={4} boxShadow="0 2px 4px rgba(0,0,0,0.1)">
+      <Button
+        onClick={addNewChore}
+        colorScheme="whiteAlpha"
+        ml={2}
+        p={4}
+        boxShadow="0 2px 6px rgba(0, 0, 0, 0.3)"
+      >
         <AddIcon />
       </Button>
     </Box>

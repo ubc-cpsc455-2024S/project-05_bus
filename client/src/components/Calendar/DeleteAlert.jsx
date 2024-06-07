@@ -23,9 +23,11 @@ export default function DeleteAlert({ id }) {
   const events = useSelector((state) => state.events.events);
 
   const handleDelete = () => {
-    events.filter((event) => event.extendedProps.choreId === id).forEach((event) => {
+    events
+      .filter((event) => event.extendedProps.choreId === id)
+      .forEach((event) => {
         dispatch(removeEvent(event.id));
-    });
+      });
     dispatch(removeChore(id));
     onClose();
   };
@@ -34,7 +36,7 @@ export default function DeleteAlert({ id }) {
     <>
       <IconButton
         size="xs"
-        colorScheme="red"
+        colorScheme="blackAlpha"
         onClick={onOpen}
         icon={<DeleteIcon />}
       />
