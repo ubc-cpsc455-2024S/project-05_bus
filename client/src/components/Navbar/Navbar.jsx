@@ -1,6 +1,6 @@
 import './Navbar.css'
 import { 
-  IconButton,
+  Button,
   ButtonGroup,
   Avatar,
   Popover,
@@ -11,9 +11,8 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation } from 'react-router-dom'
-import { Home, CalendarMonth, Restaurant, Person } from '@mui/icons-material'
 
-const Navbar = () => {
+export default function Navbar() {
   const location = useLocation();
 
   const getPageName = (pathname) => {
@@ -28,18 +27,35 @@ const Navbar = () => {
       <h1 className="page-name">{pageName}</h1>
       <ButtonGroup className="page-buttons">
         <nav>
-          <IconButton className="page-button" as="a" href="/" icon={<Home sx={{fontSize: 30}}/>} size="lg" />
-          <IconButton className="page-button" as="a" href="/calendar" icon={<CalendarMonth sx={{fontSize: 30}}/>} size="lg"/>
-          <IconButton className="page-button" as="a" href="/groceries" icon={<Restaurant sx={{fontSize: 30}}/>} size="lg"/>
+          <div className="page-button-container">
+            <Button className="page-button" as="a" href="/" size="lg">
+              <span className="material-symbols-outlined icon">home</span>
+            </Button>
+            <p className="page-label">Home</p>
+          </div>
+          <div className="page-button-container">
+            <Button className="page-button" as="a" href="/calendar" size="lg">
+              <span className="material-symbols-outlined icon">calendar_month</span>
+            </Button>
+            <p className="page-label">Calendar</p>
+          </div>
+          <div className="page-button-container">
+            <Button className="page-button" as="a" href="/groceries" size="lg">
+              <span className="material-symbols-outlined icon">restaurant</span>
+            </Button>
+            <p className="page-label">Groceries</p>
+          </div>
         </nav>
       </ButtonGroup>
       <Popover placement="right-start" isLazy>
         <PopoverTrigger>
-          <IconButton 
-          className="profile-button"
-          icon={<Avatar size="sm" bg="none" icon={<Person className="default-user-icon" sx={{fontSize: 30}}/>} />} 
-          size="lg"
-          />
+          <Button className="profile-button" size="lg">
+            <Avatar 
+              size="sm"
+              bg="none"
+              icon={<span className="icon profile-icon material-symbols-outlined">person</span>}
+            />
+          </Button>
         </PopoverTrigger>
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
@@ -56,5 +72,3 @@ const Navbar = () => {
     </div>
   )
 }
-
-export default Navbar;
