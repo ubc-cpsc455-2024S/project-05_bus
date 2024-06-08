@@ -1,6 +1,8 @@
 import { Input, InputGroup, InputRightElement, InputLeftElement, Button } from '@chakra-ui/react';
 import './LoginForm.css';
 import { useState } from 'react';
+import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ChakraLink } from '@chakra-ui/react';
 
 export default function LoginForm() {
 
@@ -56,7 +58,11 @@ export default function LoginForm() {
             </div>
             <Button className='forgot-password' variant="link">Forgot Password?</Button>
             <Button className='login-button' colorScheme='teal'>Login</Button>
-            <Button className='register-link' variant="link">{"Don't have an account?"}&nbsp;<b>Register</b></Button>
+            <Button className='register-link' variant="link">
+                <ChakraLink as={ReactRouterLink} to='/signup'>
+                    {"Don't have an account?"}&nbsp;<b>Register</b>
+                </ChakraLink>
+            </Button>
         </div>
     );
 }
