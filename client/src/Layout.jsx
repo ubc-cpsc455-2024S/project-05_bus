@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage'
 import GroceriesPage from './pages/GroceriesPage'
 import ProfilePage from './pages/ProfilePage'
 import SettingsPage from './pages/SettingsPage'
+import SignupPage from './pages/SignupPage'
 
 export default function Layout() {
   const location = useLocation();
@@ -19,7 +20,7 @@ export default function Layout() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          {/* <Route path="/signup" element={<SignupPage />} /> */}
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/groceries" element={<GroceriesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
