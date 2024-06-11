@@ -10,7 +10,7 @@ import {
   PopoverBody,
   PopoverCloseButton,
 } from '@chakra-ui/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 export default function Navbar() {
   const location = useLocation();
@@ -28,19 +28,19 @@ export default function Navbar() {
       <ButtonGroup className="page-buttons">
         <nav>
           <div className="page-button-container">
-            <Button className="page-button" as="a" href="/" size="lg">
+            <Button className="page-button" as={Link} to="/" size="lg">
               <span className="material-symbols-outlined icon">home</span>
             </Button>
             <p className="page-label">Home</p>
           </div>
           <div className="page-button-container">
-            <Button className="page-button" as="a" href="/calendar" size="lg">
+            <Button className="page-button" as={Link} to="/calendar" size="lg">
               <span className="material-symbols-outlined icon">calendar_month</span>
             </Button>
             <p className="page-label">Calendar</p>
           </div>
           <div className="page-button-container">
-            <Button className="page-button" as="a" href="/groceries" size="lg">
+            <Button className="page-button" as={Link} to="/groceries" size="lg">
               <span className="material-symbols-outlined icon">restaurant</span>
             </Button>
             <p className="page-label">Groceries</p>
@@ -64,8 +64,8 @@ export default function Navbar() {
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
-            <a href="/profile">Profile</a>
-            <a href="/settings">Settings</a>
+            <Link to="/profile">Profile</Link>
+            <Link to="/settings">Settings</Link>
           </PopoverBody>
         </PopoverContent>
       </Popover>
