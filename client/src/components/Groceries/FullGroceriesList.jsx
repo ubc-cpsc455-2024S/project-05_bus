@@ -10,9 +10,6 @@ import {
   IconButton,
   HStack,
   VStack,
-  Input,
-  Select,
-  Button,
   Text,
   NumberInput,
   NumberInputField,
@@ -46,11 +43,12 @@ import NotificationPopover from "./NotificationPopover";
 import { updateGroceryQuantity } from "../../redux/slices/groceriesSlice";
 import { addEvent } from "../../redux/slices/calendarSlice";
 import AddGrocery from "./AddGrocery";
+import GroceriesDrawer from "./Drawer";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 7 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 12 });
   const [openFilter, setOpenFilter] = useState(null);
   const [dateFilterType, setDateFilterType] = useState("on");
   const dispatch = useDispatch();
@@ -78,12 +76,13 @@ export default function GroceriesTable() {
     },
     {
       accessorKey: "quantity",
-      header: "Quantity",
+      header: "Qty",
       cell: ({ row }) => {
         return (
           <NumberInput
             value={row.original.quantity}
             size="sm"
+            maxW={20}
             min={0}
             onChange={(valueString) => {
               const value = Number(valueString);
@@ -261,6 +260,7 @@ export default function GroceriesTable() {
             icon={<ArrowRightIcon />}
             aria-label="Next Page"
           />
+          <GroceriesDrawer />
         </HStack>
       </VStack>
     </Box>

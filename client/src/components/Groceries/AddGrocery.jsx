@@ -10,6 +10,7 @@ import {
   NumberDecrementStepper,
   Button,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { addGrocery } from "../../redux/slices/groceriesSlice";
 import moment from "moment";
@@ -31,13 +32,21 @@ export default function AddGrocery() {
     dispatch(
       addGrocery({
         name,
-        locationId,
-        categoryId,
+        locationId: Number(locationId),
+        categoryId: Number(categoryId),
         expiryDate: formatedExpiryDate,
         quantity,
       })
     );
-    console.log(groceries);
+    resetFields();
+  };
+
+  const resetFields = () => {
+    setName("");
+    setLocationId("");
+    setCategoryId("");
+    setExpiryDate("");
+    setQuantity(0);
   };
 
   return (
@@ -46,11 +55,13 @@ export default function AddGrocery() {
         placeholder="Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        w="25%"
       />
       <Select
         placeholder="Location"
         value={locationId}
         onChange={(e) => setLocationId(e.target.value)}
+        w="20%"
       >
         {locations.map((location) => (
           <option key={location.id} value={location.id}>
@@ -62,6 +73,7 @@ export default function AddGrocery() {
         placeholder="Category"
         value={categoryId}
         onChange={(e) => setCategoryId(e.target.value)}
+        w="20%"
       >
         {categories.map((category) => (
           <option key={category.id} value={category.id}>
@@ -74,12 +86,14 @@ export default function AddGrocery() {
         type="date"
         value={expiryDate}
         onChange={(e) => setExpiryDate(e.target.value)}
+        w="20%"
       />
       <NumberInput
         placeholder="Quantity"
         value={quantity}
         onChange={(value) => setQuantity(value)}
         min={0}
+        w="10%"
       >
         <NumberInputField />
         <NumberInputStepper>
@@ -87,7 +101,9 @@ export default function AddGrocery() {
           <NumberDecrementStepper />
         </NumberInputStepper>
       </NumberInput>
-      <Button onClick={handleAdd}>Add</Button>
+      <Button onClick={handleAdd}>
+        <AddIcon />
+      </Button>
     </HStack>
   );
 }
