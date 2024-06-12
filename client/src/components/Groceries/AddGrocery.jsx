@@ -18,7 +18,6 @@ import moment from "moment";
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
-  const groceries = useSelector((state) => state.groceries.groceries);
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
@@ -32,8 +31,8 @@ export default function AddGrocery() {
     dispatch(
       addGrocery({
         name,
-        locationId: Number(locationId),
-        categoryId: Number(categoryId),
+        locationId,
+        categoryId,
         expiryDate: formatedExpiryDate,
         quantity,
       })

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Box,
+  TableContainer,
   Table,
   Thead,
   Tbody,
@@ -34,22 +35,25 @@ import {
   getPaginationRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import ColumnFilter from "./ColumnFilter";
 import { useSelector, useDispatch } from "react-redux";
-import selectGroceriesWithNames from "../../redux/selectors/grocerySelectors";
 import moment from "moment";
-import { DateFilter } from "./FilterFns";
+
+import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
-import { updateGroceryQuantity } from "../../redux/slices/groceriesSlice";
-import { addEvent } from "../../redux/slices/calendarSlice";
 import AddGrocery from "./AddGrocery";
 import GroceriesDrawer from "./Drawer";
+
+import selectGroceriesWithNames from "../../redux/selectors/grocerySelectors";
+import { updateGroceryQuantity } from "../../redux/slices/groceriesSlice";
+import { addEvent } from "../../redux/slices/calendarSlice";
+
+import { DateFilter } from "./FilterFns";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 12 });
-  const [openFilter, setOpenFilter] = useState(null);
+  const [openFilter, setOpenFilter] = useState("");
   const [dateFilterType, setDateFilterType] = useState("on");
   const dispatch = useDispatch();
 
@@ -82,6 +86,7 @@ export default function GroceriesTable() {
           <NumberInput
             value={row.original.quantity}
             size="sm"
+            border="transparent"
             maxW={20}
             min={0}
             onChange={(valueString) => {
@@ -97,8 +102,8 @@ export default function GroceriesTable() {
           >
             <NumberInputField />
             <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
+              <NumberIncrementStepper border="none"/>
+              <NumberDecrementStepper border="none"/>
             </NumberInputStepper>
           </NumberInput>
         );
@@ -127,9 +132,7 @@ export default function GroceriesTable() {
   const groceriesData = useSelector(selectGroceriesWithNames);
 
   const handleToggle = (columnId) => {
-    setOpenFilter((currentOpenFilter) =>
-      currentOpenFilter === columnId ? null : columnId
-    );
+    setOpenFilter(columnId === openFilter ? null : columnId);
   };
 
   const table = useReactTable({
@@ -164,85 +167,113 @@ export default function GroceriesTable() {
     >
       <VStack spacing={4} height="100%">
         <Box flex="1" overflow="auto" width="100%">
-          <Table variant="striped" size="sm">
-            <Thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <Tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <Th key={header.id} cursor="pointer">
-                      <HStack
-                        spacing={2}
-                        w="full"
-                        justifyContent="space-between"
+          <TableContainer>
+            <Table variant="striped" colorScheme="cyan" size="sm">
+              <Thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <Tr key={headerGroup.id} bg="gray.100">
+                    {headerGroup.headers.map((header) => (
+                      <Th
+                        key={header.id}
+                        cursor="pointer"
+                        bg="teal.500"
+                        color="white"
+                        py={3}
+                        px={4}
+                        borderTopLeftRadius={
+                          header.id === headerGroup.headers[0].id
+                            ? "md"
+                            : "none"
+                        }
+                        _hover={{ bg: "teal.600" }}
                       >
-                        <Box
-                          onClick={header.column.getToggleSortingHandler()}
-                          cursor="pointer"
-                          display="flex"
+                        <HStack
+                          spacing={2}
+                          w="full"
+                          justifyContent="space-between"
                         >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
                           <Box
-                            display="inline-flex"
+                            onClick={header.column.getToggleSortingHandler()}
+                            cursor="pointer"
+                            display="flex"
                             alignItems="center"
-                            ml="4px"
                           >
-                            {header.column.getIsSorted() ? (
-                              header.column.getIsSorted() === "desc" ? (
-                                <TriangleDownIcon />
-                              ) : (
-                                <TriangleUpIcon />
-                              )
-                            ) : (
-                              <UpDownIcon />
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
                             )}
+                            <Box
+                              display="inline-flex"
+                              alignItems="center"
+                              ml="4px"
+                            >
+                              {header.column.getIsSorted() ? (
+                                header.column.getIsSorted() === "desc" ? (
+                                  <TriangleDownIcon />
+                                ) : (
+                                  <TriangleUpIcon />
+                                )
+                              ) : (
+                                <UpDownIcon />
+                              )}
+                            </Box>
                           </Box>
-                        </Box>
-                        <Spacer />
-                        <Box>
-                          <ColumnFilter
-                            column={header.column}
-                            isOpen={openFilter === header.column.id}
-                            onToggle={() => handleToggle(header.column.id)}
-                            dateFilterType={dateFilterType}
-                            setDateFilterType={setDateFilterType}
-                          />
-                        </Box>
-                      </HStack>
+                          <Spacer />
+                          <Box>
+                            <ColumnFilter
+                              column={header.column}
+                              isOpen={openFilter === header.column.id}
+                              onToggle={() => handleToggle(header.column.id)}
+                              dateFilterType={dateFilterType}
+                              setDateFilterType={setDateFilterType}
+                            />
+                          </Box>
+                        </HStack>
+                      </Th>
+                    ))}
+                    <Th
+                      bg="teal.500"
+                      color="white"
+                      py={3}
+                      px={4}
+                      borderTopRightRadius="md"
+                      _hover={{ bg: "teal.600" }}
+                    >
+                      Actions
                     </Th>
-                  ))}
-                  <Th>Actions</Th>
-                </Tr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map((row) => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <Td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                  </Tr>
+                ))}
+              </Thead>
+              <Tbody>
+                {table.getRowModel().rows.map((row) => (
+                  <Tr key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <Td key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </Td>
+                    ))}
+                    <Td>
+                      <IconButton
+                        aria-label="Edit"
+                        icon={<EditIcon />}
+                        bg="transparent"
+                        onClick={() => handleEdit(row)}
+                      />
+                      <NotificationPopover groceryItem={row.original} />
                     </Td>
-                  ))}
-                  <Td>
-                    <IconButton
-                      aria-label="Edit"
-                      icon={<EditIcon />}
-                      bg="transparent"
-                      onClick={() => handleEdit(row)}
-                    />
-                    <NotificationPopover groceryItem={row.original} />
-                  </Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
+                  </Tr>
+                ))}
+              </Tbody>
+            </Table>
+          </TableContainer>
         </Box>
-        <AddGrocery />
+        <HStack>
+          <AddGrocery />
+          <GroceriesDrawer />
+        </HStack>
         <HStack spacing={2} justifyContent="space-between" width="100%">
           <IconButton
             onClick={() => table.previousPage()}
@@ -260,7 +291,6 @@ export default function GroceriesTable() {
             icon={<ArrowRightIcon />}
             aria-label="Next Page"
           />
-          <GroceriesDrawer />
         </HStack>
       </VStack>
     </Box>

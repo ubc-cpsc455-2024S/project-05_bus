@@ -12,7 +12,7 @@ import {
   Tr,
   Th,
   Tooltip,
-  Text
+  Text,
 } from "@chakra-ui/react";
 
 const MiniGroceryList = ({ data, type, groceries }) => (
@@ -29,7 +29,18 @@ const MiniGroceryList = ({ data, type, groceries }) => (
 
       return (
         <Card key={item.id} backgroundColor={getRandomMutedColor()}>
-          <CardHeader fontSize="lg">{item.name}</CardHeader>
+          <CardHeader
+            fontSize="lg"
+            pt={2}
+            pb={2}
+            bg="teal.500"
+            color="white"
+            borderTopRadius="md"
+            p={3}
+            textAlign="center"
+          >
+            {item.name}
+          </CardHeader>
           <CardBody m={1} p={0}>
             {matchingGroceries.length > 0 ? (
               <TableContainer overflowX="hidden" overflowY="scroll">

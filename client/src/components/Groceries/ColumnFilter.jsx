@@ -22,7 +22,13 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType, setDateFilterType }) {
+export default function ColumnFilter({
+  column,
+  isOpen,
+  onToggle,
+  dateFilterType,
+  setDateFilterType,
+}) {
   const [selectedDate, setSelectedDate] = useState("");
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
@@ -40,6 +46,20 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
   };
 
   const renderInput = () => {
+    const inputStyleProps = {
+      variant: "filled",
+      size: "sm",
+      focusBorderColor: "teal.400",
+      errorBorderColor: "red.300",
+      _hover: {
+        bg: "teal.50",
+      },
+      _focus: {
+        bg: "white",
+        borderColor: "teal.400",
+      },
+    };
+
     switch (column.columnDef.header) {
       case "Location":
         return (
@@ -47,7 +67,7 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
             placeholder={`Select ${column.columnDef.header}`}
             value={column.getFilterValue() || ""}
             onChange={(e) => handleChange(e)}
-            size="sm"
+            {...inputStyleProps}
           >
             {locations.map((location) => (
               <option key={location.id} value={location.name}>
@@ -62,7 +82,7 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
             placeholder={`Select ${column.columnDef.header}`}
             value={column.getFilterValue() || ""}
             onChange={(e) => handleChange(e)}
-            size="sm"
+            {...inputStyleProps}
           >
             {categories.map((category) => (
               <option key={category.id} value={category.name}>
@@ -73,26 +93,27 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
         );
       case "Expiry Date":
         return (
-          <HStack spacing={2} width="100%" px={2}>
+          <HStack spacing={2} px={2}>
             <RadioGroup
               onChange={setDateFilterType}
               value={dateFilterType}
               size="sm"
             >
-              <Stack direction="row">
+              <Stack direction="column">
                 <Radio value="before">Before</Radio>
                 <Radio value="on">On</Radio>
                 <Radio value="after">After</Radio>
+                <Input
+                  type="date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  size="sm"
+                  bg="white"
+                  width="auto"
+                  {...inputStyleProps}
+                />
               </Stack>
             </RadioGroup>
-            <Input
-              type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-              size="sm"
-              bg="white"
-              width="auto"
-            />
           </HStack>
         );
       case "Quantity":
@@ -102,8 +123,7 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
             onChange={(valueString) => {
               column.setFilterValue(valueString || undefined);
             }}
-            size="sm"
-            min={0}
+            {...inputStyleProps}
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -118,29 +138,39 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
             placeholder={`Search ${column.columnDef.header}`}
             value={column.getFilterValue() || ""}
             onChange={(e) => column.setFilterValue(e.target.value || undefined)}
-            size="sm"
+            {...inputStyleProps}
           />
         );
     }
   };
 
   return (
-    <Popover isOpen={isOpen} onClose={() => onToggle(null)}>
+    <Popover isOpen={isOpen} onClose={() => onToggle(null)} colorScheme="teal">
       <PopoverTrigger>
         <Button
           size="sm"
+          variant="solid"
           className="material-symbols-outlined"
           onClick={() => onToggle(column.id)}
-          bg="transparent"
+          colorScheme="teal"
+          _hover={{ bg: "teal.100" }}
+          _active={{ bg: "teal.200" }}
         >
           {column.getIsFiltered() ? "filter_alt" : "filter_alt_off"}
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
-        <PopoverArrow />
-        <PopoverHeader>
+      <PopoverContent border="0" boxShadow="xl" w="100%">
+        <PopoverArrow bg="teal.50" />
+        <PopoverHeader
+          flexDirection="column"
+          alignItems="center"
+          borderBottom="0"
+        >
           <Button
+            mt={2}
             size="sm"
+            variant="outline"
+            colorScheme="teal"
             onClick={() => {
               column.setFilterValue("");
               onToggle(null);
@@ -149,10 +179,14 @@ export default function ColumnFilter({ column, isOpen, onToggle, dateFilterType,
             Clear Filter
           </Button>
         </PopoverHeader>
-        <PopoverCloseButton position="absolute" top="0" right="0" zIndex="1" />
-        <PopoverBody>
-          <HStack spacing={2}>{renderInput()}</HStack>
-        </PopoverBody>
+        <PopoverCloseButton
+          position="absolute"
+          top="1"
+          right="1"
+          zIndex="1"
+          color="black"
+        />
+        <PopoverBody color="teal.600">{renderInput()}</PopoverBody>
       </PopoverContent>
     </Popover>
   );
