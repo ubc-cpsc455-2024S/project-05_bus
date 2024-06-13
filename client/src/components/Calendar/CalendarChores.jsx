@@ -18,7 +18,7 @@ export default function CalendarChores() {
       const draggable = new Draggable(containerEl, {
         itemSelector: ".event",
         eventData: (eventEl) => {
-          const choreId = Number(eventEl.getAttribute("data-chore-id"));
+          const choreId = eventEl.getAttribute("data-chore-id");
           const eventTitleEl = eventEl.querySelector(".event-title");
           return {
             title: eventTitleEl.innerText,

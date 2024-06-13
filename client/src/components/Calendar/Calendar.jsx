@@ -41,7 +41,7 @@ export default function Calendar() {
 
   const handleDeleteEvent = () => {
     if (popoverInfo.event) {
-      dispatch(removeEvent(Number(popoverInfo.event.id)));
+      dispatch(removeEvent(popoverInfo.event.id));
       popoverInfo.event.remove();
       closePopover();
     }
@@ -50,7 +50,7 @@ export default function Calendar() {
   const handleDragEvent = (info) => {
     dispatch(
       editEvent({
-        id: Number(info.event.id),
+        id: info.event.id,
         title: info.event.title,
         start: info.event.start,
         end: info.event.end,
@@ -68,15 +68,15 @@ export default function Calendar() {
       if (chore) {
         dispatch(
           editEvent({
-            id: Number(popoverInfo.event.id),
+            id: popoverInfo.event.id,
             title: eventDetails.title,
             start: eventDetails.start,
             end: eventDetails.end,
             backgroundColor: chore.color,
             borderColor: chore.color,
             extendedProps: {
-              choreId: Number(chore.id),
-              memberId: Number(eventDetails.memberId),
+              choreId: chore.id,
+              memberId: eventDetails.memberId,
               done: eventDetails.done,
             },
           })
@@ -88,7 +88,7 @@ export default function Calendar() {
 
   const renderEventContent = (eventInfo) => {
     const member = members.find(
-      (member) => member.id === eventInfo.event.extendedProps.memberId
+      (member) => member.id === String(eventInfo.event.extendedProps.memberId)
     );
     const isDone = eventInfo.event.extendedProps.done;
 

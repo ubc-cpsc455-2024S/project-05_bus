@@ -26,13 +26,24 @@ export default function GroceriesDrawer() {
   const groceries = useSelector((state) => state.groceries.groceries);
   const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
+  const [error, setError] = useState(false);
 
   const handleAdd = (value) => {
+    let hasError = false;
     if (tabIndex === 0) {
-      dispatch(addLocation(value));
+      if (locations.find((location) => location.name === value) || value.trim().length === 0) {
+        hasError = true;
+      } else {
+        dispatch(addLocation(value));
+      }
     } else if (tabIndex === 1) {
-      dispatch(addCategory(value));
+      if (categories.find((category) => category.name === value) || value.trim().length === 0) {
+        hasError = true;
+      } else {
+        dispatch(addCategory(value));
+      }
     }
+    setError(hasError);
   };
 
   const handleTabsChange = (index) => {
@@ -81,7 +92,7 @@ export default function GroceriesDrawer() {
                 </TabPanels>
               </DrawerBody>
               <DrawerFooter justifyContent={"flex-end"}>
-                <FloatingAddButton onAdd={handleAdd} />
+                <FloatingAddButton onAdd={handleAdd} error={error}/>
               </DrawerFooter>
             </Tabs>
           </DrawerContent>

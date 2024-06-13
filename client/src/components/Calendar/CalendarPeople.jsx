@@ -35,13 +35,13 @@ export default function CalendarPeople() {
       </Heading>
       <RadioGroup
         onChange={handleRadioChange}
-        value={selectedMember ? Number(selectedMember.id) : ""}
+        value={selectedMember ? selectedMember.id : ""}
       >
         <VStack align="start" spacing={3}>
           {members.map((member) => (
             <Radio
               key={member.id}
-              value={Number(member.id)}
+              value={String(member.id)}
               size="lg"
               colorScheme="whiteAlpha"
               _hover={{ bg: "teal.100" }}

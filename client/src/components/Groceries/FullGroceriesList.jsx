@@ -25,7 +25,6 @@ import {
   ArrowRightIcon,
   ArrowLeftIcon,
   UpDownIcon,
-  EditIcon,
 } from "@chakra-ui/icons";
 import {
   useReactTable,
@@ -43,11 +42,12 @@ import NotificationPopover from "./NotificationPopover";
 import AddGrocery from "./AddGrocery";
 import GroceriesDrawer from "./Drawer";
 
-import selectGroceriesWithNames from "../../redux/selectors/grocerySelectors";
-import { updateGroceryQuantity } from "../../redux/slices/groceriesSlice";
+import { updateGrocery } from "../../redux/slices/groceriesSlice";
 import { addEvent } from "../../redux/slices/calendarSlice";
 
 import { DateFilter } from "./FilterFns";
+import EditGroceryPopover from "./EditGroceryItem";
+import FavoriteButton from "./FavouriteButton";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
@@ -55,6 +55,11 @@ export default function GroceriesTable() {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 12 });
   const [openFilter, setOpenFilter] = useState("");
   const [dateFilterType, setDateFilterType] = useState("on");
+
+  const categories = useSelector((state) => state.groceries.categories);
+  const locations = useSelector((state) => state.groceries.locations);
+  const groceriesData = useSelector((state) => state.groceries.groceries);
+
   const dispatch = useDispatch();
 
   const columns = [
@@ -63,12 +68,14 @@ export default function GroceriesTable() {
       header: "Name",
     },
     {
-      accessorKey: "locationName",
+      accessorKey: "locationId",
       header: "Location",
+      cell: (info) => locations.find((l) => l.id === String(info.getValue())).name,
     },
     {
-      accessorKey: "categoryName",
+      accessorKey: "categoryId",
       header: "Category",
+      cell: (info) => categories.find((c) => c.id === String(info.getValue())).name,
     },
     {
       accessorKey: "expiryDate",
@@ -92,9 +99,8 @@ export default function GroceriesTable() {
             onChange={(valueString) => {
               const value = Number(valueString);
               dispatch(
-                updateGroceryQuantity({ id: row.original.id, quantity: value })
+                updateGrocery({ id: row.original.id, quantity: value })
               );
-              row.original.quantity = value;
               if (value <= row.original.restockThreshold) {
                 createRestockNotification(row.original);
               }
@@ -121,15 +127,14 @@ export default function GroceriesTable() {
         borderColor: "#c49bad",
         extendedProps: {
           groceryId: groceryItem.id,
-          choreId: 5,
-          memberId: 0,
+          choreId: "6",
+          type: "restock",
+          memberId: "0",
           done: false,
         },
       })
     );
   };
-
-  const groceriesData = useSelector(selectGroceriesWithNames);
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
@@ -151,10 +156,6 @@ export default function GroceriesTable() {
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   });
-
-  const handleEdit = (row) => {
-    console.log("Edit", row.original);
-  };
 
   return (
     <Box
@@ -256,13 +257,9 @@ export default function GroceriesTable() {
                       </Td>
                     ))}
                     <Td>
-                      <IconButton
-                        aria-label="Edit"
-                        icon={<EditIcon />}
-                        bg="transparent"
-                        onClick={() => handleEdit(row)}
-                      />
+                      <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
+                      <FavoriteButton groceryItem={row.original} />
                     </Td>
                   </Tr>
                 ))}

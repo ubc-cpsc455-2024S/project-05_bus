@@ -1,15 +1,17 @@
+import moment from "moment";
+
 export function DateFilter(row, columnId, filterValue, dateFilterType) {
-    const selectedDate = new Date(filterValue);
-    const rowDate = new Date(row.getValue(columnId));
+    const selectedDate = moment(filterValue);
+    const rowDate = moment(row.getValue(columnId));
 
     switch (dateFilterType) {
-      case "before":
-        return rowDate < selectedDate;
-      case "on":
-        return rowDate.toDateString() === selectedDate.toDateString();
-      case "after":
-        return rowDate > selectedDate;
-      default:
-        return true;
+        case "before":
+            return rowDate.isBefore(selectedDate, 'day');
+        case "on":
+            return rowDate.isSame(selectedDate, 'day'); 
+        case "after":
+            return rowDate.isAfter(selectedDate, 'day');
+        default:
+            return true;
     }
 }

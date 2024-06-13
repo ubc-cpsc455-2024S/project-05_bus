@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-export default function FloatingAddButton({ onAdd }) {
+export default function FloatingAddButton({ onAdd, error }) {
   const [inputValue, setInputValue] = useState("");
   const initialFocusRef = useRef(null);
 
@@ -31,7 +31,7 @@ export default function FloatingAddButton({ onAdd }) {
           icon={<AddIcon />}
           isRound
           size="lg"
-          colorScheme="teal"
+          colorScheme={"teal"}
           aria-label="Add item"
           shadow="md"
         />
@@ -39,6 +39,7 @@ export default function FloatingAddButton({ onAdd }) {
       <PopoverContent p={0}>
         <InputGroup>
           <Input
+            isInvalid={error}
             placeholder="Type here..."
             value={inputValue}
             ref={initialFocusRef}
