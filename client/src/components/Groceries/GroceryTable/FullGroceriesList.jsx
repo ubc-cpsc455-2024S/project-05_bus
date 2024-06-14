@@ -12,11 +12,6 @@ import {
   HStack,
   VStack,
   Text,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Spacer,
 } from "@chakra-ui/react";
 import {
@@ -40,12 +35,11 @@ import moment from "moment";
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
 import AddGrocery from "./AddGrocery";
-import GroceriesDrawer from "./Drawer";
+import GroceriesDrawer from "../GroceryDrawer/Drawer";
+import columns from "./TableColumns";
 
-import { updateGrocery } from "../../redux/slices/groceriesSlice";
-import { addEvent } from "../../redux/slices/calendarSlice";
+import { addEvent } from "../../../redux/slices/calendarSlice";
 
-import { DateFilter } from "./FilterFns";
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
 
@@ -59,63 +53,9 @@ export default function GroceriesTable() {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
   const groceriesData = useSelector((state) => state.groceries.groceries);
+  const events = useSelector((state) => state.events.events);
 
   const dispatch = useDispatch();
-
-  const columns = [
-    {
-      accessorKey: "name",
-      header: "Name",
-    },
-    {
-      accessorKey: "locationId",
-      header: "Location",
-      cell: (info) => locations.find((l) => l.id === String(info.getValue())).name,
-    },
-    {
-      accessorKey: "categoryId",
-      header: "Category",
-      cell: (info) => categories.find((c) => c.id === String(info.getValue())).name,
-    },
-    {
-      accessorKey: "expiryDate",
-      header: "Expiry Date",
-      cell: (info) => moment(info.getValue()).format("MMMM DD, YYYY"),
-      filterFn: (row, columnId, filterValue) => {
-        return DateFilter(row, columnId, filterValue, dateFilterType);
-      },
-    },
-    {
-      accessorKey: "quantity",
-      header: "Qty",
-      cell: ({ row }) => {
-        return (
-          <NumberInput
-            value={row.original.quantity}
-            size="sm"
-            border="transparent"
-            maxW={20}
-            min={0}
-            onChange={(valueString) => {
-              const value = Number(valueString);
-              dispatch(
-                updateGrocery({ id: row.original.id, quantity: value })
-              );
-              if (value <= row.original.restockThreshold) {
-                createRestockNotification(row.original);
-              }
-            }}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper border="none"/>
-              <NumberDecrementStepper border="none"/>
-            </NumberInputStepper>
-          </NumberInput>
-        );
-      },
-    },
-  ];
 
   const createRestockNotification = (groceryItem) => {
     dispatch(
@@ -142,7 +82,7 @@ export default function GroceriesTable() {
 
   const table = useReactTable({
     data: groceriesData,
-    columns,
+    columns: columns(locations, categories, dispatch, events, dateFilterType, createRestockNotification),
     state: {
       sorting,
       columnFilters,

@@ -14,14 +14,14 @@ import {
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { addGrocery } from "../../redux/slices/groceriesSlice";
+import { addGrocery } from "../../../redux/slices/groceriesSlice";
 import moment from "moment";
 import {
   handleCreateCategory,
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "./CreateNewSelectOptions";
+} from "../Shared/CreateNewSelectOptions";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
@@ -94,6 +94,7 @@ export default function AddGrocery() {
           value={locations.find((loc) => loc.id === String(location))}
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
+          menuPlacement="auto"
           onCreateOption={(input) =>
             handleCreateLocation(
               input,
@@ -126,6 +127,7 @@ export default function AddGrocery() {
           value={categories.find((cat) => cat.id === String(category))}
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
+          menuPlacement="auto"
           onCreateOption={(input) =>
             handleCreateCategory(
               input,

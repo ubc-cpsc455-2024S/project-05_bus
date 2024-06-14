@@ -34,8 +34,8 @@ import {
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "./CreateNewSelectOptions";
-import { updateGrocery } from "../../redux/slices/groceriesSlice";
+} from "../Shared/CreateNewSelectOptions";
+import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import moment from "moment";
 
 export default function EditGroceryPopover({ groceryItem }) {

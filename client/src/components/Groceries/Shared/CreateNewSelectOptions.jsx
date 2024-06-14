@@ -1,4 +1,4 @@
-import { addCategory, addLocation } from "../../redux/slices/groceriesSlice";
+import { addCategory, addLocation } from "../../../redux/slices/groceriesSlice";
 
 export const handleCreateCategory = (inputValue, categories, dispatch, setCategory, setErrors, errors) => {
     const existingCategory = categories.find(

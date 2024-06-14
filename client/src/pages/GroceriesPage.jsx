@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import FullGroceriesList from '../components/Groceries/FullGroceriesList';
+import FullGroceriesList from '../components/Groceries/GroceryTable/FullGroceriesList';
 
 export default function GroceriesPage() {
   return (

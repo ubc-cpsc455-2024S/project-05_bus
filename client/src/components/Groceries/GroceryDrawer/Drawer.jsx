@@ -17,7 +17,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import MiniGroceryList from "./MiniGroceryList";
 import FloatingAddButton from "./AddButton";
-import { addLocation, addCategory } from "../../redux/slices/groceriesSlice";
+import { addLocation, addCategory } from "../../../redux/slices/groceriesSlice";
 
 export default function GroceriesDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();

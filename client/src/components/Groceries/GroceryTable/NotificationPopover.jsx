@@ -25,11 +25,11 @@ import {
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvent } from "../../redux/slices/calendarSlice";
+import { addEvent } from "../../../redux/slices/calendarSlice";
 import {
   updateGrocery,
-} from "../../redux/slices/groceriesSlice";
-import { removeEvent } from "../../redux/slices/calendarSlice";
+} from "../../../redux/slices/groceriesSlice";
+import { removeEvent } from "../../../redux/slices/calendarSlice";
 import moment from "moment";
 
 export default function NotificationPopover({ groceryItem }) {

@@ -182,6 +182,9 @@ const groceriesSlice = createSlice({
         (grocery) => grocery.id === action.payload.id
       );
       if (index !== -1) {
+        if (action.payload.expiryDate) {
+          state.groceries[index].expiryNotificationDate = "";
+        }
         state.groceries[index] = {
           ...state.groceries[index],
           ...action.payload,
@@ -196,7 +199,17 @@ const groceriesSlice = createSlice({
         (category) => category.id !== action.payload
       );
     },
-
+    updateCategory: (state, action) => {
+      const index = state.categories.findIndex(
+        (category) => category.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.categories[index] = {
+          ...state.categories[index],
+          ...action.payload,
+        };
+      }
+    },
     addLocation: (state, action) => {
       state.locations.push({ id: nanoid(), name: action.payload });
     },
@@ -205,6 +218,17 @@ const groceriesSlice = createSlice({
         (location) => location.id !== action.payload
       );
     },
+    updateLocation: (state, action) => {
+      const index = state.locations.findIndex(
+        (location) => location.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.locations[index] = {
+          ...state.locations[index],
+          ...action.payload,
+        };
+      }
+    }
   },
 });
 
@@ -214,8 +238,10 @@ export const {
   updateGrocery,
   addCategory,
   removeCategory,
+  updateCategory,
   addLocation,
   removeLocation,
+  updateLocation,
 } = groceriesSlice.actions;
 
 export default groceriesSlice.reducer;
