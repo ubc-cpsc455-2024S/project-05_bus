@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { SimpleGrid } from '@chakra-ui/react';
-import MiniGroceryCard from './MiniGroceryCard'; // Adjust the import based on the actual file path
+import MiniGroceryCard from './MiniGroceryCard';
 
 const getRandomMutedColour = () => {
   const mutedColours = [
@@ -29,9 +29,9 @@ export default function MiniGroceryList({ data, type, groceries }) {
     <SimpleGrid columns={2} spacing={10}>
       {data.map((item) => {
         const matchingGroceries = groceries.filter((grocery) => {
-          if (type === "categories") {
+          if (type === "category") {
             return grocery.categoryId === item.id;
-          } else if (type === "locations") {
+          } else if (type === "location") {
             return grocery.locationId === item.id;
           }
           return false;

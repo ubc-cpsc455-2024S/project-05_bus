@@ -10,6 +10,7 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
@@ -27,6 +28,7 @@ export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
@@ -45,7 +47,7 @@ export default function AddGrocery() {
 
     setErrors(newErrors);
 
-    if (errors.length === 0) {
+    if (Object.keys(newErrors).length === 0) {
       const formattedExpiryDate = moment(expiryDate).format();
       dispatch(
         addGrocery({
@@ -56,6 +58,15 @@ export default function AddGrocery() {
           quantity,
         })
       );
+      toast({
+        title: "Grocery Added",
+        description: `${name}${
+          quantity > 1 ? "'s" : ""
+        } has been added to the ${location}`,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       resetFields();
     }
   };
@@ -91,19 +102,11 @@ export default function AddGrocery() {
             value: loc.id,
             label: loc.name,
           }))}
-          value={locations.find((loc) => loc.id === String(location))}
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement="auto"
           onCreateOption={(input) =>
-            handleCreateLocation(
-              input,
-              locations,
-              dispatch,
-              setLocation,
-              setErrors,
-              errors
-            )
+            handleCreateLocation(input, dispatch, setLocation)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
@@ -124,19 +127,11 @@ export default function AddGrocery() {
             value: cat.id,
             label: cat.name,
           }))}
-          value={categories.find((cat) => cat.id === String(category))}
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement="auto"
           onCreateOption={(input) =>
-            handleCreateCategory(
-              input,
-              categories,
-              dispatch,
-              setLocation,
-              setErrors,
-              errors
-            )
+            handleCreateCategory(input, dispatch, setLocation)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({

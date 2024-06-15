@@ -12,54 +12,42 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useDispatch, useSelector } from "react-redux";
-import { removeChore } from "../../redux/slices/choresSlice";
-import { removeEvent } from "../../redux/slices/calendarSlice";
 
-export default function DeleteAlert({ id }) {
+export default function DeleteAlert({ handleDelete, type, style }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  const dispatch = useDispatch();
-  const events = useSelector((state) => state.events.events);
-
-  const handleDelete = () => {
-    events
-      .filter((event) => event.extendedProps.choreId === id)
-      .forEach((event) => {
-        dispatch(removeEvent(event.id));
-      });
-    dispatch(removeChore(id));
-    onClose();
-  };
 
   return (
     <>
-      <IconButton
-        size="xs"
-        colorScheme="blackAlpha"
-        onClick={onOpen}
-        icon={<DeleteIcon />}
-      />
+      <IconButton size="xs" onClick={onOpen} icon={<DeleteIcon />} sx={style} />
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         isOpen={isOpen}
+        autoFocus={true}
         isCentered
       >
         <AlertDialogOverlay />
         <AlertDialogContent>
-          <AlertDialogHeader>Delete this chore?</AlertDialogHeader>
+          <AlertDialogHeader>Delete this {type}?</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            Are you sure you want to delete this chore? All related events will
-            be deleted as well.
+            Are you sure you want to delete this {type}? All related{" "}
+            {type === "chore" ? "events" : "groceries"} will be deleted as well.
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
               No
             </Button>
-            <Button colorScheme="red" onClick={handleDelete} ml={3}>
+            <Button
+              colorScheme="red"
+              onClick={() => {
+                handleDelete();
+                onClose();
+              }}
+              ml={3}
+            >
               Yes
             </Button>
           </AlertDialogFooter>

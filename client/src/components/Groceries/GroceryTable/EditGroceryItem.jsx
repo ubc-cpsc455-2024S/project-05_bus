@@ -60,13 +60,15 @@ export default function EditGroceryPopover({ groceryItem }) {
   useOutsideClick({
     ref: ref,
     handler: () => {
-      onClose();
+      if (Object.keys(errors).length === 0) {
+        onClose();
+      }
     },
   });
 
   const validateForm = () => {
     const newErrors = {};
-    if (!name) newErrors.name = "Name is required";
+    if (name.trim().length === 0) newErrors.name = "Name is required";
     if (!location) newErrors.location = "Location is required";
     if (!category) newErrors.category = "Category is required";
     if (!quantity || quantity <= 0)
@@ -145,20 +147,20 @@ export default function EditGroceryPopover({ groceryItem }) {
               onChange={(option) => setLocation(option.value)}
               isValidNewOption={(input) => isValidNewLocation(input, locations)}
               value={
-                currentCategory
-                  ? { value: currentCategory.id, label: currentCategory.name }
+                currentLocation
+                  ? { value: currentLocation.id, label: currentLocation.name }
                   : null
               }
               onCreateOption={(input) =>
-                handleCreateLocation(
-                  input,
-                  locations,
-                  dispatch,
-                  setLocation,
-                  setErrors,
-                  errors
-                )
+                handleCreateLocation(input, dispatch, setLocation)
               }
+              chakraStyles={{
+                singleValue: (provided) => ({
+                  ...provided,
+                  paddingTop: 1,
+                  paddingBottom: 1,
+                }),
+              }}
             />
             {errors.location && (
               <FormErrorMessage>{errors.location}</FormErrorMessage>
@@ -173,23 +175,23 @@ export default function EditGroceryPopover({ groceryItem }) {
               }))}
               onChange={(option) => setCategory(option.value)}
               value={
-                currentLocation
-                  ? { value: currentLocation.id, label: currentLocation.name }
+                currentCategory
+                  ? { value: currentCategory.id, label: currentCategory.name }
                   : null
               }
               isValidNewOption={(input) =>
                 isValidNewCategory(input, categories)
               }
               onCreateOption={(input) =>
-                handleCreateCategory(
-                  input,
-                  categories,
-                  dispatch,
-                  setLocation,
-                  setErrors,
-                  errors
-                )
+                handleCreateCategory(input, dispatch, setLocation)
               }
+              chakraStyles={{
+                singleValue: (provided) => ({
+                  ...provided,
+                  paddingTop: 1,
+                  paddingBottom: 1,
+                }),
+              }}
             />
             {errors.category && (
               <FormErrorMessage>{errors.category}</FormErrorMessage>

@@ -65,6 +65,7 @@ export default function GroceriesDrawer() {
             <Tabs
               index={tabIndex}
               onChange={handleTabsChange}
+              size="lg"
               isLazy
               variant="enclosed"
             >
@@ -78,14 +79,14 @@ export default function GroceriesDrawer() {
                   <TabPanel>
                     <MiniGroceryList
                       data={locations}
-                      type="locations"
+                      type="location"
                       groceries={groceries}
                     />
                   </TabPanel>
                   <TabPanel>
                     <MiniGroceryList
                       data={categories}
-                      type="categories"
+                      type="category"
                       groceries={groceries}
                     />
                   </TabPanel>

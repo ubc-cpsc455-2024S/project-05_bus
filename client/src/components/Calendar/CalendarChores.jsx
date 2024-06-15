@@ -1,16 +1,29 @@
 import { useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Box, Heading, VStack, Text, HStack, Tooltip } from "@chakra-ui/react";
 import { Draggable } from "@fullcalendar/interaction";
 import CreateChore from "./CreateChore";
 import CalendarPeople from "./CalendarPeople";
 import EventList from "./EventList";
-import DeleteAlert from "./DeleteAlert";
+import DeleteAlert from "../DeleteAlert";
+import { removeChore } from "../../redux/slices/choresSlice";
+import { removeEvent } from "../../redux/slices/calendarSlice";
 
 export default function CalendarChores() {
   const eventsRef = useRef(null);
   const chores = useSelector((state) => state.chores.chores);
   const selectedMember = useSelector((state) => state.members.selectedMember);
+  const dispatch = useDispatch();
+  const events = useSelector((state) => state.events.events);
+
+  const handleDelete = (id) => {
+    events
+      .filter((event) => event.extendedProps.choreId === id)
+      .forEach((event) => {
+        dispatch(removeEvent(event.id));
+      });
+    dispatch(removeChore(id));
+  };
 
   useEffect(() => {
     if (selectedMember) {
@@ -89,7 +102,11 @@ export default function CalendarChores() {
                   {chore.title}
                 </Text>
               </Tooltip>
-              <DeleteAlert id={chore.id} />
+              <DeleteAlert
+                handleDelete={() => handleDelete(chore.id)}
+                type={"chore"}
+                style={{ backgroundColor: "whiteAlpha.500"}}
+              />
             </HStack>
           ))}
           <CreateChore />
