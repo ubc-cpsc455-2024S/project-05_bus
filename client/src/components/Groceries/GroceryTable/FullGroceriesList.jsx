@@ -69,7 +69,7 @@ export default function GroceriesTable() {
           groceryId: groceryItem.id,
           choreId: "6",
           type: "restock",
-          memberId: "0",
+          memberId: groceryItem.restockerId,
           done: false,
         },
       })

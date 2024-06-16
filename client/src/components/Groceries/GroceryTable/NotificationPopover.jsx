@@ -26,9 +26,7 @@ import {
 import { BellIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvent } from "../../../redux/slices/calendarSlice";
-import {
-  updateGrocery,
-} from "../../../redux/slices/groceriesSlice";
+import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import { removeEvent } from "../../../redux/slices/calendarSlice";
 import moment from "moment";
 
@@ -52,8 +50,7 @@ export default function NotificationPopover({ groceryItem }) {
   useEffect(() => {
     const initialNotifications = [];
     if (groceryItem.expiryNotificationDate) initialNotifications.push("expiry");
-    if (groceryItem.restockNotificationDate)
-      initialNotifications.push("restock");
+    if (groceryItem.restockThreshold) initialNotifications.push("restock");
     setSelectedNotifications(initialNotifications);
   }, [groceryItem]);
 
@@ -110,17 +107,13 @@ export default function NotificationPopover({ groceryItem }) {
     }
 
     if (selectedNotifications.includes("restock")) {
-      const today = moment(new Date()).format();
-      if (groceryItem.restockNotificationDate !== today) {
-        dispatch(
-          updateGrocery({
-            id: groceryItem.id,
-            restockNotificationDate: today,
-            restockThreshold: restockQuantity,
-            restockerId: assignedUser,
-          })
-        );
-      }
+      dispatch(
+        updateGrocery({
+          id: groceryItem.id,
+          restockThreshold: restockQuantity,
+          restockerId: assignedUser,
+        })
+      );
     } else {
       relatedEvents
         .filter((event) => event.extendedProps.type === "restock")

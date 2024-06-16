@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import { updateGrocery, removeGrocery } from "../../../redux/slices/groceriesSlice";
 import { removeEvent } from "../../../redux/slices/calendarSlice";
+import moment from "moment";
 
 export default function GroceryQuantityControl({
   row,
@@ -37,6 +38,12 @@ export default function GroceryQuantityControl({
           row.original.restockerId
         ) {
           createRestockNotification(row.original);
+          dispatch(
+            updateGrocery({
+              id: row.original.id,
+              restockNotificationDate: moment(new Date()).format(),
+            })
+          );
         }
         if (
           value > row.original.restockThreshold &&
