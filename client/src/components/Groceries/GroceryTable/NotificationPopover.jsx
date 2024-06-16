@@ -34,7 +34,7 @@ import moment from "moment";
 
 export default function NotificationPopover({ groceryItem }) {
   const [selectedNotifications, setSelectedNotifications] = useState([]);
-  const [expiryNotificationTime, setExpiryNotificationTime] = useState(7);
+  const [expiryNotificationTime, setExpiryNotificationTime] = useState("7");
   const [restockQuantity, setRestockQuantity] = useState(
     groceryItem.restockThreshold
   );
@@ -219,7 +219,7 @@ export default function NotificationPopover({ groceryItem }) {
                 onChange={(valueString) =>
                   setRestockQuantity(Number(valueString))
                 }
-                value={restockQuantity}
+                value={Number(restockQuantity)}
               >
                 <NumberInputField placeholder="Restock Quantity" />
               </NumberInput>
