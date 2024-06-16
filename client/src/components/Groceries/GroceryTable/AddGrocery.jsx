@@ -62,7 +62,7 @@ export default function AddGrocery() {
         title: "Grocery Added",
         description: `${name}${
           quantity > 1 ? "'s" : ""
-        } has been added to the ${location}`,
+        } has been added to the ${locations.find((l) => l.id === location).name}`,
         status: "success",
         duration: 3000,
         isClosable: true,

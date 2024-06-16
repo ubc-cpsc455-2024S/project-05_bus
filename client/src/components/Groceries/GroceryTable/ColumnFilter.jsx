@@ -148,7 +148,7 @@ export default function ColumnFilter({
     <Popover isOpen={isOpen} onClose={() => onToggle(null)} colorScheme="teal">
       <PopoverTrigger>
         <Button
-          size="sm"
+          size="xs"
           variant="solid"
           className="material-symbols-outlined"
           onClick={() => onToggle(column.id)}

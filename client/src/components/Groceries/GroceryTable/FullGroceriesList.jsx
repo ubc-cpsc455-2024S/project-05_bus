@@ -13,6 +13,7 @@ import {
   VStack,
   Text,
   Spacer,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   TriangleDownIcon,
@@ -57,6 +58,8 @@ export default function GroceriesTable() {
 
   const dispatch = useDispatch();
 
+  const tooltipColumns = ['name', 'categoryId', 'locationId'];
+
   const createRestockNotification = (groceryItem) => {
     dispatch(
       addEvent({
@@ -82,7 +85,14 @@ export default function GroceriesTable() {
 
   const table = useReactTable({
     data: groceriesData,
-    columns: columns(locations, categories, dispatch, events, dateFilterType, createRestockNotification),
+    columns: columns(
+      locations,
+      categories,
+      dispatch,
+      events,
+      dateFilterType,
+      createRestockNotification
+    ),
     state: {
       sorting,
       columnFilters,
@@ -100,7 +110,7 @@ export default function GroceriesTable() {
   return (
     <Box
       p={5}
-      flex="5"
+      flex="1"
       boxShadow="base"
       bg="white"
       className="groceries-container"
@@ -119,8 +129,8 @@ export default function GroceriesTable() {
                         cursor="pointer"
                         bg="teal.500"
                         color="white"
-                        py={3}
-                        px={4}
+                        py={2}
+                        px={3}
                         borderTopLeftRadius={
                           header.id === headerGroup.headers[0].id
                             ? "md"
@@ -189,10 +199,39 @@ export default function GroceriesTable() {
                 {table.getRowModel().rows.map((row) => (
                   <Tr key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <Td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
+                      <Td key={cell.id} maxWidth="180px">
+                        {tooltipColumns.includes(cell.column.id) ? (
+                          <Tooltip
+                            label={flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                            hasArrow
+                          >
+                            <Box
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                              whiteSpace="nowrap"
+                              p={1}
+                            >
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                            </Box>
+                          </Tooltip>
+                        ) : (
+                          <Box
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                            p={1}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </Box>
                         )}
                       </Td>
                     ))}
