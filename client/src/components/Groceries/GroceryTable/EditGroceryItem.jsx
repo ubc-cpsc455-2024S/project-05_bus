@@ -34,7 +34,7 @@ import {
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "../Shared/CreateNewSelectOptions";
+} from "../utils/CreateNewSelectOptions";
 import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import moment from "moment";
 

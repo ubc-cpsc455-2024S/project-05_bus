@@ -1,5 +1,5 @@
 import moment from "moment";
-import { DateFilter } from "./FilterFns";
+import { DateFilter } from "../utils/FilterFns";
 import GroceryQuantityControl from "./GroceryQuantityControl";
 
 const columns = (

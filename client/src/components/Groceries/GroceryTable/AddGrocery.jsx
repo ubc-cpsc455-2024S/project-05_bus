@@ -22,7 +22,7 @@ import {
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "../Shared/CreateNewSelectOptions";
+} from "../utils/CreateNewSelectOptions";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
