@@ -39,7 +39,7 @@ const initialState = {
         groupID: 2
       }
   ],
-  currentUser: null
+  currentUser: ""
 }
 
 const users = createSlice({

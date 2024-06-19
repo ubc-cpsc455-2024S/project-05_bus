@@ -11,9 +11,19 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { setCurrentUser } from '../../redux/slices/usersSlice';
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(state => state.users.currentUser);
   const location = useLocation();
+
+  // TEMPORARY
+  useEffect(() => {
+    dispatch(setCurrentUser(1))
+  }, [])
 
   const getPageName = (pathname) => {
     const pageName = pathname.split('/').filter(Boolean)[0] || 'Home';
@@ -21,6 +31,7 @@ export default function Navbar() {
   }
 
   const pageName = getPageName(location.pathname);
+
 
   return (
     <div className="container">
@@ -60,7 +71,7 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">John Doe</h2>
+            <h2 className="profile-popover-name">{currentUser.displayName}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
