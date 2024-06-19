@@ -20,12 +20,12 @@ export default function MealPlanBox() {
   };
 
   return (
-    <Box p={1}>
+    <Box p={5}>
       <Heading mb={4} size="lg" color="black" textAlign="center">
         Need Help <br /> Planning a Meal?
       </Heading>
       <Heading mb={4} size="sm" color="teal" textAlign="center">
-        Select from the table which grocery items you would like to incorporate
+        Select from the table the grocery items you would like <br /> to incorporate
       </Heading>
       <VStack align="start" spacing={3}>
         {favouriteItems.map((item) => (

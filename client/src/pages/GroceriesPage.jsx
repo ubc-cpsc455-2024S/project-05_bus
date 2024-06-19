@@ -13,8 +13,7 @@ export default function GroceriesPage() {
     >
       <FullGroceriesList />
       <Box 
-        p={5}
-        flex="1"
+        flex="0.35"
         borderRadius="md"
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
       >
