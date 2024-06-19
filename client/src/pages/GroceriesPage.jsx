@@ -13,11 +13,11 @@ export default function GroceriesPage() {
     >
       <FullGroceriesList />
       <Box 
-      p={5}
-      flex="1"
-      borderRadius="md"
-      marginBottom={4}
-      boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)">
+        p={5}
+        flex="1"
+        borderRadius="md"
+        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+      >
         <MealPlanBox />
       </Box>
     </Box>
