@@ -8,6 +8,7 @@ import GroceriesPage from './pages/GroceriesPage'
 import ProfilePage from './pages/ProfilePage'
 import SettingsPage from './pages/SettingsPage'
 import SignupPage from './pages/SignupPage'
+import CreateGroupPage from './pages/CreateGroupPage'
 
 export default function Layout() {
   const location = useLocation();
@@ -25,6 +26,7 @@ export default function Layout() {
           <Route path="/groceries" element={<GroceriesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/create-group" element={<CreateGroupPage />} />
         </Routes>
       </div>
     </>
