@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import FullGroceriesList from "../components/Groceries/GroceryTable/FullGroceriesList";
+import MealPlanBox from "../components/Groceries/MealPlan/MealPlanBox";
 
 export default function GroceriesPage() {
   return (
@@ -11,8 +12,13 @@ export default function GroceriesPage() {
       className="calendar-page"
     >
       <FullGroceriesList />
-      <Box flex="1">
-        Placeholder for groceries AI or whatever
+      <Box 
+      p={5}
+      flex="1"
+      borderRadius="md"
+      marginBottom={4}
+      boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)">
+        <MealPlanBox />
       </Box>
     </Box>
   );
