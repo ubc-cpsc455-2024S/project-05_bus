@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import moment from 'moment-timezone';
+import { nanoid } from "nanoid";
 
 const initialState = {
   events: [],
-  id: 0,
   filter: false,
 };
 
@@ -14,11 +14,10 @@ const calendarSlice = createSlice({
     addEvent: {
       reducer: (state, action) => {
         const event = {
-          id: state.id,
+          id: nanoid(),
           ...action.payload,
         };
         state.events.push(event);
-        state.id++;
       },
       prepare: (event) => {
         const serializableDate =

@@ -23,7 +23,6 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
     title: event.title,
     start: moment(event.start).format("YYYY-MM-DDTHH:mm"),
-    end: event.end ? moment(event.end).format("YYYY-MM-DDTHH:mm") : "",
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     done: event.extendedProps.done,
@@ -47,7 +46,8 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   };
 
   const handleSubmit = () => {
-    onEdit(eventDetails);
+    const selectedChore = chores.find(chore => chore.id === eventDetails.choreId);
+    onEdit({ ...eventDetails, title: selectedChore ? selectedChore.title : eventDetails.title });
   };
 
   return (
@@ -85,12 +85,12 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
               variant="filled"
               border="none"
               bg="white"
-              name="title"
-              value={eventDetails.title}
+              name="choreId"
+              value={eventDetails.choreId}
               onChange={handleChange}
             >
               {chores.map((chore) => (
-                <option key={chore.id} value={chore.title}>
+                <option key={chore.id} value={chore.id}>
                   {chore.title}
                 </option>
               ))}

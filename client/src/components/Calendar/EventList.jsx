@@ -94,7 +94,7 @@ export default function ChoresList() {
                   >
                     {
                       members.find(
-                        (member) => Number(member.id) === Number(memberId)
+                        (member) => member.id === memberId
                       )?.name
                     }
                   </Box>
