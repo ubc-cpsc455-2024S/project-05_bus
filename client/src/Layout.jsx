@@ -26,7 +26,7 @@ export default function Layout() {
           <Route path="/groceries" element={<GroceriesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/create-group" element={<CreateGroupPage />} />
+          <Route path="/group/create" element={<CreateGroupPage />} />
         </Routes>
       </div>
     </>
