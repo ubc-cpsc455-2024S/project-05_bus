@@ -30,15 +30,16 @@ const initialState = {
         displayName: "John Parker",
         email: "jparker@gmail.com",
         groupID: 1
+      },
+      {
+        id: 5,
+        username: "karenn",
+        displayName: "Karen Nelson",
+        email: "karennelson@gmail.com",
+        groupID: 2
       }
   ],
-  currentUser: {
-    id: 1,
-    username: "panda123",
-    displayName: "James Smith",
-    email: "panda123@gmail.com",
-    groupID: 1
-  },
+  currentUser: null
 }
 
 const users = createSlice({
