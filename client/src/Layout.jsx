@@ -19,7 +19,7 @@ export default function Layout() {
       {noNavbarPaths.includes(location.pathname) ? null : <Navbar />}
       <div className={noNavbarPaths.includes(location.pathname) ? "" : "navbar-padding"}>
         <Routes>
-          <Route exact path="/" element={<HomePage />} />
+          <Route exact path="/home" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/calendar" element={<CalendarPage />} />

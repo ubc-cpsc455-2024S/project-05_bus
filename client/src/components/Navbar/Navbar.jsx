@@ -23,10 +23,10 @@ export default function Navbar() {
   // TEMPORARY
   useEffect(() => {
     dispatch(setCurrentUser("5"))
-  }, [])
+  }, [dispatch])
 
   const getPageName = (pathname) => {
-    const pageName = pathname.split('/').filter(Boolean)[0] || 'Home';
+    const pageName = pathname.split('/').filter(Boolean)[0];
     return pageName.charAt(0).toUpperCase() + pageName.slice(1);
   }
 
