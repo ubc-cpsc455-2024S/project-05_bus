@@ -6,15 +6,15 @@ export default function MealPlanBox() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.groceries.groceries);
 
-  const favouriteItems = items.filter(item => item.favourite);
+  const selectedMealItems = items.filter(item => item.selectMeal);
 
-  const removeFavourite = (item) => {
-    dispatch(updateGrocery({ id: item.id, favourite: false }));
+  const removeSelect = (item) => {
+    dispatch(updateGrocery({ id: item.id, selectMeal: false }));
   };
 
   const generateMeal = () => {
     let selectedItems = [];
-    favouriteItems.forEach(item => {
+    selectedItems.forEach(item => {
         selectedItems.push(item.name);
     });
   };
@@ -28,7 +28,7 @@ export default function MealPlanBox() {
         Select from the table the grocery items you would like <br /> to incorporate
       </Heading>
       <VStack align="start" spacing={3}>
-        {favouriteItems.map((item) => (
+        {selectedMealItems.map((item) => (
           <Box
             key={item.id}
             display="flex"
@@ -39,7 +39,7 @@ export default function MealPlanBox() {
               bg="transparent"
               color="red"
               variant="unstyled"
-              onClick={() => removeFavourite(item)}
+              onClick={() => removeSelect(item)}
             />
             <Text color="black">{item.name}</Text>
           </Box>

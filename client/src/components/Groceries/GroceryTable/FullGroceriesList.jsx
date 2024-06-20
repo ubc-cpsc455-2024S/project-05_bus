@@ -43,6 +43,7 @@ import { addEvent } from "../../../redux/slices/calendarSlice";
 
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
+import SelectMealButton from "./MealButton";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
@@ -239,6 +240,7 @@ export default function GroceriesTable() {
                       <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
                       <FavoriteButton groceryItem={row.original} />
+                      <SelectMealButton groceryItem={row.original} />
                     </Td>
                   </Tr>
                 ))}

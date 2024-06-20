@@ -3,7 +3,7 @@ import { DateFilter } from "../utils/FilterFns";
 import GroceryQuantityControl from "./GroceryQuantityControl";
 
 const columns = (
-  // locations,
+  locations,
   categories,
   dispatch,
   events,
@@ -14,12 +14,12 @@ const columns = (
     accessorKey: "name",
     header: "Name",
   },
-  // {
-  //   accessorKey: "locationId",
-  //   header: "Location",
-  //   cell: (info) =>
-  //     locations.find((l) => l.id === String(info.getValue())).name,
-  // },
+  {
+    accessorKey: "locationId",
+    header: "Location",
+    cell: (info) =>
+      locations.find((l) => l.id === String(info.getValue())).name,
+  },
   {
     accessorKey: "categoryId",
     header: "Category",
