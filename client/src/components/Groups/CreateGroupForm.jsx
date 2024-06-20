@@ -3,13 +3,13 @@ import { nanoid } from 'nanoid';
 import { Button, Box, Input, Tag, TagLabel, TagCloseButton, VStack, Text, HStack, FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createGroup } from '../../redux/slices/groupsSlice';
-import { updateUser } from '../../redux/slices/usersSlice';
+import { createGroupAndAssignMembers } from '../../redux/thunks';
 
 export default function CreateGroupForm() {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
-  const currentUser = useSelector(state => state.users.currentUser);
+  const currentUserID = useSelector(state => state.users.currentUserID);
+  const currentUser = useSelector(state => state.users.users.find(user => user.id == currentUserID));
   const [groupName, setGroupName] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -46,7 +46,7 @@ export default function CreateGroupForm() {
     setSelectedUsers(selectedUsers.filter((user) => user.id !== userId));
   };
 
-  const handleCreateGroup = () => {
+  const handleCreateGroup = async () => {
     const members = [currentUser, ...selectedUsers];
     const memberIDs = members.map(member => member.id);
     const group = {
@@ -54,8 +54,13 @@ export default function CreateGroupForm() {
       name: groupName,
       memberIDs
     }
-    dispatch(createGroup(group));
-    dispatch(updateUser({id: currentUser.id, updatedFields: {groupID: group.id}}));
+     
+    try {
+      await dispatch(createGroupAndAssignMembers(group));
+      console.log('Group created and members assigned successfully.');
+    } catch (error) {
+      setError('Could not create group.');
+    }
   }
 
   return (
@@ -99,4 +104,3 @@ export default function CreateGroupForm() {
     </Box>
   );
 }
-

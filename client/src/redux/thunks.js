@@ -6,7 +6,7 @@ import {
 } from "./slices/groceriesSlice";
 import { removeEvent } from "./slices/calendarSlice";
 import { removeMember, deleteGroup, addMember, createGroup } from "./slices/groupsSlice";
-import { updateUser } from "./slices/usersSlice";
+import { updateUser, updateGroupIDs } from "./slices/usersSlice";
 
 export const removeCategoryAndRelatedGroceries = createAsyncThunk(
   "categories/removeCategoryAndRelatedGroceries",
@@ -55,19 +55,41 @@ export const removeGroceryAndRelatedEvents = createAsyncThunk(
   }
 );
 
-export const createGroupAndAssignMembers = createAsyncThunk(
-  "groups/createGroupAndAssignMembers",
-  async (group, { dispatch, getState }) => {
-    const state = getState();
-    const memberIDs = new Set(group.memberIDs);
+// export const createGroupAndAssignMembers = createAsyncThunk(
+//   "groups/createGroupAndAssignMembers",
+//   async (group, { dispatch, getState }) => {
+//     const state = getState();
+//     const memberIDs = new Set(group.memberIDs);
 
+//     try {
+//       dispatch(createGroup(group));
+//     } catch (error) {
+//       console.log("Could not create group, got error: ", error.message);
+//       throw new Error({message: error.message});
+//     }
+
+//     state.users.users.forEach(user => {
+//       const id = user.id;
+//       if (memberIDs.has(id)) {
+//         try {
+//           dispatch(updateUser({id, updatedFields: {groupID: group.id}}));
+//         } catch (error) {
+//           console.log(`Could not assign group to member with id ${id}, got error: ${error.message}`);
+//           throw new Error({message: error.message});
+//         }
+//       }
+//     })
+//   }
+// );
+
+export const createGroupAndAssignMembers = createAsyncThunk(
+  'groups/createGroupAndAssignMembers',
+  async (group, { dispatch }) => {
+    // const groupID = nanoid();
+    // dispatch(groups.actions.addGroup({ id: groupID, ...payload }));
     dispatch(createGroup(group));
-    state.users.users.forEach(user => {
-      const id = user.id;
-      if (memberIDs.has(id)) {
-        dispatch(updateUser({id, updatedFields: {groupID: group.id}}));
-      }
-    })
+    dispatch(updateGroupIDs({ groupID: group.id, memberIDs: group.memberIDs }));
+    return group.id;
   }
 );
 

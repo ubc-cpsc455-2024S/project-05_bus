@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import CreateGroupForm from '../components/Groups/CreateGroupForm'
 
 export default function CreateGroupPage() {
-  const currentUser = useSelector(state => state.users.currentUser);
+  const currentUserID = useSelector(state => state.users.currentUserID);
+  const currentUser = useSelector(state => state.users.users.find(user => user.id == currentUserID));
   const navigate = useNavigate();
 
   if (currentUser.groupID) {

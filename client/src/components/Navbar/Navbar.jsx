@@ -11,19 +11,12 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
-import { setCurrentUser } from '../../redux/slices/usersSlice';
+import { useSelector } from "react-redux"
 
 export default function Navbar() {
-  const dispatch = useDispatch();
-  const currentUser = useSelector(state => state.users.currentUser);
+  const currentUserID = useSelector(state => state.users.currentUserID);
+  const currentUser = useSelector(state => state.users.users.find(user => user.id == currentUserID));
   const location = useLocation();
-
-  // TEMPORARY
-  useEffect(() => {
-    dispatch(setCurrentUser("5"))
-  }, [dispatch])
 
   const getPageName = (pathname) => {
     const pageName = pathname.split('/').filter(Boolean)[0];

@@ -39,7 +39,7 @@ const initialState = {
         groupID: null
       }
   ],
-  currentUser: ""
+  currentUserID: "5"
 }
 
 const users = createSlice({
@@ -64,16 +64,27 @@ const users = createSlice({
             ...state.users[userIndex],
             ...updatedFields,
           };
-          if (state.currentUser && state.currentUser.id === id) {
-            state.currentUser = state.users[userIndex];
+
+          const currentUser = state.users.find(user => user.id == state.currentUserID);
+          if (currentUser && currentUser.id === id) {
+            state.currentUserID = id;
           }
         }
       },
-      setCurrentUser: (state, action) => {
-          state.currentUser = state.users.find(user => user.id === action.payload);
+      updateGroupIDs: (state, action) => {
+        const { groupID, memberIDs } = action.payload;
+        const membersSet = new Set(memberIDs) 
+        state.users.forEach(user => {
+          if (membersSet.has(user.id)) {
+            user.groupID = groupID;
+          }
+        });
+      },
+      setCurrentUserID: (state, action) => {
+        state.currentUserID = action.payload;
       },
   },
 });
 
-export const { createUser, deleteUser, updateUser, setCurrentUser } = users.actions;
+export const { createUser, deleteUser, updateUser, setCurrentUserID, updateGroupIDs } = users.actions;
 export default users.reducer;
