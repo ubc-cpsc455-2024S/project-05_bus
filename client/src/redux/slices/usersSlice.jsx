@@ -47,20 +47,33 @@ const users = createSlice({
   initialState,
   reducers: {
       createUser: (state, action) => {
-          const user = {
-              id: nanoid(),
-              ...action.payload,
-          }
-          state.users.push(user);
+        const user = {
+            id: nanoid(),
+            ...action.payload,
+        }
+        state.users.push(user);
       },
       deleteUser: (state, action) => {
-          state.users = state.users.filter(user => user.id !== action.payload);
+        state.users = state.users.filter(user => user.id !== action.payload);
+      },
+      updateUser: (state, action) => {
+        const { id, updatedFields } = action.payload;
+        const userIndex = state.users.findIndex(user => user.id === id);
+        if (userIndex !== -1) {
+          state.users[userIndex] = {
+            ...state.users[userIndex],
+            ...updatedFields,
+          };
+        if (state.currentUser && state.currentUser.id === id) {
+          state.currentUser = state.users[userIndex];
+        }
+        }
       },
       setCurrentUser: (state, action) => {
           state.currentUser = state.users.find(user => user.id === action.payload);
-      }
+      },
   },
 });
 
-export const { createUser, deleteUser, setCurrentUser } = users.actions;
+export const { createUser, deleteUser, updateUser, setCurrentUser } = users.actions;
 export default users.reducer;

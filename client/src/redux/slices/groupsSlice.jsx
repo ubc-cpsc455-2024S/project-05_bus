@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 
 const initialState = {
   groups: [
@@ -8,13 +7,7 @@ const initialState = {
       name: "W 10th Roommates",
       memberIDs: ["1", "2", "3", "4"]
     },
-    {
-      id: "2",
-      name: "Karen's House",
-      memberIDs: ["5"]
-    }
-  ],
-  currentGroup: null
+  ]
 }
 
 const groups = createSlice({
@@ -22,20 +15,13 @@ const groups = createSlice({
   initialState,
   reducers: {
       createGroup: (state, action) => {
-          const group = {
-              id: nanoid(),
-              ...action.payload,
-          }
-          state.groups.push(group);
+          state.groups.push(action.payload);
       },
       deleteGroup: (state, action) => {
           state.groups = state.groups.filter(group => group.id !== action.payload);
-      },
-      setCurrentGroup: (state, action) => {
-          state.currentGroup = state.groups.find(group => group.id === action.payload);
       }
   },
 });
 
-export const { createGroup, deleteGroup, setCurrentGroup } = groups.actions;
+export const { createGroup, deleteGroup } = groups.actions;
 export default groups.reducer;
