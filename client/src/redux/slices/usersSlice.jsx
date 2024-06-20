@@ -1,42 +1,42 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 
 const initialState = {
   users: [
       {
-        id: 1,
+        id: "1",
         username: "panda123",
-        displayName: "James Smith",
+        name: "James Smith",
         email: "panda123@gmail.com",
         groupID: 1
       },
       {
-        id: 2,
+        id: "2",
         username: "maggiebk",
-        displayName: "Maggie Baker",
+        name: "Maggie Baker",
         email: "maggiebaker@yahoo.com",
         groupID: 1
       },
       {
-        id: 3,
+        id: "3",
         username: "mary02",
-        displayName: "Mary Brown",
+        name: "Mary Brown",
         email: "mhbrown@yahoo.com",
         groupID: 1
       },
       {
-        id: 4,
+        id: "4",
         username: "johnny",
-        displayName: "John Parker",
+        name: "John Parker",
         email: "jparker@gmail.com",
         groupID: 1
       },
       {
-        id: 5,
+        id: "5",
         username: "karenn",
-        displayName: "Karen Nelson",
+        name: "Karen Nelson",
         email: "karennelson@gmail.com",
-        groupID: 2
+        groupID: null
       }
   ],
   currentUser: ""
@@ -48,7 +48,7 @@ const users = createSlice({
   reducers: {
       createUser: (state, action) => {
           const user = {
-              id: uuidv4(),
+              id: nanoid(),
               ...action.payload,
           }
           state.users.push(user);

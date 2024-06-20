@@ -22,7 +22,7 @@ export default function Navbar() {
 
   // TEMPORARY
   useEffect(() => {
-    dispatch(setCurrentUser(1))
+    dispatch(setCurrentUser("5"))
   }, [])
 
   const getPageName = (pathname) => {
@@ -71,7 +71,7 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">{currentUser.displayName}</h2>
+            <h2 className="profile-popover-name">{currentUser.name}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
