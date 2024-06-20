@@ -64,11 +64,6 @@ const users = createSlice({
             ...state.users[userIndex],
             ...updatedFields,
           };
-
-          const currentUser = state.users.find(user => user.id == state.currentUserID);
-          if (currentUser && currentUser.id === id) {
-            state.currentUserID = id;
-          }
         }
       },
       updateGroupIDs: (state, action) => {
