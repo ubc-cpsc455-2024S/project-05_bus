@@ -5,6 +5,8 @@ import {
   removeGrocery,
 } from "./slices/groceriesSlice";
 import { removeEvent } from "./slices/calendarSlice";
+import { removeMember, deleteGroup, addMember, createGroup } from "./slices/groupsSlice";
+import { updateUser } from "./slices/usersSlice";
 
 export const removeCategoryAndRelatedGroceries = createAsyncThunk(
   "categories/removeCategoryAndRelatedGroceries",
@@ -50,5 +52,50 @@ export const removeGroceryAndRelatedEvents = createAsyncThunk(
       dispatch(removeEvent(event.id));
     });
     dispatch(removeGrocery(groceryId));
+  }
+);
+
+export const createGroupAndAssignMembers = createAsyncThunk(
+  "groups/createGroupAndAssignMembers",
+  async (group, { dispatch, getState }) => {
+    const state = getState();
+    const memberIDs = new Set(group.memberIDs);
+
+    dispatch(createGroup(group));
+    state.users.users.forEach(user => {
+      const id = user.id;
+      if (memberIDs.has(id)) {
+        dispatch(updateUser({id, updatedFields: {groupID: group.id}}));
+      }
+    })
+  }
+);
+
+export const addGroupMember = createAsyncThunk(
+  "groups/addGroupMember",
+  async (groupID, userID, { dispatch }) => {
+    dispatch(addMember({groupID, userID}));
+    dispatch(updateUser({id: userID, updatedFields: {groupID: groupID}}));
+  }
+);
+
+export const removeGroupMember = createAsyncThunk(
+  "groups/removeGroupMember",
+  async (groupID, userID, { dispatch }) => {
+    dispatch(removeMember({groupID, userID}));
+    dispatch(updateUser({id: userID, updatedFields: {groupID: null}}));
+  }
+);
+
+export const deleteGroupAndUnassignMembers = createAsyncThunk(
+  "groups/deleteGroupAndUnassignMembers",
+  async (groupID, { dispatch, getState }) => {
+    const state = getState();
+    state.users.users.forEach(user => {
+      if (user.groupID == groupID) {
+        dispatch(updateUser({id: user.id, updatedFields: {groupID: null}}));
+      }
+    });
+    dispatch(deleteGroup(groupID));
   }
 );

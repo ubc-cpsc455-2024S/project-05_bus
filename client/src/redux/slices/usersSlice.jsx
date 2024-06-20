@@ -64,9 +64,9 @@ const users = createSlice({
             ...state.users[userIndex],
             ...updatedFields,
           };
-        if (state.currentUser && state.currentUser.id === id) {
-          state.currentUser = state.users[userIndex];
-        }
+          if (state.currentUser && state.currentUser.id === id) {
+            state.currentUser = state.users[userIndex];
+          }
         }
       },
       setCurrentUser: (state, action) => {
