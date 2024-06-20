@@ -111,14 +111,13 @@ export default function GroceriesTable() {
   return (
     <Box
       p={5}
-      flex="1"
       boxShadow="base"
       bg="white"
       className="groceries-container"
       height="100vh"
     >
       <VStack spacing={4} height="100%">
-        <Box flex="1" overflow="auto" width="100%">
+        <Box overflow="auto" width="100%">
           <TableContainer>
             <Table variant="striped" colorScheme="cyan" size="sm">
               <Thead>

@@ -11,11 +11,20 @@ export default function GroceriesPage() {
       height="100vh"
       className="calendar-page"
     >
-      <FullGroceriesList />
-      <Box 
-        flex="0.35"
+      <Box
+        flex="2"
+        maxWidth="1000px"
+        minWidth="300px"
+        overflow="auto"
+      >
+        <FullGroceriesList />
+      </Box>
+      <Box
+        flex="1"
         borderRadius="md"
+        minWidth="400px"
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        overflow="auto"
       >
         <MealPlanBox />
       </Box>

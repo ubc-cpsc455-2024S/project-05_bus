@@ -32,7 +32,6 @@ import {
 export default function GroceryCard({
   item,
   type,
-  groceries,
   matchingGroceries,
   bgColor,
 }) {
@@ -142,15 +141,7 @@ export default function GroceryCard({
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {groceries
-                    .filter((grocery) => {
-                      if (type === "category") {
-                        return grocery.categoryId === item.id;
-                      } else if (type === "location") {
-                        return grocery.locationId === item.id;
-                      }
-                      return false;
-                    })
+                  {matchingGroceries
                     .map((grocery) => (
                       <Tr key={grocery.id}>
                         <Td>
