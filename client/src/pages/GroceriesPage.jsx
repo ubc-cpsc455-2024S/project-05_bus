@@ -13,7 +13,7 @@ export default function GroceriesPage() {
     >
       <Box
         flex="2"
-        maxWidth="1000px"
+        maxWidth="1300px"
         minWidth="300px"
         overflow="auto"
       >
@@ -22,7 +22,8 @@ export default function GroceriesPage() {
       <Box
         flex="1"
         borderRadius="md"
-        minWidth="400px"
+        maxWidth="300px"
+        minWidth="300px"
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
         overflow="auto"
       >

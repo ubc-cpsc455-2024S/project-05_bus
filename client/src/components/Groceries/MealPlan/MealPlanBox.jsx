@@ -25,7 +25,7 @@ export default function MealPlanBox() {
         Need Help <br /> Planning a Meal?
       </Heading>
       <Heading mb={4} size="sm" color="teal" textAlign="center">
-        Select from the table the grocery items you would like <br /> to incorporate
+        Select from the table the <br /> grocery items you would <br /> like to incorporate
       </Heading>
       <VStack align="start" spacing={3}>
         {selectedMealItems.map((item) => (
