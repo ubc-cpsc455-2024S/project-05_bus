@@ -23,14 +23,20 @@ export default function CreateGroupForm() {
     setError('');
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleAddUser();
+    }
+  };
+
   const handleAddUser = () => {
     const user = users.find((user) => user.email === emailInput);
     if (user) {
       if (!selectedUsers.find((u) => u.id === user.id)) {
         if (user.id === currentUser.id) {
-          setError('You do not need to add yourself when creating a group.');
+          setError('You do not need to add yourself when creating a group');
         } else if (user.groupID) {
-          setError('User already belongs to a group.');
+          setError('User already belongs to a group');
         } else {
           setSelectedUsers([...selectedUsers, user]);
           setEmailInput('');
@@ -63,8 +69,11 @@ export default function CreateGroupForm() {
   }
 
   return (
-    <Box width="400px" margin="auto" mt="20px">
-      <h1 className="create-group-heading">Create a Group</h1>
+    <Box width="400px" mt="20px" className="create-group-container">
+      <div className="create-group-heading-container">
+        <h1 className="create-group-heading">Create a Group</h1>
+        <span className="material-symbols-outlined icon">add_business</span>
+      </div>
       <FormControl isRequired>
         <FormLabel>Group Name</FormLabel>
         <Input
@@ -79,6 +88,7 @@ export default function CreateGroupForm() {
         <Input
           value={emailInput}
           onChange={handleEmailChange}
+          onKeyDown={handleKeyPress}
           placeholder="janedoe@gmail.com"
         />
         <Button onClick={handleAddUser} className="material-symbols-outlined">

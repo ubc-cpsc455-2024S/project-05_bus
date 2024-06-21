@@ -79,15 +79,26 @@ export const createGroupAndAssignMembers = createAsyncThunk(
 
 export const addGroupMember = createAsyncThunk(
   "groups/addGroupMember",
-  async (groupID, userID, { dispatch }) => {
-    dispatch(addMember({groupID, userID}));
-    dispatch(updateUser({id: userID, updatedFields: {groupID: groupID}}));
+  async ({ groupID, userID }, { dispatch }) => {
+    try {
+      dispatch(addMember({groupID, userID}));
+    } catch (error) {
+      console.log(`Could not add member ${userID} to group ${groupID}, got error: ${error.message}`);
+      throw new Error(error.message);
+    }
+
+    try {
+      dispatch(updateUser({id: userID, updatedFields: {groupID}}));
+    } catch (error) {
+      console.log(`Could not assign group ${groupID} to user ${userID}, got error: ${error.message}`);
+      throw new Error(error.message);
+    }
   }
 );
 
 export const removeGroupMember = createAsyncThunk(
   "groups/removeGroupMember",
-  async (groupID, userID, { dispatch }) => {
+  async ({ groupID, userID }, { dispatch }) => {
     dispatch(removeMember({groupID, userID}));
     dispatch(updateUser({id: userID, updatedFields: {groupID: null}}));
   }

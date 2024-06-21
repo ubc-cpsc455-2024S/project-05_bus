@@ -8,11 +8,11 @@ import GroceriesPage from './pages/GroceriesPage'
 import ProfilePage from './pages/ProfilePage'
 import SettingsPage from './pages/SettingsPage'
 import SignupPage from './pages/SignupPage'
-import CreateGroupPage from './pages/CreateGroupPage'
+import GroupsPage from './pages/GroupsPage'
 
 export default function Layout() {
   const location = useLocation();
-  const noNavbarPaths = ['/login', '/signup'];
+  const noNavbarPaths = ['/login', '/signup', '/groups'];
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function Layout() {
           <Route path="/groceries" element={<GroceriesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/group/create" element={<CreateGroupPage />} />
+          <Route path="/groups" element={<GroupsPage />} />
         </Routes>
       </div>
     </>

@@ -28,7 +28,7 @@ const groups = createSlice({
       const { groupID, userID } = action.payload;
       const groupIndex = state.groups.findIndex(group => group.id == groupID);
       if (!state.groups[groupIndex].memberIDs.includes(userID)) {
-        state.groups[groupIndex].memberIDs = state.groups[groupIndex].push(userID);
+        state.groups[groupIndex].memberIDs.push(userID);
       } else {
         console.log(`User ${userID} is already part of group ${groupID}`);
       }
