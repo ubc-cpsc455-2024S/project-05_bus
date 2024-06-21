@@ -92,11 +92,12 @@ export default function ChoresList() {
                     fontSize="xl"
                     fontWeight="bold"
                   >
-                    {
-                      members.find(
+                    {(() => {
+                      const member = members.find(
                         (member) => member.id === memberId
-                      )?.name
-                    }
+                      );
+                      return `${member.firstName} ${member.lastName}`;
+                    })()}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

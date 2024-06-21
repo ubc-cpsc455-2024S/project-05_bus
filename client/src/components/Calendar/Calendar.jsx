@@ -117,7 +117,7 @@ export default function Calendar() {
               overflow: "hidden",
             }}
           >
-            {member.name.concat(" - ", eventInfo.event.title)}
+            {`${member.firstName} ${member.lastName} - ${eventInfo.event.title}`}
           </div>
         </Tooltip>
       </div>
