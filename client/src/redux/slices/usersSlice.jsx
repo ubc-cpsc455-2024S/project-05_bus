@@ -8,6 +8,7 @@ const initialState = {
         firstName: "James",
         lastName: "Smith",
         email: "panda123@gmail.com",
+        password: "password123",
         groupID: 1
       },
       {
@@ -15,6 +16,7 @@ const initialState = {
         firstName: "Maggie",
         lastName: "Baker",
         email: "maggiebaker@yahoo.com",
+        password: "password123",
         groupID: 1
       },
       {
@@ -22,6 +24,7 @@ const initialState = {
         firstName: "Mary",
         lastName: "Brown",
         email: "mhbrown@yahoo.com",
+        password: "password123",
         groupID: 1
       },
       {
@@ -29,6 +32,7 @@ const initialState = {
         firstName: "John",
         lastName: "Parker",
         email: "jparker@gmail.com",
+        password: "password123",
         groupID: null
       },
       {
@@ -36,6 +40,7 @@ const initialState = {
         firstName: "Karen",
         lastName: "Nelson",
         email: "karennelson@gmail.com",
+        password: "password123",
         groupID: null
       },
       {
@@ -43,6 +48,7 @@ const initialState = {
         firstName: "Sam",
         lastName: "Cyrus",
         email: "scy456@gmail.com",
+        password: "password123",
         groupID: null
       }
   ],
