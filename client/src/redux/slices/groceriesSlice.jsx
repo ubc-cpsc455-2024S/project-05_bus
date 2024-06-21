@@ -15,6 +15,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "2",
@@ -28,6 +29,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "3",
@@ -41,6 +43,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "4",
@@ -54,6 +57,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "5",
@@ -67,6 +71,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "6",
@@ -80,6 +85,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "7",
@@ -93,6 +99,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "8",
@@ -106,6 +113,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "9",
@@ -119,6 +127,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
     {
       id: "10",
@@ -132,6 +141,7 @@ const initialState = {
       restockThreshold: "",
       restockerId: "",
       favourite: false,
+      selectMeal: false,
     },
   ],
   categories: [

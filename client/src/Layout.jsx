@@ -8,6 +8,7 @@ import GroceriesPage from './pages/GroceriesPage'
 import ProfilePage from './pages/ProfilePage'
 import SettingsPage from './pages/SettingsPage'
 import SignupPage from './pages/SignupPage'
+import LandingPage from './pages/LandingPage'
 import GroupsPage from './pages/GroupsPage'
 
 export default function Layout() {
@@ -19,9 +20,10 @@ export default function Layout() {
       {noNavbarPaths.includes(location.pathname) ? null : <Navbar />}
       <div className={noNavbarPaths.includes(location.pathname) ? "" : "navbar-padding"}>
         <Routes>
-          <Route exact path="/home" element={<HomePage />} />
+          <Route exact path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/groceries" element={<GroceriesPage />} />
           <Route path="/profile" element={<ProfilePage />} />
