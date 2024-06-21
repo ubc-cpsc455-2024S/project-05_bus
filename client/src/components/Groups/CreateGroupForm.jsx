@@ -27,7 +27,9 @@ export default function CreateGroupForm() {
     const user = users.find((user) => user.email === emailInput);
     if (user) {
       if (!selectedUsers.find((u) => u.id === user.id)) {
-        if (user.groupID) {
+        if (user.id === currentUser.id) {
+          setError('You do not need to add yourself when creating a group.');
+        } else if (user.groupID) {
           setError('User already belongs to a group.');
         } else {
           setSelectedUsers([...selectedUsers, user]);
@@ -62,6 +64,7 @@ export default function CreateGroupForm() {
 
   return (
     <Box width="400px" margin="auto" mt="20px">
+      <h1 className="create-group-heading">Create a Group</h1>
       <FormControl isRequired>
         <FormLabel>Group Name</FormLabel>
         <Input
