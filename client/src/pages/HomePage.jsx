@@ -10,8 +10,8 @@ export default function HomePage() {
 
   return (
     <div className="home-container">
-      {group && <HomeGroup group={group}/>}
       <HomeNotifications />
+      {group && <HomeGroup group={group}/>}
     </div>
   )
 }
