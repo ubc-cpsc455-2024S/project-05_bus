@@ -13,7 +13,7 @@ export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
   const members = useCurrentGroupMembers();
-  const selectedMember = useSelector((state) => state.members.selectedMember)
+  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
   const isFiltered = useSelector((state) => state.events.filter)
 
   const dispatch = useDispatch();
@@ -140,7 +140,7 @@ export default function Calendar() {
         eventStartEditable={true}
         eventDurationEditable={false}
         droppable
-        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMember.id) : events}
+        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMemberID) : events}
         eventReceive={(info) => {
           dispatch(
             addEvent({

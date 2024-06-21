@@ -10,7 +10,7 @@ import {
   FormLabel,
   Text,
 } from "@chakra-ui/react";
-import { setSelectedMember } from "../../redux/slices/membersSlice";
+import { setSelectedMemberID } from "../../redux/slices/groupsSlice";
 import { toggleFilter } from "../../redux/slices/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 import useCurrentGroup from "../../hooks/useCurrentGroup";
@@ -19,12 +19,12 @@ export default function CalendarPeople() {
   const dispatch = useDispatch();
   const currentGroup = useCurrentGroup();
   const members = useCurrentGroupMembers();
-  const selectedMember = useSelector((state) => state.members.selectedMember);
+  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
   const isFiltered = useSelector((state) => state.events.filter);
 
   const handleRadioChange = (value) => {
     const selectedMemberId = value !== "" ? value : null;
-    dispatch(setSelectedMember(selectedMemberId));
+    dispatch(setSelectedMemberID(selectedMemberId));
   };
 
   const handleToggleChange = () => {
@@ -38,7 +38,7 @@ export default function CalendarPeople() {
       </Heading>
       <RadioGroup
         onChange={handleRadioChange}
-        value={selectedMember ? selectedMember.id : ""}
+        value={selectedMemberID ? selectedMemberID : ""}
       >
         <VStack align="start" spacing={3}>
           {members.map((member) => (

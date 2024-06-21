@@ -25,10 +25,12 @@ export default function ChoresList() {
 
   const groupedChores = events.reduce((acc, event) => {
     const memberId = event.extendedProps.memberId;
+    console.log("memberId", memberId)
     if (!acc[memberId]) {
       acc[memberId] = [];
     }
     acc[memberId].push(event);
+    console.log("acc", acc);
     return acc;
   }, {});
 

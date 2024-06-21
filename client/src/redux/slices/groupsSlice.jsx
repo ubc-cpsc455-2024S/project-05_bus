@@ -7,7 +7,8 @@ const initialState = {
       name: "W 10th Roommates",
       memberIDs: ["1", "2", "3"]
     },
-  ]
+  ],
+  selectedMemberID: ""
 }
 
 const groups = createSlice({
@@ -38,8 +39,11 @@ const groups = createSlice({
       const groupIndex = state.groups.findIndex(group => group.id == groupID);
       state.groups[groupIndex].memberIDs = state.groups[groupIndex].memberIDs.filter(memberID => memberID !== userID);
     },
+    setSelectedMemberID: (state, action) => {
+      state.selectedMemberID = action.payload;
+    },
   },
 });
 
-export const { addGroup, deleteGroup, addMember, removeMember } = groups.actions;
+export const { addGroup, deleteGroup, addMember, removeMember, setSelectedMemberID } = groups.actions;
 export default groups.reducer;
