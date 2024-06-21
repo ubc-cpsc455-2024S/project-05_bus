@@ -29,13 +29,20 @@ const initialState = {
         username: "johnny",
         name: "John Parker",
         email: "jparker@gmail.com",
-        groupID: 1
+        groupID: null
       },
       {
         id: "5",
         username: "karenn",
         name: "Karen Nelson",
         email: "karennelson@gmail.com",
+        groupID: null
+      },
+      {
+        id: "6",
+        username: "sam456",
+        name: "Sam Cyrus",
+        email: "scy456@gmail.com",
         groupID: null
       }
   ],

@@ -55,7 +55,6 @@ export default function CreateGroupForm() {
      
     try {
       await dispatch(createGroupAndAssignMembers(group));
-      console.log('Group created and members assigned successfully.');
     } catch (error) {
       setError('Could not create group.');
     }

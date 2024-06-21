@@ -5,7 +5,7 @@ const initialState = {
     {
       id: "1",
       name: "W 10th Roommates",
-      memberIDs: ["1", "2", "3", "4"]
+      memberIDs: ["1", "2", "3"]
     },
   ]
 }
