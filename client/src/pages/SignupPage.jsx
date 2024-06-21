@@ -2,31 +2,36 @@ import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import LoginSidebar from '../components/Login/LoginSidebar';
 import './LoginPage.css';
 import { useState } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { addMember } from '../redux/slices/membersSlice';
 
 export default function SignupPage() {
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const handlePasswordClick = () => setShowPassword(!showPassword);  
+  const handleConfirmPasswordClick = () => setShowConfirmPassword(!showConfirmPassword);
+  const navigate = useNavigate();
 
-  function PasswordInput({value}) {
-    const [show, setShow] = useState(false);
-    const handleClick = () => setShow(!show);
+  const handleSignup = (e) => {
+    e.preventDefault()
+    const signupData = new FormData(e.currentTarget)
 
-    return (
-        <div>
-            <InputGroup size='md'>
-                <Input
-                    pr='4.5rem'
-                    type={show ? 'text' : 'password'}
-                    placeholder={value}
-                />
-                <InputRightElement width='6rem'>
-                    <Button h='1.75rem' w='5rem' size='sm' onClick={handleClick}>
-                        {show ? 'Hide' : 'Show'}
-                    </Button>
-                </InputRightElement>
-            </InputGroup>
-        </div>
-    );
+    if (signupData.get('password') === signupData.get('confirmPassword')) {
+    const newUser = {
+      firstName: signupData.get('firstName'),
+      lastName: signupData.get('lastName'),
+      email: signupData.get('email'),
+      password: signupData.get('password')
+    }
+    dispatch(addMember(newUser));
+    navigate('/');
+    } else {
+      // temporary alert
+      alert('Passwords do not match')
+    }
   }
 
   return (
@@ -34,16 +39,17 @@ export default function SignupPage() {
       <div className="login-sidebar">
         <LoginSidebar value="Signup"></LoginSidebar>
       </div>
-      <div className="login-form">
+      <form className="login-form" onSubmit={handleSignup}>
         <div className='form-container'>
           <div className='input-container'>
-          <div className='input-div'>
+            <div className='input-div'>
               <p className='input-title'><b>First Name</b></p>
               <div>
                 <InputGroup size='md'>
                   <Input
                     pr='4.5rem'
                     placeholder='First name'
+                    name="firstName"
                   />
                 </InputGroup>
               </div>
@@ -55,6 +61,7 @@ export default function SignupPage() {
                   <Input
                     pr='4.5rem'
                     placeholder='Last name'
+                    name="lastName"
                   />
                 </InputGroup>
               </div>
@@ -62,30 +69,54 @@ export default function SignupPage() {
             <div className='input-div'>
               <p className='input-title'><b>Email</b></p>
               <InputGroup>
-                <Input type='text' placeholder='Enter email' />
+                <Input type='text' placeholder='Enter email' name="email" />
               </InputGroup>
             </div>
             <div className='input-div'>
               <p className='input-title'><b>Password</b></p>
               <div>
-                <PasswordInput value='Enter Password' />
+              <InputGroup size='md'>
+                <Input
+                    pr='4.5rem'
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder='Enter password'
+                    name="password"
+                />
+                <InputRightElement width='6rem'>
+                    <Button h='1.75rem' w='5rem' size='sm' onClick={handlePasswordClick}>
+                        {showPassword ? 'Hide' : 'Show'}
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
               </div>
             </div>
             <div className='input-div'>
               <p className='input-title'><b>Confirm Password</b></p>
               <div>
-                <PasswordInput value='Confirm Password' />
+              <InputGroup size='md'>
+                <Input
+                    pr='4.5rem'
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    placeholder='Confirm password'
+                    name="confirmPassword"
+                />
+                <InputRightElement width='6rem'>
+                    <Button h='1.75rem' w='5rem' size='sm' onClick={handleConfirmPasswordClick}>
+                        {showConfirmPassword ? 'Hide' : 'Show'}
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
               </div>
             </div>
           </div>
-          <Button className='login-button' colorScheme='teal'>Sign Up</Button>
+          <Button className='login-button' colorScheme='teal' type="submit">Sign Up</Button>
           <Button className='register-link' variant="link">
             <ChakraLink as={ReactRouterLink} to='/login'>
               Already have an account?&nbsp;<b>Sign in</b>
             </ChakraLink>
           </Button>
         </div>
-      </div>
+      </form>
     </div>
 
   );

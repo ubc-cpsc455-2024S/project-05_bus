@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     members: [
-        { id: "0", name: 'John Doe' },
-        { id: "1", name: 'Jane Doe' },
+        { id: "0", firstName: 'John', lastName: 'Doe', email: 'johndoe@email.com', password: '123Password!' },
+        { id: "1", firstName: 'Jane', lastName: 'Doe', email: 'janedoe@email.com', password: '123Password!' },
     ],
     selectedMember: "",
 }
