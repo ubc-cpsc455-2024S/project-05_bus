@@ -5,8 +5,9 @@ import {
   removeGrocery,
 } from "./slices/groceriesSlice";
 import { removeEvent } from "./slices/calendarSlice";
-import { removeMember, deleteGroup, addMember, createGroup } from "./slices/groupsSlice";
+import { removeMember, deleteGroup, addMember, addGroup } from "./slices/groupsSlice";
 import { updateUser, updateGroupIDs } from "./slices/usersSlice";
+import { nanoid } from 'nanoid';
 
 export const removeCategoryAndRelatedGroceries = createAsyncThunk(
   "categories/removeCategoryAndRelatedGroceries",
@@ -55,41 +56,24 @@ export const removeGroceryAndRelatedEvents = createAsyncThunk(
   }
 );
 
-// export const createGroupAndAssignMembers = createAsyncThunk(
-//   "groups/createGroupAndAssignMembers",
-//   async (group, { dispatch, getState }) => {
-//     const state = getState();
-//     const memberIDs = new Set(group.memberIDs);
-
-//     try {
-//       dispatch(createGroup(group));
-//     } catch (error) {
-//       console.log("Could not create group, got error: ", error.message);
-//       throw new Error({message: error.message});
-//     }
-
-//     state.users.users.forEach(user => {
-//       const id = user.id;
-//       if (memberIDs.has(id)) {
-//         try {
-//           dispatch(updateUser({id, updatedFields: {groupID: group.id}}));
-//         } catch (error) {
-//           console.log(`Could not assign group to member with id ${id}, got error: ${error.message}`);
-//           throw new Error({message: error.message});
-//         }
-//       }
-//     })
-//   }
-// );
-
 export const createGroupAndAssignMembers = createAsyncThunk(
   'groups/createGroupAndAssignMembers',
   async (group, { dispatch }) => {
-    // const groupID = nanoid();
-    // dispatch(groups.actions.addGroup({ id: groupID, ...payload }));
-    dispatch(createGroup(group));
-    dispatch(updateGroupIDs({ groupID: group.id, memberIDs: group.memberIDs }));
-    return group.id;
+    const groupID = nanoid();
+    try {
+      dispatch(addGroup({ id: groupID, ...group }));
+    } catch (error) {
+      console.log("Could not add group, got error: ", error.message);
+      throw new Error({message: error.message});
+    }
+
+    try {
+      dispatch(updateGroupIDs({ groupID, memberIDs: group.memberIDs }));
+      return groupID;
+    } catch (error) {
+      console.log(`Could not assign group ${groupID} to members, got error: ${error.message}`);
+      throw new Error({message: error.message});
+    }
   }
 );
 

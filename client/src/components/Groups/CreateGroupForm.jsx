@@ -1,5 +1,4 @@
 import './CreateGroupForm.css';
-import { nanoid } from 'nanoid';
 import { Button, Box, Input, Tag, TagLabel, TagCloseButton, VStack, Text, HStack, FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -50,7 +49,6 @@ export default function CreateGroupForm() {
     const members = [currentUser, ...selectedUsers];
     const memberIDs = members.map(member => member.id);
     const group = {
-      id: nanoid(),
       name: groupName,
       memberIDs
     }
