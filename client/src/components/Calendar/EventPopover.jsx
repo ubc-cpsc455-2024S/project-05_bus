@@ -74,7 +74,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
             >
               {members.map((member) => (
                 <option key={member.id} value={member.id}>
-                  {member.name}
+                  {`${member.firstName} ${member.lastName}`}
                 </option>
               ))}
             </Select>

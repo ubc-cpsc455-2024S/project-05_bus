@@ -55,7 +55,7 @@ export default function CalendarPeople() {
               }}
               color="black"
             >
-              <Text color="black">{member.name}</Text>
+              <Text color="black">{`${member.firstName} ${member.lastName}`}</Text>
             </Radio>
           ))}
         </VStack>
