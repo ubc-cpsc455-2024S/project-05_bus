@@ -28,7 +28,7 @@ export default function Navbar() {
       <ButtonGroup className="page-buttons">
         <nav>
           <div className="page-button-container">
-            <Button className="page-button" as={Link} to="/" size="lg">
+            <Button className="page-button" as={Link} to="/home" size="lg">
               <span className="material-symbols-outlined icon">home</span>
             </Button>
             <p className="page-label">Home</p>

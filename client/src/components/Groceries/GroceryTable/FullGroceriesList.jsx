@@ -43,6 +43,7 @@ import { addEvent } from "../../../redux/slices/calendarSlice";
 
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
+import SelectMealButton from "./MealButton";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
@@ -110,14 +111,13 @@ export default function GroceriesTable() {
   return (
     <Box
       p={5}
-      flex="1"
       boxShadow="base"
       bg="white"
       className="groceries-container"
       height="100vh"
     >
       <VStack spacing={4} height="100%">
-        <Box flex="1" overflow="auto" width="100%">
+        <Box overflow="auto" width="100%">
           <TableContainer>
             <Table variant="striped" colorScheme="cyan" size="sm">
               <Thead>
@@ -239,6 +239,7 @@ export default function GroceriesTable() {
                       <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
                       <FavoriteButton groceryItem={row.original} />
+                      <SelectMealButton groceryItem={row.original} />
                     </Td>
                   </Tr>
                 ))}
