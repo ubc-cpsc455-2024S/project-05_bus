@@ -1,4 +1,6 @@
-import HomeGroup from '../components/Home/HomeGroup'
+import './HomePage.css';
+import HomeGroup from '../components/Home/HomeGroup';
+import HomeNotifications from '../components/Home/HomeNotifications';
 import { useSelector } from 'react-redux';
 
 export default function HomePage() {
@@ -7,8 +9,9 @@ export default function HomePage() {
   const group = useSelector(state => state.groups.groups.find(group => group.id == currentUser.groupID));
 
   return (
-    <div>
+    <div className="home-container">
       {group && <HomeGroup group={group}/>}
+      <HomeNotifications />
     </div>
   )
 }

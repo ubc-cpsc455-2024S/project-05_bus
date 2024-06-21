@@ -1,0 +1,62 @@
+.home-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  box-sizing: border-box;
+}
+
+.home-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.home-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-heading {
+  font-weight: bold;
+  font-size: 25px;
+  color: teal;
+  margin-bottom: 5px;
+}
+
+.icon {
+  color: teal;
+  font-size: 35px;
+}
+
+.home-card-body {
+  font-size: 18px;
+}
+
+.group-member-container {
+  display: flex;
+  align-items: center;
+}
+
+.group-member-avatar {
+  margin: 15px 15px 15px 5px;
+}
+
+.notifications-placeholder {
+  margin-left: 5px;
+}
+
+.home-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.settings-button {
+  background: none !important;
+}
+
+.settings-icon {
+  color: rgba(0, 128, 128, 0.631);
+  font-size: 25px;
+}
