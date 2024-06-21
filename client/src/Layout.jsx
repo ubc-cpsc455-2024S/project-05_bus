@@ -13,7 +13,7 @@ import GroupsPage from './pages/GroupsPage'
 
 export default function Layout() {
   const location = useLocation();
-  const noNavbarPaths = ['/login', '/signup', '/groups'];
+  const noNavbarPaths = ['/', '/login', '/signup', '/groups'];
 
   return (
     <>
