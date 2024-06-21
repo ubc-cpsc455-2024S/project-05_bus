@@ -109,7 +109,7 @@ export default function CreateGroupForm() {
         ))}
       </VStack>
       <Button mt="20px" isDisabled={!groupName} onClick={handleCreateGroup}>
-        Create Group
+        Create
       </Button>
     </Box>
   );
