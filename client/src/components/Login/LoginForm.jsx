@@ -1,10 +1,27 @@
 import { Input, InputGroup, InputRightElement, InputLeftElement, Button } from '@chakra-ui/react';
 import './LoginForm.css';
 import { useState } from 'react';
-import { Link as ReactRouterLink } from 'react-router-dom';
+import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 export default function LoginForm() {
+    const users = useSelector((state) => state.members.members);
+    const navigate = useNavigate();
+
+    const validateUser = (email) => {
+        return users.filter((user) => user.email === email).length > 0
+    }
+
+    // unused until we have db/persistent storage of users
+    const handleLogin = (e) => {
+        e.preventDefault()
+        const loginData = new FormData(e.currentTarget)
+
+        if (validateUser(loginData.get('email'))) {
+            navigate ('');
+        }
+    }
 
     function UsernameInput() {
         return (
@@ -13,7 +30,7 @@ export default function LoginForm() {
                     <InputLeftElement pointerEvents='none'>
                         <span className='login-icon material-symbols-outlined'>person</span>
                     </InputLeftElement>
-                    <Input type='text' placeholder='Enter email' />
+                    <Input type='text' placeholder='Enter email' name="email"/>
                 </InputGroup>
             </div>
         );
@@ -33,6 +50,7 @@ export default function LoginForm() {
                         pr='4.5rem'
                         type={show ? 'text' : 'password'}
                         placeholder='Enter password'
+                        name="password"
                     />
                     <InputRightElement width='6rem'>
                         <Button h='1.75rem' w='5rem' size='sm' onClick={handleClick}>
@@ -45,7 +63,7 @@ export default function LoginForm() {
     }
 
     return (
-        <div className='form-container'>
+        <form className='form-container'>
             <div className='input-container'>
                 <div className='input-div'>
                     <p className='input-title'><b>Email</b></p>
@@ -63,6 +81,6 @@ export default function LoginForm() {
                     {"Don't have an account?"}&nbsp;<b>Register</b>
                 </ChakraLink>
             </Button>
-        </div>
+        </form>
     );
 }
