@@ -27,7 +27,6 @@ export default function CalendarChores() {
 
   useEffect(() => {
     if (selectedMemberID) {
-      console.log("HERE")
       const containerEl = eventsRef.current;
       const draggable = new Draggable(containerEl, {
         itemSelector: ".event",
