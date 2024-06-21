@@ -5,43 +5,43 @@ const initialState = {
   users: [
       {
         id: "1",
-        username: "panda123",
-        name: "James Smith",
+        firstName: "James",
+        lastName: "Smith",
         email: "panda123@gmail.com",
         groupID: 1
       },
       {
         id: "2",
-        username: "maggiebk",
-        name: "Maggie Baker",
+        firstName: "Maggie",
+        lastName: "Baker",
         email: "maggiebaker@yahoo.com",
         groupID: 1
       },
       {
         id: "3",
-        username: "mary02",
-        name: "Mary Brown",
+        firstName: "Mary",
+        lastName: "Brown",
         email: "mhbrown@yahoo.com",
         groupID: 1
       },
       {
         id: "4",
-        username: "johnny",
-        name: "John Parker",
+        firstName: "John",
+        lastName: "Parker",
         email: "jparker@gmail.com",
         groupID: null
       },
       {
         id: "5",
-        username: "karenn",
-        name: "Karen Nelson",
+        firstName: "Karen",
+        lastName: "Nelson",
         email: "karennelson@gmail.com",
         groupID: null
       },
       {
         id: "6",
-        username: "sam456",
-        name: "Sam Cyrus",
+        firstName: "Sam",
+        lastName: "Cyrus",
         email: "scy456@gmail.com",
         groupID: null
       }
