@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
 import useCurrentGroup from './useCurrentGroup';
+import { selectGroupMembers } from '../selectors/groupsSelectors';
 
 export default function useCurrentGroupMembers() {
   const currentGroup = useCurrentGroup();
-  const memberIDs = new Set(currentGroup.memberIDs);
-  const members = useSelector((state) => state.users.users.filter(user => memberIDs.has(user.id)));
+  const members = useSelector((state) => selectGroupMembers(state, currentGroup));
 
   return members;
 }

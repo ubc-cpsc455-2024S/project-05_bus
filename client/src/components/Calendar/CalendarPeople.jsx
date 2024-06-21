@@ -13,9 +13,11 @@ import {
 import { setSelectedMember } from "../../redux/slices/membersSlice";
 import { toggleFilter } from "../../redux/slices/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+import useCurrentGroup from "../../hooks/useCurrentGroup";
 
 export default function CalendarPeople() {
   const dispatch = useDispatch();
+  const currentGroup = useCurrentGroup();
   const members = useCurrentGroupMembers();
   const selectedMember = useSelector((state) => state.members.selectedMember);
   const isFiltered = useSelector((state) => state.events.filter);
@@ -32,7 +34,7 @@ export default function CalendarPeople() {
   return (
     <Box p={0}>
       <Heading mb={4} size="lg" color="black">
-        Roommates
+        {currentGroup.name}
       </Heading>
       <RadioGroup
         onChange={handleRadioChange}
