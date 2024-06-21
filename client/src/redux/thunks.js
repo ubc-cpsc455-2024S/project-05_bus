@@ -6,7 +6,7 @@ import {
 } from "./slices/groceriesSlice";
 import { removeEvent } from "./slices/calendarSlice";
 import { removeMember, deleteGroup, addMember, addGroup } from "./slices/groupsSlice";
-import { updateUser, updateGroupIDs } from "./slices/usersSlice";
+import { updateUser, updateGroupIDs, createUser, setCurrentUserID } from "./slices/usersSlice";
 import { nanoid } from 'nanoid';
 
 export const removeCategoryAndRelatedGroceries = createAsyncThunk(
@@ -55,6 +55,27 @@ export const removeGroceryAndRelatedEvents = createAsyncThunk(
     dispatch(removeGrocery(groceryId));
   }
 );
+
+export const createUserAndSetCurrent = createAsyncThunk(
+  'users/createUserAndSetCurrent',
+  async (user, { dispatch }) => {
+    const userID = nanoid();
+    try {
+      dispatch(createUser({ id: userID, groupID: null, ...user }));
+    } catch (error) {
+      console.log("Could not create user, got error: ", error.message);
+      throw new Error({message: error.message});
+    }
+
+    try {
+      dispatch(setCurrentUserID(userID));
+      return userID;
+    } catch (error) {
+      console.log(`Could not set current user to ${userID}, got error: ${error.message}`);
+      throw new Error({message: error.message});
+    }
+  }
+)
 
 export const createGroupAndAssignMembers = createAsyncThunk(
   'groups/createGroupAndAssignMembers',

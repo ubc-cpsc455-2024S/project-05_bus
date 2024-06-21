@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { addMember } from '../redux/slices/membersSlice';
+import { createUserAndSetCurrent } from '../redux/thunks';
 
 export default function SignupPage() {
   const dispatch = useDispatch();
@@ -26,8 +26,8 @@ export default function SignupPage() {
       email: signupData.get('email'),
       password: signupData.get('password')
     }
-    dispatch(addMember(newUser));
-    navigate('/');
+    dispatch(createUserAndSetCurrent(newUser));
+    navigate('/groups');
     } else {
       // temporary alert
       alert('Passwords do not match')

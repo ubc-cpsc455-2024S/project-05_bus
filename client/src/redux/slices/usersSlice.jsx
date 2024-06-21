@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 
 const initialState = {
   users: [
@@ -60,11 +59,11 @@ const users = createSlice({
   initialState,
   reducers: {
       createUser: (state, action) => {
-        const user = {
-            id: nanoid(),
-            ...action.payload,
+        if (!state.users.find(user => user.email === action.payload.email)) {
+          state.users.push(action.payload);
+        } else {
+          console.log(`A user with email ${action.payload.email} already exists`);
         }
-        state.users.push(user);
       },
       deleteUser: (state, action) => {
         state.users = state.users.filter(user => user.id !== action.payload);
