@@ -11,11 +11,11 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
-import { useSelector } from "react-redux"
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function Navbar() {
-  const currentUserID = useSelector(state => state.users.currentUserID);
-  const currentUser = useSelector(state => state.users.users.find(user => user.id == currentUserID));
+  const currentUser = useCurrentUser();
+
   const location = useLocation();
 
   const getPageName = (pathname) => {

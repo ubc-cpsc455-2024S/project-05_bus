@@ -12,10 +12,11 @@ import {
 } from "@chakra-ui/react";
 import { setSelectedMember } from "../../redux/slices/membersSlice";
 import { toggleFilter } from "../../redux/slices/calendarSlice";
+import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
 export default function CalendarPeople() {
   const dispatch = useDispatch();
-  const members = useSelector((state) => state.members.members);
+  const members = useCurrentGroupMembers();
   const selectedMember = useSelector((state) => state.members.selectedMember);
   const isFiltered = useSelector((state) => state.events.filter);
 

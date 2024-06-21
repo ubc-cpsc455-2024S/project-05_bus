@@ -18,6 +18,7 @@ import {
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
@@ -28,7 +29,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
     done: event.extendedProps.done,
   });
   const chores = useSelector((state) => state.chores.chores);
-  const members = useSelector((state) => state.members.members);
+  const members = useCurrentGroupMembers();
   const popoverRef = useRef();
 
   useEffect(() => {

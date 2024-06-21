@@ -2,13 +2,13 @@ import './CreateGroupForm.css';
 import { Button, Box, Input, Tag, TagLabel, TagCloseButton, VStack, Text, HStack, FormControl, FormLabel } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import useCurrentUser from '../../hooks/useCurrentUser';
 import { createGroupAndAssignMembers } from '../../redux/thunks';
 
 export default function CreateGroupForm() {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
-  const currentUserID = useSelector(state => state.users.currentUserID);
-  const currentUser = useSelector(state => state.users.users.find(user => user.id == currentUserID));
+  const currentUser = useCurrentUser();
   const [groupName, setGroupName] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);

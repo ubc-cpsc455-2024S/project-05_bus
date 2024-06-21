@@ -1,14 +1,13 @@
 import './LoginPage.css';
-import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoginSidebar from '../components/Login/LoginSidebar'
 import CreateGroupForm from '../components/Groups/CreateGroupForm'
 import JoinGroupForm from '../components/Groups/JoinGroupForm'
+import useCurrentUser from '../hooks/useCurrentUser';
 
 export default function GroupPage() {
-  const currentUserID = useSelector(state => state.users.currentUserID);
-  const currentUser = useSelector(state => state.users.users.find(user => user.id === currentUserID));
+  const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
   useEffect(() => {

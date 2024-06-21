@@ -16,10 +16,11 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import { editEvent } from "../../redux/slices/calendarSlice";
+import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
 export default function ChoresList() {
   const events = useSelector((state) => state.events.events);
-  const members = useSelector((state) => state.members.members);
+  const members = useCurrentGroupMembers();
   const dispatch = useDispatch();
 
   const groupedChores = events.reduce((acc, event) => {

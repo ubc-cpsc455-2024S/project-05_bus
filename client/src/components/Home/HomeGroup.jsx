@@ -1,10 +1,9 @@
 import './Home.css';
 import { Box, Card, CardHeader, CardBody, CardFooter, Avatar, Button } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
 
 export default function HomeGroup({ group }) {
-  const memberIDs = group ? new Set(group.memberIDs) : null;
-  const members = useSelector(state => state.users.users.filter(user => memberIDs.has(user.id)));
+  const members = useCurrentGroupMembers();
 
   return (
     <Box className="home-card-container">

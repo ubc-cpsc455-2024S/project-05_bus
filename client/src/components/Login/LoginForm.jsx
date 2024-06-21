@@ -6,7 +6,7 @@ import { Link as ChakraLink } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 export default function LoginForm() {
-    const users = useSelector((state) => state.members.members);
+    const users = useSelector((state) => state.users.users);
     const navigate = useNavigate();
 
     const validateUser = (email) => {

@@ -29,6 +29,7 @@ import { addEvent } from "../../../redux/slices/calendarSlice";
 import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import { removeEvent } from "../../../redux/slices/calendarSlice";
 import moment from "moment";
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
 
 export default function NotificationPopover({ groceryItem }) {
   const [selectedNotifications, setSelectedNotifications] = useState([]);
@@ -37,7 +38,7 @@ export default function NotificationPopover({ groceryItem }) {
     groceryItem.restockThreshold
   );
   const [assignedUser, setAssignedUser] = useState(groceryItem.restockerId);
-  const members = useSelector((state) => state.members.members);
+  const members = useCurrentGroupMembers();
   const events = useSelector((state) => state.events.events);
   const relatedEvents = events.filter(
     (event) => event.extendedProps.groceryId === groceryItem.id

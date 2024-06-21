@@ -8,7 +8,7 @@ const initialState = {
         lastName: "Smith",
         email: "panda123@gmail.com",
         password: "password123",
-        groupID: 1
+        groupID: "1"
       },
       {
         id: "2",
@@ -16,7 +16,7 @@ const initialState = {
         lastName: "Baker",
         email: "maggiebaker@yahoo.com",
         password: "password123",
-        groupID: 1
+        groupID: "1"
       },
       {
         id: "3",
@@ -24,7 +24,7 @@ const initialState = {
         lastName: "Brown",
         email: "mhbrown@yahoo.com",
         password: "password123",
-        groupID: 1
+        groupID: "1"
       },
       {
         id: "4",
