@@ -263,7 +263,9 @@ export default function GroceriesTable() {
             {table.getPageCount()}
           </Text>
           <IconButton
-            onClick={() => table.nextPage()}
+            onClick={() => {
+              if (table.getCanNextPage()) table.nextPage();
+            }}
             disabled={!table.getCanNextPage()}
             icon={<ArrowRightIcon />}
             aria-label="Next Page"

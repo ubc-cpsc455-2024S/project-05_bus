@@ -1,13 +1,13 @@
 import { useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Heading, VStack, Text, HStack, Tooltip } from "@chakra-ui/react";
+import { Box, Heading, VStack } from "@chakra-ui/react";
 import { Draggable } from "@fullcalendar/interaction";
 import CreateChore from "./CreateChore";
 import CalendarPeople from "./CalendarPeople";
 import EventList from "./EventList";
-import DeleteAlert from "../DeleteAlert";
 import { removeChore } from "../../redux/slices/choresSlice";
 import { removeEvent } from "../../redux/slices/calendarSlice";
+import Chore from "./Chore";
 
 export default function CalendarChores() {
   const eventsRef = useRef(null);
@@ -24,7 +24,7 @@ export default function CalendarChores() {
       });
     dispatch(removeChore(id));
   };
-
+  
   useEffect(() => {
     if (selectedMemberID) {
       const containerEl = eventsRef.current;
@@ -74,40 +74,7 @@ export default function CalendarChores() {
         </Heading>
         <VStack id="events" ref={eventsRef} spacing={4}>
           {chores.map((chore, index) => (
-            <HStack
-              key={index}
-              className="event"
-              data-chore-id={chore.id}
-              style={{
-                backgroundColor: chore.color,
-                padding: "8px",
-                borderRadius: "4px",
-                width: "100%",
-                justifyContent: "space-between",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              <Tooltip label={chore.title}>
-                <Text
-                  fontSize="md"
-                  className="event-title"
-                  style={{
-                    color: "white",
-                    mixBlendMode: "difference",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {chore.title}
-                </Text>
-              </Tooltip>
-              <DeleteAlert
-                handleDelete={() => handleDelete(chore.id)}
-                type={"chore"}
-                style={{ backgroundColor: "whiteAlpha.500"}}
-              />
-            </HStack>
+            <Chore chore={chore} key={index} handleDelete={handleDelete} />
           ))}
           <CreateChore />
         </VStack>
