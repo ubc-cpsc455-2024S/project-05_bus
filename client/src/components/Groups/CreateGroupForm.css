@@ -1,0 +1,21 @@
+.create-group-container {
+  margin: auto;
+  margin-bottom: 40px;
+}
+
+.create-group-heading-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-group-heading {
+  font-weight: bold;
+  font-size: 25px;
+  color: teal;
+  margin-bottom: 5px;
+}
+
+.icon {
+  color: teal;
+  font-size: 35px;
+}

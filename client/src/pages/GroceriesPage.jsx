@@ -12,8 +12,7 @@ export default function GroceriesPage() {
       className="calendar-page"
     >
       <Box
-        flex="2"
-        maxWidth="1300px"
+        flex="3"
         minWidth="300px"
         overflow="auto"
       >
@@ -22,7 +21,6 @@ export default function GroceriesPage() {
       <Box
         flex="1"
         borderRadius="md"
-        maxWidth="300px"
         minWidth="300px"
         boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
         overflow="auto"

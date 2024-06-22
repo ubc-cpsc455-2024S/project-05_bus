@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import calendarReducer from "./slices/calendarSlice";
 import choresReducer from "./slices/choresSlice";
-import membersReducer from "./slices/membersSlice";
 import groceriesReducer from "./slices/groceriesSlice";
+import usersReducer from "./slices/usersSlice";
+import groupsReducer from "./slices/groupsSlice";
 import {
   deleteExpiryNotifications,
   deleteLocationRelatedGroceries,
@@ -14,8 +15,9 @@ const store = configureStore({
   reducer: {
     events: calendarReducer,
     chores: choresReducer,
-    members: membersReducer,
     groceries: groceriesReducer,
+    users: usersReducer,
+    groups: groupsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

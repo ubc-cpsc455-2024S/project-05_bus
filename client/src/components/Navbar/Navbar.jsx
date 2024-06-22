@@ -11,16 +11,20 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 export default function Navbar() {
+  const currentUser = useCurrentUser();
+
   const location = useLocation();
 
   const getPageName = (pathname) => {
-    const pageName = pathname.split('/').filter(Boolean)[0] || 'Home';
+    const pageName = pathname.split('/').filter(Boolean)[0];
     return pageName.charAt(0).toUpperCase() + pageName.slice(1);
   }
 
   const pageName = getPageName(location.pathname);
+
 
   return (
     <div className="container">
@@ -60,7 +64,7 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">John Doe</h2>
+            <h2 className="profile-popover-name">{`${currentUser.firstName} ${currentUser.lastName}`}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">

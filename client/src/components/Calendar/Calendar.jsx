@@ -7,12 +7,13 @@ import { addEvent, removeEvent } from "../../redux/slices/calendarSlice";
 import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
 import { editEvent } from "../../redux/slices/calendarSlice";
+import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
-  const members = useSelector((state) => state.members.members);
-  const selectedMember = useSelector((state) => state.members.selectedMember)
+  const members = useCurrentGroupMembers();
+  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
   const isFiltered = useSelector((state) => state.events.filter)
 
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ export default function Calendar() {
         eventStartEditable={true}
         eventDurationEditable={false}
         droppable
-        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMember.id) : events}
+        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMemberID) : events}
         eventReceive={(info) => {
           dispatch(
             addEvent({

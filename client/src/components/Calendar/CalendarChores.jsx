@@ -12,7 +12,7 @@ import { removeEvent } from "../../redux/slices/calendarSlice";
 export default function CalendarChores() {
   const eventsRef = useRef(null);
   const chores = useSelector((state) => state.chores.chores);
-  const selectedMember = useSelector((state) => state.members.selectedMember);
+  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events.events);
 
@@ -26,7 +26,7 @@ export default function CalendarChores() {
   };
 
   useEffect(() => {
-    if (selectedMember) {
+    if (selectedMemberID) {
       const containerEl = eventsRef.current;
       const draggable = new Draggable(containerEl, {
         itemSelector: ".event",
@@ -38,7 +38,7 @@ export default function CalendarChores() {
             backgroundColor: eventEl.style.backgroundColor,
             extendedProps: {
               choreId: choreId,
-              memberId: selectedMember.id,
+              memberId: selectedMemberID,
               done: false,
             },
           };
@@ -49,7 +49,7 @@ export default function CalendarChores() {
         draggable.destroy();
       };
     }
-  }, [chores, selectedMember]);
+  }, [chores, selectedMemberID]);
 
   return (
     <Box bg="white" flex="3" p="4" overflowY="auto" height="100vh">
