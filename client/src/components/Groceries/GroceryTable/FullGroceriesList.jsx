@@ -117,7 +117,7 @@ export default function GroceriesTable() {
       height="100vh"
     >
       <VStack spacing={4} height="100%">
-        <Box overflow="auto" width="100%">
+        <Box overflow="auto" width="100%" height="100%">
           <TableContainer>
             <Table variant="striped" colorScheme="cyan" size="sm">
               <Thead>
