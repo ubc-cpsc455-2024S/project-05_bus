@@ -9,7 +9,6 @@ const mongoose = require('mongoose');
 const db_uri = process.env.DB_URI;
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
-var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -22,7 +21,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect Routes
-app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // Connect Database
