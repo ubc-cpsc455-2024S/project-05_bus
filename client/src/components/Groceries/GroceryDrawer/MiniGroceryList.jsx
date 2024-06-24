@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { SimpleGrid } from '@chakra-ui/react';
-import MiniGroceryCard from './MiniGroceryCard';
+import { useState } from "react";
+import { SimpleGrid } from "@chakra-ui/react";
+import MiniGroceryCard from "./MiniGroceryCard";
 
 const getRandomMutedColour = () => {
   const mutedColours = [
@@ -27,26 +27,29 @@ export default function MiniGroceryList({ data, type, groceries }) {
 
   return (
     <SimpleGrid columns={2} spacing={10}>
-      {data.map((item) => {
-        const matchingGroceries = groceries.filter((grocery) => {
-          if (type === "category") {
-            return grocery.categoryId === item.id;
-          } else if (type === "location") {
-            return grocery.locationId === item.id;
-          }
-          return false;
-        });
-        return (
+      {data
+        .map((item) => {
+          const matchingGroceries = groceries.filter((grocery) => {
+            if (type === "category") {
+              return grocery.categoryId === item.id;
+            } else if (type === "location") {
+              return grocery.locationId === item.id;
+            }
+            return false;
+          });
+          return { ...item, matchingGroceries };
+        })
+        .sort((a, b) => b.matchingGroceries.length - a.matchingGroceries.length)
+        .map((item) => (
           <MiniGroceryCard
             key={item.id}
             item={item}
             type={type}
             groceries={groceries}
-            matchingGroceries={matchingGroceries}
+            matchingGroceries={item.matchingGroceries}
             bgColor={colours[item.id]}
           />
-        );
-      })}
+        ))}
     </SimpleGrid>
   );
 }

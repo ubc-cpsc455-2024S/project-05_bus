@@ -5,6 +5,8 @@ import { nanoid } from "nanoid";
 const initialState = {
   events: [],
   filter: false,
+  currentStart: "",
+  currentEnd: "",
 };
 
 const calendarSlice = createSlice({
@@ -64,9 +66,13 @@ const calendarSlice = createSlice({
     },
     toggleFilter: (state) => {
       state.filter = !state.filter;
+    },
+    updateMonthView(state, action) {
+      state.currentStart = action.payload.currentStart;
+      state.currentEnd = action.payload.currentEnd;
     }
   },
 });
 
-export const { addEvent, removeEvent, editEvent, toggleFilter } = calendarSlice.actions;
+export const { addEvent, removeEvent, editEvent, toggleFilter, updateMonthView } = calendarSlice.actions;
 export default calendarSlice.reducer;
