@@ -14,7 +14,7 @@ router.get('/', async function(req, res, next) {
 });
 
 /* GET user listing. */
-router.get('/:id', async function(req, res, next) {
+router.get('/:userID', async function(req, res, next) {
   try {
       const result = await userQueries.getOneUser(req.params.id);
       if (!result) {
@@ -39,7 +39,7 @@ router.post('/', async function(req, res, next) {
 });
 
 /* DELETE user listing. */
-router.delete('/:id', async function(req, res, next) {
+router.delete('/:userID', async function(req, res, next) {
   try {
       const result = await userQueries.deleteUser(req.params.id);
       if (!result) {
