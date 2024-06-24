@@ -8,13 +8,17 @@ import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
 import { editEvent } from "../../redux/slices/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+import { updateMonthView } from "../../redux/slices/calendarSlice";
+import moment from "moment";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
   const members = useCurrentGroupMembers();
-  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
-  const isFiltered = useSelector((state) => state.events.filter)
+  const selectedMemberID = useSelector(
+    (state) => state.groups.selectedMemberID
+  );
+  const isFiltered = useSelector((state) => state.events.filter);
 
   const dispatch = useDispatch();
 
@@ -89,7 +93,7 @@ export default function Calendar() {
 
   const renderEventContent = (eventInfo) => {
     const member = members.find(
-      (member) => member.id === String(eventInfo.event.extendedProps.memberId)
+      (member) => member.id === eventInfo.event.extendedProps.memberId
     );
     const isDone = eventInfo.event.extendedProps.done;
 
@@ -137,10 +141,24 @@ export default function Calendar() {
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
+        datesSet={(dateInfo) => {
+          dispatch(
+            updateMonthView({
+              currentStart: moment(dateInfo.start).format(),
+              currentEnd: moment(dateInfo.end).format(),
+            })
+          );
+        }}
         eventStartEditable={true}
         eventDurationEditable={false}
         droppable
-        events={isFiltered ? events.filter(event => event.extendedProps.memberId === selectedMemberID) : events}
+        events={
+          isFiltered
+            ? events.filter(
+                (event) => event.extendedProps.memberId === selectedMemberID
+              )
+            : events
+        }
         eventReceive={(info) => {
           dispatch(
             addEvent({
