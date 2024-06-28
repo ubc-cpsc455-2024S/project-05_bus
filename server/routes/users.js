@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const userQueries = require('../queries/userQuery');
+import { Router } from 'express';
+import userQueries from '../queries/userQuery';
+
+const router = Router();
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
@@ -52,4 +53,4 @@ router.delete('/:userID', async function(req, res, next) {
   }
 });
 
-module.exports = router;
+export default router;

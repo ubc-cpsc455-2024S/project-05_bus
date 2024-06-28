@@ -1,13 +1,14 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 // create schema
-const recipeSchema = new mongoose.Schema({
+const recipeSchema = new Schema({
     id: { type: String, required: true, unique: true },
     groceryItems: { type: [String], required: true },
     recipe: { type: String, required: true },
+    groupID: { type: String, required: true, ref: 'Group' },
 });
 
 // create model
-const Recipes = mongoose.model('Recipes', recipeSchema);
+const Recipes = model('Recipes', recipeSchema);
 
-module.exports = Recipes;
+export default Recipes;
