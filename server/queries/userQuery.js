@@ -1,4 +1,4 @@
-import Users from '../models/userSchema';
+import Users from '../models/userSchema.js';
 
 const userQueries = {
     getAllUsers: async function (groupID) {

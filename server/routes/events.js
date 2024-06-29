@@ -1,5 +1,5 @@
 import express from "express";
-import eventQueries from "../queries/eventQuery";
+import eventQueries from "../queries/eventQuery.js";
 
 const router = express.Router();
 
@@ -40,3 +40,5 @@ router.delete("/events/:id", async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+export default router;

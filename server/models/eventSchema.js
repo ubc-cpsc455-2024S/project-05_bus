@@ -17,4 +17,5 @@ const eventSchema = new Schema({
 });
 
 const Events = model('Events', eventSchema);
+
 export default Events;

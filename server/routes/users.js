@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import userQueries from '../queries/userQuery';
+import userQueries from '../queries/userQuery.js';
 
 const router = Router();
 

@@ -1,4 +1,4 @@
-import Events from "../models/eventModel";
+import Events from "../models/eventSchema.js";
 
 const eventQueries = {
   getAllEvents: async function (groupID) {

@@ -1,7 +1,7 @@
 import express from 'express';
-import groceryQueries from '../queries/groceryQueries';
-import groceryLocationQueries from '../queries/groceryLocationQueries';
-import groceryCategoryQueries from '../queries/groceryCategoryQueries';
+import groceryQueries from '../queries/groceryQuery.js';
+import groceryLocationQueries from '../queries/groceryLocationQuery.js';
+import groceryCategoryQueries from '../queries/groceryCategoryQuery.js';
 
 const router = express.Router();
 
