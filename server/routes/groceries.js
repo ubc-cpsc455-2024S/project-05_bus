@@ -1,12 +1,12 @@
-import express from 'express';
-import groceryQueries from '../queries/groceryQuery.js';
-import groceryLocationQueries from '../queries/groceryLocationQuery.js';
-import groceryCategoryQueries from '../queries/groceryCategoryQuery.js';
+import express from "express";
+import groceryQueries from "../queries/groceryQuery.js";
+import groceryLocationQueries from "../queries/groceryLocationQuery.js";
+import groceryCategoryQueries from "../queries/groceryCategoryQuery.js";
 
 const router = express.Router();
 
 // Grocery routes
-router.get('/groceries', async (req, res) => {
+router.get("/group/:groupID", async (req, res) => {
   try {
     const groceries = await groceryQueries.getAllGroceries(req.params.groupID);
     return res.json(groceries);
@@ -15,7 +15,7 @@ router.get('/groceries', async (req, res) => {
   }
 });
 
-router.get('/groceries/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const grocery = await groceryQueries.getOneGrocery(req.params.id);
     return res.json(grocery);
@@ -24,7 +24,7 @@ router.get('/groceries/:id', async (req, res) => {
   }
 });
 
-router.post('/groceries', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newGrocery = await groceryQueries.postGrocery(req.body);
     return res.status(201).json(newGrocery);
@@ -33,7 +33,7 @@ router.post('/groceries', async (req, res) => {
   }
 });
 
-router.delete('/groceries/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const result = await groceryQueries.deleteGrocery(req.params.id);
     return res.json(result);
@@ -43,7 +43,7 @@ router.delete('/groceries/:id', async (req, res) => {
 });
 
 // Grocery Location Routes
-router.get('/locations', async (req, res) => {
+router.get("/locations/group/:groupID", async (req, res) => {
   try {
     const locations = await groceryLocationQueries.getAllLocations(req.params.groupID);
     return res.json(locations);
@@ -52,7 +52,7 @@ router.get('/locations', async (req, res) => {
   }
 });
 
-router.get('/locations/:id', async (req, res) => {
+router.get("/locations/:id", async (req, res) => {
   try {
     const location = await groceryLocationQueries.getOneLocation(req.params.id);
     return res.json(location);
@@ -61,7 +61,7 @@ router.get('/locations/:id', async (req, res) => {
   }
 });
 
-router.post('/locations', async (req, res) => {
+router.post("/locations", async (req, res) => {
   try {
     const newLocation = await groceryLocationQueries.postLocation(req.body);
     return res.status(201).json(newLocation);
@@ -70,20 +70,19 @@ router.post('/locations', async (req, res) => {
   }
 });
 
-router.delete('/locations/:id', async (req, res) => {
+router.delete("/locations/:id", async (req, res) => {
   const locationId = req.params.id;
-  const groupID = req.params.groupID;
   try {
     await groceryLocationQueries.deleteLocation(locationId);
     await groceryQueries.deleteManyGroceries({ locationId });
-    return res.status(200).send({ message: 'Location and related groceries deleted successfully' });
+    return res.status(200).send({ message: "Location and related groceries deleted successfully" });
   } catch (error) {
     return res.status(500).send(error.message);
   }
 });
 
 // Grocery Category Routes
-router.get('/categories', async (req, res) => {
+router.get("/categories/group/:groupID", async (req, res) => {
   try {
     const categories = await groceryCategoryQueries.getAllCategories(req.params.groupID);
     return res.json(categories);
@@ -92,7 +91,7 @@ router.get('/categories', async (req, res) => {
   }
 });
 
-router.get('/categories/:id', async (req, res) => {
+router.get("/categories/:id", async (req, res) => {
   try {
     const category = await groceryCategoryQueries.getOneCategory(req.params.id);
     return res.json(category);
@@ -101,7 +100,7 @@ router.get('/categories/:id', async (req, res) => {
   }
 });
 
-router.post('/categories', async (req, res) => {
+router.post("/categories", async (req, res) => {
   try {
     const newCategory = await groceryCategoryQueries.postCategory(req.body);
     return res.status(201).json(newCategory);
@@ -110,13 +109,13 @@ router.post('/categories', async (req, res) => {
   }
 });
 
-router.delete('/categories/:id', async (req, res) => {
+router.delete("/categories/:id", async (req, res) => {
   const categoryId = req.params.id;
   const groupID = req.params.groupID;
   try {
     await groceryCategoryQueries.deleteCategory(categoryId);
     await groceryQueries.deleteMany({ categoryId });
-    return res.status(200).send({ message: 'Category and related groceries deleted successfully' });
+    return res.status(200).send({ message: "Category and related groceries deleted successfully" });
   } catch (error) {
     return res.status(500).send(error.message);
   }

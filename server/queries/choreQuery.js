@@ -1,4 +1,4 @@
-import Chores from '../models/choreSchema.js';
+import Chores from "../models/choreSchema.js";
 
 const choreQueries = {
     getAllChores: async function (groupID) {

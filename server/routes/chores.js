@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Chore routes
 
-router.get("/chores", async (req, res) => {
+router.get("/group/:groupID", async (req, res) => {
   try {
     const chores = await choreQueries.getAllChores(req.params.groupID);
     return res.json(chores);
@@ -15,7 +15,7 @@ router.get("/chores", async (req, res) => {
   }
 });
 
-router.get("/chores/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const chore = await choreQueries.getOneChore(req.params.id);
     return res.json(chore);
@@ -24,7 +24,7 @@ router.get("/chores/:id", async (req, res) => {
   }
 });
 
-router.post("/chores", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newChore = await choreQueries.postChore(req.body);
     return res.status(201).json(newChore);
@@ -33,7 +33,7 @@ router.post("/chores", async (req, res) => {
   }
 });
 
-router.delete("/chores/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await choreQueries.deleteChore(req.params.id);
     await eventQueries.deleteManyEvents(req.params.id);
