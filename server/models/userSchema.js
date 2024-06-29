@@ -2,12 +2,11 @@ import { Schema, model } from 'mongoose';
 
 // create schema
 const userSchema = new Schema({
-    id: { type: String, required: true, unique: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    groupID: { type: String, required: true, ref: 'Group' },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: 'Group' },
     // a security measure we may want to look into is hashing the password when we store it
 });
 

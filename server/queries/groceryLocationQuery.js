@@ -1,4 +1,4 @@
-import GroceryLocations from "../models/grocerySchema.js";
+import { GroceryLocations } from "../models/grocerySchema.js";
 
 const groceryLocationQueries = {
   getAllLocations: async function (groupID) {
@@ -12,7 +12,7 @@ const groceryLocationQueries = {
   },
   getOneLocation: async function (id) {
     try {
-      const location = await GroceryLocations.findOne({ id: id });
+      const location = await GroceryLocations.findOne({ _id: id });
       return location;
     } catch (error) {
       console.error(`Error fetching location with id ${id}:`, error);
@@ -32,13 +32,13 @@ const groceryLocationQueries = {
   updateLocation: async function (locationData) {
     try {
       const result = await GroceryLocations.updateOne(
-        { id: locationData.id },
+        { _id: locationData._id },
         locationData
       );
       return result;
     } catch (error) {
       console.error(
-        `Error updating location with id ${locationData.id}:`,
+        `Error updating location with id ${locationData._id}:`,
         error
       );
       throw error;
@@ -46,7 +46,7 @@ const groceryLocationQueries = {
   },
   deleteLocation: async function (id) {
     try {
-      const result = await GroceryLocations.deleteOne({ id: id });
+      const result = await GroceryLocations.deleteOne({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting location with id ${id}:`, error);

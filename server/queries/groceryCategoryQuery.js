@@ -1,4 +1,4 @@
-import GroceryCategories from "../models/grocerySchema.js";
+import { GroceryCategories } from "../models/grocerySchema.js";
 
 const groceryCategoryQueries = {
   getAllCategories: async function (groupID) {
@@ -12,7 +12,7 @@ const groceryCategoryQueries = {
   },
   getOneCategory: async function (id) {
     try {
-      const category = await GroceryCategories.findOne({ id: id });
+      const category = await GroceryCategories.findOne({ _id: id });
       return category;
     } catch (error) {
       console.error(`Error fetching category with id ${id}:`, error);
@@ -32,13 +32,13 @@ const groceryCategoryQueries = {
   updateCategory: async function (categoryData) {
     try {
       const result = await GroceryCategories.updateOne(
-        { id: categoryData.id },
+        { _id: categoryData._id },
         categoryData
       );
       return result;
     } catch (error) {
       console.error(
-        `Error updating category with id ${categoryData.id}:`,
+        `Error updating category with id ${categoryData._id}:`,
         error
       );
       throw error;
@@ -46,7 +46,7 @@ const groceryCategoryQueries = {
   },
   deleteCategory: async function (id) {
     try {
-      const result = await GroceryCategories.deleteOne({ id: id });
+      const result = await GroceryCategories.deleteOne({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting category with id ${id}:`, error);

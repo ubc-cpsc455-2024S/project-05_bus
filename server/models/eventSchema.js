@@ -7,13 +7,13 @@ const eventSchema = new Schema({
     backgroundColor: { type: String, required: true },
     borderColor: { type: String, required: true },
     extendedProps: {
-        groceryId: { type: String, required: false, ref: 'Grocery' },
-        choreId: { type: String, required: true, ref: 'Chore' },
+        groceryId: { type: Schema.Types.ObjectId, required: false, ref: 'Grocery' },
+        choreId: { type: Schema.Types.ObjectId, required: true, ref: 'Chore' },
         type: { type: String, required: true },
-        memberId: { type: String, required: true, ref: 'User' },
-        done: { type: Boolean, required: true },
+        memberId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+        done: { type: Boolean, default: false,  required: true },
     },
-    groupID: { type: String, required: true, ref: 'Group' },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: 'Group' },
 });
 
 const Events = model('Events', eventSchema);

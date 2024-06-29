@@ -6,7 +6,7 @@ const userQueries = {
         return users;
     },
     getOneUser: async function (id) {
-        const user = await Users.findOne({ id: id });
+        const user = await Users.findOne({ _id: id });
         return user;
     },
     postUser: async function (userData) {
@@ -15,7 +15,7 @@ const userQueries = {
         return savedUser;
     },
     deleteUser: async function (id) {
-        const result = await Users.deleteOne({ id: id });
+        const result = await Users.deleteOne({ _id: id });
         return result;
     }
 }
