@@ -12,7 +12,7 @@ const eventQueries = {
   },
   getOneEvent: async function (id) {
     try {
-      const event = await Events.findOne({ _id: id });
+      const event = await Events.findOne({ id: id });
       return event;
     } catch (error) {
       console.error(`Error fetching event with id ${id}:`, error);
@@ -40,7 +40,7 @@ const eventQueries = {
   },
   updateEvent: async function (eventData) {
     try {
-      const result = await Events.updateOne({ _id: eventData.id }, eventData);
+      const result = await Events.updateOne({ id: eventData.id }, eventData);
       return result;
     } catch (error) {
       console.error(`Error updating event with id ${eventData.id}:`, error);
@@ -49,7 +49,7 @@ const eventQueries = {
   },
   deleteEvent: async function (id) {
     try {
-      const result = await Events.deleteOne({ _id: id });
+      const result = await Events.deleteOne({ id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting event with id ${id}:`, error);

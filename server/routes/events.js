@@ -8,36 +8,36 @@ const router = express.Router();
 router.get("/events", async (req, res) => {
   try {
     const events = await eventQueries.getAllEvents(req.params.groupID);
-    res.json(events);
+    return res.json(events);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
 router.get("/events/:id", async (req, res) => {
   try {
     const event = await eventQueries.getOneEvent(req.params.id);
-    res.json(event);
+    return res.json(event);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
 router.post("/events", async (req, res) => {
   try {
     const newEvent = await eventQueries.postEvent(req.body);
-    res.status(201).json(newEvent);
+    return res.status(201).json(newEvent);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
 router.delete("/events/:id", async (req, res) => {
   try {
     const result = await eventQueries.deleteEvent(req.params.id);
-    res.json(result);
+    return res.json(result);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 

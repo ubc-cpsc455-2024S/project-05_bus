@@ -9,27 +9,27 @@ const router = express.Router();
 router.get("/chores", async (req, res) => {
   try {
     const chores = await choreQueries.getAllChores(req.params.groupID);
-    res.json(chores);
+    return res.json(chores);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
 router.get("/chores/:id", async (req, res) => {
   try {
     const chore = await choreQueries.getOneChore(req.params.id);
-    res.json(chore);
+    return res.json(chore);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
 router.post("/chores", async (req, res) => {
   try {
     const newChore = await choreQueries.postChore(req.body);
-    res.status(201).json(newChore);
+    return res.status(201).json(newChore);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
@@ -37,9 +37,9 @@ router.delete("/chores/:id", async (req, res) => {
   try {
     await choreQueries.deleteChore(req.params.id);
     await eventQueries.deleteManyEvents(req.params.id);
-    res.json(result);
+    return res.json(result);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 

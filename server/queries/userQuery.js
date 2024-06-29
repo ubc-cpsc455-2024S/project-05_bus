@@ -5,8 +5,8 @@ const userQueries = {
         const users = await Users.find({ groupID });
         return users;
     },
-    getOneUser: async function (id) {
-        const user = await Users.findOne({ _id: id });
+    getOneUser: async function (userID) {
+        const user = await Users.findOne({ id: userID });
         return user;
     },
     postUser: async function (userData) {
@@ -14,8 +14,8 @@ const userQueries = {
         const savedUser = await newUser.save();
         return savedUser;
     },
-    deleteUser: async function (id) {
-        const result = await Users.deleteOne({ _id: id });
+    deleteUser: async function (userID) {
+        const result = await Users.deleteOne({ id: userID });
         return result;
     }
 }

@@ -12,7 +12,7 @@ const groceryLocationQueries = {
   },
   getOneLocation: async function (id) {
     try {
-      const location = await GroceryLocations.findOne({ _id: id });
+      const location = await GroceryLocations.findOne({ id: id });
       return location;
     } catch (error) {
       console.error(`Error fetching location with id ${id}:`, error);
@@ -32,7 +32,7 @@ const groceryLocationQueries = {
   updateLocation: async function (locationData) {
     try {
       const result = await GroceryLocations.updateOne(
-        { _id: locationData.id },
+        { id: locationData.id },
         locationData
       );
       return result;
@@ -46,7 +46,7 @@ const groceryLocationQueries = {
   },
   deleteLocation: async function (id) {
     try {
-      const result = await GroceryLocations.deleteOne({ _id: id });
+      const result = await GroceryLocations.deleteOne({ id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting location with id ${id}:`, error);

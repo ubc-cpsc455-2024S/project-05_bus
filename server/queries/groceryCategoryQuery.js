@@ -12,7 +12,7 @@ const groceryCategoryQueries = {
   },
   getOneCategory: async function (id) {
     try {
-      const category = await GroceryCategories.findOne({ _id: id });
+      const category = await GroceryCategories.findOne({ id: id });
       return category;
     } catch (error) {
       console.error(`Error fetching category with id ${id}:`, error);
@@ -32,7 +32,7 @@ const groceryCategoryQueries = {
   updateCategory: async function (categoryData) {
     try {
       const result = await GroceryCategories.updateOne(
-        { _id: categoryData.id },
+        { id: categoryData.id },
         categoryData
       );
       return result;
@@ -46,7 +46,7 @@ const groceryCategoryQueries = {
   },
   deleteCategory: async function (id) {
     try {
-      const result = await GroceryCategories.deleteOne({ _id: id });
+      const result = await GroceryCategories.deleteOne({ id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting category with id ${id}:`, error);

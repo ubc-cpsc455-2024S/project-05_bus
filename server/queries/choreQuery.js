@@ -12,7 +12,7 @@ const choreQueries = {
     },
     getOneChore: async function (id) {
         try {
-            const chore = await Chores.findOne({ _id: id });
+            const chore = await Chores.findOne({ id: id });
             return chore;
         } catch (error) {
             console.error(`Error fetching chore with id ${id}:`, error);
@@ -31,7 +31,7 @@ const choreQueries = {
     },
     deleteChore: async function (id) {
         try {
-            const result = await Chores.deleteOne({ _id: id });
+            const result = await Chores.deleteOne({ id: id });
             return result;
         } catch (error) {
             console.error(`Error deleting chore with id ${id}:`, error);
