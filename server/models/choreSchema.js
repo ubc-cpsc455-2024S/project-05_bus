@@ -1,13 +1,11 @@
-const mongoose = require('mongoose');
+import { Schema, model } from "mongoose";
 
-// create schema
-const choreSchema = new mongoose.Schema({
-    id: { type: String, required: true, unique: true },
+const choreSchema = new Schema({
     title: { type: String, required: true },
     colour: { type: String, required: true },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });
 
-// create model
-const Chores = mongoose.model('Chores', choreSchema);
+const Chores = model("Chores", choreSchema);
 
-module.exports = Chores;
+export default Chores;

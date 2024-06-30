@@ -1,13 +1,10 @@
-const mongoose = require('mongoose');
+import { Schema, model } from "mongoose";
 
-// create schema
-const groupSchema = new mongoose.Schema({
-    id: { type: String, required: true, unique: true },
+const groupSchema = new Schema({
     name: { type: String, required: true },
-    memberIDs: { type: [String], required: true },
+    memberIDs: { type: [Schema.Types.ObjectId], required: true },
 });
 
-// create model
-const Groups = mongoose.model('Groups', groupSchema);
+const Groups = model("Groups", groupSchema);
 
-module.exports = Groups;
+export default Groups;

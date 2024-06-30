@@ -1,22 +1,32 @@
-const mongoose = require('mongoose');
+import { Schema, model } from "mongoose";
 
-// create schema
-const grocerySchema = new mongoose.Schema({
-    id: { type: String, required: true, unique: true },
+const grocerySchema = new Schema({
     name: { type: String, required: true },
-    locationId: { type: String, required: true },
-    categoryId: { type: String, required: true },
-    expiryDate: { type: String, required: true },
+    locationId: { type: Schema.Types.ObjectId, required: true, ref: "GroceryLocation" },
+    categoryId: { type: Schema.Types.ObjectId, required: true, ref: "GroceryCategory" },
+    expiryDate: { type: String, required: false },
     quantity: { type: Number, required: true },
-    expiryNotificationDate: { type: String, required: true },
-    restockNotificationDate: { type: String, required: true },
-    restockThreshold: { type: String, required: true },
-    restockerId: { type: String, required: true },
-    favourite: { type: Boolean, required: true },
-    selectMeal: { type: Boolean, required: true },
+    expiryNotificationDate: { type: String, required: false },
+    restockNotificationDate: { type: String, required: false },
+    restockThreshold: { type: String, required: false },
+    restockerId: { type: Schema.Types.ObjectId, required: false },
+    favourite: { type: Boolean, default: false, required: false },
+    selectMeal: { type: Boolean, default: false, required: false },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });
 
-// create model
-const Groceries = mongoose.model('Groceries', grocerySchema);
+const groceryLocationSchema = new Schema({
+    name: { type: String, required: true },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
+});
 
-module.exports = Groceries;
+const groceryCategorySchema = new Schema({
+    name: { type: String, required: true },
+    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
+});
+
+const Groceries = model("Groceries", grocerySchema);
+const GroceryLocations = model("GroceryLocation", groceryLocationSchema);
+const GroceryCategories = model("GroceryCategory", groceryCategorySchema);
+
+export { Groceries, GroceryLocations, GroceryCategories };
