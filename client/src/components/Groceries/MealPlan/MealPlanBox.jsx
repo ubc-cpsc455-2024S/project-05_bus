@@ -2,7 +2,6 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateGrocery } from '../../../redux/slices/groceriesSlice';
 import { useState } from 'react';
-import { color } from 'framer-motion';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
