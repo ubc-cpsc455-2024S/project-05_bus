@@ -2,6 +2,7 @@ import express from "express";
 import groceryQueries from "../queries/groceryQuery.js";
 import groceryLocationQueries from "../queries/groceryLocationQuery.js";
 import groceryCategoryQueries from "../queries/groceryCategoryQuery.js";
+import groceryMealQueries from "../queries/groceryMealQuery.js";
 
 const router = express.Router();
 
@@ -111,11 +112,47 @@ router.post("/categories", async (req, res) => {
 
 router.delete("/categories/:id", async (req, res) => {
   const categoryId = req.params.id;
-  const groupID = req.params.groupID;
   try {
     await groceryCategoryQueries.deleteCategory(categoryId);
     await groceryQueries.deleteMany({ categoryId });
     return res.status(200).send({ message: "Category and related groceries deleted successfully" });
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+// Grocery Meal Planning Routes
+router.get("/meals/group/:groupID", async (req, res) => {
+  try {
+    const meals = await groceryMealQueries.getAllMeals(req.params.groupID);
+    return res.json(meals);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.get("/meals/:id", async (req, res) => {
+  try {
+    const meals = await groceryMealQueries.getOneMeal(req.params.id);
+    return res.json(meals);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.post("/meals", async (req, res) => {
+  try {
+    const newMeal = await groceryMealQueries.postMeal(req.body);
+    return res.status(201).json(newMeal);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.delete("/meals/:id", async (req, res) => {
+  try {
+    await groceryMealQueries.deleteMeal(req.params.id);
+    return res.status(200).send({ message: "Meal deleted successfully" });
   } catch (error) {
     return res.status(500).send(error.message);
   }
