@@ -1,6 +1,7 @@
-import { Box, Button, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateGrocery } from '../../../redux/slices/groceriesSlice';
+import { useState } from 'react';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -8,15 +9,31 @@ export default function MealPlanBox() {
 
   const selectedMealItems = items.filter(item => item.selectMeal);
 
+  const [quantities, setQuantities] = useState(
+    selectedMealItems.reduce((acc, item) => {
+      acc[item.id] = item.quantity;
+      return acc;
+    }, {})
+  );
+
   const removeSelect = (item) => {
     dispatch(updateGrocery({ id: item.id, selectMeal: false }));
+  };
+  
+  const handleQuantityChange = (id, value) => {
+    setQuantities(prevQuantities => ({
+      ...prevQuantities,
+      [id]: value
+    }));
   };
 
   const generateMeal = () => {
     let selectedItems = [];
-    selectedItems.forEach(item => {
-        selectedItems.push(item.name);
+    selectedMealItems.forEach(item => {
+      const quantity = quantities[item.id] !== undefined ? quantities[item.id] : item.quantity;
+      selectedItems.push({ name: item.name, quantity });
     });
+    console.log(selectedItems);
   };
 
   return (
@@ -33,6 +50,7 @@ export default function MealPlanBox() {
             key={item.id}
             display="flex"
             alignItems="center"
+            justifyContent="space-between"
           >
             <IconButton
               icon={<span className="material-symbols-outlined">close_small</span>}
@@ -42,6 +60,18 @@ export default function MealPlanBox() {
               onClick={() => removeSelect(item)}
             />
             <Text color="black">{item.name}</Text>
+            <NumberInput defaultValue={item.quantity} max={item.quantity} min={1} 
+            size="sm"
+            width="62px"
+            border="transparent"
+            value={quantities[item.id]}
+            onChange={(valueString) => handleQuantityChange(item.id, parseInt(valueString))}>
+                <NumberInputField fontWeight="bold" />
+                <NumberInputStepper>
+                    <NumberIncrementStepper border="none" />
+                    <NumberDecrementStepper border="none" />
+                </NumberInputStepper>
+            </NumberInput>
           </Box>
         ))}
       </VStack>
