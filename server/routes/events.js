@@ -32,6 +32,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/many", async (req, res) => {
+  try {
+    const newEvent = await eventQueries.postEvent(req.body);
+    return res.status(201).json(newEvent);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const result = await eventQueries.deleteEvent(req.params.id);

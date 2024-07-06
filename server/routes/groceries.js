@@ -1,4 +1,5 @@
 import express from "express";
+import eventQueries from "../queries/eventQuery.js";
 import groceryQueries from "../queries/groceryQuery.js";
 import groceryLocationQueries from "../queries/groceryLocationQuery.js";
 import groceryCategoryQueries from "../queries/groceryCategoryQuery.js";
@@ -35,8 +36,9 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const result = await groceryQueries.deleteGrocery(req.params.id);
-    return res.json(result);
+    await groceryQueries.deleteGrocery(req.params.id);
+    await eventQueries.deleteGroceryEvents(req.params.id);
+    return res.status(200).send({ message: "Grocery and related events deleted successfully" });
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -111,7 +113,6 @@ router.post("/categories", async (req, res) => {
 
 router.delete("/categories/:id", async (req, res) => {
   const categoryId = req.params.id;
-  const groupID = req.params.groupID;
   try {
     await groceryCategoryQueries.deleteCategory(categoryId);
     await groceryQueries.deleteMany({ categoryId });

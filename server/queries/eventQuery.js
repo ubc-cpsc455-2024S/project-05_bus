@@ -1,3 +1,4 @@
+import { deleteGrocery } from "../../client/src/redux/groceries/thunks.js";
 import Events from "../models/eventSchema.js";
 
 const eventQueries = {
@@ -56,12 +57,37 @@ const eventQueries = {
       throw error;
     }
   },
-  deleteManyEvents: async function (choreId) {
+  deleteChoreEvents: async function (choreId) {
     try {
       const result = await Events.deleteMany({ choreId });
       return result;
     } catch (error) {
       console.error(`Error deleting events with choreId ${choreId}:`, error);
+      throw error;
+    }
+  },
+  deleteGroceryEvents: async function (groceryId) {
+    try {
+      const result = await Events.deleteMany({ groceryId });
+      return result;
+    } catch (error) {
+      console.error(`Error deleting events with groceryId ${groceryId}:`, error);
+      throw error;
+    }
+  },
+  deleteExpiryEvents: async function (groceryId) {
+    try {
+      await Events.deleteMany({ groceryId: groceryId, type: "expiry" });
+    } catch (error) {
+      console.error(`Error deleting expiry events for groceryId ${groceryId}:`, error);
+      throw error;
+    }
+  },
+  deleteRestockNotifications: async function(groceryId) {
+    try {
+      await Events.deleteMany({ groceryId: groceryId, type: "restock" });
+    } catch (error) {
+      console.error(`Error deleting restock notifications for groceryId ${groceryId}:`, error);
       throw error;
     }
   },
