@@ -131,15 +131,6 @@ router.get("/meals/group/:groupID", async (req, res) => {
   }
 });
 
-router.get("/meals/:id", async (req, res) => {
-  try {
-    const meals = await groceryMealQueries.getOneMeal(req.params.id);
-    return res.json(meals);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
-});
-
 router.post("/meals", async (req, res) => {
   try {
     const newMeal = await groceryMealQueries.postMeal(req.body);

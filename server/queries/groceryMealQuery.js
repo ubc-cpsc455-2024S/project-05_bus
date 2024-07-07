@@ -10,15 +10,6 @@ const groceryMealQueries = {
             throw error;
         }
     },
-    getOneMeal: async function (id) {
-        try {
-            const meal = await GroceryMeals.findOne({ _id: id });
-            return meal;
-        } catch (error) {
-            console.error(`Error fetching meal with id ${id}:`, error);
-            throw error;
-        }
-    },
     postMeal: async function (mealData) {
         try {
             const newMeal = new GroceryMeals(mealData);

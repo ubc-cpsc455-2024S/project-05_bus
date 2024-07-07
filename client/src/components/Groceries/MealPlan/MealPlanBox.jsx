@@ -23,6 +23,9 @@ export default function MealPlanBox() {
 
   const saveMeal = () => {
     setShowRecipe(!showRecipe);
+    selectedMealItems.forEach(item => {
+      dispatch(updateGrocery({ id: item.id, selectMeal: false }));
+    });
   };
 
   const cancelMeal = () => {
@@ -43,30 +46,34 @@ export default function MealPlanBox() {
       selectedItems.push({ name: item.name, quantity });
     });
     console.log(selectedItems);
+    
     setShowRecipe(!showRecipe);
   };
 
   return (
     showRecipe ? (
       <Box p={5}>
-        <IconButton
-          icon={<span className="material-symbols-outlined">bookmark</span>}
-          bg="transparent"
-          size="lg"
-          color="orange.300"
-          variant="unstyled"
-          _hover={{color: "orange.500"}}
-          onClick={() => saveMeal()}
-        />
-        <IconButton
-          icon={<span className="material-symbols-outlined">close</span>}
-          bg="transparent"
-          size="lg"
-          color="red.500"
-          variant="unstyled"
-          _hover={{color: "red.700"}}
-          onClick={() => cancelMeal()}
-        />
+        <Box display="flex" justifyContent="space-between">
+          <IconButton
+            icon={<span className="material-symbols-outlined">bookmark</span>}
+            bg="transparent"
+            size="lg"
+            color="orange.300"
+            variant="unstyled"
+            _hover={{color: "orange.500"}}
+            onClick={() => saveMeal()}
+          />
+          <IconButton
+            icon={<span className="material-symbols-outlined">close</span>}
+            bg="transparent"
+            size="lg"
+            color="red.500"
+            variant="unstyled"
+            _hover={{color: "red.700"}}
+            onClick={() => cancelMeal()}
+          />
+        </Box>
+        <p>hello</p>
       </Box>
     ) : (
       <Box p={5}>
