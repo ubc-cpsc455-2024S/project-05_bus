@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { REQUEST_STATE } from './utils';
-import { addMeal, getMeals, removeMeal } from '../thunks/groceryMealThunk';
+import { addMeal, getMeals, removeMeal } from './thunks';
 
 const INITIAL_STATE = {
   list: [],
