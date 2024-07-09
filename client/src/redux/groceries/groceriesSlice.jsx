@@ -1,257 +1,236 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { nanoid } from "nanoid";
+import { REQUEST_STATE } from "../utils";
+import {
+  getGroceriesAsync,
+  getGroceryAsync,
+  addGroceryAsync,
+  updateGroceryAsync,
+  deleteGroceryAsync,
+  getCategoriesAsync,
+  getCategoryAsync,
+  addCategoryAsync,
+  updateCategoryAsync,
+  deleteCategoryAsync,
+  getLocationsAsync,
+  getLocationAsync,
+  addLocationAsync,
+  updateLocationAsync,
+  deleteLocationAsync,
+} from "./thunks";
 
 const initialState = {
-  groceries: [
-    {
-      id: "1",
-      name: "Apple",
-      locationId: "1",
-      categoryId: "1",
-      expiryDate: "2024-06-10T00:00:00.000",
-      quantity: 10,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "2",
-      name: "Loaf of sliced bread",
-      locationId: "2",
-      categoryId: "2",
-      expiryDate: "2024-06-10T00:00:00.000",
-      quantity: 2,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "3",
-      name: "2L Homogenized Milk",
-      locationId: "3",
-      categoryId: "3",
-      expiryDate: "2024-06-10T00:00:00.000",
-      quantity: 1,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "4",
-      name: "Banana",
-      locationId: "1",
-      categoryId: "1",
-      expiryDate: "2024-06-12T00:00:00.000",
-      quantity: 6,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "5",
-      name: "Whole Wheat Bread",
-      locationId: "2",
-      categoryId: "2",
-      expiryDate: "2024-06-15T00:00:00.000",
-      quantity: 1,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "6",
-      name: "Cheddar Cheese",
-      locationId: "3",
-      categoryId: "3",
-      expiryDate: "2024-07-01T00:00:00.000",
-      quantity: 1,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "7",
-      name: "Orange Juice",
-      locationId: "3",
-      categoryId: "6",
-      expiryDate: "2024-06-20T00:00:00.000",
-      quantity: 2,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "8",
-      name: "Strawberries",
-      locationId: "3",
-      categoryId: "1",
-      expiryDate: "2024-06-13T00:00:00.000",
-      quantity: 1,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "9",
-      name: "Pasta",
-      locationId: "2",
-      categoryId: "2",
-      expiryDate: "2025-06-10T00:00:00.000",
-      quantity: 5,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-    {
-      id: "10",
-      name: "Yogurt",
-      locationId: "3",
-      categoryId: "3",
-      expiryDate: "2024-06-25T00:00:00.000",
-      quantity: 6,
-      expiryNotificationDate: "",
-      restockNotificationDate: "",
-      restockThreshold: "",
-      restockerId: "",
-      favourite: false,
-      selectMeal: false,
-    },
-  ],
-  categories: [
-    { id: "1", name: "Fruit" },
-    { id: "2", name: "Grain" },
-    { id: "3", name: "Dairy" },
-    { id: "4", name: "Vegetables" },
-    { id: "5", name: "Meat" },
-    { id: "6", name: "Beverages" },
-    { id: "7", name: "Snacks" },
-    { id: "8", name: "Condiments" },
-    { id: "9", name: "Seafood" },
-    { id: "10", name: "Frozen Foods" },
-  ],
-  locations: [
-    { id: "1", name: "Fruit Basket" },
-    { id: "2", name: "Pantry" },
-    { id: "3", name: "Fridge" },
-    { id: "4", name: "Freezer" },
-    { id: "5", name: "Cupboard" },
-    { id: "6", name: "Vegetable Crisper" },
-    { id: "7", name: "Wine Rack" },
-    { id: "8", name: "Snack Drawer" },
-  ],
+  groceries: [],
+  categories: [],
+  locations: [],
+  getGroceries: REQUEST_STATE.IDLE,
+  getGrocery: REQUEST_STATE.IDLE,
+  addGrocery: REQUEST_STATE.IDLE,
+  updateGrocery: REQUEST_STATE.IDLE,
+  deleteGrocery: REQUEST_STATE.IDLE,
+  getCategories: REQUEST_STATE.IDLE,
+  getCategory: REQUEST_STATE.IDLE,
+  addCategory: REQUEST_STATE.IDLE,
+  updateCategory: REQUEST_STATE.IDLE,
+  deleteCategory: REQUEST_STATE.IDLE,
+  getLocations: REQUEST_STATE.IDLE,
+  getLocation: REQUEST_STATE.IDLE,
+  addLocation: REQUEST_STATE.IDLE,
+  updateLocation: REQUEST_STATE.IDLE,
+  deleteLocation: REQUEST_STATE.IDLE,
 };
 
 const groceriesSlice = createSlice({
   name: "groceries",
   initialState,
-  reducers: {
-    addGrocery: (state, action) => {
-      state.groceries.push({
-        id: nanoid(),
-        ...action.payload,
-        expiryNotificationDate: "",
-        restockNotificationDate: "",
-        restockThreshold: "",
-        restockerId: "",
-      });
-    },
-    removeGrocery: (state, action) => {
-      state.groceries = state.groceries.filter(
-        (grocery) => grocery.id !== action.payload
-      );
-    },
-    updateGrocery: (state, action) => {
-      const index = state.groceries.findIndex(
-        (grocery) => grocery.id === action.payload.id
-      );
-      if (index !== -1) {
-        if (action.payload.expiryDate) {
-          state.groceries[index].expiryNotificationDate = "";
-        }
-        state.groceries[index] = {
-          ...state.groceries[index],
-          ...action.payload,
-        };
-      }
-    },
-    addCategory: (state, action) => {
-      state.categories.push({ id: nanoid(), name: action.payload });
-    },
-    removeCategory: (state, action) => {
-      state.categories = state.categories.filter(
-        (category) => category.id !== action.payload
-      );
-    },
-    updateCategory: (state, action) => {
-      const index = state.categories.findIndex(
-        (category) => category.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.categories[index] = {
-          ...state.categories[index],
-          ...action.payload,
-        };
-      }
-    },
-    addLocation: (state, action) => {
-      state.locations.push({ id: nanoid(), name: action.payload });
-    },
-    removeLocation: (state, action) => {
-      state.locations = state.locations.filter(
-        (location) => location.id !== action.payload
-      );
-    },
-    updateLocation: (state, action) => {
-      const index = state.locations.findIndex(
-        (location) => location.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.locations[index] = {
-          ...state.locations[index],
-          ...action.payload,
-        };
-      }
-    }
+  reducers: {},
+  extraReducers: (builder) => {
+    handleGroceriesCases(builder);
+    handleCategoriesCases(builder);
+    handleLocationsCases(builder);
   },
 });
 
-export const {
-  addGrocery,
-  removeGrocery,
-  updateGrocery,
-  addCategory,
-  removeCategory,
-  updateCategory,
-  addLocation,
-  removeLocation,
-  updateLocation,
-} = groceriesSlice.actions;
+const handleGroceriesCases = (builder) => {
+  builder
+    .addCase(getGroceriesAsync.pending, (state) => {
+      state.getGroceries = REQUEST_STATE.PENDING;
+    })
+    .addCase(getGroceriesAsync.fulfilled, (state, action) => {
+      state.groceries = action.payload;
+      state.getGroceries = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getGroceriesAsync.rejected, (state) => {
+      state.getGroceries = REQUEST_STATE.REJECTED;
+    })
+    .addCase(getGroceryAsync.pending, (state) => {
+      state.getGroceries = REQUEST_STATE.PENDING;
+    })
+    .addCase(getGroceryAsync.fulfilled, (state, action) => {
+      state.groceries = [...state.groceries, action.payload];
+      state.getGroceries = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getGroceryAsync.rejected, (state) => {
+      state.getGroceries = REQUEST_STATE.REJECTED;
+    })
+    .addCase(addGroceryAsync.pending, (state) => {
+      state.addGrocery = REQUEST_STATE.PENDING;
+    })
+    .addCase(addGroceryAsync.fulfilled, (state, action) => {
+      state.groceries = [...state.groceries, action.payload];
+      state.addGrocery = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(addGroceryAsync.rejected, (state) => {
+      state.addGrocery = REQUEST_STATE.REJECTED;
+    })
+    .addCase(updateGroceryAsync.pending, (state) => {
+      state.updateGrocery = REQUEST_STATE.PENDING;
+    })
+    .addCase(updateGroceryAsync.fulfilled, (state, action) => {
+      const index = state.groceries.findIndex(
+        (grocery) => grocery._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.groceries[index] = action.payload;
+      }
+      state.updateGrocery = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(updateGroceryAsync.rejected, (state) => {
+      state.updateGrocery = REQUEST_STATE.REJECTED;
+    })
+    .addCase(deleteGroceryAsync.pending, (state) => {
+      state.deleteGrocery = REQUEST_STATE.PENDING;
+    })
+    .addCase(deleteGroceryAsync.fulfilled, (state, action) => {
+      state.groceries = state.groceries.filter(
+        (grocery) => grocery._id !== action.payload._id
+      );
+      state.deleteGrocery = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(deleteGroceryAsync.rejected, (state) => {
+      state.deleteGrocery = REQUEST_STATE.REJECTED;
+    });
+};
+
+const handleCategoriesCases = (builder) => {
+  builder
+    .addCase(getCategoriesAsync.pending, (state) => {
+      state.getCategories = REQUEST_STATE.PENDING;
+    })
+    .addCase(getCategoriesAsync.fulfilled, (state, action) => {
+      state.categories = action.payload;
+      state.getCategories = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getCategoriesAsync.rejected, (state) => {
+      state.getCategories = REQUEST_STATE.REJECTED;
+    })
+    .addCase(getCategoryAsync.pending, (state) => {
+      state.getCategories = REQUEST_STATE.PENDING;
+    })
+    .addCase(getCategoryAsync.fulfilled, (state, action) => {
+      state.categories = [...state.categories, action.payload];
+      state.getCategories = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getCategoryAsync.rejected, (state) => {
+      state.getCategories = REQUEST_STATE.REJECTED;
+    })
+    .addCase(addCategoryAsync.pending, (state) => {
+      state.addCategory = REQUEST_STATE.PENDING;
+    })
+    .addCase(addCategoryAsync.fulfilled, (state, action) => {
+      state.categories = [...state.categories, action.payload];
+      state.addCategory = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(addCategoryAsync.rejected, (state) => {
+      state.addCategory = REQUEST_STATE.REJECTED;
+    })
+    .addCase(deleteCategoryAsync.pending, (state) => {
+      state.deleteCategory = REQUEST_STATE.PENDING;
+    })
+    .addCase(deleteCategoryAsync.fulfilled, (state, action) => {
+      state.categories = state.categories.filter(
+        (category) => category._id !== action.payload._id
+      );
+      state.deleteCategory = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(deleteCategoryAsync.rejected, (state) => {
+      state.deleteCategory = REQUEST_STATE.REJECTED;
+    })
+    .addCase(updateCategoryAsync.pending, (state) => {
+      state.updateCategory = REQUEST_STATE.PENDING;
+    })
+    .addCase(updateCategoryAsync.fulfilled, (state, action) => {
+      const index = state.categories.findIndex(
+        (category) => category._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.categories[index] = action.payload;
+      }
+      state.updateCategory = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(updateCategoryAsync.rejected, (state) => {
+      state.updateCategory = REQUEST_STATE.REJECTED;
+    });
+};
+
+const handleLocationsCases = (builder) => {
+  builder
+    .addCase(getLocationsAsync.pending, (state) => {
+      state.getLocations = REQUEST_STATE.PENDING;
+    })
+    .addCase(getLocationsAsync.fulfilled, (state, action) => {
+      state.locations = action.payload;
+      state.getLocations = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getLocationsAsync.rejected, (state) => {
+      state.getLocations = REQUEST_STATE.REJECTED;
+    })
+    .addCase(getLocationAsync.pending, (state) => {
+      state.getLocations = REQUEST_STATE.PENDING;
+    })
+    .addCase(getLocationAsync.fulfilled, (state, action) => {
+      state.locations = [...state.locations, action.payload];
+      state.getLocations = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(getLocationAsync.rejected, (state) => {
+      state.getLocations = REQUEST_STATE.REJECTED;
+    })
+    .addCase(addLocationAsync.pending, (state) => {
+      state.addLocation = REQUEST_STATE.PENDING;
+    })
+    .addCase(addLocationAsync.fulfilled, (state, action) => {
+      state.locations = [...state.locations, action.payload];
+      state.addLocation = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(addLocationAsync.rejected, (state) => {
+      state.addLocation = REQUEST_STATE.REJECTED;
+    })
+    .addCase(updateLocationAsync.pending, (state) => {
+      state.updateLocation = REQUEST_STATE.PENDING;
+    })
+    .addCase(updateLocationAsync.fulfilled, (state, action) => {
+      const index = state.locations.findIndex(
+        (location) => location._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.locations[index] = action.payload;
+      }
+      state.updateLocation = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(updateLocationAsync.rejected, (state) => {
+      state.updateLocation = REQUEST_STATE.REJECTED;
+    })
+    .addCase(deleteLocationAsync.pending, (state) => {
+      state.deleteLocation = REQUEST_STATE.PENDING;
+    })
+    .addCase(deleteLocationAsync.fulfilled, (state, action) => {
+      state.locations = state.locations.filter(
+        (location) => location._id !== action.payload._id
+      );
+      state.deleteLocation = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(deleteLocationAsync.rejected, (state) => {
+      state.deleteLocation = REQUEST_STATE.REJECTED;
+    });
+};
 
 export default groceriesSlice.reducer;

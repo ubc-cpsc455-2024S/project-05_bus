@@ -1,9 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import moment from 'moment-timezone';
-import { nanoid } from "nanoid";
+import { REQUEST_STATE } from "../utils";
+import {
+  getEventsAsync,
+  getEventAsync,
+  addEventAsync,
+  deleteEventAsync,
+  updateEventAsync,
+} from "./thunks";
 
 const initialState = {
   events: [],
+  getEvents: REQUEST_STATE.IDLE,
+  getEvent: REQUEST_STATE.IDLE,
+  addEvent: REQUEST_STATE.IDLE,
+  updateEvent: REQUEST_STATE.IDLE,
+  deleteEvent: REQUEST_STATE.IDLE,
   filter: false,
   currentStart: "",
   currentEnd: "",
@@ -13,66 +24,74 @@ const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    addEvent: {
-      reducer: (state, action) => {
-        const event = {
-          id: nanoid(),
-          ...action.payload,
-        };
-        state.events.push(event);
-      },
-      prepare: (event) => {
-        const serializableDate =
-          event.start instanceof Date ? moment(event.start).format() : event.start;
-        return {
-          payload: {
-            ...event,
-            start: serializableDate,
-          },
-        };
-      },
-    },
-    removeEvent: (state, action) => {
-      state.events = state.events.filter(
-        (event) => event.id !== action.payload
-      );
-    },
-    editEvent: {
-      reducer: (state, action) => {
-        const index = state.events.findIndex(
-          (event) => event.id === action.payload.id
-        );
-        if (index !== -1) {
-          state.events[index] = {
-            ...state.events[index],
-            ...action.payload,
-            extendedProps: {
-              ...state.events[index].extendedProps,
-              ...action.payload.extendedProps,
-            },
-          };
-        }
-      },
-      prepare: (event) => {
-        const serializableDate =
-          event.start instanceof Date ? moment(event.start).format() : event.start;
-        return {
-          payload: {
-            ...event,
-            start: serializableDate,
-          },
-        };
-      },
-    },
     toggleFilter: (state) => {
       state.filter = !state.filter;
     },
     updateMonthView(state, action) {
       state.currentStart = action.payload.currentStart;
       state.currentEnd = action.payload.currentEnd;
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getEventsAsync.pending, (state) => {
+        state.getEvents = REQUEST_STATE.PENDING;
+      })
+      .addCase(getEventsAsync.fulfilled, (state, action) => {
+        state.events = action.payload;
+        state.getEvents = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(getEventsAsync.rejected, (state) => {
+        state.getEvents = REQUEST_STATE.REJECTED;
+      })
+      .addCase(getEventAsync.pending, (state) => {
+        state.getEvent = REQUEST_STATE.PENDING;
+      })
+      .addCase(getEventAsync.fulfilled, (state, action) => {
+        state.events = [...state.events, action.payload];
+        state.getEvent = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(getEventAsync.rejected, (state) => {
+        state.getEvent = REQUEST_STATE.REJECTED;
+      })
+      .addCase(addEventAsync.pending, (state) => {
+        state.addEvent = REQUEST_STATE.PENDING;
+      })
+      .addCase(addEventAsync.fulfilled, (state, action) => {
+        state.events = [...state.events, action.payload];
+        state.addEvent = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(addEventAsync.rejected, (state) => {
+        state.addEvent = REQUEST_STATE.REJECTED;
+      })
+      .addCase(updateEventAsync.pending, (state) => {
+        state.updateEvent = REQUEST_STATE.PENDING;
+      })
+      .addCase(updateEventAsync.fulfilled, (state, action) => {
+        const index = state.events.findIndex(
+          (event) => event._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.events[index] = action.payload;
+        }
+        state.updateEvent = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(updateEventAsync.rejected, (state) => {
+        state.updateEvent = REQUEST_STATE.REJECTED;
+      })
+      .addCase(deleteEventAsync.pending, (state) => {
+        state.deleteEvent = REQUEST_STATE.PENDING;
+      })
+      .addCase(deleteEventAsync.fulfilled, (state, action) => {
+        state.events = state.events.filter(
+          (event) => event._id !== action.payload._id
+        );
+        state.deleteEvent = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(deleteEventAsync.rejected, (state) => {
+        state.deleteEvent = REQUEST_STATE.REJECTED;
+      });
   },
 });
 
-export const { addEvent, removeEvent, editEvent, toggleFilter, updateMonthView } = calendarSlice.actions;
 export default calendarSlice.reducer;

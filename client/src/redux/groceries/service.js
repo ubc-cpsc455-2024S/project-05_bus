@@ -89,14 +89,10 @@ const addCategory = async (category) => {
   }
 };
 
-const removeCategory = async (category) => {
+const deleteCategory = async (id) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/category", {
+    const response = await fetch(`http://localhost:3000/groceries/category/${id}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(category),
     });
     const data = await response.json();
     return data;
@@ -140,14 +136,10 @@ const addLocation = async (location) => {
   }
 };
 
-const removeLocation = async (location) => {
+const deleteLocation = async (id) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/location", {
+    const response = await fetch(`http://localhost:3000/groceries/location/${id}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(location),
     });
     const data = await response.json();
     return data;
@@ -181,9 +173,9 @@ export default {
   updateGrocery,
   deleteGrocery,
   addCategory,
-  removeCategory,
+  deleteCategory,
   updateCategory,
   addLocation,
-  removeLocation,
+  deleteLocation,
   updateLocation,
 };

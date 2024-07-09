@@ -5,9 +5,9 @@ export const actionTypes = {
     UPDATE_GROCERY: "groceries/updateGrocery",
     DELETE_GROCERY: "groceries/deleteGrocery",
     ADD_CATEGORY: "groceries/addCategory",
-    REMOVE_CATEGORY: "groceries/removeCategory",
+    DELETE_CATEGORY: "groceries/deleteCategory",
     UPDATE_CATEGORY: "groceries/updateCategory",
     ADD_LOCATION: "groceries/addLocation",
-    REMOVE_LOCATION: "groceries/removeLocation",
+    DELETE_LOCATION: "groceries/removeLocation",
     UPDATE_LOCATION: "groceries/updateLocation",
 }

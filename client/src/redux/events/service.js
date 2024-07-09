@@ -22,7 +22,7 @@ const getOneEvent = async (id) => {
   }
 };
 
-const postEvent = async (event) => {
+const addEvent = async (event) => {
   try {
     const response = await fetch("http://localhost:3000/events", {
       method: "POST",
@@ -69,6 +69,6 @@ const deleteEvent = async (id) => {
   }
 };
 
-export default { getAllEvents, getOneEvent, postEvent, updateEvent, deleteEvent };
+export default { getAllEvents, getOneEvent, addEvent, updateEvent, deleteEvent };
 
 

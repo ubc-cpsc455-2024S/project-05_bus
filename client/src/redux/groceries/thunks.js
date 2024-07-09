@@ -1,81 +1,113 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { actionTypes } from "./actionTypes";
 import GroceryService from "./service";
-import { getAllEvents } from "../events/thunks"
+import { getEventsAsync } from "../events/thunks"
 
-export const getGroceries = createAsyncThunk(
+export const getGroceriesAsync = createAsyncThunk(
   actionTypes.GET_GROCERIES,
   async (groupID) => {
     return await GroceryService.getAllGroceries(groupID);
   }
 );
 
-export const getGrocery = createAsyncThunk(
+export const getGroceryAsync = createAsyncThunk(
   actionTypes.GET_GROCERY,
   async (id) => {
     return await GroceryService.getOneGrocery(id);
   }
 );
 
-export const addGrocery = createAsyncThunk(
+export const addGroceryAsync = createAsyncThunk(
   actionTypes.ADD_GROCERY,
   async (grocery) => {
     return await GroceryService.postGrocery(grocery);
   }
 );
 
-export const updateGrocery = createAsyncThunk(
+export const updateGroceryAsync = createAsyncThunk(
   actionTypes.UPDATE_GROCERY,
   async (grocery, { dispatch }) => {
     const response = await GroceryService.updateGrocery(grocery);
-    dispatch(getAllEvents(grocery.groupID));
+    dispatch(getEventsAsync(grocery.groupID));
     return response;
   }
 );
 
-export const deleteGrocery = createAsyncThunk(
+export const deleteGroceryAsync = createAsyncThunk(
   actionTypes.DELETE_GROCERY,
   async (id) => {
     return await GroceryService.deleteGrocery(id);
   }
 );
 
-export const addCategory = createAsyncThunk(
+export const getCategoriesAsync = createAsyncThunk(
+  actionTypes.GET_CATEGORIES,
+  async (groupID) => {
+    return await GroceryService.getAllCategories(groupID);
+  }
+);
+
+export const getCategoryAsync = createAsyncThunk(
+  actionTypes.GET_CATEGORY,
+  async (id) => {
+    return await GroceryService.getOneCategory(id);
+  }
+);
+
+export const getLocationsAsync = createAsyncThunk(
+  actionTypes.GET_LOCATIONS,
+  async (groupID) => {
+    return await GroceryService.getAllLocations(groupID);
+  }
+);
+
+export const getLocationAsync = createAsyncThunk(
+  actionTypes.GET_LOCATION,
+  async (id) => {
+    return await GroceryService.getOneLocation(id);
+  }
+);
+
+export const addCategoryAsync = createAsyncThunk(
   actionTypes.ADD_CATEGORY,
   async (category) => {
     return await GroceryService.postCategory(category);
   }
 );
 
-export const removeCategory = createAsyncThunk(
-  actionTypes.REMOVE_CATEGORY,
-  async (category) => {
-    return await GroceryService.deleteCategory(category);
+export const deleteCategoryAsync = createAsyncThunk(
+  actionTypes.DELETE_CATEGORY,
+  async (category, { dispatch }) => {
+    const response = await GroceryService.deleteCategory(category._id);
+    dispatch(getGroceriesAsync(category.groupID));
+    return response;
   }
 );
 
-export const updateCategory = createAsyncThunk(
+export const updateCategoryAsync = createAsyncThunk(
   actionTypes.UPDATE_CATEGORY,
   async (category) => {
     return await GroceryService.updateCategory(category);
   }
 );
 
-export const addLocation = createAsyncThunk(
+export const addLocationAsync = createAsyncThunk(
   actionTypes.ADD_LOCATION,
   async (location) => {
     return await GroceryService.postLocation(location);
   }
 );
 
-export const removeLocation = createAsyncThunk(
-  actionTypes.REMOVE_LOCATION,
-  async (location) => {
-    return await GroceryService.deleteLocation(location);
+export const deleteLocationAsync = createAsyncThunk(
+  actionTypes.DELETE_LOCATION,
+  async (location, { dispatch }) => {
+    const response = await GroceryService.deleteLocation(location._id);
+    dispatch(getGroceriesAsync(location.groupID));
+    return response;
   }
 );
 
-export const updateLocation = createAsyncThunk(
+export const updateLocationAsync = createAsyncThunk(
   actionTypes.UPDATE_LOCATION,
   async (location) => {
     return await GroceryService.updateLocation(location);

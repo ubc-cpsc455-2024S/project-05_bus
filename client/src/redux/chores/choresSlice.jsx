@@ -1,37 +1,78 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { REQUEST_STATE } from "../utils";
+import { getChoresAsync, getChoreAsync, addChoreAsync, updateChoreAsync, deleteChoreAsync } from "./thunks";
 
 const initialState = {
-  chores: [
-    { id: "0", title: "Wash the dishes", color: "#ff9d94" },
-    { id: "1", title: "Empty the garbage", color: "#9DC183" },
-    { id: "2", title: "Buy groceries", color: "#89CFF0" },
-    { id: "3", title: "Water the plants", color: "#88B7B5" },
-    { id: "4", title: "Organize the bookshelf", color: "#F5F5DC" },
-    { id: "5", title: "Check and Use Expiring Food", color: "#c49bad" },
-    { id: "6", title: "Restock groceries", color: "#FFD700" },
-  ],
+  chores: [],
+  getChores: REQUEST_STATE.IDLE,
+  getChore: REQUEST_STATE.IDLE,
+  addChore: REQUEST_STATE.IDLE,
+  updateChore: REQUEST_STATE.IDLE,
+  deleteChore: REQUEST_STATE.IDLE,
 };
-
-initialState.id = initialState.chores.length;
 
 const choresSlice = createSlice({
   name: "chores",
   initialState,
-  reducers: {
-    addChore: (state, action) => {
-      const chore = {
-        id: state.id++,
-        ...action.payload,
-      };
-      state.chores.push(chore);
-    },
-    removeChore: (state, action) => {
-      state.chores = state.chores.filter(
-        (chore) => chore.id !== action.payload
-      );
-    },
-  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getChoresAsync.pending, (state) => {
+        state.getChore = REQUEST_STATE.PENDING;
+      })
+      .addCase(getChoresAsync.fulfilled, (state, action) => {
+        state.chores = action.payload;
+        state.getChore = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(getChoresAsync.rejected, (state) => {
+        state.getChore = REQUEST_STATE.REJECTED;
+      })
+      .addCase(getChoreAsync.pending, (state) => {
+        state.getChore = REQUEST_STATE.PENDING;
+      })
+      .addCase(getChoreAsync.fulfilled, (state, action) => {
+        state.chores = [...state.chores, action.payload];
+        state.getChore = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(getChoreAsync.rejected, (state) => {
+        state.getChore = REQUEST_STATE.REJECTED;
+      })
+      .addCase(addChoreAsync.pending, (state) => {
+        state.addChore = REQUEST_STATE.PENDING;
+      })
+      .addCase(addChoreAsync.fulfilled, (state, action) => {
+        state.chores = [...state.chores, action.payload];
+        state.addChore = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(addChoreAsync.rejected, (state) => {
+        state.addChore = REQUEST_STATE.REJECTED;
+      })
+      .addCase(updateChoreAsync.pending, (state) => {
+        state.updateChore = REQUEST_STATE.PENDING;
+      })
+      .addCase(updateChoreAsync.fulfilled, (state, action) => {
+        const index = state.chores.findIndex(
+          (chore) => chore._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.chores[index] = action.payload;
+        }
+        state.updateChore = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(updateChoreAsync.rejected, (state) => {
+        state.updateChore = REQUEST_STATE.REJECTED;
+      })
+      .addCase(deleteChoreAsync.pending, (state) => {
+        state.deleteChore = REQUEST_STATE.PENDING;
+      })
+      .addCase(deleteChoreAsync.fulfilled, (state, action) => {
+        state.chores = state.chores.filter((chore) => chore._id !== action.payload);
+        state.deleteChore = REQUEST_STATE.FULFILLED;
+      })
+      .addCase(deleteChoreAsync.rejected, (state) => {
+        state.deleteChore = REQUEST_STATE.REJECTED;
+      });
+  }
 });
 
-export const { addChore, removeChore } = choresSlice.actions;
 export default choresSlice.reducer;
