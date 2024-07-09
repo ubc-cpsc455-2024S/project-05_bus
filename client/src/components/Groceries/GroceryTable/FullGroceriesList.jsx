@@ -31,7 +31,6 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
@@ -39,11 +38,11 @@ import AddGrocery from "./AddGrocery";
 import GroceriesDrawer from "../GroceryDrawer/Drawer";
 import columns from "./TableColumns";
 
-import { addEvent } from "../../../redux/slices/calendarSlice";
-
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
 import SelectMealButton from "./MealButton";
+import { addEventAsync } from "../../../redux/events/thunks";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
@@ -56,6 +55,7 @@ export default function GroceriesTable() {
   const locations = useSelector((state) => state.groceries.locations);
   const groceriesData = useSelector((state) => state.groceries.groceries);
   const events = useSelector((state) => state.events.events);
+  const group = useCurrentGroup();
 
   const dispatch = useDispatch();
 
@@ -63,15 +63,15 @@ export default function GroceriesTable() {
 
   const createRestockNotification = (groceryItem) => {
     dispatch(
-      addEvent({
+      addEventAsync({
         title: `Restock ${groceryItem.name}`,
-        start: moment(new Date()).format(),
+        start: new Date(),
         allDay: true,
         backgroundColor: "#c49bad",
         borderColor: "#c49bad",
+        groupID: group._id,
         extendedProps: {
           groceryId: groceryItem.id,
-          choreId: "6",
           type: "restock",
           memberId: groceryItem.restockerId,
           done: false,

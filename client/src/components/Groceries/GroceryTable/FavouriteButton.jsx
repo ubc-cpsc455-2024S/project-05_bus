@@ -2,14 +2,14 @@ import { useState } from "react";
 import { IconButton } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
-import { updateGrocery } from "../../../redux/slices/groceriesSlice";
+import { updateGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function FavoriteButton({ groceryItem }) {
   const [isFavourite, setIsFavourite] = useState(groceryItem.favourite);
   const dispatch = useDispatch();
 
   const toggleFavourite = () => {
-    dispatch(updateGrocery({ id: groceryItem.id, favourite: !isFavourite }));
+    dispatch(updateGroceryAsync({ _id: groceryItem._id, favourite: !isFavourite }));
     setIsFavourite(!isFavourite);
   };
 

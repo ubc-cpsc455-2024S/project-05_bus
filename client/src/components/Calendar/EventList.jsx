@@ -20,8 +20,8 @@ import {
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
-import { editEvent } from "../../redux/slices/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+import { updateEventAsync } from "../../redux/events/thunks";
 
 export default function ChoresList() {
   const [dailyMode, setDailyMode] = useState(true);
@@ -90,7 +90,7 @@ export default function ChoresList() {
 
   const markAsDone = (chore) => {
     dispatch(
-      editEvent({
+      updateEventAsync({
         ...chore,
         extendedProps: {
           ...chore.extendedProps,

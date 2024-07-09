@@ -35,8 +35,8 @@ import {
   isValidNewCategory,
   isValidNewLocation,
 } from "../utils/CreateNewSelectOptions";
-import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import moment from "moment";
+import { updateGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function EditGroceryPopover({ groceryItem }) {
   const [name, setName] = useState(groceryItem.name);
@@ -87,8 +87,8 @@ export default function EditGroceryPopover({ groceryItem }) {
         isClosable: true,
       });
       dispatch(
-        updateGrocery({
-          id: groceryItem.id,
+        updateGroceryAsync({
+          _id: groceryItem._id,
           name,
           locationId: location,
           categoryId: category,
