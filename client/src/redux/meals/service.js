@@ -29,9 +29,28 @@ const addMeal = async (newMeal) => {
     });
     return response.json();
   };
+
+  const generateMeal = async (list) => {
+    const response = await fetch('http://localhost:3000/groceries/generateMeal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(list)
+    });
+  
+    const data = await response.json();
+    if (!response.ok) {
+      const errorMsg = data?.message;
+      throw new Error(errorMsg)
+    }
+    
+    return data;
+  };
   
   export default {
     addMeal,
     getMeals,
-    removeMeal
+    removeMeal,
+    generateMeal
   };

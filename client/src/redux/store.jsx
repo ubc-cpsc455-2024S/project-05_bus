@@ -4,6 +4,7 @@ import choresReducer from "./slices/choresSlice";
 import groceriesReducer from "./slices/groceriesSlice";
 import usersReducer from "./slices/usersSlice";
 import groupsReducer from "./slices/groupsSlice";
+import mealsReducer from "./meals/mealsSlice";
 import {
   deleteExpiryNotifications,
   deleteLocationRelatedGroceries,
@@ -18,6 +19,7 @@ const store = configureStore({
     groceries: groceriesReducer,
     users: usersReducer,
     groups: groupsReducer,
+    meals: mealsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

@@ -22,3 +22,10 @@ export const removeMeal = createAsyncThunk(
     return await MealService.removeMeal(id);
   }
 );
+
+export const generateMeal = createAsyncThunk(
+  actionTypes.GENERATE_MEAL,
+async (list) => {
+  return await MealService.generateMeal(list);
+}
+);

@@ -2,6 +2,7 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateGrocery } from '../../../redux/slices/groceriesSlice';
 import { useState } from 'react';
+import { generateMeal } from '../../../redux/meals/thunks';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -9,6 +10,8 @@ export default function MealPlanBox() {
   const [showRecipe, setShowRecipe] = useState(false);
 
   const selectedMealItems = items.filter(item => item.selectMeal);
+
+  const recipe = useSelector((state) => state.meals.recipe);
 
   const [quantities, setQuantities] = useState(
     selectedMealItems.reduce((acc, item) => {
@@ -39,15 +42,15 @@ export default function MealPlanBox() {
     }));
   };
 
-  const generateMeal = () => {
+  const generateRecipe = () => {
     let selectedItems = [];
     selectedMealItems.forEach(item => {
       const quantity = quantities[item.id] !== undefined ? quantities[item.id] : item.quantity;
       selectedItems.push({ name: item.name, quantity });
     });
-    console.log(selectedItems);
     
-    setShowRecipe(!showRecipe);
+    dispatch(generateMeal(selectedItems));
+    setShowRecipe(true);
   };
 
   return (
@@ -73,7 +76,7 @@ export default function MealPlanBox() {
             onClick={() => cancelMeal()}
           />
         </Box>
-        <p>hello</p>
+        <Text>{ recipe.message }</Text>
       </Box>
     ) : (
       <Box p={5}>
@@ -128,7 +131,7 @@ export default function MealPlanBox() {
             bg="teal.500"
             color="white"
             _hover={{ bg: "teal.600" }}
-            onClick={generateMeal}
+            onClick={generateRecipe}
           >
             Generate Meal
           </Button>

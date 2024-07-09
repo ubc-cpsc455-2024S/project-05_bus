@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { REQUEST_STATE } from './utils';
-import { addMeal, getMeals, removeMeal } from './thunks';
+import { addMeal, getMeals, removeMeal, generateMeal } from './thunks';
 
 const INITIAL_STATE = {
   list: [],
+  recipe: "",
   getMeals: REQUEST_STATE.IDLE,
   addMeal: REQUEST_STATE.IDLE,
   removeMeal: REQUEST_STATE.IDLE,
+  generateMeal: REQUEST_STATE.IDLE,
   error: null
 }
 
@@ -48,6 +50,18 @@ const groceryMealSlice = createSlice({
         })
         .addCase(removeMeal.rejected, (state, action) => {
           state.removeMeal = REQUEST_STATE.REJECTED;
+          state.error = action.error;
+        })
+        .addCase(generateMeal.pending, (state) => {
+          state.generateMeal = REQUEST_STATE.PENDING;
+          state.error = null;
+        })
+        .addCase(generateMeal.fulfilled, (state, action) => {
+          state.generateMeal = REQUEST_STATE.FULFILLED;
+          state.recipe = action.payload;
+        })
+        .addCase(generateMeal.rejected, (state, action) => {
+          state.generateMeal = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
     }

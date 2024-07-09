@@ -158,17 +158,18 @@ router.delete("/meals/:id", async (req, res) => {
 
 router.post("/generateMeal", async (req, res) => {
   try {
-    const user_message = `Given the food items ${req.body} I want to use in my cooking or baking, can you give me a recipe (without any small talk) incorporating these ingredients and their available quantities.`;
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: user_message },
-      ],
-    });
-    return response.choices[0].message.content;
+    // const user_message = `Given the food items ${req.body} I want to use in my cooking or baking, can you give me a recipe (without any small talk) incorporating these ingredients and their available quantities.`;
+    // const response = await openai.chat.completions.create({
+    //   model: "gpt-3.5-turbo",
+    //   messages: [
+    //     { role: "system", content: user_message },
+    //   ],
+    // });
+    // return response.choices[0].message.content;
+    return res.status(200).send({ message: "Delicious pasta" });
   } catch (err) {
     console.log(err);
-    console.log("Failed to create a recipe.");
+    res.status(500).send(err.message);
   }
 })
 
