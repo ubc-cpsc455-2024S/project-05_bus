@@ -37,7 +37,7 @@ export default function ChorePopover({ chore }) {
 
   useEffect(() => {
     if (members.length > 0) {
-      setAssignee(members[0].id);
+      setAssignee(members[0]._id);
     }
   }, [members]);
 
@@ -130,7 +130,7 @@ export default function ChorePopover({ chore }) {
                 onChange={(e) => setAssignee(e.target.value)}
               >
                 {members.map((member) => (
-                  <option key={member.id} value={member.id}>
+                  <option key={member._id} value={member._id}>
                     {`${member.firstName} ${member.lastName}`}
                   </option>
                 ))}

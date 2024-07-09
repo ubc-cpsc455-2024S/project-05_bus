@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useDispatch, useSelector } from "react-redux";
-import { updateEventAsync, addEventAsync, removeEventAsync } from "../../redux/events/thunks";
+import { getEventsAsync, updateEventAsync, addEventAsync, deleteEventAsync } from "../../redux/events/thunks";
 import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 import useCurrentGroup from "../../hooks/useCurrentGroup";
 import { updateMonthView } from "../../redux/events/calendarSlice";
 import moment from "moment";
+import { getChoresAsync } from "../../redux/chores/thunks";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -22,6 +23,13 @@ export default function Calendar() {
   const isFiltered = useSelector((state) => state.events.filter);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (group?._id) {
+      dispatch(getEventsAsync(group._id));
+      dispatch(getChoresAsync(group._id));
+    }
+  }, [dispatch, group]);
 
   const [popoverInfo, setPopoverInfo] = useState({
     visible: false,
@@ -47,13 +55,14 @@ export default function Calendar() {
 
   const handleDeleteEvent = () => {
     if (popoverInfo.event) {
-      dispatch(removeEventAsync(popoverInfo.event.id));
+      dispatch(deleteEventAsync(popoverInfo.event.id));
       popoverInfo.event.remove();
       closePopover();
     }
   };
 
   const handleDragEvent = (info) => {
+    console.log(info.event)
     dispatch(
       updateEventAsync({
         _id: info.event.id,
@@ -89,7 +98,7 @@ export default function Calendar() {
 
   const renderEventContent = (eventInfo) => {
     const member = members.find(
-      (member) => member.id === eventInfo.event.extendedProps.memberId
+      (member) => member._id === eventInfo.event.extendedProps.memberId
     );
     const isDone = eventInfo.event.extendedProps.done;
 

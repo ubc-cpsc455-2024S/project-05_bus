@@ -73,12 +73,12 @@ export default function GroceryCard({
 
   return (
     <>
-      <Card key={item.id} backgroundColor={bgColor} ref={ref} shadow="xl">
+      <Card key={item._id} backgroundColor={bgColor} ref={ref} shadow="xl">
         {isEditing ? (
           <IconButton
             size="xs"
             icon={<DeleteIcon />}
-            onClick={() => handleDeleteClick(item.id, type)}
+            onClick={() => handleDeleteClick(item._id, type)}
             backgroundColor="red.400"
             color="white"
             _hover={{ bg: "red.500" }}
@@ -142,7 +142,7 @@ export default function GroceryCard({
                 </Thead>
                 <Tbody>
                   {matchingGroceries.map((grocery) => (
-                    <Tr key={grocery.id}>
+                    <Tr key={grocery._id}>
                       <Td>
                         <Tooltip label={grocery.name} aria-label="grocery-name">
                           <Box

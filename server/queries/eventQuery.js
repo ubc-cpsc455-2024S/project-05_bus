@@ -1,4 +1,3 @@
-import { deleteGroceryAsync } from "../../client/src/redux/groceries/thunks.js";
 import Events from "../models/eventSchema.js";
 
 const eventQueries = {

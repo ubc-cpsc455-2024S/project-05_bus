@@ -166,7 +166,7 @@ export default function ChoresList() {
                     >
                       {(() => {
                         const member = members.find(
-                          (member) => member.id === memberId
+                          (member) => member._id === memberId
                         );
                         return `${member.firstName} ${member.lastName}`;
                       })()}
@@ -197,7 +197,7 @@ export default function ChoresList() {
                             <List spacing={4}>
                               {choresOnDate.map((chore) => (
                                 <ListItem
-                                  key={chore.id}
+                                  key={chore._id}
                                   display="flex"
                                   alignItems="center"
                                   bg="teal.50"

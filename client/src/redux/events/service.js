@@ -1,7 +1,7 @@
 const getAllEvents = async (groupID) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/events/group/${groupID}`
+      `http://localhost:3000/calendar/group/${groupID}`
     );
     const data = await response.json();
     return data;
@@ -13,7 +13,7 @@ const getAllEvents = async (groupID) => {
 
 const getOneEvent = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/events/${id}`);
+    const response = await fetch(`http://localhost:3000/calendar/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -24,7 +24,7 @@ const getOneEvent = async (id) => {
 
 const addEvent = async (event) => {
   try {
-    const response = await fetch("http://localhost:3000/events", {
+    const response = await fetch("http://localhost:3000/calendar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const addEvent = async (event) => {
 
 const updateEvent = async (event) => {
   try {
-    const response = await fetch(`http://localhost:3000/events/${event._id}`, {
+    const response = await fetch(`http://localhost:3000/calendar/${event._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const updateEvent = async (event) => {
 
 const deleteEvent = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/events/${id}`, {
+    const response = await fetch(`http://localhost:3000/calendar/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();

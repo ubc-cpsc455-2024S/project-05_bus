@@ -31,9 +31,10 @@ const groceryCategoryQueries = {
   },
   updateCategory: async function (categoryData) {
     try {
-      const result = await GroceryCategories.updateOne(
+      const result = await GroceryCategories.findOneAndUpdate(
         { _id: categoryData._id },
-        categoryData
+        categoryData,
+        { new: true }
       );
       return result;
     } catch (error) {

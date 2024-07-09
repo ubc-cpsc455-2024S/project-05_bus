@@ -72,9 +72,35 @@ const deleteGrocery = async (id) => {
   }
 };
 
+const getCategories = async (groupID) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/groceries/categories/group/${groupID}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};
+
+const getCategory = async (id) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/groceries/categories/${id}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    throw error;
+  }
+};
+
 const addCategory = async (category) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/category", {
+    const response = await fetch("http://localhost:3000/groceries/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -91,9 +117,12 @@ const addCategory = async (category) => {
 
 const deleteCategory = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/category/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost:3000/groceries/categories/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -104,7 +133,7 @@ const deleteCategory = async (id) => {
 
 const updateCategory = async (category) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/category", {
+    const response = await fetch(`http://localhost:3000/groceries/categories/${category._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -119,9 +148,33 @@ const updateCategory = async (category) => {
   }
 };
 
+const getLocations = async (groupID) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/groceries/locations/group/${groupID}`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching locations:", error);
+    throw error;
+  }
+};
+
+const getLocation = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:3000/groceries/locations/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching location:", error);
+    throw error;
+  }
+};
+
 const addLocation = async (location) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/location", {
+    const response = await fetch("http://localhost:3000/groceries/locations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -138,9 +191,12 @@ const addLocation = async (location) => {
 
 const deleteLocation = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/location/${id}`, {
-      method: "DELETE",
-    });
+    const response = await fetch(
+      `http://localhost:3000/groceries/locations/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -151,7 +207,7 @@ const deleteLocation = async (id) => {
 
 const updateLocation = async (location) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/location", {
+    const response = await fetch(`http://localhost:3000/groceries/locations/${location._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -172,9 +228,13 @@ export default {
   postGrocery,
   updateGrocery,
   deleteGrocery,
+  getCategories,
+  getCategory,
   addCategory,
   deleteCategory,
   updateCategory,
+  getLocations,
+  getLocation,
   addLocation,
   deleteLocation,
   updateLocation,

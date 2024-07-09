@@ -101,7 +101,7 @@ export default function AddGrocery() {
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
-            value: loc.id,
+            value: loc._id,
             label: loc.name,
           }))}
           onChange={(option) => setLocation(option.value)}
@@ -126,7 +126,7 @@ export default function AddGrocery() {
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
-            value: cat.id,
+            value: cat._id,
             label: cat.name,
           }))}
           onChange={(option) => setCategory(option.value)}

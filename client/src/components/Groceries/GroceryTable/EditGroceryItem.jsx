@@ -141,14 +141,14 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Location</FormLabel>
             <CreatableSelect
               options={locations.map((loc) => ({
-                value: loc.id,
+                value: loc._id,
                 label: loc.name,
               }))}
               onChange={(option) => setLocation(option.value)}
               isValidNewOption={(input) => isValidNewLocation(input, locations)}
               value={
                 currentLocation
-                  ? { value: currentLocation.id, label: currentLocation.name }
+                  ? { value: currentLocation._id, label: currentLocation.name }
                   : null
               }
               onCreateOption={(input) =>
@@ -170,13 +170,13 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Category</FormLabel>
             <CreatableSelect
               options={categories.map((cat) => ({
-                value: cat.id,
+                value: cat._id,
                 label: cat.name,
               }))}
               onChange={(option) => setCategory(option.value)}
               value={
                 currentCategory
-                  ? { value: currentCategory.id, label: currentCategory.name }
+                  ? { value: currentCategory._id, label: currentCategory.name }
                   : null
               }
               isValidNewOption={(input) =>

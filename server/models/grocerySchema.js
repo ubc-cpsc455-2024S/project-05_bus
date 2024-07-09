@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
-import { deleteRestockNotifications, deleteExpiryEvents } from "../queries/eventQuery.js";
+import eventQueries from "../queries/eventQuery.js";
+
+const { deleteExpiryEvents, deleteRestockNotifications } = eventQueries;
 
 const grocerySchema = new Schema({
   name: { type: String, required: true },
@@ -16,7 +18,7 @@ const grocerySchema = new Schema({
   expiryDate: { type: Date, required: false },
   quantity: { type: Number, required: true },
   expiryNotificationDate: { type: Date, required: false },
-  restockNotificationDate: { type: DAte, required: false },
+  restockNotificationDate: { type: Date, required: false },
   restockThreshold: { type: String, required: false },
   restockerId: { type: Schema.Types.ObjectId, required: false },
   favourite: { type: Boolean, default: false, required: false },
@@ -24,20 +26,26 @@ const grocerySchema = new Schema({
   groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });
 
-grocerySchema.pre("save", async function (next) {
-  if (this.isModified("expiryDate")) {
+grocerySchema.pre("findOneAndUpdate", async function (next) {
+  const update = this.getUpdate();
+  const { expiryDate, quantity, restockThreshold } = update.$set || {};
+
+  if (expiryDate !== undefined) {
     try {
-      await deleteExpiryEvents(this._id);
+      await deleteExpiryEvents(this.getQuery()._id);
     } catch (error) {
       next(error);
     }
   }
 
-  if (this.isModified("quantity") && this.quantity >= this.restockThreshold) {
-    try {
-      await deleteRestockNotifications(this._id);
-    } catch (error) {
-      next(error);
+  if (quantity !== undefined) {
+    const docToUpdate = await this.model.findOne(this.getQuery());
+    if (quantity >= docToUpdate.restockThreshold) {
+      try {
+        await deleteRestockNotifications(this.getQuery()._id);
+      } catch (error) {
+        next(error);
+      }
     }
   }
 

@@ -95,4 +95,5 @@ const calendarSlice = createSlice({
   },
 });
 
+export const { toggleFilter, updateMonthView } = calendarSlice.actions;
 export default calendarSlice.reducer;

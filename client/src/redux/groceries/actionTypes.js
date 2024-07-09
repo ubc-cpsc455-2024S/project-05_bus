@@ -4,10 +4,14 @@ export const actionTypes = {
     ADD_GROCERY: "groceries/addGrocery",
     UPDATE_GROCERY: "groceries/updateGrocery",
     DELETE_GROCERY: "groceries/deleteGrocery",
+    GET_CATEGORIES: "groceries/getCategories",
+    GET_CATEGORY: "groceries/getCategory",
     ADD_CATEGORY: "groceries/addCategory",
     DELETE_CATEGORY: "groceries/deleteCategory",
     UPDATE_CATEGORY: "groceries/updateCategory",
+    GET_LOCATIONS: "groceries/getLocations",
+    GET_LOCATION: "groceries/getLocation",
     ADD_LOCATION: "groceries/addLocation",
-    DELETE_LOCATION: "groceries/removeLocation",
+    DELETE_LOCATION: "groceries/deleteLocation",
     UPDATE_LOCATION: "groceries/updateLocation",
-}
+};

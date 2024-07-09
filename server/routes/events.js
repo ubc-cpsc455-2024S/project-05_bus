@@ -41,6 +41,15 @@ router.post("/many", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const updatedEvent = await eventQueries.updateEvent(req.body);
+    return res.json(updatedEvent);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const result = await eventQueries.deleteEvent(req.params.id);

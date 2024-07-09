@@ -6,7 +6,7 @@ export default function Chore({ chore, handleDelete }) {
   return (
     <HStack
       className="event"
-      data-chore-id={chore.id}
+      data-chore-id={chore._id}
       style={{
         backgroundColor: chore.color,
         padding: "8px",
@@ -34,7 +34,7 @@ export default function Chore({ chore, handleDelete }) {
       <ButtonGroup>
         <ChorePopover chore={chore} />
         <DeleteAlert
-          handleDelete={() => handleDelete(chore.id)}
+          handleDelete={() => handleDelete(chore._id)}
           type={"chore"}
           style={{ backgroundColor: "whiteAlpha.500" }}
         />

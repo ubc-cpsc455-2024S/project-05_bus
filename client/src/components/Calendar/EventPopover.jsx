@@ -47,7 +47,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   };
 
   const handleSubmit = () => {
-    const selectedChore = chores.find(chore => chore.id === eventDetails.choreId);
+    const selectedChore = chores.find(chore => chore._id === eventDetails.choreId);
     onEdit({ ...eventDetails, title: selectedChore ? selectedChore.title : eventDetails.title });
   };
 
@@ -74,7 +74,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
               onChange={handleChange}
             >
               {members.map((member) => (
-                <option key={member.id} value={member.id}>
+                <option key={member._id} value={member._id}>
                   {`${member.firstName} ${member.lastName}`}
                 </option>
               ))}
@@ -91,7 +91,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
               onChange={handleChange}
             >
               {chores.map((chore) => (
-                <option key={chore.id} value={chore.id}>
+                <option key={chore._id} value={chore._id}>
                   {chore.title}
                 </option>
               ))}

@@ -34,6 +34,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const updatedGrocery = await groceryQueries.updateGrocery(req.body);
+    return res.json(updatedGrocery);
+  } catch (error) {
+    return
+    res.status(500).send(error.message);
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     await groceryQueries.deleteGrocery(req.params.id);
@@ -67,6 +77,15 @@ router.post("/locations", async (req, res) => {
   try {
     const newLocation = await groceryLocationQueries.postLocation(req.body);
     return res.status(201).json(newLocation);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.patch("/locations/:id", async (req, res) => {
+  try {
+    const updatedLocation = await groceryLocationQueries.updateLocation(req.body);
+    return res.json(updatedLocation);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -106,6 +125,15 @@ router.post("/categories", async (req, res) => {
   try {
     const newCategory = await groceryCategoryQueries.postCategory(req.body);
     return res.status(201).json(newCategory);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
+router.patch("/categories/:id", async (req, res) => {
+  try {
+    const updatedCategory = await groceryCategoryQueries.updateCategory(req.body);
+    return res.json(updatedCategory);
   } catch (error) {
     return res.status(500).send(error.message);
   }

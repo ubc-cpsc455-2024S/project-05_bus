@@ -31,9 +31,10 @@ const groceryLocationQueries = {
   },
   updateLocation: async function (locationData) {
     try {
-      const result = await GroceryLocations.updateOne(
+      const result = await GroceryLocations.findOneAndUpdate(
         { _id: locationData._id },
-        locationData
+        locationData,
+        { new: true }
       );
       return result;
     } catch (error) {

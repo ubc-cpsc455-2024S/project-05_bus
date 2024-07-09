@@ -51,9 +51,10 @@ export default function GroceriesTable() {
   const [openFilter, setOpenFilter] = useState("");
   const [dateFilterType, setDateFilterType] = useState("on");
 
+  const groceriesData = useSelector((state) => state.groceries.groceries);
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
-  const groceriesData = useSelector((state) => state.groceries.groceries);
+
   const events = useSelector((state) => state.events.events);
   const group = useCurrentGroup();
 

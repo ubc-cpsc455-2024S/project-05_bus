@@ -20,7 +20,7 @@ const getRandomMutedColour = () => {
 export default function MiniGroceryList({ data, type, groceries }) {
   const [colours] = useState(() => {
     return data.reduce((acc, item) => {
-      acc[item.id] = getRandomMutedColour();
+      acc[item._id] = getRandomMutedColour();
       return acc;
     }, {});
   });
@@ -31,9 +31,9 @@ export default function MiniGroceryList({ data, type, groceries }) {
         .map((item) => {
           const matchingGroceries = groceries.filter((grocery) => {
             if (type === "category") {
-              return grocery.categoryId === item.id;
+              return grocery.categoryId === item._id;
             } else if (type === "location") {
-              return grocery.locationId === item.id;
+              return grocery.locationId === item._id;
             }
             return false;
           });
@@ -42,12 +42,12 @@ export default function MiniGroceryList({ data, type, groceries }) {
         .sort((a, b) => b.matchingGroceries.length - a.matchingGroceries.length)
         .map((item) => (
           <MiniGroceryCard
-            key={item.id}
+            key={item._id}
             item={item}
             type={type}
             groceries={groceries}
             matchingGroceries={item.matchingGroceries}
-            bgColor={colours[item.id]}
+            bgColor={colours[item._id]}
           />
         ))}
     </SimpleGrid>

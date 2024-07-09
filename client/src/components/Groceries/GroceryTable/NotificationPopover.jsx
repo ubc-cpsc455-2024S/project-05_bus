@@ -41,7 +41,7 @@ export default function NotificationPopover({ groceryItem }) {
   const currentUserID = useSelector((state) => state.users.currentUserID);
   const members = useCurrentGroupMembers();
   const group = useCurrentGroup();
-  
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const ref = useRef();
 
@@ -97,8 +97,8 @@ export default function NotificationPopover({ groceryItem }) {
     } else {
       dispatch(
         updateGroceryAsync({
-          _id: groceryItem.id,
-          expiryNotificationDate: "",
+          _id: groceryItem._id,
+          expiryNotificationDate: null,
         })
       );
     }
@@ -106,7 +106,7 @@ export default function NotificationPopover({ groceryItem }) {
     if (selectedNotifications.includes("restock")) {
       dispatch(
         updateGroceryAsync({
-          id: groceryItem.id,
+          _id: groceryItem._id,
           restockThreshold: restockQuantity,
           restockerId: assignedUser,
         })
@@ -115,9 +115,9 @@ export default function NotificationPopover({ groceryItem }) {
       dispatch(
         updateGroceryAsync({
           _id: groceryItem._id,
-          restockNotificationDate: "",
-          restockThreshold: "",
-          restockerId: "",
+          restockNotificationDate: null,
+          restockThreshold: null,
+          restockerId: null,
         })
       );
     }
@@ -218,7 +218,7 @@ export default function NotificationPopover({ groceryItem }) {
                 value={assignedUser}
               >
                 {members.map((member) => (
-                  <option key={member.id} value={member.id}>
+                  <option key={member._id} value={member._id}>
                     {`${member.firstName} ${member.lastName}`}
                   </option>
                 ))}

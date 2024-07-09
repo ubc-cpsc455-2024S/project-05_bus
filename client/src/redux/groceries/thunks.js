@@ -1,12 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { actionTypes } from "./actionTypes";
 import GroceryService from "./service";
-import { getEventsAsync } from "../events/thunks"
+import { getEventsAsync } from "../events/thunks";
 
 export const getGroceriesAsync = createAsyncThunk(
   actionTypes.GET_GROCERIES,
-  async (groupID) => {
-    return await GroceryService.getAllGroceries(groupID);
+  async (groupID, { dispatch }) => {
+    const response = await GroceryService.getAllGroceries(groupID);
+    if (response) {
+      await dispatch(getCategoriesAsync(groupID));
+      await dispatch(getLocationsAsync(groupID));
+    }
+    return response;
   }
 );
 
@@ -28,7 +33,10 @@ export const updateGroceryAsync = createAsyncThunk(
   actionTypes.UPDATE_GROCERY,
   async (grocery, { dispatch }) => {
     const response = await GroceryService.updateGrocery(grocery);
-    dispatch(getEventsAsync(grocery.groupID));
+    console.log(response);
+    if (response) {
+      await dispatch(getEventsAsync(response.groupID));
+    }
     return response;
   }
 );
@@ -43,28 +51,28 @@ export const deleteGroceryAsync = createAsyncThunk(
 export const getCategoriesAsync = createAsyncThunk(
   actionTypes.GET_CATEGORIES,
   async (groupID) => {
-    return await GroceryService.getAllCategories(groupID);
+    return await GroceryService.getCategories(groupID);
   }
 );
 
 export const getCategoryAsync = createAsyncThunk(
   actionTypes.GET_CATEGORY,
   async (id) => {
-    return await GroceryService.getOneCategory(id);
+    return await GroceryService.getCategory(id);
   }
 );
 
 export const getLocationsAsync = createAsyncThunk(
   actionTypes.GET_LOCATIONS,
   async (groupID) => {
-    return await GroceryService.getAllLocations(groupID);
+    return await GroceryService.getLocations(groupID);
   }
 );
 
 export const getLocationAsync = createAsyncThunk(
   actionTypes.GET_LOCATION,
   async (id) => {
-    return await GroceryService.getOneLocation(id);
+    return await GroceryService.getLocation(id);
   }
 );
 
