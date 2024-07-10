@@ -71,7 +71,7 @@ const eventQueries = {
   },
   deleteGroceryEvents: async function (groceryId) {
     try {
-      const result = await Events.deleteMany({ groceryId });
+      const result = await Events.deleteMany({ "extendedProps.groceryId": groceryId });
       return result;
     } catch (error) {
       console.error(
@@ -83,7 +83,10 @@ const eventQueries = {
   },
   deleteExpiryEvents: async function (groceryId) {
     try {
-      await Events.deleteMany({ groceryId: groceryId, type: "expiry" });
+      await Events.deleteMany({
+        "extendedProps.groceryId": groceryId,
+        "extendedProps.type": "expiry",
+      });
     } catch (error) {
       console.error(
         `Error deleting expiry events for groceryId ${groceryId}:`,
@@ -94,7 +97,10 @@ const eventQueries = {
   },
   deleteRestockNotifications: async function (groceryId) {
     try {
-      await Events.deleteMany({ groceryId: groceryId, type: "restock" });
+      await Events.deleteMany({
+        "extendedProps.groceryId": groceryId,
+        "extendedProps.type": "restock",
+      });
     } catch (error) {
       console.error(
         `Error deleting restock notifications for groceryId ${groceryId}:`,

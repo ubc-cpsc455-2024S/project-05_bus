@@ -54,8 +54,8 @@ export default function EditGroceryPopover({ groceryItem }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
-  const currentCategory = categories.find((cat) => cat.id === category);
-  const currentLocation = locations.find((loc) => loc.id === location);
+  const currentCategory = categories.find((cat) => cat._id === category);
+  const currentLocation = locations.find((loc) => loc._id === location);
 
   useOutsideClick({
     ref: ref,
@@ -92,7 +92,7 @@ export default function EditGroceryPopover({ groceryItem }) {
           name,
           locationId: location,
           categoryId: category,
-          expiryDate: moment(expiryDate).format(),
+          expiryDate: expiryDate,
           quantity,
         })
       );

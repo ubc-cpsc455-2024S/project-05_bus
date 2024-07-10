@@ -44,17 +44,17 @@ export default function GroceryQuantityControl({
         }
         if (
           value > row.original.restockThreshold &&
-          row.original.restockNotificationDate !== ""
+          row.original.restockNotificationDate !== null
         ) {
           dispatch(
             updateGroceryAsync({
               _id: row.original._id,
-              restockNotificationDate: "",
+              restockNotificationDate: null,
             })
           );
           // removeAssociatedEvents(row.original._id);
         }
-        if (value <= 0 && !row.original.favourite) {
+        if (value <= 0 && !row.original.favourite && row.original.restockNotificationDate == "") {
           dispatch(deleteGroceryAsync(row.original._id));
         }
       }}

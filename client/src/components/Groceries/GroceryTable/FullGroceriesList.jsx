@@ -72,7 +72,7 @@ export default function GroceriesTable() {
         borderColor: "#c49bad",
         groupID: group._id,
         extendedProps: {
-          groceryId: groceryItem.id,
+          groceryId: groceryItem._id,
           type: "restock",
           memberId: groceryItem.restockerId,
           done: false,

@@ -39,8 +39,7 @@ router.patch("/:id", async (req, res) => {
     const updatedGrocery = await groceryQueries.updateGrocery(req.body);
     return res.json(updatedGrocery);
   } catch (error) {
-    return
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 

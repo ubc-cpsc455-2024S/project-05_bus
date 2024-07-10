@@ -28,29 +28,30 @@ const grocerySchema = new Schema({
 
 grocerySchema.pre("findOneAndUpdate", async function (next) {
   const update = this.getUpdate();
-  const { expiryDate, quantity, restockThreshold } = update.$set || {};
+  const updateDoc = update.$set || update;
+  const { expiryDate, quantity, restockNotificationDate, expiryNotificationDate } = updateDoc;
+  const queryId = this.getQuery()._id;
 
-  if (expiryDate !== undefined) {
-    try {
-      await deleteExpiryEvents(this.getQuery()._id);
-    } catch (error) {
-      next(error);
+  try {
+    if (expiryDate !== undefined || expiryNotificationDate == null) {
+      await deleteExpiryEvents(queryId);
     }
-  }
-
-  if (quantity !== undefined) {
-    const docToUpdate = await this.model.findOne(this.getQuery());
-    if (quantity >= docToUpdate.restockThreshold) {
-      try {
-        await deleteRestockNotifications(this.getQuery()._id);
-      } catch (error) {
-        next(error);
+    if (quantity !== undefined) {
+      const docToUpdate = await this.model.findOne(this.getQuery());
+      if (quantity > docToUpdate.restockThreshold) {
+        await deleteRestockNotifications(queryId);
       }
     }
-  }
+    // if (restockNotificationDate == null) {
+    //   await deleteRestockNotifications(queryId);
+    // }
 
-  next();
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
+
 
 const groceryLocationSchema = new Schema({
   name: { type: String, required: true },

@@ -62,7 +62,6 @@ export default function Calendar() {
   };
 
   const handleDragEvent = (info) => {
-    console.log(info.event)
     dispatch(
       updateEventAsync({
         _id: info.event.id,

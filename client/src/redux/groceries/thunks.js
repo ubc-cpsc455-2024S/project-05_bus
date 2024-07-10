@@ -33,7 +33,6 @@ export const updateGroceryAsync = createAsyncThunk(
   actionTypes.UPDATE_GROCERY,
   async (grocery, { dispatch }) => {
     const response = await GroceryService.updateGrocery(grocery);
-    console.log(response);
     if (response) {
       await dispatch(getEventsAsync(response.groupID));
     }
