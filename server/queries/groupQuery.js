@@ -64,4 +64,4 @@ const groupQueries = {
   }
 }
 
-export default userQueries;
+export default groupQueries;
