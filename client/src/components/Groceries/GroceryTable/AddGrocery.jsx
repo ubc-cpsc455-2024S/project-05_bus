@@ -49,7 +49,6 @@ export default function AddGrocery() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // const formattedExpiryDate = moment(expiryDate).format();
       dispatch(
         addGroceryAsync({
           name,

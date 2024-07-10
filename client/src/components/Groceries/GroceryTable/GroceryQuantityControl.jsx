@@ -10,16 +10,7 @@ import { deleteGroceryAsync, updateGroceryAsync } from "../../../redux/groceries
 export default function GroceryQuantityControl({
   row,
   dispatch,
-  createRestockNotification,
 }) {
-  // const removeAssociatedEvents = (groceryId) => {
-  //   events
-  //     .filter((event) => event.extendedProps.groceryId === groceryId)
-  //     .forEach((event) => {
-  //       dispatch(deleteEventAsync(event.id));
-  //     });
-  // };
-
   return (
     <NumberInput
       value={row.original.quantity}
@@ -30,31 +21,7 @@ export default function GroceryQuantityControl({
       onChange={(valueString) => {
         const value = Number(valueString);
         dispatch(updateGroceryAsync({ _id: row.original._id, quantity: value }));
-        if (
-          value <= row.original.restockThreshold &&
-          row.original.restockerId
-        ) {
-          createRestockNotification(row.original);
-          dispatch(
-            updateGroceryAsync({
-              _id: row.original._id,
-              restockNotificationDate: new Date(),
-            })
-          );
-        }
-        if (
-          value > row.original.restockThreshold &&
-          row.original.restockNotificationDate !== null
-        ) {
-          dispatch(
-            updateGroceryAsync({
-              _id: row.original._id,
-              restockNotificationDate: null,
-            })
-          );
-          // removeAssociatedEvents(row.original._id);
-        }
-        if (value <= 0 && !row.original.favourite && row.original.restockNotificationDate == "") {
+        if (value <= 0 && !row.original.favourite && row.original.restockNotificationDate == null) {
           dispatch(deleteGroceryAsync(row.original._id));
         }
       }}

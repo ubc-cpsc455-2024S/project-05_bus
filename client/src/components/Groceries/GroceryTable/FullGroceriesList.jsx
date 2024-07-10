@@ -41,8 +41,6 @@ import columns from "./TableColumns";
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
 import SelectMealButton from "./MealButton";
-import { addEventAsync } from "../../../redux/events/thunks";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
@@ -56,30 +54,10 @@ export default function GroceriesTable() {
   const locations = useSelector((state) => state.groceries.locations);
 
   const events = useSelector((state) => state.events.events);
-  const group = useCurrentGroup();
 
   const dispatch = useDispatch();
 
   const tooltipColumns = ['name', 'categoryId', 'locationId'];
-
-  const createRestockNotification = (groceryItem) => {
-    dispatch(
-      addEventAsync({
-        title: `Restock ${groceryItem.name}`,
-        start: new Date(),
-        allDay: true,
-        backgroundColor: "#c49bad",
-        borderColor: "#c49bad",
-        groupID: group._id,
-        extendedProps: {
-          groceryId: groceryItem._id,
-          type: "restock",
-          memberId: groceryItem.restockerId,
-          done: false,
-        },
-      })
-    );
-  };
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
@@ -93,7 +71,6 @@ export default function GroceriesTable() {
       dispatch,
       events,
       dateFilterType,
-      createRestockNotification
     ),
     state: {
       sorting,
@@ -248,7 +225,7 @@ export default function GroceriesTable() {
             </Table>
           </TableContainer>
         </Box>
-        <HStack>
+        <HStack w="100%">
           <AddGrocery />
           <GroceriesDrawer />
         </HStack>
