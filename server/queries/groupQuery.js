@@ -10,12 +10,12 @@ const groupQueries = {
       throw error;
     }
   },
-  getAllMembers: async function (groupID) {
+  getGroup: async function(groupID) {
     try {
-      const members = await Groups.find({ groupID });
-      return members;
+      const group = await Groups.findById(groupID);
+      return group;
     } catch (error) {
-      console.error(`Error fetching members of group ${groupID}: `, error);
+      console.error(`Error fetching group ${groupID}: `, error);
       throw error;
     }
   },
@@ -30,15 +30,6 @@ const groupQueries = {
       throw error;
     }
   },
-  deleteGroup: async function(groupID) {
-    try {
-      // update users' groupID's here ???
-      return await Groups.deleteOne({ _id: groupID });
-    } catch (error) {
-      console.error(`Error deleting group with id ${groupID}: `, error);
-      throw error;
-    }
-  },
   addMember: async function (groupID, userID) {
     try {
       const group = Groups.find({_id: groupID});
@@ -47,6 +38,15 @@ const groupQueries = {
       return Groups.findByIdAndUpdate(groupID, newGroupData, {new: true});
     } catch (error) {
       console.error(`Error adding user ${userID} to group ${groupID}: `, error);
+      throw error;
+    }
+  },
+  deleteGroup: async function(groupID) {
+    try {
+      // update users' groupID's here ???
+      return await Groups.deleteOne({ _id: groupID });
+    } catch (error) {
+      console.error(`Error deleting group with id ${groupID}: `, error);
       throw error;
     }
   },
