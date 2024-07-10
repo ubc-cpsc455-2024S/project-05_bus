@@ -23,7 +23,6 @@ const groupQueries = {
     try {
       const newGroup = new Groups(groupData);
       const savedGroup = await newGroup.save();
-      // update users' groupID's here ???
       return savedGroup;
     } catch (error) {
       console.error("Error saving new group: ", error);
@@ -32,7 +31,6 @@ const groupQueries = {
   },
   addMember: async function (groupID, userID) {
     try {
-      // update user's groupID here ???
       return await Groups.findByIdAndUpdate(groupID, {$push: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error adding user ${userID} to group ${groupID}: `, error);
@@ -41,7 +39,6 @@ const groupQueries = {
   },
   deleteGroup: async function(groupID) {
     try {
-      // update users' groupID's here ???
       return await Groups.findByIdAndDelete(groupID);
     } catch (error) {
       console.error(`Error deleting group with id ${groupID}: `, error);
@@ -50,7 +47,6 @@ const groupQueries = {
   },
   removeMember: async function (groupID, userID) {
     try {
-      // update user's groupID here ???
       return await Groups.findByIdAndUpdate(groupID, {$pull: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error removing user ${userID} from group ${groupID}: `, error);

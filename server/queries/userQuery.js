@@ -17,6 +17,10 @@ const userQueries = {
     deleteUser: async function (id) {
         const result = await Users.deleteOne({ _id: id });
         return result;
+    },
+    updateUserGroup: async function (userID, groupID) {
+        const result = await Users.findByIdAndUpdate(userID, {groupID});
+        return result;
     }
 }
 
