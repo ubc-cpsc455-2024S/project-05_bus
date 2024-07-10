@@ -36,6 +36,17 @@ router.post("/", async function(req, res) {
   }
 });
 
+/* PATCH group name listing. */
+router.patch("/:groupID", async function(req, res) {
+  try {
+    await groupQueries.updateName(req.params.groupID, req.body.name);
+    return res.status(200).send({ message: "Group name updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
 /* PATCH group member add listing. */
 router.patch("/:groupID/:userID", async function(req, res) {
   try {

@@ -42,7 +42,7 @@ const groupQueries = {
   deleteGroup: async function(groupID) {
     try {
       // update users' groupID's here ???
-      return await Groups.deleteOne({ _id: groupID });
+      return await Groups.findByIdAndDelete(groupID);
     } catch (error) {
       console.error(`Error deleting group with id ${groupID}: `, error);
       throw error;
@@ -54,6 +54,14 @@ const groupQueries = {
       return await Groups.findByIdAndUpdate(groupID, {$pull: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error removing user ${userID} from group ${groupID}: `, error);
+      throw error;
+    }
+  },
+  updateName: async function (groupID, newName) {
+    try {
+      return await Groups.findByIdAndUpdate(groupID, {name: newName}, {new: true});
+    } catch (error) {
+      console.error(`Error updating name for group ${groupID}: `, error);
       throw error;
     }
   }
