@@ -70,7 +70,7 @@ export default function ColumnFilter({
             {...inputStyleProps}
           >
             {locations.map((location) => (
-              <option key={location.id} value={location.id}>
+              <option key={location._id} value={location._id}>
                 {location.name}
               </option>
             ))}
@@ -85,7 +85,7 @@ export default function ColumnFilter({
             {...inputStyleProps}
           >
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option key={category._id} value={category._id}>
                 {category.name}
               </option>
             ))}

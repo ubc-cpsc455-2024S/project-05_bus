@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   groups: [
     {
-      id: "1",
-      name: "W 10th Roommates",
-      memberIDs: ["1", "2", "3"]
+      _id: "6680530d7522f05c47e32859",
+      name: "Group One",
+      memberIDs: ["668053007522f05c47e32853", "668053007522f05c47e32854"]
     },
   ],
   selectedMemberID: ""
@@ -16,10 +16,10 @@ const groups = createSlice({
   initialState,
   reducers: {
     addGroup: (state, action) => {
-      if (!state.groups.find(group => group.id === action.payload.id)) {
+      if (!state.groups.find(group => group._id === action.payload._id)) {
         state.groups.push(action.payload);
       } else {
-        console.log(`A group with id ${action.payload.id} already exists`);
+        console.log(`A group with id ${action.payload._id} already exists`);
       }
     },
     deleteGroup: (state, action) => {
@@ -27,7 +27,7 @@ const groups = createSlice({
     },
     addMember: (state, action) => {
       const { groupID, userID } = action.payload;
-      const groupIndex = state.groups.findIndex(group => group.id == groupID);
+      const groupIndex = state.groups.findIndex(group => group._id == groupID);
       if (!state.groups[groupIndex].memberIDs.includes(userID)) {
         state.groups[groupIndex].memberIDs.push(userID);
       } else {
@@ -36,7 +36,7 @@ const groups = createSlice({
     },
     removeMember: (state, action) => {
       const { groupID, userID } = action.payload;
-      const groupIndex = state.groups.findIndex(group => group.id == groupID);
+      const groupIndex = state.groups.findIndex(group => group._id == groupID);
       state.groups[groupIndex].memberIDs = state.groups[groupIndex].memberIDs.filter(memberID => memberID !== userID);
     },
     setSelectedMemberID: (state, action) => {

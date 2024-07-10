@@ -5,24 +5,12 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { updateGrocery, removeGrocery } from "../../../redux/slices/groceriesSlice";
-import { removeEvent } from "../../../redux/slices/calendarSlice";
-import moment from "moment";
+import { deleteGroceryAsync, updateGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function GroceryQuantityControl({
   row,
   dispatch,
-  events,
-  createRestockNotification,
 }) {
-  const removeAssociatedEvents = (groceryId) => {
-    events
-      .filter((event) => event.extendedProps.groceryId === groceryId)
-      .forEach((event) => {
-        dispatch(removeEvent(event.id));
-      });
-  };
-
   return (
     <NumberInput
       value={row.original.quantity}
@@ -32,33 +20,9 @@ export default function GroceryQuantityControl({
       min={0}
       onChange={(valueString) => {
         const value = Number(valueString);
-        dispatch(updateGrocery({ id: row.original.id, quantity: value }));
-        if (
-          value <= row.original.restockThreshold &&
-          row.original.restockerId
-        ) {
-          createRestockNotification(row.original);
-          dispatch(
-            updateGrocery({
-              id: row.original.id,
-              restockNotificationDate: moment(new Date()).format(),
-            })
-          );
-        }
-        if (
-          value > row.original.restockThreshold &&
-          row.original.restockNotificationDate !== ""
-        ) {
-          dispatch(
-            updateGrocery({
-              id: row.original.id,
-              restockNotificationDate: "",
-            })
-          );
-          removeAssociatedEvents(row.original.id);
-        }
-        if (value <= 0 && !row.original.favourite) {
-          dispatch(removeGrocery(row.original.id));
+        dispatch(updateGroceryAsync({ _id: row.original._id, quantity: value }));
+        if (value <= 0 && !row.original.favourite && row.original.restockNotificationDate == null) {
+          dispatch(deleteGroceryAsync(row.original._id));
         }
       }}
     >

@@ -2,56 +2,24 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   users: [
-      {
-        id: "1",
-        firstName: "James",
-        lastName: "Smith",
-        email: "panda123@gmail.com",
-        password: "password123",
-        groupID: "1"
-      },
-      {
-        id: "2",
-        firstName: "Maggie",
-        lastName: "Baker",
-        email: "maggiebaker@yahoo.com",
-        password: "password123",
-        groupID: "1"
-      },
-      {
-        id: "3",
-        firstName: "Mary",
-        lastName: "Brown",
-        email: "mhbrown@yahoo.com",
-        password: "password123",
-        groupID: "1"
-      },
-      {
-        id: "4",
-        firstName: "John",
-        lastName: "Parker",
-        email: "jparker@gmail.com",
-        password: "password123",
-        groupID: null
-      },
-      {
-        id: "5",
-        firstName: "Karen",
-        lastName: "Nelson",
-        email: "karennelson@gmail.com",
-        password: "password123",
-        groupID: null
-      },
-      {
-        id: "6",
-        firstName: "Sam",
-        lastName: "Cyrus",
-        email: "scy456@gmail.com",
-        password: "password123",
-        groupID: null
-      }
+    {
+      _id: "668053007522f05c47e32853",
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      password: "password123",
+      groupID: "6680530d7522f05c47e32859"
+    },
+    {
+      _id: "668053007522f05c47e32854",
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      password: "password456",
+      groupID: "6680530d7522f05c47e32859"
+    }
   ],
-  currentUserID: "1"
+  currentUserID: "668053007522f05c47e32853"
 }
 
 const users = createSlice({
@@ -66,11 +34,11 @@ const users = createSlice({
         }
       },
       deleteUser: (state, action) => {
-        state.users = state.users.filter(user => user.id !== action.payload);
+        state.users = state.users.filter(user => user._id !== action.payload);
       },
       updateUser: (state, action) => {
         const { id, updatedFields } = action.payload;
-        const userIndex = state.users.findIndex(user => user.id === id);
+        const userIndex = state.users.findIndex(user => user._id === id);
         if (userIndex !== -1) {
           state.users[userIndex] = {
             ...state.users[userIndex],
@@ -82,7 +50,7 @@ const users = createSlice({
         const { groupID, memberIDs } = action.payload;
         const membersSet = new Set(memberIDs) 
         state.users.forEach(user => {
-          if (membersSet.has(user.id)) {
+          if (membersSet.has(user._id)) {
             user.groupID = groupID;
           }
         });

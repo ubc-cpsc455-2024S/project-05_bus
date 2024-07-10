@@ -8,13 +8,20 @@ const eventSchema = new Schema({
     borderColor: { type: String, required: true },
     extendedProps: {
         groceryId: { type: Schema.Types.ObjectId, required: false, ref: "Grocery" },
-        choreId: { type: Schema.Types.ObjectId, required: true, ref: "Chore" },
+        choreId: { type: Schema.Types.ObjectId, required: false, ref: "Chore" },
         type: { type: String, required: true },
         memberId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
         done: { type: Boolean, default: false,  required: true },
     },
     groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });
+
+eventSchema.virtual('id').get(function() {
+    return this._id.toString();
+});
+
+eventSchema.set('toObject', { virtuals: true });
+eventSchema.set('toJSON', { virtuals: true });
 
 const Events = model("Events", eventSchema);
 

@@ -35,8 +35,8 @@ import {
   isValidNewCategory,
   isValidNewLocation,
 } from "../utils/CreateNewSelectOptions";
-import { updateGrocery } from "../../../redux/slices/groceriesSlice";
 import moment from "moment";
+import { updateGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function EditGroceryPopover({ groceryItem }) {
   const [name, setName] = useState(groceryItem.name);
@@ -54,8 +54,8 @@ export default function EditGroceryPopover({ groceryItem }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
-  const currentCategory = categories.find((cat) => cat.id === category);
-  const currentLocation = locations.find((loc) => loc.id === location);
+  const currentCategory = categories.find((cat) => cat._id === category);
+  const currentLocation = locations.find((loc) => loc._id === location);
 
   useOutsideClick({
     ref: ref,
@@ -87,12 +87,12 @@ export default function EditGroceryPopover({ groceryItem }) {
         isClosable: true,
       });
       dispatch(
-        updateGrocery({
-          id: groceryItem.id,
+        updateGroceryAsync({
+          _id: groceryItem._id,
           name,
           locationId: location,
           categoryId: category,
-          expiryDate: moment(expiryDate).format(),
+          expiryDate: expiryDate,
           quantity,
         })
       );
@@ -141,14 +141,14 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Location</FormLabel>
             <CreatableSelect
               options={locations.map((loc) => ({
-                value: loc.id,
+                value: loc._id,
                 label: loc.name,
               }))}
               onChange={(option) => setLocation(option.value)}
               isValidNewOption={(input) => isValidNewLocation(input, locations)}
               value={
                 currentLocation
-                  ? { value: currentLocation.id, label: currentLocation.name }
+                  ? { value: currentLocation._id, label: currentLocation.name }
                   : null
               }
               onCreateOption={(input) =>
@@ -170,13 +170,13 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Category</FormLabel>
             <CreatableSelect
               options={categories.map((cat) => ({
-                value: cat.id,
+                value: cat._id,
                 label: cat.name,
               }))}
               onChange={(option) => setCategory(option.value)}
               value={
                 currentCategory
-                  ? { value: currentCategory.id, label: currentCategory.name }
+                  ? { value: currentCategory._id, label: currentCategory.name }
                   : null
               }
               isValidNewOption={(input) =>

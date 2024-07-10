@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { IconButton } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import { updateGrocery } from "../../../redux/slices/groceriesSlice";
+import { updateGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function SelectMealButton({ groceryItem }) {
   const [isSelect, setSelect] = useState(groceryItem.selectMeal);
@@ -12,7 +12,7 @@ export default function SelectMealButton({ groceryItem }) {
   }, [groceryItem.selectMeal]);
 
   const toggleSelect = () => {
-    dispatch(updateGrocery({ id: groceryItem.id, selectMeal: !isSelect }));
+    dispatch(updateGroceryAsync({ id: groceryItem.id, selectMeal: !isSelect }));
     setSelect(!isSelect);
   };
 
