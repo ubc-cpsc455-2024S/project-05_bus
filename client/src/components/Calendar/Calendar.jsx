@@ -3,7 +3,12 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useDispatch, useSelector } from "react-redux";
-import { getEventsAsync, updateEventAsync, addEventAsync, deleteEventAsync } from "../../redux/events/thunks";
+import {
+  getEventsAsync,
+  updateEventAsync,
+  addEventAsync,
+  deleteEventAsync,
+} from "../../redux/events/thunks";
 import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
@@ -153,9 +158,11 @@ export default function Calendar() {
             })
           );
         }}
-        eventStartEditable={true}
-        eventDurationEditable={false}
+        eventStartEditable={(info) => {
+          return info.event.extendedProps.type == "chore";
+        }}
         droppable
+        eventDurationEditable={false}
         events={
           isFiltered
             ? events.filter(
@@ -179,7 +186,11 @@ export default function Calendar() {
           );
         }}
         eventClick={handleEventClick}
-        eventDrop={handleDragEvent}
+        eventDrop={(info) => {
+          if (info.event.extendedProps.type == "chore") {
+            handleDragEvent(info);
+          }
+        }}
         eventContent={renderEventContent}
         height="100%"
       />

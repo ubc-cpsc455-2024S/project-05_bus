@@ -27,6 +27,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     done: event.extendedProps.done,
+    type: event.extendedProps.type,
   });
   const chores = useSelector((state) => state.chores.chores);
   const members = useCurrentGroupMembers();
@@ -47,8 +48,13 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   };
 
   const handleSubmit = () => {
-    const selectedChore = chores.find(chore => chore._id === eventDetails.choreId);
-    onEdit({ ...eventDetails, title: selectedChore ? selectedChore.title : eventDetails.title });
+    const selectedChore = chores.find(
+      (chore) => chore._id === eventDetails.choreId
+    );
+    onEdit({
+      ...eventDetails,
+      title: selectedChore ? selectedChore.title : eventDetails.title,
+    });
   };
 
   return (
@@ -80,33 +86,33 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
               ))}
             </Select>
           </FormControl>
-          <FormControl pb={2}>
-            <FormLabel color="black">Type of Chore</FormLabel>
-            <Select
-              variant="filled"
-              border="none"
-              bg="white"
-              name="choreId"
-              value={eventDetails.choreId}
-              onChange={handleChange}
-            >
-              {chores.map((chore) => (
-                <option key={chore._id} value={chore._id}>
-                  {chore.title}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl>
-            <FormLabel color="black">Date</FormLabel>
-            <Input
-              type="date"
-              name="start"
-              bg="white"
-              value={eventDetails.start.split("T")[0]}
-              onChange={handleChange}
-            />
-          </FormControl>
+          {eventDetails.type === "chore" && (
+            <FormControl pb={2}>
+              <FormLabel color="black">Type of Chore</FormLabel>
+              <Select
+                variant="filled"
+                border="none"
+                bg="white"
+                name="choreId"
+                value={eventDetails.choreId}
+                onChange={handleChange}
+              >
+                {chores.map((chore) => (
+                  <option key={chore._id} value={chore._id}>
+                    {chore.title}
+                  </option>
+                ))}
+              </Select>
+              <FormLabel color="black">Date</FormLabel>
+              <Input
+                type="date"
+                name="start"
+                bg="white"
+                value={eventDetails.start.split("T")[0]}
+                onChange={handleChange}
+              />
+            </FormControl>
+          )}
         </PopoverBody>
         <PopoverFooter>
           <ButtonGroup spacing={4}>
