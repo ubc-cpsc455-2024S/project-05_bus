@@ -32,10 +32,8 @@ const groupQueries = {
   },
   addMember: async function (groupID, userID) {
     try {
-      const group = Groups.find({_id: groupID});
-      const newGroupData = { memberIDs: [...group.memberIDs, userID] };
       // update user's groupID here ???
-      return Groups.findByIdAndUpdate(groupID, newGroupData, {new: true});
+      return await Groups.findByIdAndUpdate(groupID, {$push: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error adding user ${userID} to group ${groupID}: `, error);
       throw error;
@@ -52,11 +50,8 @@ const groupQueries = {
   },
   removeMember: async function (groupID, userID) {
     try {
-      const group = Groups.find({_id: groupID});
-      const index = group.memberIDs.indexOf(userID);
-      if (index > -1) group.memberIDs.splice(index, 1);
       // update user's groupID here ???
-      return Groups.findByIdAndUpdate(groupID, group, {new: true});
+      return await Groups.findByIdAndUpdate(groupID, {$pull: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error removing user ${userID} from group ${groupID}: `, error);
       throw error;

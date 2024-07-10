@@ -48,7 +48,7 @@ router.patch("/:groupID/:userID", async function(req, res) {
 });
 
 /* PATCH group member remove listing. */
-router.patch("/:groupID/:userID", async function(req, res) {
+router.patch("/remove/:groupID/:userID", async function(req, res) {
   try {
     const result = await groupQueries.removeMember(req.params.groupID, req.params.userID);
     return res.status(200).send({ message: "Member removed successfully" });
