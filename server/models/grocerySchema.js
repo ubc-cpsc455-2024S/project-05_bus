@@ -71,7 +71,6 @@ grocerySchema.post('findOneAndUpdate', async function(doc) {
 });
 
 const createRestockNotification = async (groceryItem) => {
-  console.log(groceryItem);
   const event = {
     title: `Restock ${groceryItem.name}`,
     start: new Date(),
