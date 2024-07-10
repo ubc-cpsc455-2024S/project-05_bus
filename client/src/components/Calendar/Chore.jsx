@@ -8,7 +8,7 @@ export default function Chore({ chore, handleDelete }) {
       className="event"
       data-chore-id={chore._id}
       style={{
-        backgroundColor: chore.color,
+        backgroundColor: chore.colour,
         padding: "8px",
         borderRadius: "4px",
         width: "100%",

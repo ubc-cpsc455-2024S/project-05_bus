@@ -82,8 +82,8 @@ export default function Calendar() {
             title: eventDetails.title,
             start: eventDetails.start,
             end: eventDetails.end,
-            backgroundColor: chore.color,
-            borderColor: chore.color,
+            backgroundColor: chore.colour,
+            borderColor: chore.colour,
             extendedProps: {
               choreId: chore.id,
               memberId: eventDetails.memberId,
@@ -170,6 +170,7 @@ export default function Calendar() {
               title: info.event.title,
               start: info.event.start,
               end: info.event.end,
+              allDay: true,
               backgroundColor: info.event.backgroundColor,
               borderColor: info.event.backgroundColor,
               textColor: info.event.textColor,

@@ -54,9 +54,9 @@ const groceryQueries = {
       throw error;
     }
   },
-  deleteGrocery: async function (id, groupID) {
+  deleteGrocery: async function (id) {
     try {
-      const result = await Groceries.deleteOne({ _id: id });
+      const result = await Groceries.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting grocery with id ${id}:`, error);

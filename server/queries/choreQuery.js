@@ -44,7 +44,7 @@ const choreQueries = {
   },
   deleteChore: async function (id) {
     try {
-      const result = await Chores.deleteOne({ _id: id });
+      const result = await Chores.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting chore with id ${id}:`, error);

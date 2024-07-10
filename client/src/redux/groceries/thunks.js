@@ -79,7 +79,7 @@ export const getLocationAsync = createAsyncThunk(
 export const addCategoryAsync = createAsyncThunk(
   actionTypes.ADD_CATEGORY,
   async (category) => {
-    return await GroceryService.postCategory(category);
+    return await GroceryService.addCategory(category);
   }
 );
 
@@ -102,7 +102,7 @@ export const updateCategoryAsync = createAsyncThunk(
 export const addLocationAsync = createAsyncThunk(
   actionTypes.ADD_LOCATION,
   async (location) => {
-    return await GroceryService.postLocation(location);
+    return await GroceryService.addLocation(location);
   }
 );
 

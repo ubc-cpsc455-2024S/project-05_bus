@@ -47,7 +47,7 @@ const groceryLocationQueries = {
   },
   deleteLocation: async function (id) {
     try {
-      const result = await GroceryLocations.deleteOne({ _id: id });
+      const result = await GroceryLocations.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting location with id ${id}:`, error);

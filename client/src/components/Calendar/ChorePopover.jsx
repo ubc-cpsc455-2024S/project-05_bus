@@ -66,10 +66,11 @@ export default function ChorePopover({ chore }) {
         title: chore.title,
         start: date,
         allDay: true,
-        backgroundColor: chore.color,
-        borderColor: chore.color,
+        backgroundColor: chore.colour,
+        borderColor: chore.colour,
         groupID: group._id,
         extendedProps: {
+          type: "chore",
           choreId: chore.id,
           memberId: assignee,
           done: false,

@@ -29,7 +29,7 @@ export default function CreateChore() {
 
   const addNewChore = () => {
     if (newChore.trim() !== "") {
-      dispatch(addChoreAsync({ title: newChore, color: newColor, groupID: group._id}));
+      dispatch(addChoreAsync({ title: newChore, colour: newColor, groupID: group._id}));
       setNewChore("");
     }
   };

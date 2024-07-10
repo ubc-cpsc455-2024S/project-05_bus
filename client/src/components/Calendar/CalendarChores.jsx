@@ -28,9 +28,12 @@ export default function CalendarChores() {
           const eventTitleEl = eventEl.querySelector(".event-title");
           return {
             title: eventTitleEl.innerText,
+            allDay: true,
             backgroundColor: eventEl.style.backgroundColor,
+            borderColor: eventEl.style.backgroundColor,
             extendedProps: {
               choreId: choreId,
+              type: "chore",
               memberId: selectedMemberID,
               done: false,
             },

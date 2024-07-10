@@ -15,7 +15,7 @@ const userQueries = {
         return savedUser;
     },
     deleteUser: async function (id) {
-        const result = await Users.deleteOne({ _id: id });
+        const result = await Users.findOneAndDelete({ _id: id });
         return result;
     }
 }

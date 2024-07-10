@@ -47,7 +47,7 @@ const groceryCategoryQueries = {
   },
   deleteCategory: async function (id) {
     try {
-      const result = await GroceryCategories.deleteOne({ _id: id });
+      const result = await GroceryCategories.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting category with id ${id}:`, error);
