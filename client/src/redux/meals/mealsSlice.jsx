@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { REQUEST_STATE } from './utils';
-import { addMeal, getMeals, removeMeal, generateMeal } from './thunks';
+import { REQUEST_STATE } from "../utils";
+import { addMealAsync, getMealsAsync, removeMealAsync, generateMealAsync } from './thunks';
 
 const INITIAL_STATE = {
   list: [],
   recipe: "",
-  getMeals: REQUEST_STATE.IDLE,
-  addMeal: REQUEST_STATE.IDLE,
-  removeMeal: REQUEST_STATE.IDLE,
-  generateMeal: REQUEST_STATE.IDLE,
+  getMealsAsync: REQUEST_STATE.IDLE,
+  addMealAsync: REQUEST_STATE.IDLE,
+  removeMealAsync: REQUEST_STATE.IDLE,
+  generateMealAsync: REQUEST_STATE.IDLE,
   error: null
 }
 
@@ -18,49 +18,49 @@ const groceryMealSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
       builder
-        .addCase(getMeals.pending, (state) => {
+        .addCase(getMealsAsync.pending, (state) => {
           state.getMeals = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(getMeals.fulfilled, (state, action) => {
+        .addCase(getMealsAsync.fulfilled, (state, action) => {
           state.getMeals = REQUEST_STATE.FULFILLED;
           state.list = action.payload;
         })
-        .addCase(getMeals.rejected, (state, action) => {
+        .addCase(getMealsAsync.rejected, (state, action) => {
           state.getMeals = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(addMeal.pending, (state) => {
+        .addCase(addMealAsync.pending, (state) => {
           state.addMeal = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(addMeal.fulfilled, (state) => {
+        .addCase(addMealAsync.fulfilled, (state) => {
           state.addMeal = REQUEST_STATE.FULFILLED;
         })
-        .addCase(addMeal.rejected, (state, action) => {
+        .addCase(addMealAsync.rejected, (state, action) => {
           state.addMeal = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(removeMeal.pending, (state) => {
+        .addCase(removeMealAsync.pending, (state) => {
           state.removeMeal = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(removeMeal.fulfilled, (state) => {
+        .addCase(removeMealAsync.fulfilled, (state) => {
           state.removeMeal = REQUEST_STATE.FULFILLED;
         })
-        .addCase(removeMeal.rejected, (state, action) => {
+        .addCase(removeMealAsync.rejected, (state, action) => {
           state.removeMeal = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(generateMeal.pending, (state) => {
+        .addCase(generateMealAsync.pending, (state) => {
           state.generateMeal = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(generateMeal.fulfilled, (state, action) => {
+        .addCase(generateMealAsync.fulfilled, (state, action) => {
           state.generateMeal = REQUEST_STATE.FULFILLED;
           state.recipe = action.payload;
         })
-        .addCase(generateMeal.rejected, (state, action) => {
+        .addCase(generateMealAsync.rejected, (state, action) => {
           state.generateMeal = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })

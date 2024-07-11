@@ -1,6 +1,6 @@
 import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGroceryAsync } from '../../../redux/slices/groceriesSlice';
+import { updateGroceryAsync } from '../../../redux/groceries/thunks';
 import { useState } from 'react';
 import { addMealAsync, generateMealAsync } from '../../../redux/meals/thunks';
 
@@ -15,7 +15,7 @@ export default function MealPlanBox() {
 
   const [quantities, setQuantities] = useState(
     selectedMealItems.reduce((acc, item) => {
-      acc[item.id] = item.quantity;
+      acc[item._id] = item.quantity;
       return acc;
     }, {})
   );
@@ -28,7 +28,7 @@ export default function MealPlanBox() {
     dispatch(addMealAsync({meal: recipe.message}));
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
-      dispatch(updateGroceryAsync({ id: item.id, selectMeal: false }));
+      dispatch(updateGroceryAsync({ _id: item._id, selectMeal: false }));
     });
   };
 
@@ -36,17 +36,17 @@ export default function MealPlanBox() {
     setShowRecipe(!showRecipe);
   };
   
-  const handleQuantityChange = (id, value) => {
+  const handleQuantityChange = (_id, value) => {
     setQuantities(prevQuantities => ({
       ...prevQuantities,
-      [id]: value
+      [_id]: value
     }));
   };
 
   const generateRecipe = () => {
     let selectedItems = [];
     selectedMealItems.forEach(item => {
-      const quantity = quantities[item.id] !== undefined ? quantities[item.id] : item.quantity;
+      const quantity = quantities[item._id] !== undefined ? quantities[item._id] : item.quantity;
       selectedItems.push({ name: item.name, quantity });
     });
     
@@ -90,7 +90,7 @@ export default function MealPlanBox() {
         <VStack align="start" spacing={3}>
           {selectedMealItems.map((item) => (
             <Box
-              key={item.id}
+              key={item._id}
               display="flex"
               alignItems="center"
               justifyContent="space-between"

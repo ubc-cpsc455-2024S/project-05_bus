@@ -12,7 +12,7 @@ export default function SelectMealButton({ groceryItem }) {
   }, [groceryItem.selectMeal]);
 
   const toggleSelect = () => {
-    dispatch(updateGroceryAsync({ id: groceryItem.id, selectMeal: !isSelect }));
+    dispatch(updateGroceryAsync({ _id: groceryItem._id, selectMeal: !isSelect }));
     setSelect(!isSelect);
   };
 
