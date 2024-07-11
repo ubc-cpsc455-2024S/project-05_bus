@@ -14,20 +14,22 @@ import {
   PopoverCloseButton,
 } from "@chakra-ui/react";
 import { HexColorPicker } from "react-colorful";
-import { addChore } from "../../redux/slices/choresSlice";
 import { useDispatch } from "react-redux";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
+import { addChoreAsync } from "../../redux/chores/thunks";
+import useCurrentGroup from "../../hooks/useCurrentGroup";
 
 export default function CreateChore() {
   const [newChore, setNewChore] = useState("");
   const [newColor, setNewColor] = useState("#aabbcc");
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const group = useCurrentGroup();
 
   const dispatch = useDispatch();
 
   const addNewChore = () => {
     if (newChore.trim() !== "") {
-      dispatch(addChore({ title: newChore, color: newColor }));
+      dispatch(addChoreAsync({ title: newChore, colour: newColor, groupID: group._id}));
       setNewChore("");
     }
   };

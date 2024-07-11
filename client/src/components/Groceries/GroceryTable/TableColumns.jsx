@@ -18,13 +18,13 @@ const columns = (
     accessorKey: "locationId",
     header: "Location",
     cell: (info) =>
-      locations.find((l) => l.id === String(info.getValue())).name,
+      locations.find((l) => l._id === String(info.getValue())).name,
   },
   {
     accessorKey: "categoryId",
     header: "Category",
     cell: (info) =>
-      categories.find((c) => c.id === String(info.getValue())).name,
+      categories.find((c) => c._id === String(info.getValue())).name,
   },
   {
     accessorKey: "expiryDate",

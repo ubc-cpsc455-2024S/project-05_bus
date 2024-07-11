@@ -25,11 +25,11 @@ import {
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvent } from "../../../redux/slices/calendarSlice";
-import { updateGrocery } from "../../../redux/slices/groceriesSlice";
-import { removeEvent } from "../../../redux/slices/calendarSlice";
 import moment from "moment";
 import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import { updateGroceryAsync } from "../../../redux/groceries/thunks";
+import { addEventAsync } from "../../../redux/events/thunks";
 
 export default function NotificationPopover({ groceryItem }) {
   const [selectedNotifications, setSelectedNotifications] = useState([]);
@@ -40,10 +40,8 @@ export default function NotificationPopover({ groceryItem }) {
   const [assignedUser, setAssignedUser] = useState(groceryItem.restockerId);
   const currentUserID = useSelector((state) => state.users.currentUserID);
   const members = useCurrentGroupMembers();
-  const events = useSelector((state) => state.events.events);
-  const relatedEvents = events.filter(
-    (event) => event.extendedProps.groceryId === groceryItem.id
-  );
+  const group = useCurrentGroup();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const ref = useRef();
 
@@ -72,7 +70,7 @@ export default function NotificationPopover({ groceryItem }) {
 
       if (groceryItem.expiryNotificationDate !== notificationDate) {
         dispatch(
-          addEvent({
+          addEventAsync({
             title: `${groceryItem.name} will expire on ${moment(
               groceryItem.expiryDate
             ).format("MMMM Do YYYY")}`,
@@ -80,9 +78,9 @@ export default function NotificationPopover({ groceryItem }) {
             allDay: true,
             backgroundColor: "#c49bad",
             borderColor: "#c49bad",
+            groupID: group._id,
             extendedProps: {
-              groceryId: groceryItem.id,
-              choreId: "5",
+              groceryId: groceryItem._id,
               type: "expiry",
               memberId: currentUserID,
               done: false,
@@ -90,42 +88,36 @@ export default function NotificationPopover({ groceryItem }) {
           })
         );
         dispatch(
-          updateGrocery({
-            id: groceryItem.id,
-            expiryNotificationDate: moment(notificationDate).format(),
+          updateGroceryAsync({
+            _id: groceryItem._id,
+            expiryNotificationDate: notificationDate,
           })
         );
       }
     } else {
-      relatedEvents
-        .filter((event) => event.extendedProps.type === "expiry")
-        .map((event) => dispatch(removeEvent(event.id)));
       dispatch(
-        updateGrocery({
-          id: groceryItem.id,
-          expiryNotificationDate: "",
+        updateGroceryAsync({
+          _id: groceryItem._id,
+          expiryNotificationDate: null,
         })
       );
     }
 
     if (selectedNotifications.includes("restock")) {
       dispatch(
-        updateGrocery({
-          id: groceryItem.id,
+        updateGroceryAsync({
+          _id: groceryItem._id,
           restockThreshold: restockQuantity,
           restockerId: assignedUser,
         })
       );
     } else {
-      relatedEvents
-        .filter((event) => event.extendedProps.type === "restock")
-        .map((event) => dispatch(removeEvent(event.id)));
       dispatch(
-        updateGrocery({
-          id: groceryItem.id,
-          restockNotificationDate: "",
-          restockThreshold: "",
-          restockerId: "",
+        updateGroceryAsync({
+          _id: groceryItem._id,
+          restockNotificationDate: null,
+          restockThreshold: null,
+          restockerId: null,
         })
       );
     }
@@ -226,7 +218,7 @@ export default function NotificationPopover({ groceryItem }) {
                 value={assignedUser}
               >
                 {members.map((member) => (
-                  <option key={member.id} value={member.id}>
+                  <option key={member._id} value={member._id}>
                     {`${member.firstName} ${member.lastName}`}
                   </option>
                 ))}

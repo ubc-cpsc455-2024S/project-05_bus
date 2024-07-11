@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Connect Routes
 app.use("/users", usersRouter);
-app.use("/events", eventsRouter);
+app.use("/calendar", eventsRouter);
 app.use("/chores", choresRouter);
 app.use("/groceries", groceriesRouter);
 

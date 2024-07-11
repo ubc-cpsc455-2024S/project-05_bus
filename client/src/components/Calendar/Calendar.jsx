@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { useDispatch, useSelector } from "react-redux";
-import { addEvent, removeEvent } from "../../redux/slices/calendarSlice";
+import {
+  getEventsAsync,
+  updateEventAsync,
+  addEventAsync,
+  deleteEventAsync,
+} from "../../redux/events/thunks";
 import EventPopover from "./EventPopover";
 import { Box, Tooltip } from "@chakra-ui/react";
-import { editEvent } from "../../redux/slices/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
-import { updateMonthView } from "../../redux/slices/calendarSlice";
+import useCurrentGroup from "../../hooks/useCurrentGroup";
+import { updateMonthView } from "../../redux/events/calendarSlice";
 import moment from "moment";
+import { getChoresAsync } from "../../redux/chores/thunks";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
+  const group = useCurrentGroup();
   const members = useCurrentGroupMembers();
   const selectedMemberID = useSelector(
     (state) => state.groups.selectedMemberID
@@ -21,6 +28,13 @@ export default function Calendar() {
   const isFiltered = useSelector((state) => state.events.filter);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (group?._id) {
+      dispatch(getEventsAsync(group._id));
+      dispatch(getChoresAsync(group._id));
+    }
+  }, [dispatch, group]);
 
   const [popoverInfo, setPopoverInfo] = useState({
     visible: false,
@@ -46,7 +60,7 @@ export default function Calendar() {
 
   const handleDeleteEvent = () => {
     if (popoverInfo.event) {
-      dispatch(removeEvent(popoverInfo.event.id));
+      dispatch(deleteEventAsync(popoverInfo.event.id));
       popoverInfo.event.remove();
       closePopover();
     }
@@ -54,15 +68,10 @@ export default function Calendar() {
 
   const handleDragEvent = (info) => {
     dispatch(
-      editEvent({
-        id: info.event.id,
-        title: info.event.title,
+      updateEventAsync({
+        _id: info.event.id,
         start: info.event.start,
         end: info.event.end,
-        backgroundColor: info.event.backgroundColor,
-        borderColor: info.event.backgroundColor,
-        textColor: info.event.textColor,
-        extendedProps: info.event.extendedProps,
       })
     );
   };
@@ -72,13 +81,13 @@ export default function Calendar() {
       const chore = chores.find((ch) => ch.title === eventDetails.title);
       if (chore) {
         dispatch(
-          editEvent({
-            id: popoverInfo.event.id,
+          updateEventAsync({
+            _id: popoverInfo.event.id,
             title: eventDetails.title,
             start: eventDetails.start,
             end: eventDetails.end,
-            backgroundColor: chore.color,
-            borderColor: chore.color,
+            backgroundColor: chore.colour,
+            borderColor: chore.colour,
             extendedProps: {
               choreId: chore.id,
               memberId: eventDetails.memberId,
@@ -93,7 +102,7 @@ export default function Calendar() {
 
   const renderEventContent = (eventInfo) => {
     const member = members.find(
-      (member) => member.id === eventInfo.event.extendedProps.memberId
+      (member) => member._id === eventInfo.event.extendedProps.memberId
     );
     const isDone = eventInfo.event.extendedProps.done;
 
@@ -149,9 +158,11 @@ export default function Calendar() {
             })
           );
         }}
-        eventStartEditable={true}
-        eventDurationEditable={false}
+        eventStartEditable={(info) => {
+          return info.event.extendedProps.type == "chore";
+        }}
         droppable
+        eventDurationEditable={false}
         events={
           isFiltered
             ? events.filter(
@@ -161,19 +172,25 @@ export default function Calendar() {
         }
         eventReceive={(info) => {
           dispatch(
-            addEvent({
+            addEventAsync({
               title: info.event.title,
               start: info.event.start,
               end: info.event.end,
+              allDay: true,
               backgroundColor: info.event.backgroundColor,
-              borderColor: "none",
+              borderColor: info.event.backgroundColor,
               textColor: info.event.textColor,
+              groupID: group._id,
               extendedProps: info.event.extendedProps,
             })
           );
         }}
         eventClick={handleEventClick}
-        eventDrop={handleDragEvent}
+        eventDrop={(info) => {
+          if (info.event.extendedProps.type == "chore") {
+            handleDragEvent(info);
+          }
+        }}
         eventContent={renderEventContent}
         height="100%"
       />

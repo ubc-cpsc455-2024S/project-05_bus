@@ -31,9 +31,10 @@ const groceryCategoryQueries = {
   },
   updateCategory: async function (categoryData) {
     try {
-      const result = await GroceryCategories.updateOne(
+      const result = await GroceryCategories.findOneAndUpdate(
         { _id: categoryData._id },
-        categoryData
+        categoryData,
+        { new: true }
       );
       return result;
     } catch (error) {
@@ -46,7 +47,7 @@ const groceryCategoryQueries = {
   },
   deleteCategory: async function (id) {
     try {
-      const result = await GroceryCategories.deleteOne({ _id: id });
+      const result = await GroceryCategories.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting category with id ${id}:`, error);

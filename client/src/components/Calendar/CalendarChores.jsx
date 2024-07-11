@@ -5,8 +5,7 @@ import { Draggable } from "@fullcalendar/interaction";
 import CreateChore from "./CreateChore";
 import CalendarPeople from "./CalendarPeople";
 import EventList from "./EventList";
-import { removeChore } from "../../redux/slices/choresSlice";
-import { removeEvent } from "../../redux/slices/calendarSlice";
+import { deleteChoreAsync } from "../../redux/chores/thunks";
 import Chore from "./Chore";
 
 export default function CalendarChores() {
@@ -14,15 +13,9 @@ export default function CalendarChores() {
   const chores = useSelector((state) => state.chores.chores);
   const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
   const dispatch = useDispatch();
-  const events = useSelector((state) => state.events.events);
 
   const handleDelete = (id) => {
-    events
-      .filter((event) => event.extendedProps.choreId === id)
-      .forEach((event) => {
-        dispatch(removeEvent(event.id));
-      });
-    dispatch(removeChore(id));
+    dispatch(deleteChoreAsync(id));
   };
   
   useEffect(() => {
@@ -35,9 +28,12 @@ export default function CalendarChores() {
           const eventTitleEl = eventEl.querySelector(".event-title");
           return {
             title: eventTitleEl.innerText,
+            allDay: true,
             backgroundColor: eventEl.style.backgroundColor,
+            borderColor: eventEl.style.backgroundColor,
             extendedProps: {
               choreId: choreId,
+              type: "chore",
               memberId: selectedMemberID,
               done: false,
             },
