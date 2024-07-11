@@ -1,16 +1,13 @@
 import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateGroceryAsync } from '../../../redux/groceries/thunks';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { addMealAsync, generateMealAsync } from '../../../redux/meals/thunks';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.groceries.groceries);
   const [showRecipe, setShowRecipe] = useState(false);
-  const [recipeTitle, setRecipeTitle] = useState("");
-  const [recipeIngredients, setRecipeIngredients] = useState([]);
-  const [recipeInstructions, setRecipeInstructions] = useState([]);
 
   const selectedMealItems = items.filter(item => item.selectMeal);
 
@@ -55,28 +52,12 @@ export default function MealPlanBox() {
     
     dispatch(generateMealAsync(selectedItems));
     setShowRecipe(true);
-
-    const recipeString = JSON.stringify(recipe.message);
-
-    const sections = recipeString.split(" // ");
-    sections.forEach(section => {
-      if (section.startsWith("Ingredients:")) {
-        // Split the ingredients section into individual items
-        setRecipeIngredients(section.replace("Ingredients: ", "").split(" // "));
-      } else if (section.startsWith("Instructions:")) {
-        // Split the instructions section into individual steps
-        setRecipeInstructions(section.replace("Instructions: ", "").split(" // "));
-      } else {
-        setRecipeTitle(section);
-      }
-    });
-    console.log(recipeTitle);
-    console.log(recipeIngredients);
-    console.log(recipeInstructions);
+    console.log(recipe);
+    console.log(typeof(recipe));
   };
 
   return (
-    showRecipe && recipe && recipe.message ? (
+    showRecipe ? (
       <Box p={5}>
         <Box display="flex" justifyContent="space-between">
           <IconButton
@@ -98,10 +79,23 @@ export default function MealPlanBox() {
             onClick={() => cancelMeal()}
           />
         </Box>
-        <Text>{ recipe.message }</Text>
-        <Text>{ recipeTitle }</Text>
-        <Text>{ recipeIngredients }</Text>
-        <Text>{ recipeInstructions }</Text>
+        <Text><strong>{recipe.Recipe}</strong><br /><br /></Text>
+        <Text><strong>Ingredients:</strong></Text>
+        <Text>
+          {recipe.Ingredients && recipe.Ingredients.map((ingredient, index) => (
+          <React.Fragment key={index}>
+            <span>- {ingredient}</span>
+            <br />
+          </React.Fragment>
+        ))}<br /></Text>
+        <Text><strong>Instructions:</strong></Text>
+        <Text>
+          {recipe.Instructions && recipe.Instructions.map((instruction, index) => (
+          <React.Fragment key={index}>
+            <span>{instruction}</span>
+            <br />
+          </React.Fragment>
+        ))}</Text>
       </Box>
     ) : (
       <Box p={5}>
