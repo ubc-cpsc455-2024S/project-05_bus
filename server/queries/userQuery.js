@@ -1,9 +1,13 @@
 import Users from "../models/userSchema.js";
 
 const userQueries = {
-    getAllUsers: async function (groupID) {
-        const users = await Users.find({ groupID });
+    getAllUsers: async function () {
+        const users = await Users.find();
         return users;
+    },
+    getGroupMembers: async function (groupID) {
+        const members = await Users.find({ groupID });
+        return members;
     },
     getOneUser: async function (id) {
         const user = await Users.findOne({ _id: id });

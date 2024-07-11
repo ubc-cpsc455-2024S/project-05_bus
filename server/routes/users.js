@@ -3,10 +3,21 @@ import userQueries from "../queries/userQuery.js";
 
 const router = express.Router();
 
-/* GET users listing. */
+/* GET all users listing. */
+router.get("/", async function(req, res, next) {
+  try {
+      const result = await userQueries.getAllUsers();
+      return res.json(result);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+/* GET group members listing. */
 router.get("/group/:groupID", async function(req, res, next) {
   try {
-      const result = await userQueries.getAllUsers(req.params.groupID);
+      const result = await userQueries.getGroupMembers(req.params.groupID);
       return res.json(result);
   } catch (err) {
       console.error(err);
