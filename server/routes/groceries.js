@@ -129,9 +129,9 @@ router.delete("/categories/:id", async (req, res) => {
 });
 
 // Grocery Meal Planning Routes
-router.get("/meals/group/:groupID", async (req, res) => {
+router.get("/meals", async (req, res) => {
   try {
-    const meals = await groceryMealQueries.getAllMeals(req.params.groupID);
+    const meals = await groceryMealQueries.getAllMeals();
     return res.json(meals);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -158,15 +158,14 @@ router.delete("/meals/:id", async (req, res) => {
 
 router.post("/generateMeal", async (req, res) => {
   try {
-    // const user_message = `Given the food items ${req.body} I want to use in my cooking or baking, can you give me a recipe (without any small talk) incorporating these ingredients and their available quantities.`;
-    // const response = await openai.chat.completions.create({
-    //   model: "gpt-3.5-turbo",
-    //   messages: [
-    //     { role: "system", content: user_message },
-    //   ],
-    // });
-    // return response.choices[0].message.content;
-    return res.status(200).send({ message: "Delicious pasta" });
+    const user_message = `Given the food items ${req.body} I want to use in my cooking or baking, can you give me a recipe (without any small talk) incorporating these ingredients and their available quantities.`;
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: user_message },
+      ],
+    });
+    return res.status(200).send({ message: response.choices[0].message.content});
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);

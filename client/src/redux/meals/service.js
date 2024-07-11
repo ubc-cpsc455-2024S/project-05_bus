@@ -1,5 +1,5 @@
 const addMeal = async (newMeal) => {
-    const response = await fetch('http://localhost:3000/groceries/meals', {
+    const response = await fetch(`http://localhost:3000/groceries/meals`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -16,8 +16,8 @@ const addMeal = async (newMeal) => {
     return data;
   };
   
-  const getMeals = async (groupId) => {
-    const response = await fetch(`http://localhost:3000/groceries/meals/group/${groupId}`, {
+  const getMeals = async () => {
+    const response = await fetch(`http://localhost:3000/groceries/meals`, {
       method: 'GET'
     });
     return response.json();

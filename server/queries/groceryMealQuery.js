@@ -1,9 +1,9 @@
 import { GroceryMeals } from "../models/grocerySchema.js";
 
 const groceryMealQueries = {
-    getAllMeals: async function (groupID) {
+    getAllMeals: async function () {
         try {
-            const meals = await GroceryMeals.find({ groupID });
+            const meals = await GroceryMeals.find();
             return meals;
         } catch (error) {
             console.error("Error fetching meals:", error);

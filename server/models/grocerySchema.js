@@ -26,8 +26,7 @@ const groceryCategorySchema = new Schema({
 });
 
 const groceryMealSchema = new Schema({
-    meal: { type: String, required: true },
-    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
+    meal: { type: String, required: true }
 });
 
 const Groceries = model("Groceries", grocerySchema);

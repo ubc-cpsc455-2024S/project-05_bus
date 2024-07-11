@@ -2,7 +2,7 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateGrocery } from '../../../redux/slices/groceriesSlice';
 import { useState } from 'react';
-import { generateMeal } from '../../../redux/meals/thunks';
+import { addMeal, generateMeal } from '../../../redux/meals/thunks';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ export default function MealPlanBox() {
   };
 
   const saveMeal = () => {
+    dispatch(addMeal({meal: recipe.message}));
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
       dispatch(updateGrocery({ id: item.id, selectMeal: false }));
