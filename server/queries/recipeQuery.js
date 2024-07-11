@@ -1,9 +1,9 @@
-import { GroceryMeals } from "../models/grocerySchema.js";
+import Recipes from "../models/recipeSchema.js";
 
-const groceryMealQueries = {
+const recipeQueries = {
     getAllMeals: async function () {
         try {
-            const meals = await GroceryMeals.find();
+            const meals = await Recipes.find();
             return meals;
         } catch (error) {
             console.error("Error fetching meals:", error);
@@ -12,7 +12,7 @@ const groceryMealQueries = {
     },
     postMeal: async function (mealData) {
         try {
-            const newMeal = new GroceryMeals(mealData);
+            const newMeal = new Recipes(mealData);
             const savedMeal = await newMeal.save();
             return savedMeal;
         } catch (error) {
@@ -22,7 +22,7 @@ const groceryMealQueries = {
     },
     deleteMeal: async function (id) {
         try {
-            const result = await GroceryMeals.deleteOne({ _id: id });
+            const result = await Recipes.deleteOne({ _id: id });
             return result;
         } catch (error) {
             console.error(`Error deleting meal with id ${id}:`, error);
@@ -31,4 +31,4 @@ const groceryMealQueries = {
     } 
 }
 
-export default groceryMealQueries;
+export default recipeQueries;

@@ -25,7 +25,12 @@ export default function MealPlanBox() {
   };
 
   const saveMeal = () => {
-    dispatch(addMealAsync({meal: recipe.message}));
+    const newMeal = {
+      recipe: recipe.Recipe,
+      ingredients: recipe.Ingredients,
+      instructions: recipe.Instructions,
+  };
+    dispatch(addMealAsync(newMeal));
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
       dispatch(updateGroceryAsync({ _id: item._id, selectMeal: false }));

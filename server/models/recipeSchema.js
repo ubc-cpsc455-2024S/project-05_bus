@@ -2,9 +2,10 @@ import { Schema, model } from "mongoose";
 
 // create schema
 const recipeSchema = new Schema({
-    groceryItems: { type: [String], required: true },
     recipe: { type: String, required: true },
-    groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
+    ingredients: { type: [String], required: true },
+    instructions: { type: [String], required: true },
+    groupID: { type: Schema.Types.ObjectId, required: false, ref: "Group" },
 });
 
 // create model

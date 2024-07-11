@@ -3,7 +3,7 @@ import eventQueries from "../queries/eventQuery.js";
 import groceryQueries from "../queries/groceryQuery.js";
 import groceryLocationQueries from "../queries/groceryLocationQuery.js";
 import groceryCategoryQueries from "../queries/groceryCategoryQuery.js";
-import groceryMealQueries from "../queries/groceryMealQuery.js";
+import recipeQueries from "../queries/recipeQuery.js";
 import dotenv from "dotenv";
 import { OpenAI } from "openai";
 
@@ -160,7 +160,7 @@ router.delete("/categories/:id", async (req, res) => {
 // Grocery Meal Planning Routes
 router.get("/meals", async (req, res) => {
   try {
-    const meals = await groceryMealQueries.getAllMeals();
+    const meals = await recipeQueries.getAllMeals();
     return res.json(meals);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -169,7 +169,7 @@ router.get("/meals", async (req, res) => {
 
 router.post("/meals", async (req, res) => {
   try {
-    const newMeal = await groceryMealQueries.postMeal(req.body);
+    const newMeal = await recipeQueries.postMeal(req.body);
     return res.status(201).json(newMeal);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -178,7 +178,7 @@ router.post("/meals", async (req, res) => {
 
 router.delete("/meals/:id", async (req, res) => {
   try {
-    await groceryMealQueries.deleteMeal(req.params.id);
+    await recipeQueries.deleteMeal(req.params.id);
     return res.status(200).send({ message: "Meal deleted successfully" });
   } catch (error) {
     return res.status(500).send(error.message);

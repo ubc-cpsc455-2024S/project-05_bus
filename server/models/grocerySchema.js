@@ -99,13 +99,8 @@ const groceryCategorySchema = new Schema({
   groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });
 
-const groceryMealSchema = new Schema({
-    meal: { type: String, required: true }
-});
-
 const Groceries = model("Groceries", grocerySchema);
 const GroceryLocations = model("GroceryLocation", groceryLocationSchema);
 const GroceryCategories = model("GroceryCategory", groceryCategorySchema);
-const GroceryMeals = model("GroceryMeal", groceryMealSchema);
 
-export { Groceries, GroceryLocations, GroceryCategories, GroceryMeals };
+export { Groceries, GroceryLocations, GroceryCategories };
