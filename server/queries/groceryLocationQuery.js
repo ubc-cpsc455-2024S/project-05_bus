@@ -31,9 +31,10 @@ const groceryLocationQueries = {
   },
   updateLocation: async function (locationData) {
     try {
-      const result = await GroceryLocations.updateOne(
+      const result = await GroceryLocations.findOneAndUpdate(
         { _id: locationData._id },
-        locationData
+        locationData,
+        { new: true }
       );
       return result;
     } catch (error) {
@@ -46,7 +47,7 @@ const groceryLocationQueries = {
   },
   deleteLocation: async function (id) {
     try {
-      const result = await GroceryLocations.deleteOne({ _id: id });
+      const result = await GroceryLocations.findOneAndDelete({ _id: id });
       return result;
     } catch (error) {
       console.error(`Error deleting location with id ${id}:`, error);

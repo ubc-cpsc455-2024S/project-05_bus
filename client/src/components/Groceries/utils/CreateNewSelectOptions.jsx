@@ -1,11 +1,11 @@
-import { addCategory, addLocation } from "../../../redux/slices/groceriesSlice";
+import { addCategoryAsync, addLocationAsync } from "../../../redux/groceries/thunks";
 
-export const handleCreateCategory = (inputValue, dispatch) => {
-  dispatch(addCategory(inputValue));
+export const handleCreateCategory = (inputValue, dispatch, groupID) => {
+  dispatch(addCategoryAsync({name: inputValue, groupID}));
 };
 
-export const handleCreateLocation = (inputValue, dispatch) => {
-  dispatch(addLocation(inputValue));
+export const handleCreateLocation = (inputValue, dispatch, groupID) => {
+  dispatch(addLocationAsync({name: inputValue, groupID}));
 };
 
 export const isValidNewCategory = (inputValue, categories) => {

@@ -23,11 +23,11 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import {
-  updateCategory,
-  removeCategory,
-  updateLocation,
-  removeLocation,
-} from "../../../redux/slices/groceriesSlice";
+  deleteCategoryAsync,
+  deleteLocationAsync,
+  updateCategoryAsync,
+  updateLocationAsync,
+} from "../../../redux/groceries/thunks";
 
 export default function GroceryCard({
   item,
@@ -55,9 +55,9 @@ export default function GroceryCard({
 
   const handleSaveClick = () => {
     if (type === "category") {
-      dispatch(updateCategory({ id: item.id, name: cardName }));
+      dispatch(updateCategoryAsync({ _id: item._id, name: cardName }));
     } else if (type === "location") {
-      dispatch(updateLocation({ id: item.id, name: cardName }));
+      dispatch(updateLocationAsync({ _id: item._id, name: cardName }));
     }
     setIsEditing(false);
   };
@@ -65,20 +65,20 @@ export default function GroceryCard({
   const handleDeleteClick = (id, type) => {
     if (confirm("Are you sure you want to delete this?") === false) return;
     if (type === "category") {
-      dispatch(removeCategory(id));
+      dispatch(deleteCategoryAsync(id));
     } else if (type === "location") {
-      dispatch(removeLocation(id));
+      dispatch(deleteLocationAsync(id));
     }
   };
 
   return (
     <>
-      <Card key={item.id} backgroundColor={bgColor} ref={ref} shadow="xl">
+      <Card key={item._id} backgroundColor={bgColor} ref={ref} shadow="xl">
         {isEditing ? (
           <IconButton
             size="xs"
             icon={<DeleteIcon />}
-            onClick={() => handleDeleteClick(item.id, type)}
+            onClick={() => handleDeleteClick(item._id, type)}
             backgroundColor="red.400"
             color="white"
             _hover={{ bg: "red.500" }}
@@ -141,28 +141,24 @@ export default function GroceryCard({
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {matchingGroceries
-                    .map((grocery) => (
-                      <Tr key={grocery.id}>
-                        <Td>
-                          <Tooltip
-                            label={grocery.name}
-                            aria-label="grocery-name"
+                  {matchingGroceries.map((grocery) => (
+                    <Tr key={grocery._id}>
+                      <Td>
+                        <Tooltip label={grocery.name} aria-label="grocery-name">
+                          <Box
+                            maxWidth="90%"
+                            overflow="hidden"
+                            textOverflow="ellipsis"
+                            whiteSpace="nowrap"
+                            p={0.8}
                           >
-                            <Box
-                              maxWidth="90%"
-                              overflow="hidden"
-                              textOverflow="ellipsis"
-                              whiteSpace="nowrap"
-                              p={0.8}
-                            >
-                              {grocery.name}
-                            </Box>
-                          </Tooltip>
-                        </Td>
-                        <Td isNumeric>{grocery.quantity}</Td>
-                      </Tr>
-                    ))}
+                            {grocery.name}
+                          </Box>
+                        </Tooltip>
+                      </Td>
+                      <Td isNumeric>{grocery.quantity}</Td>
+                    </Tr>
+                  ))}
                 </Tbody>
               </Table>
             </TableContainer>

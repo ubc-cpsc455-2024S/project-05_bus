@@ -31,15 +31,12 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
 import AddGrocery from "./AddGrocery";
 import GroceriesDrawer from "../GroceryDrawer/Drawer";
 import columns from "./TableColumns";
-
-import { addEvent } from "../../../redux/slices/calendarSlice";
 
 import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
@@ -52,33 +49,15 @@ export default function GroceriesTable() {
   const [openFilter, setOpenFilter] = useState("");
   const [dateFilterType, setDateFilterType] = useState("on");
 
+  const groceriesData = useSelector((state) => state.groceries.groceries);
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
-  const groceriesData = useSelector((state) => state.groceries.groceries);
+
   const events = useSelector((state) => state.events.events);
 
   const dispatch = useDispatch();
 
   const tooltipColumns = ['name', 'categoryId', 'locationId'];
-
-  const createRestockNotification = (groceryItem) => {
-    dispatch(
-      addEvent({
-        title: `Restock ${groceryItem.name}`,
-        start: moment(new Date()).format(),
-        allDay: true,
-        backgroundColor: "#c49bad",
-        borderColor: "#c49bad",
-        extendedProps: {
-          groceryId: groceryItem.id,
-          choreId: "6",
-          type: "restock",
-          memberId: groceryItem.restockerId,
-          done: false,
-        },
-      })
-    );
-  };
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
@@ -92,7 +71,6 @@ export default function GroceriesTable() {
       dispatch,
       events,
       dateFilterType,
-      createRestockNotification
     ),
     state: {
       sorting,
@@ -247,7 +225,7 @@ export default function GroceriesTable() {
             </Table>
           </TableContainer>
         </Box>
-        <HStack>
+        <HStack w="100%">
           <AddGrocery />
           <GroceriesDrawer />
         </HStack>

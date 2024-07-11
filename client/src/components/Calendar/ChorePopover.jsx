@@ -21,21 +21,23 @@ import {
   Portal,
 } from "@chakra-ui/react";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+import useCurrentGroup from "../../hooks/useCurrentGroup";
 import { useDispatch } from "react-redux";
-import { addEvent } from "../../redux/slices/calendarSlice";
 import moment from "moment";
+import { addEventAsync } from "../../redux/events/thunks";
 
 export default function ChorePopover({ chore }) {
   const [eventType, setEventType] = useState("one-time");
   const [assignee, setAssignee] = useState("");
   const [repeatInterval, setRepeatInterval] = useState(1);
+  const group = useCurrentGroup();
   const members = useCurrentGroupMembers();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (members.length > 0) {
-      setAssignee(members[0].id);
+      setAssignee(members[0]._id);
     }
   }, [members]);
 
@@ -60,13 +62,15 @@ export default function ChorePopover({ chore }) {
 
   const dispatchEvent = (date) => {
     dispatch(
-      addEvent({
+      addEventAsync({
         title: chore.title,
         start: date,
         allDay: true,
-        backgroundColor: chore.color,
-        borderColor: chore.color,
+        backgroundColor: chore.colour,
+        borderColor: chore.colour,
+        groupID: group._id,
         extendedProps: {
+          type: "chore",
           choreId: chore.id,
           memberId: assignee,
           done: false,
@@ -127,7 +131,7 @@ export default function ChorePopover({ chore }) {
                 onChange={(e) => setAssignee(e.target.value)}
               >
                 {members.map((member) => (
-                  <option key={member.id} value={member.id}>
+                  <option key={member._id} value={member._id}>
                     {`${member.firstName} ${member.lastName}`}
                   </option>
                 ))}

@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { setSelectedMemberID } from "../../redux/slices/groupsSlice";
-import { toggleFilter } from "../../redux/slices/calendarSlice";
+import { toggleFilter } from "../../redux/events/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 import useCurrentGroup from "../../hooks/useCurrentGroup";
 
@@ -43,8 +43,8 @@ export default function CalendarPeople() {
         <VStack align="start" spacing={3}>
           {members.map((member) => (
             <Radio
-              key={member.id}
-              value={String(member.id)}
+              key={member._id}
+              value={String(member._id)}
               size="lg"
               colorScheme="whiteAlpha"
               _hover={{ bg: "teal.100" }}

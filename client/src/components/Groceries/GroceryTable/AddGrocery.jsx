@@ -15,19 +15,20 @@ import {
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { addGrocery } from "../../../redux/slices/groceriesSlice";
-import moment from "moment";
 import {
   handleCreateCategory,
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
 } from "../utils/CreateNewSelectOptions";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import { addGroceryAsync } from "../../../redux/groceries/thunks";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
   const dispatch = useDispatch();
+  const group = useCurrentGroup();
   const toast = useToast();
 
   const [name, setName] = useState("");
@@ -48,21 +49,21 @@ export default function AddGrocery() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      const formattedExpiryDate = moment(expiryDate).format();
       dispatch(
-        addGrocery({
+        addGroceryAsync({
           name,
           locationId: location,
           categoryId: category,
-          expiryDate: formattedExpiryDate,
+          expiryDate,
           quantity,
+          groupID: group._id,
         })
       );
       toast({
         title: "Grocery Added",
         description: `${name}${
           quantity > 1 ? "'s" : ""
-        } has been added to the ${locations.find((l) => l.id === location).name}`,
+        } has been added to the ${locations.find((l) => l._id === location).name}`,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -99,14 +100,14 @@ export default function AddGrocery() {
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
-            value: loc.id,
+            value: loc._id,
             label: loc.name,
           }))}
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement="auto"
           onCreateOption={(input) =>
-            handleCreateLocation(input, dispatch, setLocation)
+            handleCreateLocation(input, dispatch, group._id)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
@@ -124,14 +125,14 @@ export default function AddGrocery() {
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
-            value: cat.id,
+            value: cat._id,
             label: cat.name,
           }))}
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement="auto"
           onCreateOption={(input) =>
-            handleCreateCategory(input, dispatch, setLocation)
+            handleCreateCategory(input, dispatch, group._id)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({

@@ -1,6 +1,6 @@
 import { Box, Button, Heading, IconButton, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGrocery } from '../../../redux/slices/groceriesSlice';
+import { updateGroceryAsync } from '../../../redux/groceries/thunks';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export default function MealPlanBox() {
   const selectedMealItems = items.filter(item => item.selectMeal);
 
   const removeSelect = (item) => {
-    dispatch(updateGrocery({ id: item.id, selectMeal: false }));
+    dispatch(updateGroceryAsync({ _id: item._id, selectMeal: false }));
   };
 
   const generateMeal = () => {
