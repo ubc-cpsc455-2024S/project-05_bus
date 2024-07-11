@@ -4,7 +4,7 @@ import { addMealAsync, getMealsAsync, removeMealAsync, generateMealAsync } from 
 
 const INITIAL_STATE = {
   list: [],
-  recipe: "",
+  recipe: {},
   getMealsAsync: REQUEST_STATE.IDLE,
   addMealAsync: REQUEST_STATE.IDLE,
   removeMealAsync: REQUEST_STATE.IDLE,

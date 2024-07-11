@@ -187,14 +187,18 @@ router.delete("/meals/:id", async (req, res) => {
 
 router.post("/generateMeal", async (req, res) => {
   try {
-    const user_message = `Given the food items ${req.body} I want to use in my cooking or baking, can you give me a recipe (without any small talk) incorporating these ingredients and their available quantities.`;
+    console.log(req.body);
+    const user_message = `Given the food items and their quantity in the list ${req.body}, give me a recipe with ingredients, measurements and the instructions incorporating the exact food items given without going over their quantity. Do no include any small talk or Here is a recipe, just give the recipe on its own. Give only the recipe name like "Chicken Stirfy" at the top without "Recipe: ". Add // after the recipe name. Can you ALWAYS add // after each individual ingredient listed like "Ingredients: 1 cup quinoa // 2 cups vegetable broth //", and after each individual instruction like "Instructions: 1. Rinse 1 cup of quinoa under cold water. // 2. In a saucepan, combine the rinsed quinoa with 2 cups of vegetable broth. Bring to a boil. // " so that everything is a new line.`;
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: user_message },
       ],
     });
+    console.log(response);
+    console.log(response.choices[0].message.content);
     return res.status(200).send({ message: response.choices[0].message.content});
+    // return res.status(200).send({message: "Happy"});
   } catch (err) {
     console.log(err);
     res.status(500).send(err.message);
