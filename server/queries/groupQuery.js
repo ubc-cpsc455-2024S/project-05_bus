@@ -36,7 +36,7 @@ const groupQueries = {
       console.error(`Error adding user ${userID} to group ${groupID}: `, error);
       throw error;
     }
-  },
+  },  
   deleteGroup: async function(groupID) {
     try {
       return await Groups.findByIdAndDelete(groupID);

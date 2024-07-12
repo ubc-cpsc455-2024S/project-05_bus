@@ -6,7 +6,7 @@ const getAllGroups = async (req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: err.message });
   }
 };
 
@@ -26,7 +26,7 @@ const createGroup = async (req, res) => {
     return res.status(201).send({ message: "Group added successfully" });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: err.message });
   }
 };
 
@@ -36,7 +36,7 @@ const updateName = async (req, res) => {
     return res.status(200).send({ message: "Group name updated successfully" });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: err.message });
   }
 };
 
@@ -46,7 +46,7 @@ const addMember = async (req, res) => {
     return res.status(200).send({ message: "Group member added successfully" });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: err.message });
   }
 };
 
@@ -56,7 +56,7 @@ const removeMember = async (req, res) => {
     return res.status(200).send({ message: "Member removed successfully" });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Internal Server Error" });
+    return res.status(500).send({ error: err.message });
   }
 };
 
