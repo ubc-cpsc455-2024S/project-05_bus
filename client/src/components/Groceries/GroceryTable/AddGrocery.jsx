@@ -11,6 +11,12 @@ import {
   FormControl,
   FormErrorMessage,
   useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
@@ -23,6 +29,7 @@ import {
 } from "../utils/CreateNewSelectOptions";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addGroceryAsync } from "../../../redux/groceries/thunks";
+import ReceiptScanner from "../ReceiptScanner/ReceiptScanner";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
@@ -30,12 +37,18 @@ export default function AddGrocery() {
   const dispatch = useDispatch();
   const group = useCurrentGroup();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [quantity, setQuantity] = useState(0);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+
+  const openScanner = () => setIsScannerOpen(true);
+  const closeScanner = () => setIsScannerOpen(false);
+
   const [errors, setErrors] = useState({});
 
   const handleAdd = () => {
@@ -63,7 +76,9 @@ export default function AddGrocery() {
         title: "Grocery Added",
         description: `${name}${
           quantity > 1 ? "'s" : ""
-        } has been added to the ${locations.find((l) => l._id === location).name}`,
+        } has been added to the ${
+          locations.find((l) => l._id === location).name
+        }`,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -169,10 +184,38 @@ export default function AddGrocery() {
           </NumberInputStepper>
         </NumberInput>
       </FormControl>
-
-      <Button onClick={handleAdd}>
-        <AddIcon />
-      </Button>
+      <Menu isOpen={isOpen}>
+        <MenuButton
+          as={Button}
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
+          onClick={handleAdd}
+        >
+          <AddIcon />
+        </MenuButton>
+        <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
+          <MenuItem
+            onClick={openScanner}
+            icon={
+              <Text color="gray.600" className="material-symbols-outlined">
+                receipt_long
+              </Text>
+            }
+          >
+            Scan Receipt
+          </MenuItem>
+          <MenuItem
+            icon={
+              <Text color="gray.600" className="material-symbols-outlined">
+                grocery
+              </Text>
+            }
+          >
+            Scan Food Items
+          </MenuItem>
+        </MenuList>
+      </Menu>
+      <ReceiptScanner isOpen={isScannerOpen} onClose={closeScanner} />
     </HStack>
   );
 }

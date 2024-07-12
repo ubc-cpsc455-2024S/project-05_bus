@@ -14,7 +14,9 @@
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.3",
     "morgan": "~1.9.1",
-    "openai": "^4.0.0"
+    "openai": "^4.52.7",
+    "sharp": "^0.32.6",
+    "tesseract.js": "^5.1.0"
   },
   "type": "module"
 }
