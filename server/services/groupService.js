@@ -25,6 +25,8 @@ const createGroup = async (groupData) => {
     };
   });
   await Promise.all(updatePromises);
+
+  return group;
 };
 
 const updateName = async (groupID, newName) => {

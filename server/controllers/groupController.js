@@ -22,8 +22,8 @@ const getGroup = async (req, res) => {
 
 const createGroup = async (req, res) => {
   try {
-    await GroupService.createGroup(req.body);
-    return res.status(201).send({ message: "Group added successfully" });
+    const result = await GroupService.createGroup(req.body);
+    return res.status(201).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -32,8 +32,8 @@ const createGroup = async (req, res) => {
 
 const updateName = async (req, res) => {
   try {
-    await GroupService.updateName(req.params.groupID, req.body.name);
-    return res.status(200).send({ message: "Group name updated successfully" });
+    const result = await GroupService.updateName(req.params.groupID, req.body.name);
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -42,8 +42,8 @@ const updateName = async (req, res) => {
 
 const addMember = async (req, res) => {
   try {
-    await GroupService.addMember(req.params.groupID, req.params.userID);
-    return res.status(200).send({ message: "Group member added successfully" });
+    const result = await GroupService.addMember(req.params.groupID, req.params.userID);
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -53,7 +53,7 @@ const addMember = async (req, res) => {
 const removeMember = async (req, res) => {
   try {
     const result = await GroupService.removeMember(req.params.groupID, req.params.userID);
-    return res.status(200).send({ message: "Member removed successfully" });
+    return res.status(200).json(result);;
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -63,7 +63,7 @@ const removeMember = async (req, res) => {
 const deleteGroup = async (req, res) => {
   try {
     const result = await GroupService.deleteGroup(req.params.id);
-    return res.status(200).send({ message: "Group deleted successfully" });
+    return res.status(200).json(result);;
   } catch (err) {
     console.error(err);
     return res.status(404).send({ message: "Group not found" });
