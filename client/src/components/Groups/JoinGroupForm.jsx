@@ -1,7 +1,7 @@
 import { Button, Box, Input, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMemberAsync } from '../../redux/groups/thunks';
+import { addMemberAsync, getGroupsAsync } from '../../redux/groups/thunks';
 import { getUsersAsync } from '../../redux/users/thunks';
 
 export default function JoinGroupForm() {
@@ -28,6 +28,7 @@ export default function JoinGroupForm() {
       try {
         await dispatch(addMemberAsync({groupID: group._id, userID: currentUserID}));
         await dispatch(getUsersAsync());
+        await dispatch(getGroupsAsync());
       } catch (error) {
         setError('Could not add user to group');
       }

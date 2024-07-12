@@ -1,16 +1,30 @@
 import './Home.css';
 import { Box, Card, CardHeader, CardBody, CardFooter, Avatar, Button } from '@chakra-ui/react';
 import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
 
 export default function HomeGroup({ group }) {
+  const currentGroup = useCurrentGroup();
   const members = useCurrentGroupMembers();
+
+  const handleCopyGroupID = () => {
+    navigator.clipboard.writeText(currentGroup._id);
+  };
 
   return (
     <Box className="home-card-container">
       <Card className="home-card">
-        <CardHeader className="home-card-header">
-          <h1 className="home-heading">{group ? group.name : "No active group"}</h1>
-          <span className="material-symbols-outlined icon">house</span>
+        <CardHeader>
+          <div className="home-card-header">
+            <h1 className="home-heading">{group ? group.name : "No active group"}</h1>
+            <span className="material-symbols-outlined icon">house</span>
+          </div>
+          <div className="home-card-group-id">
+            Group ID: {currentGroup._id}
+            <Button className="copy-button" onClick={handleCopyGroupID} ml={2} size="sm" colorScheme="blue">
+              <span className="material-symbols-outlined settings-icon">content_copy</span>
+            </Button>
+          </div>
         </CardHeader>
         <CardBody className="home-card-body">
           <ul>

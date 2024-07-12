@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { createGroupAsync } from '../../redux/groups/thunks';
 import { getUsersAsync } from '../../redux/users/thunks';
+import { getGroupsAsync } from '../../redux/groups/thunks';
 
 export default function CreateGroupForm() {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ export default function CreateGroupForm() {
     try {
       await dispatch(createGroupAsync(group));
       await dispatch(getUsersAsync());
+      await dispatch(getGroupsAsync());
     } catch (error) {
       setError('Could not create group.');
     }
