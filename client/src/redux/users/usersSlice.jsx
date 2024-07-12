@@ -3,8 +3,25 @@ import { REQUEST_STATE } from "../utils";
 import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, deleteUserAsync} from './thunks';
 
 const initialState = {
-  users: [],
-  currentUserID: "668de09e1cecc096caffda9e",
+  users: [
+    {
+      _id: "668053007522f05c47e32853",
+      firstName: "John",
+      lastName: "Doe",
+      email: "john.doe@example.com",
+      password: "password123",
+      groupID: "6680530d7522f05c47e32859"
+    },
+    {
+      _id: "668053007522f05c47e32854",
+      firstName: "Jane",
+      lastName: "Smith",
+      email: "jane.smith@example.com",
+      password: "password456",
+      groupID: "6680530d7522f05c47e32859"
+    }
+  ],
+  currentUserID: "668053007522f05c47e32853",
   getUsers: REQUEST_STATE.IDLE,
   getGroupMembers: REQUEST_STATE.IDLE,
   getUser: REQUEST_STATE.IDLE,
