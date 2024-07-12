@@ -29,7 +29,7 @@ import {
 } from "../utils/CreateNewSelectOptions";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addGroceryAsync } from "../../../redux/groceries/thunks";
-import ReceiptScanner from "../ReceiptScanner/ReceiptScanner";
+import Scanner from "../ReceiptScanner/Scanner";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
@@ -45,9 +45,17 @@ export default function AddGrocery() {
   const [expiryDate, setExpiryDate] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [scannerType, setScannerType] = useState(null);
 
-  const openScanner = () => setIsScannerOpen(true);
-  const closeScanner = () => setIsScannerOpen(false);
+  const openScanner = (type) => {
+    setScannerType(type);
+    setIsScannerOpen(true);
+  };
+
+  const closeScanner = () => {
+    setScannerType(null);
+    setIsScannerOpen(false);
+  };
 
   const [errors, setErrors] = useState({});
 
@@ -85,6 +93,15 @@ export default function AddGrocery() {
       });
       resetFields();
     }
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = new Date(e.target.value);
+    setExpiryDate(
+      selectedDate.toLocaleDateString("en-US", {
+        timeZone: "America/Los_Angeles",
+      })
+    );
   };
 
   const resetFields = () => {
@@ -162,8 +179,10 @@ export default function AddGrocery() {
         <Input
           placeholder="Expiry Date"
           type="date"
-          value={expiryDate}
-          onChange={(e) => setExpiryDate(e.target.value)}
+          value={
+            expiryDate ? new Date(expiryDate).toISOString().split("T")[0] : ""
+          }
+          onChange={handleDateChange}
         />
       </FormControl>
 
@@ -195,7 +214,7 @@ export default function AddGrocery() {
         </MenuButton>
         <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
           <MenuItem
-            onClick={openScanner}
+            onClick={() => openScanner("Receipt")}
             icon={
               <Text color="gray.600" className="material-symbols-outlined">
                 receipt_long
@@ -205,6 +224,7 @@ export default function AddGrocery() {
             Scan Receipt
           </MenuItem>
           <MenuItem
+            onClick={() => openScanner("Groceries")}
             icon={
               <Text color="gray.600" className="material-symbols-outlined">
                 grocery
@@ -215,7 +235,7 @@ export default function AddGrocery() {
           </MenuItem>
         </MenuList>
       </Menu>
-      <ReceiptScanner isOpen={isScannerOpen} onClose={closeScanner} />
+      <Scanner isOpen={isScannerOpen} onClose={closeScanner} type={scannerType} />
     </HStack>
   );
 }

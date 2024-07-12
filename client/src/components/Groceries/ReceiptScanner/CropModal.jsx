@@ -47,7 +47,7 @@ async function getCroppedImg(imageSrc, crop, zoom) {
   });
 }
 
-export default function CropModal({ isOpen, onClose, imageSrc, onCropComplete }) {
+export default function CropModal({ aspect, isOpen, onClose, imageSrc, onCropComplete }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -70,7 +70,7 @@ export default function CropModal({ isOpen, onClose, imageSrc, onCropComplete })
               crop={crop}
               zoom={zoom}
               zoomSpeed={0.1}
-              aspect={1/2}
+              aspect={aspect}
               onCropChange={setCrop}
               onZoomChange={setZoom}
               onCropComplete={(_, croppedAreaPixels) => setCroppedAreaPixels(croppedAreaPixels)}

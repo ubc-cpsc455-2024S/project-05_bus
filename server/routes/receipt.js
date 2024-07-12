@@ -1,27 +1,51 @@
 import express from "express";
-import { preprocessImg, processReceipt } from "../receipt/receiptParser.js";
-import { chatCompletion, chatCompletionImage } from "../receipt/openAi.js";
+import multer from "multer";
+import { receiptImgPreprocess, groceryImgPreprocess, processReceipt } from "../receipt/receiptParser.js";
+import { chatCompletion, chatCompletionImage, chatCompletionGroceryImage } from "../receipt/openAi.js";
 
 const router = express.Router();
+const upload = multer();
 
-router.post("/cheap", async (req, res) => {
+router.post("/cheap", upload.single("img"), async (req, res) => {
   try {
-    const text = await processReceipt(req.body.img);
-    const response = await chatCompletion(text, req.body.locations, req.body.categories);
+    const text = await processReceipt(req.file.buffer);
+    const response = await chatCompletion(
+      text,
+      JSON.parse(req.body.locations),
+      JSON.parse(req.body.categories)
+    );
     return res.json(response);
   } catch (error) {
     return res.status(500).send(error.message);
   }
 });
 
-router.post("/image", async (req, res) => {
+router.post("/image", upload.single("img"), async (req, res) => {
   try {
-    const image = await preprocessImg(req.body.img);
-    const response = await chatCompletionImage(image, req.body.locations, req.body.categories);
+    const image = await receiptImgPreprocess(req.file.buffer);
+    const response = await chatCompletionImage(
+      image,
+      JSON.parse(req.body.locations),
+      JSON.parse(req.body.categories)
+    );
     return res.json(response);
   } catch (error) {
     return res.status(500).send(error.message);
   }
 });
+
+router.post("/groceryImage", upload.single("img"), async (req, res) => {
+    try {
+      const image = await groceryImgPreprocess(req.file.buffer);
+      const response = await chatCompletionGroceryImage(
+        image,
+        JSON.parse(req.body.locations),
+        JSON.parse(req.body.categories)
+      );
+      return res.json(response);
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  });
 
 export default router;
