@@ -1,4 +1,5 @@
 import Users from "../models/userSchema.js";
+import groupQueries from "../queries/groupQuery.js";
 
 const userQueries = {
     getAllUsers: async function () {
@@ -19,6 +20,10 @@ const userQueries = {
         return savedUser;
     },
     deleteUser: async function (id) {
+        const user = await Users.findById(id);
+        const userGroup = user.groupID;
+        if (userGroup) groupQueries.removeMember(userGroup, id);
+        
         const result = await Users.findOneAndDelete({ _id: id });
         return result;
     },
