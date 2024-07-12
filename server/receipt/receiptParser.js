@@ -4,29 +4,13 @@ import sharp from "sharp";
 const worker = await createWorker("eng");
 
 export const processReceipt = async (image) => {
-  // const image = await fetchImageBuffer(imgUrl);
-  const processedImg = await preprocessImg(image);
+  const processedImg = await receiptImgPreprocess(image);
   const text = await extractText(processedImg);
   return text;
 };
 
-const fetchImageBuffer = async (blobUrl) => {
+export const receiptImgPreprocess = async (img) => {
   try {
-    const response = await fetch(blobUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch image. Status: ${response.status}`);
-    }
-    const arrayBuffer = await response.arrayBuffer();
-    return Buffer.from(arrayBuffer);
-  } catch (error) {
-    console.error('Error fetching image:', error.message);
-    throw new Error('Failed to fetch image.');
-  }
-};
-
-export const preprocessImg = async (img) => {
-  try {
-    console.log(img)
     const processedImg = await sharp(img)
       .greyscale()
       .normalise()
@@ -35,6 +19,25 @@ export const preprocessImg = async (img) => {
       .rotate()
       .sharpen()
       .toBuffer()
+
+    await sharp(processedImg).toFile("processedReceiptImg.jpg");
+    return processedImg;
+  } catch (error) {
+    console.error("Error preprocessing image:", error);
+    throw error;
+  }
+};
+
+export const groceryImgPreprocess = async (img) => {
+  try {
+    const processedImg = await sharp(img)
+      .normalise()
+      .blur(1)
+      .rotate()
+      .sharpen()
+      .toBuffer()
+
+    await sharp(processedImg).toFile("processedGroceryImg.jpg");
     return processedImg;
   } catch (error) {
     console.error("Error preprocessing image:", error);
