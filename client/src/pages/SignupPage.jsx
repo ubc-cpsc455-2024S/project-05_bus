@@ -5,7 +5,9 @@ import { useState } from 'react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { createUserAndSetCurrent } from '../redux/thunks';
+import { addUserAsync } from '../redux/users/thunks';
+import { setCurrentUserID } from '../redux/users/usersSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 export default function SignupPage() {
   const dispatch = useDispatch();
@@ -15,18 +17,20 @@ export default function SignupPage() {
   const handleConfirmPasswordClick = () => setShowConfirmPassword(!showConfirmPassword);
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault()
     const signupData = new FormData(e.currentTarget)
 
     if (signupData.get('password') === signupData.get('confirmPassword')) {
-    const newUser = {
+    const userData = {
       firstName: signupData.get('firstName'),
       lastName: signupData.get('lastName'),
       email: signupData.get('email'),
       password: signupData.get('password')
     }
-    dispatch(createUserAndSetCurrent(newUser));
+    const result = await dispatch(addUserAsync(userData));
+    const newUser = unwrapResult(result);
+    dispatch(setCurrentUserID(newUser._id));
     navigate('/groups');
     } else {
       // temporary alert

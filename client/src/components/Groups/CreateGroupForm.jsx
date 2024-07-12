@@ -3,7 +3,8 @@ import { Button, Box, Input, Tag, TagLabel, TagCloseButton, VStack, Text, HStack
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import { createGroupAndAssignMembers } from '../../redux/thunks';
+import { createGroupAsync } from '../../redux/groups/thunks';
+import { getUsersAsync } from '../../redux/users/thunks';
 
 export default function CreateGroupForm() {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ export default function CreateGroupForm() {
   const handleAddUser = () => {
     const user = users.find((user) => user.email === emailInput);
     if (user) {
-      if (!selectedUsers.find((u) => u.id === user.id)) {
-        if (user.id === currentUser.id) {
+      if (!selectedUsers.find((u) => u._id === user._id)) {
+        if (user._id === currentUser._id) {
           setError('You do not need to add yourself when creating a group');
         } else if (user.groupID) {
           setError('User already belongs to a group');
@@ -50,19 +51,20 @@ export default function CreateGroupForm() {
   };
 
   const handleRemoveUser = (userId) => {
-    setSelectedUsers(selectedUsers.filter((user) => user.id !== userId));
+    setSelectedUsers(selectedUsers.filter((user) => user._id !== userId));
   };
 
   const handleCreateGroup = async () => {
     const members = [currentUser, ...selectedUsers];
-    const memberIDs = members.map(member => member.id);
+    const memberIDs = members.map(member => member._id);
     const group = {
       name: groupName,
       memberIDs
     }
      
     try {
-      await dispatch(createGroupAndAssignMembers(group));
+      await dispatch(createGroupAsync(group));
+      await dispatch(getUsersAsync());
     } catch (error) {
       setError('Could not create group.');
     }
@@ -102,9 +104,9 @@ export default function CreateGroupForm() {
       )}
       <VStack align="start" mt="10px">
         {selectedUsers.map((user) => (
-          <Tag key={user.id} size="lg" variant="solid" colorScheme="teal">
+          <Tag key={user._id} size="lg" variant="solid" colorScheme="teal">
             <TagLabel>{user.email}</TagLabel>
-            <TagCloseButton onClick={() => handleRemoveUser(user.id)} />
+            <TagCloseButton onClick={() => handleRemoveUser(user._id)} />
           </Tag>
         ))}
       </VStack>

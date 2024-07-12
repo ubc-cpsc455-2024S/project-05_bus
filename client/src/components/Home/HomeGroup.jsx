@@ -15,7 +15,7 @@ export default function HomeGroup({ group }) {
         <CardBody className="home-card-body">
           <ul>
             {members.map(member => (
-              <div key={member.id} className="group-member-container">
+              <div key={member._id} className="group-member-container">
                 <Avatar className="group-member-avatar" size="sm" />
                 <p>{`${member.firstName} ${member.lastName}`}</p>
               </div>
