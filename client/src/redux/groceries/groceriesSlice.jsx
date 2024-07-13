@@ -42,7 +42,22 @@ const initialState = {
 const groceriesSlice = createSlice({
   name: "groceries",
   initialState,
-  reducers: {},
+  reducers: {
+    updateMealSelect: (state, action) => {
+      const index = state.groceries.findIndex(
+        (grocery) => grocery.id === action.payload.id
+      );
+      if (index !== -1) {
+        if (action.payload.expiryDate) {
+          state.groceries[index].expiryNotificationDate = "";
+        }
+        state.groceries[index] = {
+          ...state.groceries[index],
+          ...action.payload,
+        };
+      }
+    },
+  },
   extraReducers: (builder) => {
     handleGroceriesCases(builder);
     handleCategoriesCases(builder);
@@ -232,5 +247,9 @@ const handleLocationsCases = (builder) => {
       state.deleteLocation = REQUEST_STATE.REJECTED;
     });
 };
+
+export const {
+  updateMealSelect,
+} = groceriesSlice.actions;
 
 export default groceriesSlice.reducer;
