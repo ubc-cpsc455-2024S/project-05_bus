@@ -1,7 +1,7 @@
 import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGroceryAsync } from '../../../redux/groceries/thunks';
-import React, { useState } from 'react';
+import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
+import React, { useEffect, useState } from 'react';
 import { addMealAsync, generateMealAsync } from '../../../redux/meals/thunks';
 
 export default function MealPlanBox() {
@@ -13,6 +13,14 @@ export default function MealPlanBox() {
 
   const recipe = useSelector((state) => state.meals.recipe);
 
+  useEffect(() => {
+    return () => {
+      selectedMealItems.forEach(item => {
+        dispatch(updateMealSelect({ id: item.id, selectMeal: false }));
+      });
+    };
+  }, [dispatch, selectedMealItems]);
+
   const [quantities, setQuantities] = useState(
     selectedMealItems.reduce((acc, item) => {
       acc[item._id] = item.quantity;
@@ -21,7 +29,7 @@ export default function MealPlanBox() {
   );
 
   const removeSelect = (item) => {
-    dispatch(updateGroceryAsync({ _id: item._id, selectMeal: false }));
+    dispatch(updateMealSelect({ id: item.id, selectMeal: false }));
   };
 
   const saveMeal = () => {
@@ -33,7 +41,7 @@ export default function MealPlanBox() {
     dispatch(addMealAsync(newMeal));
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
-      dispatch(updateGroceryAsync({ _id: item._id, selectMeal: false }));
+      dispatch(updateMealSelect({ _id: item._id, selectMeal: false }));
     });
   };
 
@@ -57,8 +65,6 @@ export default function MealPlanBox() {
     
     dispatch(generateMealAsync(selectedItems));
     setShowRecipe(true);
-    console.log(recipe);
-    console.log(typeof(recipe));
   };
 
   return (
