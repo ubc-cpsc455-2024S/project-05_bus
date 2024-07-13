@@ -2,6 +2,7 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
+import { CallbackPage } from './pages/CallbackPage'
 import CalendarPage from './pages/CalendarPage'
 import LoginPage from './pages/LoginPage'
 import GroceriesPage from './pages/GroceriesPage'
@@ -23,6 +24,7 @@ export default function Layout() {
           <Route exact path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/callback" element={<CallbackPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/groceries" element={<GroceriesPage />} />

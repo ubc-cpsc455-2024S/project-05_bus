@@ -1,8 +1,31 @@
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 export default function LandingPage() {
+  const { loginWithRedirect } = useAuth0();
+
+  const handleSignup = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: "/home",
+      },
+      authorizationParams: {
+        screen_hint: "signup",
+      },
+    });
+  }
+
+  const handleLogin = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: "/home",
+      },
+    });
+  }
+
     return (
       <Box 
         display="flex"
@@ -31,10 +54,11 @@ export default function LandingPage() {
           gap={12}
           justifyContent="center"
           marginTop={20}>
-            <Button><ChakraLink as={ReactRouterLink} to='/login'><b>Login</b></ChakraLink>
+            <Button onclick={handleLogin}> Login
+              {/* <ChakraLink as={ReactRouterLink} to='/login'><b>Login</b></ChakraLink> */}
             </Button>
-            <Button bg="teal.500" color="white" _hover={{ bg: "teal.600" }}>
-                <ChakraLink as={ReactRouterLink} to='/signup'><b>Sign Up</b></ChakraLink>
+            <Button bg="teal.500" color="white" _hover={{ bg: "teal.600" }} onClick={handleSignup}> Sign Up
+                {/* <ChakraLink as={ReactRouterLink} to='/signup'><b>Sign Up</b></ChakraLink> */}
             </Button>
           </Box>
         </Box>

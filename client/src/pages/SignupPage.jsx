@@ -5,10 +5,14 @@ import { useState } from 'react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { Link as ChakraLink } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
+<<<<<<< Updated upstream
 import { addUserAsync } from '../redux/users/thunks';
 import { setCurrentUserID } from '../redux/users/usersSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
+=======
+import { createUserAndSetCurrent } from '../redux/thunks';
+>>>>>>> Stashed changes
 export default function SignupPage() {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
@@ -28,9 +32,14 @@ export default function SignupPage() {
       email: signupData.get('email'),
       password: signupData.get('password')
     }
+<<<<<<< Updated upstream
     const result = await dispatch(addUserAsync(userData));
     const newUser = unwrapResult(result);
     dispatch(setCurrentUserID(newUser._id));
+=======
+
+    dispatch(createUserAndSetCurrent(newUser));
+>>>>>>> Stashed changes
     navigate('/groups');
     } else {
       // temporary alert

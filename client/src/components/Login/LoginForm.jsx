@@ -14,7 +14,7 @@ export default function LoginForm() {
     }
 
     // unused until we have db/persistent storage of users
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         const loginData = new FormData(e.currentTarget)
 
