@@ -1,99 +1,85 @@
 import { useState } from "react";
 import {
   HStack,
+  FormControl,
   Input,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Button,
-  FormControl,
   FormErrorMessage,
   useToast,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  useDisclosure,
-  Text,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
-import { AddIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
+import { addGroceryAsync } from "../../../redux/groceries/thunks";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import {
-  handleCreateCategory,
-  handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
+  handleCreateLocation,
+  handleCreateCategory,
 } from "../utils/CreateNewSelectOptions";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
-import { addGroceryAsync } from "../../../redux/groceries/thunks";
-import Scanner from "../Scanner/Scanner";
 
-export default function AddGrocery() {
+export default function GroceryRow({
+  name: initialName,
+  location: initialLocation = "",
+  category: initialCategory = "",
+  quantity: initialQuantity,
+}) {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
   const dispatch = useDispatch();
   const group = useCurrentGroup();
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [category, setCategory] = useState("");
+  const [name, setName] = useState(initialName);
+  const [locationId, setLocationId] = useState(initialLocation);
+  const [categoryId, setCategoryId] = useState(initialCategory);
   const [expiryDate, setExpiryDate] = useState("");
-  const [quantity, setQuantity] = useState(0);
-  const [isScannerOpen, setIsScannerOpen] = useState(false);
-  const [scannerType, setScannerType] = useState(null);
+  const [quantity, setQuantity] = useState(initialQuantity);
 
-  const openScanner = (type) => {
-    setScannerType(type);
-    setIsScannerOpen(true);
-  };
-
-  const closeScanner = () => {
-    setScannerType(null);
-    setIsScannerOpen(false);
-  };
+  const currentLocation = locations.find((loc) => loc._id === locationId);
+  const currentCategory = categories.find((cat) => cat._id === categoryId);
 
   const [errors, setErrors] = useState({});
 
-  const handleAdd = () => {
-    const newErrors = {};
+//   const handleAdd = () => {
+//     const newErrors = {};
 
-    if (!name) newErrors.name = "Name is required";
-    if (!location) newErrors.locationId = "Location is required";
-    if (!category) newErrors.categoryId = "Category is required";
-    if (quantity <= 0) newErrors.quantity = "Cannot be 0";
+//     if (!name) newErrors.name = "Name is required";
+//     if (!locationId) newErrors.locationId = "Location is required";
+//     if (!categoryId) newErrors.categoryId = "Category is required";
+//     if (quantity <= 0) newErrors.quantity = "Cannot be 0";
 
-    setErrors(newErrors);
+//     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
-      dispatch(
-        addGroceryAsync({
-          name,
-          locationId: location,
-          categoryId: category,
-          expiryDate,
-          quantity,
-          groupID: group._id,
-        })
-      );
-      toast({
-        title: "Grocery Added",
-        description: `${name}${
-          quantity > 1 ? "'s" : ""
-        } has been added to the ${
-          locations.find((l) => l._id === location).name
-        }`,
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      resetFields();
-    }
-  };
+//     if (Object.keys(newErrors).length === 0) {
+//       dispatch(
+//         addGroceryAsync({
+//           name,
+//           locationId: locationId,
+//           categoryId: categoryId,
+//           expiryDate,
+//           quantity,
+//           groupID: group._id,
+//         })
+//       );
+//       toast({
+//         title: "Grocery Added",
+//         description: `${name}${
+//           quantity > 1 ? "'s" : ""
+//         } has been added to the ${
+//           locations.find((l) => l._id === locationId).name
+//         }`,
+//         status: "success",
+//         duration: 1000,
+//         isClosable: true,
+//       });
+//       resetFields();
+//     }
+//   };
 
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
@@ -106,12 +92,12 @@ export default function AddGrocery() {
 
   const resetFields = () => {
     setName("");
-    setLocation("");
-    setCategory("");
+    setLocationId("");
+    setCategoryId("");
     setExpiryDate("");
     setQuantity(0);
   };
-
+  
   return (
     <HStack spacing={2} justifyContent="space-between" width="100%">
       <FormControl isInvalid={errors.name} w="25%" position="relative">
@@ -135,7 +121,12 @@ export default function AddGrocery() {
             value: loc._id,
             label: loc.name,
           }))}
-          onChange={(option) => setLocation(option.value)}
+          value={
+            currentLocation
+              ? { value: currentLocation._id, label: currentLocation.name }
+              : null
+          }
+          onChange={(option) => setLocationId(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement="auto"
           onCreateOption={(input) =>
@@ -160,7 +151,12 @@ export default function AddGrocery() {
             value: cat._id,
             label: cat.name,
           }))}
-          onChange={(option) => setCategory(option.value)}
+          value={
+            currentCategory
+              ? { value: currentCategory._id, label: currentCategory.name }
+              : null
+          }
+          onChange={(option) => setCategoryId(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement="auto"
           onCreateOption={(input) =>
@@ -203,39 +199,6 @@ export default function AddGrocery() {
           </NumberInputStepper>
         </NumberInput>
       </FormControl>
-      <Menu isOpen={isOpen}>
-        <MenuButton
-          as={Button}
-          onMouseEnter={onOpen}
-          onMouseLeave={onClose}
-          onClick={handleAdd}
-        >
-          <AddIcon />
-        </MenuButton>
-        <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
-          <MenuItem
-            onClick={() => openScanner("Receipt")}
-            icon={
-              <Text color="gray.600" className="material-symbols-outlined">
-                receipt_long
-              </Text>
-            }
-          >
-            Scan Receipt
-          </MenuItem>
-          <MenuItem
-            onClick={() => openScanner("Groceries")}
-            icon={
-              <Text color="gray.600" className="material-symbols-outlined">
-                grocery
-              </Text>
-            }
-          >
-            Scan Food Items
-          </MenuItem>
-        </MenuList>
-      </Menu>
-      <Scanner isOpen={isScannerOpen} onClose={closeScanner} type={scannerType} />
     </HStack>
   );
 }
