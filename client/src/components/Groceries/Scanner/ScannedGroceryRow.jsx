@@ -9,6 +9,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { useSelector, useDispatch } from "react-redux";
@@ -19,6 +20,7 @@ import {
   handleCreateCategory,
 } from "../utils/CreateNewSelectOptions";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import moment from "moment";
 
 export default function GroceryRow({
   index,
@@ -39,6 +41,7 @@ export default function GroceryRow({
 
   const group = useCurrentGroup();
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const updateGrocery = (updatedGrocery) => {
     const updatedGroceries = [...allGroceries];
@@ -75,15 +78,25 @@ export default function GroceryRow({
   };
 
   const handleDateChange = (e) => {
-    const selectedDate = new Date(e.target.value);
-    setExpiryDate(
-      selectedDate.toLocaleDateString("en-US", {
-        timeZone: "America/Los_Angeles",
-      })
-    );
-    updateGrocery({ ...grocery, expiryDate: selectedDate });
+    try {
+      const selectedDate = moment(e.target.value, "YYYY-MM-DD", true);
+      if (!selectedDate.isValid()) {
+        throw new Error("Invalid date format. Please select a valid date.");
+      }
+      setExpiryDate(selectedDate);
+      updateGrocery({ ...grocery, expiryDate: selectedDate });
+    } catch (error) {
+      toast({
+        title: "Invalid Date",
+        description: error.message,
+        status: "error",
+        duration: 500,
+        isClosable: true,
+      });
+      setExpiryDate(null);
+    }
   };
-
+  
   return (
     <HStack spacing={2} justifyContent="space-between" width="100%">
       <FormControl isInvalid={name.length <= 0} w="25%" position="relative">
@@ -152,7 +165,7 @@ export default function GroceryRow({
           placeholder="Expiry Date"
           type="date"
           value={
-            expiryDate ? new Date(expiryDate).toISOString().split("T")[0] : ""
+            expiryDate ? moment(expiryDate).format("YYYY-MM-DD") : ""
           }
           onChange={handleDateChange}
         />
