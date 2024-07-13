@@ -10,7 +10,7 @@ import {
   FormLabel,
   Text,
 } from "@chakra-ui/react";
-import { setSelectedMemberID } from "../../redux/slices/groupsSlice";
+import { setSelectedMemberID } from "../../redux/groups/groupsSlice";
 import { toggleFilter } from "../../redux/events/calendarSlice";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 import useCurrentGroup from "../../hooks/useCurrentGroup";

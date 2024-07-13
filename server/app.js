@@ -9,6 +9,7 @@ import usersRouter from "./routes/users.js";
 import eventsRouter from "./routes/events.js";
 import choresRouter from "./routes/chores.js";
 import groceriesRouter from "./routes/groceries.js";
+import groupsRouter from "./routes/groups.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/users", usersRouter);
 app.use("/calendar", eventsRouter);
 app.use("/chores", choresRouter);
 app.use("/groceries", groceriesRouter);
+app.use("/groups", groupsRouter);
 
 // Connect Database
 async function connectDB() {

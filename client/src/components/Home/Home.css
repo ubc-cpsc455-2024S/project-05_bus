@@ -25,6 +25,12 @@
   margin-bottom: 5px;
 }
 
+.home-card-group-id {
+  color: grey;
+  display: flex;
+  align-items: center;
+}
+
 .icon {
   color: teal;
   font-size: 35px;
@@ -50,6 +56,11 @@
 .home-card-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.copy-button {
+  padding: 0;
+  background: none !important;
 }
 
 .settings-button {
