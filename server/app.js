@@ -11,6 +11,7 @@ import choresRouter from "./routes/chores.js";
 import groceriesRouter from "./routes/groceries.js";
 import groupsRouter from "./routes/groups.js";
 import receiptRouter from "./routes/receipt.js";
+import receiptRouter from "./routes/receipt.js";
 
 dotenv.config();
 
@@ -35,9 +36,17 @@ app.use("/chores", choresRouter);
 app.use("/groceries", groceriesRouter);
 app.use("/groups", groupsRouter);
 app.use("/receipt", receiptRouter);
+app.use("/receipt", receiptRouter);
 
 // Connect Database
 async function connectDB() {
+  try {
+    await mongoose.connect(db_uri, clientOptions);
+    console.log("Successfully connected to MongoDB.");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    throw err;
+  }
   try {
     await mongoose.connect(db_uri, clientOptions);
     console.log("Successfully connected to MongoDB.");
