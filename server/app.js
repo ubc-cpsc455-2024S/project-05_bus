@@ -47,13 +47,6 @@ async function connectDB() {
     console.error("MongoDB connection error:", err);
     throw err;
   }
-  try {
-    await mongoose.connect(db_uri, clientOptions);
-    console.log("Successfully connected to MongoDB.");
-  } catch (err) {
-    console.error("MongoDB connection error:", err);
-    throw err;
-  }
 }
 
 export { app, connectDB };
