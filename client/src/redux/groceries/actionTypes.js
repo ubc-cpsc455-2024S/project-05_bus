@@ -2,6 +2,7 @@ export const actionTypes = {
     GET_GROCERIES: "groceries/getGroceries",
     GET_GROCERY: "groceries/getGrocery",
     ADD_GROCERY: "groceries/addGrocery",
+    ADD_GROCERIES: "groceries/addGroceries",
     UPDATE_GROCERY: "groceries/updateGrocery",
     DELETE_GROCERY: "groceries/deleteGrocery",
     GET_CATEGORIES: "groceries/getCategories",

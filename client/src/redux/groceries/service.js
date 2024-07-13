@@ -39,6 +39,23 @@ const postGrocery = async (grocery) => {
   }
 };
 
+const postManyGroceries = async (groceries) => {
+  try {
+    const response = await fetch("http://localhost:3000/groceries/many", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(groceries),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error posting groceries:", error);
+    throw error;
+  }
+};
+
 const updateGrocery = async (grocery) => {
   try {
     const response = await fetch(
@@ -133,13 +150,16 @@ const deleteCategory = async (id) => {
 
 const updateCategory = async (category) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/categories/${category._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(category),
-    });
+    const response = await fetch(
+      `http://localhost:3000/groceries/categories/${category._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(category),
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -163,7 +183,9 @@ const getLocations = async (groupID) => {
 
 const getLocation = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/locations/${id}`);
+    const response = await fetch(
+      `http://localhost:3000/groceries/locations/${id}`
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -207,13 +229,16 @@ const deleteLocation = async (id) => {
 
 const updateLocation = async (location) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/locations/${location._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(location),
-    });
+    const response = await fetch(
+      `http://localhost:3000/groceries/locations/${location._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(location),
+      }
+    );
     const data = await response.json();
     return data;
   } catch (error) {
@@ -226,6 +251,7 @@ export default {
   getAllGroceries,
   getOneGrocery,
   postGrocery,
+  postManyGroceries,
   updateGrocery,
   deleteGrocery,
   getCategories,

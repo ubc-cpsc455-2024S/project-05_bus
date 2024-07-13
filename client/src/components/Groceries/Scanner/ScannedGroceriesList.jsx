@@ -10,15 +10,33 @@ import {
 } from "@chakra-ui/react";
 import GroceryRow from "./ScannedGroceryRow";
 import SubmitButton from "./SubmitButton";
+import { useDispatch } from "react-redux";
+import { addGroceriesAsync } from "../../../redux/groceries/thunks";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
-export default function ScannedGroceriesList({ croppedImageBlob, clearCroppedImage, type }) {
+export default function ScannedGroceriesList({
+  croppedImageBlob,
+  clearCroppedImage,
+  type,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [groceries, setGroceries] = useState([]);
+  const dispatch = useDispatch();
+  const groupID = useCurrentGroup()._id;
 
   const handleGroceries = (items) => {
     setGroceries(items);
     setIsOpen(true);
-  }
+  };
+
+  const handleSubmit = () => {
+    const updatedGroceries = groceries.map(grocery => ({
+      ...grocery,
+      groupID
+    }));
+    dispatch(addGroceriesAsync(updatedGroceries));
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -36,15 +54,18 @@ export default function ScannedGroceriesList({ croppedImageBlob, clearCroppedIma
             {groceries.map((grocery, index) => (
               <GroceryRow
                 key={index}
-                name={grocery.name}
-                location={grocery.locationId}
-                category={grocery.categoryId}
-                quantity={grocery.quantity}
+                index={index}
+                grocery={grocery}
+                allGroceries={groceries}
+                setAllGroceries={setGroceries}
               />
             ))}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={() => setIsOpen(false)}>
+            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+              Submit
+            </Button>
+            <Button colorScheme="red" mr={3} onClick={() => setIsOpen(false)}>
               Close
             </Button>
           </ModalFooter>

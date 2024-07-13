@@ -1,4 +1,5 @@
 import { Groceries } from "../models/grocerySchema.js";
+import mongoose from "mongoose";
 
 const groceryQueries = {
   getAllGroceries: async function (groupID) {
@@ -30,8 +31,18 @@ const groceryQueries = {
     }
   },
   postManyGroceries: async function (groceryData) {
+    const filteredData = groceryData.filter(grocery => {
+      const { categoryId, locationId, groupID } = grocery;
+
+      const isValidCategoryId = categoryId === null || mongoose.Types.ObjectId.isValid(categoryId);
+      const isValidLocationId = locationId === null || mongoose.Types.ObjectId.isValid(locationId);
+      const isValidGroupId = mongoose.Types.ObjectId.isValid(groupID);
+
+      return isValidCategoryId && isValidLocationId && isValidGroupId;
+    });
+
     try {
-      const savedGroceries = await Groceries.insertMany(groceryData);
+      const savedGroceries = await Groceries.insertMany(filteredData);
       return savedGroceries;
     } catch (error) {
       console.error("Error saving new groceries:", error);

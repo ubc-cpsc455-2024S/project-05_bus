@@ -29,6 +29,13 @@ export const addGroceryAsync = createAsyncThunk(
   }
 );
 
+export const addGroceriesAsync = createAsyncThunk(
+  actionTypes.ADD_GROCERIES,
+  async (groceries) => {
+    return await GroceryService.postManyGroceries(groceries);
+  }
+);
+
 export const updateGroceryAsync = createAsyncThunk(
   actionTypes.UPDATE_GROCERY,
   async (grocery, { dispatch }) => {
