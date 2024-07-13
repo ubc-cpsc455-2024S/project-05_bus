@@ -54,7 +54,7 @@ export default function LandingPage() {
           gap={12}
           justifyContent="center"
           marginTop={20}>
-            <Button onclick={handleLogin}> Login
+            <Button onClick={handleLogin}> Login
               {/* <ChakraLink as={ReactRouterLink} to='/login'><b>Login</b></ChakraLink> */}
             </Button>
             <Button bg="teal.500" color="white" _hover={{ bg: "teal.600" }} onClick={handleSignup}> Sign Up
