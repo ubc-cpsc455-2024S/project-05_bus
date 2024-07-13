@@ -42,6 +42,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/many", async (req, res) => {
+  try {
+    const newGroceries = await groceryQueries.postManyGroceries(req.body);
+    return res.status(201).json(newGroceries);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
 router.patch("/:id", async (req, res) => {
   try {
     const updatedGrocery = await groceryQueries.updateGrocery(req.body);

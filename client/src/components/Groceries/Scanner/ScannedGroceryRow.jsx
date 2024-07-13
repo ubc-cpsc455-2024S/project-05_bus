@@ -9,77 +9,70 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormErrorMessage,
-  useToast,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { useSelector, useDispatch } from "react-redux";
-import { addGroceryAsync } from "../../../redux/groceries/thunks";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import {
   isValidNewCategory,
   isValidNewLocation,
   handleCreateLocation,
   handleCreateCategory,
 } from "../utils/CreateNewSelectOptions";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
 export default function GroceryRow({
-  name: initialName,
-  location: initialLocation = "",
-  category: initialCategory = "",
-  quantity: initialQuantity,
+  index,
+  grocery,
+  allGroceries,
+  setAllGroceries,
 }) {
-  const categories = useSelector((state) => state.groceries.categories);
+  const [name, setName] = useState(grocery.name || "");
+  const [locationId, setLocationId] = useState(grocery.locationId || "");
+  const [categoryId, setCategoryId] = useState(grocery.categoryId || "");
+  const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || "");
+  const [quantity, setQuantity] = useState(grocery.quantity || "");
   const locations = useSelector((state) => state.groceries.locations);
-  const dispatch = useDispatch();
-  const group = useCurrentGroup();
-  const toast = useToast();
-
-  const [name, setName] = useState(initialName);
-  const [locationId, setLocationId] = useState(initialLocation);
-  const [categoryId, setCategoryId] = useState(initialCategory);
-  const [expiryDate, setExpiryDate] = useState("");
-  const [quantity, setQuantity] = useState(initialQuantity);
+  const categories = useSelector((state) => state.groceries.categories);
 
   const currentLocation = locations.find((loc) => loc._id === locationId);
   const currentCategory = categories.find((cat) => cat._id === categoryId);
 
-  const [errors, setErrors] = useState({});
+  const group = useCurrentGroup();
+  const dispatch = useDispatch();
 
-//   const handleAdd = () => {
-//     const newErrors = {};
+  const updateGrocery = (updatedGrocery) => {
+    const updatedGroceries = [...allGroceries];
+    updatedGroceries[index] = updatedGrocery;
+    setAllGroceries(updatedGroceries);
+  };
 
-//     if (!name) newErrors.name = "Name is required";
-//     if (!locationId) newErrors.locationId = "Location is required";
-//     if (!categoryId) newErrors.categoryId = "Category is required";
-//     if (quantity <= 0) newErrors.quantity = "Cannot be 0";
+  const handleNameChange = (e) => {
+    const newName = e.target.value;
+    setName(newName);
+    const updatedGrocery = { ...grocery, name: newName };
+    updateGrocery(updatedGrocery);
+  };
 
-//     setErrors(newErrors);
+  const handleLocationChange = (e) => {
+    const newLocationId = e.value;
+    setLocationId(newLocationId);
+    const updatedGrocery = { ...grocery, locationId: newLocationId };
+    updateGrocery(updatedGrocery);
+  };
 
-//     if (Object.keys(newErrors).length === 0) {
-//       dispatch(
-//         addGroceryAsync({
-//           name,
-//           locationId: locationId,
-//           categoryId: categoryId,
-//           expiryDate,
-//           quantity,
-//           groupID: group._id,
-//         })
-//       );
-//       toast({
-//         title: "Grocery Added",
-//         description: `${name}${
-//           quantity > 1 ? "'s" : ""
-//         } has been added to the ${
-//           locations.find((l) => l._id === locationId).name
-//         }`,
-//         status: "success",
-//         duration: 1000,
-//         isClosable: true,
-//       });
-//       resetFields();
-//     }
-//   };
+  const handleCategoryChange = (e) => {
+    const newCategoryId = e.value;
+    setCategoryId(newCategoryId);
+    const updatedGrocery = { ...grocery, categoryId: newCategoryId };
+    updateGrocery(updatedGrocery);
+  };
+
+  const handleQuantityChange = (valueString) => {
+    const newQuantity = parseInt(valueString, 10);
+    setQuantity(newQuantity);
+    const updatedGrocery = { ...grocery, quantity: newQuantity };
+    updateGrocery(updatedGrocery);
+  };
 
   const handleDateChange = (e) => {
     const selectedDate = new Date(e.target.value);
@@ -88,33 +81,19 @@ export default function GroceryRow({
         timeZone: "America/Los_Angeles",
       })
     );
+    updateGrocery({ ...grocery, expiryDate: selectedDate });
   };
 
-  const resetFields = () => {
-    setName("");
-    setLocationId("");
-    setCategoryId("");
-    setExpiryDate("");
-    setQuantity(0);
-  };
-  
   return (
     <HStack spacing={2} justifyContent="space-between" width="100%">
-      <FormControl isInvalid={errors.name} w="25%" position="relative">
+      <FormControl isInvalid={name.length <= 0} w="25%" position="relative">
         <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.name}
+          Missing Name!
         </FormErrorMessage>
-        <Input
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <Input placeholder="Name" value={name} onChange={handleNameChange} />
       </FormControl>
 
-      <FormControl isInvalid={errors.locationId} w="25%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.locationId}
-        </FormErrorMessage>
+      <FormControl w="25%" position="relative">
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
@@ -126,7 +105,7 @@ export default function GroceryRow({
               ? { value: currentLocation._id, label: currentLocation.name }
               : null
           }
-          onChange={(option) => setLocationId(option.value)}
+          onChange={handleLocationChange}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement="auto"
           onCreateOption={(input) =>
@@ -141,10 +120,7 @@ export default function GroceryRow({
         />
       </FormControl>
 
-      <FormControl isInvalid={errors.categoryId} w="25%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.categoryId}
-        </FormErrorMessage>
+      <FormControl w="25%" position="relative">
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
@@ -156,7 +132,7 @@ export default function GroceryRow({
               ? { value: currentCategory._id, label: currentCategory.name }
               : null
           }
-          onChange={(option) => setCategoryId(option.value)}
+          onChange={handleCategoryChange}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement="auto"
           onCreateOption={(input) =>
@@ -182,14 +158,14 @@ export default function GroceryRow({
         />
       </FormControl>
 
-      <FormControl isInvalid={errors.quantity} w="10%" position="relative">
+      <FormControl isInvalid={quantity <= 0} w="10%" position="relative">
         <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.quantity}
+          Quantity cannot be 0.
         </FormErrorMessage>
         <NumberInput
           placeholder="Quantity"
           value={quantity}
-          onChange={(value) => setQuantity(value)}
+          onChange={handleQuantityChange}
           min={0}
         >
           <NumberInputField />

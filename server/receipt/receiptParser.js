@@ -54,7 +54,5 @@ const extractText = async (receiptImg) => {
   } catch (error) {
     console.error("Error extracting text:", error);
     throw error;
-  } finally {
-    await worker.terminate();
   }
 };
