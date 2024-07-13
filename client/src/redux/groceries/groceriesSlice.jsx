@@ -45,7 +45,7 @@ const groceriesSlice = createSlice({
   reducers: {
     updateMealSelect: (state, action) => {
       const index = state.groceries.findIndex(
-        (grocery) => grocery.id === action.payload.id
+        (grocery) => grocery._id === action.payload._id
       );
       if (index !== -1) {
         if (action.payload.expiryDate) {
