@@ -57,23 +57,26 @@ Example result:
 
 const consolidatePrompt = (locations, categories) => {
   return `
-    Here are some locations and categories for organizing the grocery list you just created:
-    Use your best judgment to sort the groceries into the appropriate location and category from the provided lists. Please return the groceries as a JSON object in the format, do not include any additional text:
+    Use your best judgment to sort the groceries into the appropriate location and category from the provided lists. 
+    For example, 'Milk' would likely be in the 'Dairy' category and 'Fridge' location. 
+    Associate each grocery item with the corresponding locationId and categoryId from the given lists, referencing their _id values. 
+    If the location or category is not provided, you can leave it blank. 
+    Please return the groceries as a JSON object in the format specified, without any additional text.
+    
+    Locations:
+    ${JSON.stringify(locations)}
 
-    ${locations}
-
-    ${categories}
-
-    If a grocery item does not fit well into any of the listed locations or categories, you may leave the corresponding fields (locationId, categoryId) blank but do your best to fill them out.
+    Categories:
+    ${JSON.stringify(categories)}
 
     Example of what to return:
 
     {
-    "groceries": [
-        {"name": "Milk (1 gallon)", "quantity": 1, "locationId": 3, "categoryId": 3},
-        {"name": "Apples (5)", "quantity": 1, "locationId": 1, "categoryId": 1},
-        {"name": "Pasta", "quantity": 2} // No specific location or category
-    ]
+      "groceries": [
+          {"name": "Milk (1 gallon)", "quantity": 1, "locationId": 668dfa2940baaede0daf611f, "categoryId": 668071b47522f05c47e328a6},
+          {"name": "Apples (5)", "quantity": 1, "locationId": 668071a87522f05c47e328a1, "categoryId": 668071b47522f05c47e328a5},
+          {"name": "Pasta", "quantity": 2} // No specific location or category
+      ]
     }`;
 };
 

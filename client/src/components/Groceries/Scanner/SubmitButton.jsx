@@ -17,7 +17,7 @@ import {
   groceryImageReceiptProcessor,
 } from "./receiptService";
 
-const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type }) => {
+const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type, setGroceries }) => {
   const [selectedMode, setSelectedMode] = useState("cheap");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const categories = useSelector((state) => state.groceries.categories);
@@ -38,44 +38,38 @@ const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type }) => {
       });
       return;
     }
-    if (selectedMode === "cheap") {
-      await cheapSubmit(croppedImageBlob, locations, categories);
-    } else {
-      await imageSubmit(croppedImageBlob, locations, categories);
+
+    let processorFunction;
+    if (type === "Receipt") {
+      if (selectedMode === "cheap") {
+        processorFunction = cheapReceiptProcessor;
+      } else if (selectedMode === "image") {
+        processorFunction = imageReceiptProcessor;
+      }
+    } else if (type === "Groceries") {
+      processorFunction = groceryImageReceiptProcessor;
     }
+
+    if (processorFunction) {
+      const data = await processorFunction(
+        croppedImageBlob,
+        locations,
+        categories
+      );
+      const jsonData = extractAndParseJson(data);
+      setGroceries(jsonData.groceries);
+    }
+
     clearCroppedImage();
   };
 
-  const cheapSubmit = async (croppedImageBlob, locations, categories) => {
-    const data = await cheapReceiptProcessor(
-      croppedImageBlob,
-      locations,
-      categories
-    );
-    console.log(data);
-  };
-
-  const imageSubmit = async (croppedImageBlob, locations, categories) => {
-    const data = await imageReceiptProcessor(
-      croppedImageBlob,
-      locations,
-      categories
-    );
-    console.log(data);
-  };
-
-  const groceryImageSubmit = async (
-    croppedImageBlob,
-    locations,
-    categories
-  ) => {
-    const data = await groceryImageReceiptProcessor(
-      croppedImageBlob,
-      locations,
-      categories
-    );
-    console.log(data);
-  };
+  function extractAndParseJson(data) {
+    const jsonString = data.trim();
+    const startIndex = jsonString.indexOf('{');
+    const endIndex = jsonString.lastIndexOf('}');
+    const cleanedJsonString = jsonString.substring(startIndex, endIndex + 1);
+    return JSON.parse(cleanedJsonString);
+}
 
   return (
     <>
@@ -83,9 +77,7 @@ const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type }) => {
         <Button
           mt="4"
           colorScheme="blue"
-          onClick={() =>
-            groceryImageSubmit(croppedImageBlob, locations, categories)
-          }
+          onClick={handleSubmit}
           disabled={!croppedImageBlob}
         >
           Submit

@@ -18,7 +18,7 @@ import { useState } from "react";
 import CropModal from "./CropModal";
 import sampleReceiptImage from "./images/sample_receipt.jpg";
 import sampleGroceriesImage from "./images/sample_groceries.jpg";
-import SubmitButton from "./SubmitButton";
+import ScannedGroceriesList from "./ScannedGroceriesList";
 
 export default function Scanner({ isOpen, onClose, type }) {
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
@@ -42,11 +42,6 @@ export default function Scanner({ isOpen, onClose, type }) {
     setUploadedImageUrl(null);
     setCroppedImageUrl(null);
     setCroppedImageBlob(null);
-  };
-
-  const handleClose = () => {
-    onClose();
-    clearCroppedImage();
   };
 
   return (
@@ -84,7 +79,7 @@ export default function Scanner({ isOpen, onClose, type }) {
                   >
                     Crop Image
                   </Button>
-                  <SubmitButton
+                  <ScannedGroceriesList
                     croppedImageBlob={croppedImageBlob}
                     clearCroppedImage={clearCroppedImage}
                     type={type}
@@ -145,7 +140,7 @@ export default function Scanner({ isOpen, onClose, type }) {
       <CropModal
         aspect={type === "Receipt" ? 1 / 2 : 4 / 3}
         isOpen={isCropModalOpen}
-        onClose={handleClose}
+        onClose={() => setIsCropModalOpen(false)}
         imageSrc={uploadedImageUrl}
         onCropComplete={handleCropComplete}
       />

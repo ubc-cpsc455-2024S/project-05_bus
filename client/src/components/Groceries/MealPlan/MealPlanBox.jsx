@@ -30,7 +30,7 @@ export default function MealPlanBox() {
       <VStack align="start" spacing={3}>
         {selectedMealItems.map((item) => (
           <Box
-            key={item.id}
+            key={item._id}
             display="flex"
             alignItems="center"
           >
