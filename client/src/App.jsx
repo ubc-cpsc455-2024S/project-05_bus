@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUsersAsync } from './redux/users/thunks.js'
 import { getGroupsAsync } from './redux/groups/thunks.js'
-import { REQUEST_STATE } from "./redux/utils.js";
+import { REQUEST_STATE } from "./redux/utils.js"
 
 export default function App() {
   const dispatch = useDispatch();
