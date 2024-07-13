@@ -67,7 +67,7 @@ export default function MealPlanBox() {
         }
       });
     };
-  }, []);
+  }, );
 
   return (
     showRecipe ? (
