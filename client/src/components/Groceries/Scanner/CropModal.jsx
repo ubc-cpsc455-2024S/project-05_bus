@@ -13,19 +13,26 @@ async function getCroppedImg(imageSrc, crop, zoom) {
       const scaleY = image.naturalHeight / image.height;
       const ctx = canvas.getContext('2d');
 
-      canvas.width = crop.width;
-      canvas.height = crop.height;
+      const adjustedCrop = {
+        x: crop.x * scaleX,
+        y: crop.y * scaleY,
+        width: crop.width * scaleX,
+        height: crop.height * scaleY,
+      };
+
+      canvas.width = adjustedCrop.width / zoom;
+      canvas.height = adjustedCrop.height / zoom;
 
       ctx.drawImage(
         image,
-        crop.x * scaleX / zoom,
-        crop.y * scaleY / zoom,
-        crop.width * scaleX / zoom,
-        crop.height * scaleY / zoom,
+        adjustedCrop.x,
+        adjustedCrop.y,
+        adjustedCrop.width,
+        adjustedCrop.height,
         0,
         0,
-        crop.width,
-        crop.height
+        canvas.width,
+        canvas.height
       );
 
       canvas.toBlob((blob) => {

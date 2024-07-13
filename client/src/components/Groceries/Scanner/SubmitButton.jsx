@@ -17,7 +17,12 @@ import {
   groceryImageReceiptProcessor,
 } from "./receiptService";
 
-const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type, setGroceries }) => {
+const SubmitButton = ({
+  croppedImageBlob,
+  clearCroppedImage,
+  type,
+  setGroceries,
+}) => {
   const [selectedMode, setSelectedMode] = useState("cheap");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const categories = useSelector((state) => state.groceries.categories);
@@ -51,25 +56,48 @@ const SubmitButton = ({ croppedImageBlob, clearCroppedImage, type, setGroceries 
     }
 
     if (processorFunction) {
-      const data = await processorFunction(
-        croppedImageBlob,
-        locations,
-        categories
-      );
-      const jsonData = extractAndParseJson(data);
-      setGroceries(jsonData.groceries);
+      try {
+        const data = await processorFunction(
+          croppedImageBlob,
+          locations,
+          categories
+        );
+        const jsonData = extractAndParseJson(data);
+        if (jsonData && jsonData.groceries) {
+          setGroceries(jsonData.groceries);
+        } else {
+          throw new Error("Invalid JSON data");
+        }
+      } catch (error) {
+        toast({
+          title: "Error processing image",
+          description: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
-
     clearCroppedImage();
   };
 
   function extractAndParseJson(data) {
     const jsonString = data.trim();
-    const startIndex = jsonString.indexOf('{');
-    const endIndex = jsonString.lastIndexOf('}');
+    const startIndex = jsonString.indexOf("{");
+    const endIndex = jsonString.lastIndexOf("}");
     const cleanedJsonString = jsonString.substring(startIndex, endIndex + 1);
-    return JSON.parse(cleanedJsonString);
-}
+    try {
+      return JSON.parse(cleanedJsonString);
+    } catch (error) {
+      toast({
+        title: "Please try submitting again",
+        status: "error",
+        duration: 1000,
+        isClosable: true,
+      });
+      return {};
+    }
+  }
 
   return (
     <>
