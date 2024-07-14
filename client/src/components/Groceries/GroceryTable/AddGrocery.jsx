@@ -11,6 +11,12 @@ import {
   FormControl,
   FormErrorMessage,
   useToast,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
@@ -23,6 +29,7 @@ import {
 } from "../utils/CreateNewSelectOptions";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addGroceryAsync } from "../../../redux/groceries/thunks";
+import Scanner from "../Scanner/Scanner";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
@@ -30,12 +37,26 @@ export default function AddGrocery() {
   const dispatch = useDispatch();
   const group = useCurrentGroup();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [quantity, setQuantity] = useState(0);
+  const [isScannerOpen, setIsScannerOpen] = useState(false);
+  const [scannerType, setScannerType] = useState(null);
+
+  const openScanner = (type) => {
+    setScannerType(type);
+    setIsScannerOpen(true);
+  };
+
+  const closeScanner = () => {
+    setScannerType(null);
+    setIsScannerOpen(false);
+  };
+
   const [errors, setErrors] = useState({});
 
   const handleAdd = () => {
@@ -63,13 +84,24 @@ export default function AddGrocery() {
         title: "Grocery Added",
         description: `${name}${
           quantity > 1 ? "'s" : ""
-        } has been added to the ${locations.find((l) => l._id === location).name}`,
+        } has been added to the ${
+          locations.find((l) => l._id === location).name
+        }`,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
       resetFields();
     }
+  };
+
+  const handleDateChange = (e) => {
+    const selectedDate = new Date(e.target.value);
+    setExpiryDate(
+      selectedDate.toLocaleDateString("en-US", {
+        timeZone: "America/Los_Angeles",
+      })
+    );
   };
 
   const resetFields = () => {
@@ -147,8 +179,10 @@ export default function AddGrocery() {
         <Input
           placeholder="Expiry Date"
           type="date"
-          value={expiryDate}
-          onChange={(e) => setExpiryDate(e.target.value)}
+          value={
+            expiryDate ? new Date(expiryDate).toISOString().split("T")[0] : ""
+          }
+          onChange={handleDateChange}
         />
       </FormControl>
 
@@ -169,10 +203,39 @@ export default function AddGrocery() {
           </NumberInputStepper>
         </NumberInput>
       </FormControl>
-
-      <Button onClick={handleAdd}>
-        <AddIcon />
-      </Button>
+      <Menu isOpen={isOpen}>
+        <MenuButton
+          as={Button}
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
+          onClick={handleAdd}
+        >
+          <AddIcon />
+        </MenuButton>
+        <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
+          <MenuItem
+            onClick={() => openScanner("Receipt")}
+            icon={
+              <Text color="gray.600" className="material-symbols-outlined">
+                receipt_long
+              </Text>
+            }
+          >
+            Scan Receipt
+          </MenuItem>
+          <MenuItem
+            onClick={() => openScanner("Groceries")}
+            icon={
+              <Text color="gray.600" className="material-symbols-outlined">
+                grocery
+              </Text>
+            }
+          >
+            Scan Food Items
+          </MenuItem>
+        </MenuList>
+      </Menu>
+      <Scanner isOpen={isScannerOpen} onClose={closeScanner} type={scannerType} />
     </HStack>
   );
 }
