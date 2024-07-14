@@ -22,10 +22,13 @@ import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
+    _id: event.id,
     title: event.title,
     start: moment(event.start).format("YYYY-MM-DDTHH:mm"),
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
+    backgroundColor: event.extendedProps.backgroundColor,
+    borderColor: event.extendedProps.borderColor,
     done: event.extendedProps.done,
     type: event.extendedProps.type,
   });

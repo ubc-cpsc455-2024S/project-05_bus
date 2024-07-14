@@ -96,6 +96,23 @@ export default function Calendar() {
           })
         );
         closePopover();
+      } else if (eventDetails.type !== "chore") {
+        dispatch(
+          updateEventAsync({
+            _id: eventDetails._id,
+            title: eventDetails.title,
+            start: eventDetails.start,
+            end: eventDetails.end,
+            backgroundColor: eventDetails.backgroundColor,
+            borderColor: eventDetails.borderColor,
+            extendedProps: {
+              type: "expiry",
+              memberId: eventDetails.memberId,
+              done: eventDetails.done,
+            },
+          })
+        );
+        closePopover();
       }
     }
   };
