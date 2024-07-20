@@ -8,105 +8,64 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  FormErrorMessage,
-  useToast,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  isValidNewCategory,
-  isValidNewLocation,
-  handleCreateLocation,
-  handleCreateCategory,
-} from "../utils/CreateNewSelectOptions";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import { useSelector } from "react-redux";
 import moment from "moment";
 
 export default function GroceryRow({
-  index,
   grocery,
-  allGroceries,
-  setAllGroceries,
+  setUpdatedGrocery,
 }) {
   const [name, setName] = useState(grocery.name || "");
   const [locationId, setLocationId] = useState(grocery.locationId || "");
   const [categoryId, setCategoryId] = useState(grocery.categoryId || "");
   const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || "");
   const [quantity, setQuantity] = useState(grocery.quantity || "");
+
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
 
   const currentLocation = locations.find((loc) => loc._id === locationId);
   const currentCategory = categories.find((cat) => cat._id === categoryId);
 
-  const group = useCurrentGroup();
-  const dispatch = useDispatch();
-  const toast = useToast();
-
-  const updateGrocery = (updatedGrocery) => {
-    const updatedGroceries = [...allGroceries];
-    updatedGroceries[index] = updatedGrocery;
-    setAllGroceries(updatedGroceries);
-  };
-
   const handleNameChange = (e) => {
     const newName = e.target.value;
     setName(newName);
-    const updatedGrocery = { ...grocery, name: newName };
-    updateGrocery(updatedGrocery);
+    setUpdatedGrocery({ ...grocery, name: newName });
   };
 
   const handleLocationChange = (e) => {
     const newLocationId = e.value;
     setLocationId(newLocationId);
-    const updatedGrocery = { ...grocery, locationId: newLocationId };
-    updateGrocery(updatedGrocery);
+    setUpdatedGrocery({ ...grocery, locationId: newLocationId });
   };
 
   const handleCategoryChange = (e) => {
     const newCategoryId = e.value;
     setCategoryId(newCategoryId);
-    const updatedGrocery = { ...grocery, categoryId: newCategoryId };
-    updateGrocery(updatedGrocery);
+    setUpdatedGrocery({ ...grocery, categoryId: newCategoryId });
   };
 
   const handleQuantityChange = (valueString) => {
     const newQuantity = parseInt(valueString, 10);
     setQuantity(newQuantity);
-    const updatedGrocery = { ...grocery, quantity: newQuantity };
-    updateGrocery(updatedGrocery);
+    setUpdatedGrocery({ ...grocery, quantity: newQuantity });
   };
 
   const handleDateChange = (e) => {
-    try {
-      const selectedDate = moment(e.target.value, "YYYY-MM-DD", true);
-      if (!selectedDate.isValid()) {
-        throw new Error("Invalid date format. Please select a valid date.");
-      }
-      setExpiryDate(selectedDate);
-      updateGrocery({ ...grocery, expiryDate: selectedDate });
-    } catch (error) {
-      toast({
-        title: "Invalid Date",
-        description: error.message,
-        status: "error",
-        duration: 500,
-        isClosable: true,
-      });
-      setExpiryDate(null);
-    }
+    const newExpiryDate = e.target.value;
+    setExpiryDate(moment(newExpiryDate).format("YYYY-MM-DD"));
+    setUpdatedGrocery({ ...grocery, expiryDate: newExpiryDate });
   };
-  
+
   return (
     <HStack spacing={2} justifyContent="space-between" width="100%">
-      <FormControl isInvalid={name.length <= 0} w="25%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          Missing Name!
-        </FormErrorMessage>
+      <FormControl w="25%">
         <Input placeholder="Name" value={name} onChange={handleNameChange} />
       </FormControl>
 
-      <FormControl w="25%" position="relative">
+      <FormControl w="25%">
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
@@ -119,21 +78,10 @@ export default function GroceryRow({
               : null
           }
           onChange={handleLocationChange}
-          isValidNewOption={(input) => isValidNewLocation(input, locations)}
-          menuPlacement="auto"
-          onCreateOption={(input) =>
-            handleCreateLocation(input, dispatch, group._id)
-          }
-          chakraStyles={{
-            dropdownIndicator: (provided) => ({
-              ...provided,
-              width: "16px",
-            }),
-          }}
         />
       </FormControl>
 
-      <FormControl w="25%" position="relative">
+      <FormControl w="25%">
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
@@ -146,17 +94,6 @@ export default function GroceryRow({
               : null
           }
           onChange={handleCategoryChange}
-          isValidNewOption={(input) => isValidNewCategory(input, categories)}
-          menuPlacement="auto"
-          onCreateOption={(input) =>
-            handleCreateCategory(input, dispatch, group._id)
-          }
-          chakraStyles={{
-            dropdownIndicator: (provided) => ({
-              ...provided,
-              width: "16px",
-            }),
-          }}
         />
       </FormControl>
 
@@ -164,17 +101,12 @@ export default function GroceryRow({
         <Input
           placeholder="Expiry Date"
           type="date"
-          value={
-            expiryDate ? moment(expiryDate).format("YYYY-MM-DD") : ""
-          }
+          value={expiryDate}
           onChange={handleDateChange}
         />
       </FormControl>
 
-      <FormControl isInvalid={quantity <= 0} w="10%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          Quantity cannot be 0.
-        </FormErrorMessage>
+      <FormControl w="10%">
         <NumberInput
           placeholder="Quantity"
           value={quantity}

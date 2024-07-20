@@ -49,6 +49,7 @@ const postManyGroceries = async (groceries) => {
       body: JSON.stringify(groceries),
     });
     const data = await response.json();
+    console.log(data)
     return data;
   } catch (error) {
     console.error("Error posting groceries:", error);
@@ -68,6 +69,11 @@ const updateGrocery = async (grocery) => {
         body: JSON.stringify(grocery),
       }
     );
+
+    if (response.status === 204) {
+      return { deleted: true };
+    }
+
     const data = await response.json();
     return data;
   } catch (error) {

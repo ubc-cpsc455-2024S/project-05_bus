@@ -59,6 +59,11 @@ const groceriesSlice = createSlice({
         };
       }
     },
+    deleteGrocery(state, action) {
+      state.groceries = state.groceries.filter(
+        (grocery) => grocery._id !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     handleGroceriesCases(builder);
@@ -260,8 +265,6 @@ const handleLocationsCases = (builder) => {
     });
 };
 
-export const {
-  updateMealSelect,
-} = groceriesSlice.actions;
+export const { updateMealSelect, deleteGrocery } = groceriesSlice.actions;
 
 export default groceriesSlice.reducer;

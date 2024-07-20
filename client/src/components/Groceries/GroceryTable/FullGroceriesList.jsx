@@ -30,7 +30,7 @@ import {
   getPaginationRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
@@ -42,6 +42,9 @@ import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
 import SelectMealButton from "./MealButton";
 
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import NotePopover from "./NotePopover";
+
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -52,10 +55,7 @@ export default function GroceriesTable() {
   const groceriesData = useSelector((state) => state.groceries.groceries);
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
-
-  const events = useSelector((state) => state.events.events);
-
-  const dispatch = useDispatch();
+  const members = useCurrentGroupMembers();
 
   const tooltipColumns = ['name', 'categoryId', 'locationId'];
 
@@ -68,8 +68,7 @@ export default function GroceriesTable() {
     columns: columns(
       locations,
       categories,
-      dispatch,
-      events,
+      members,
       dateFilterType,
     ),
     state: {
@@ -217,6 +216,7 @@ export default function GroceriesTable() {
                       <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
                       <FavoriteButton groceryItem={row.original} />
+                      <NotePopover groceryItem={row.original} />
                       <SelectMealButton groceryItem={row.original} />
                     </Td>
                   </Tr>

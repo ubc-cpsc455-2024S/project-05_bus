@@ -87,7 +87,7 @@ export const chatCompletion = async (content, locations, categories) => {
         { role: "user", content: ocrPrompt + content },
         { role: "user", content: consolidatePrompt(locations, categories) },
       ],
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
     });
     return response.choices[0].message.content;
   } catch (error) {
@@ -99,7 +99,7 @@ export const chatCompletion = async (content, locations, categories) => {
 export const chatCompletionImage = async (image, locations, categories) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "user",
@@ -134,7 +134,7 @@ export const chatCompletionGroceryImage = async (
 ) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [
         {
           role: "user",

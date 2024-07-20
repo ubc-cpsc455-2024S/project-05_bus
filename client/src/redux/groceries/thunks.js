@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { actionTypes } from "./actionTypes";
 import GroceryService from "./service";
 import { getEventsAsync } from "../events/thunks";
+import { deleteGrocery } from "./groceriesSlice";
 
 export const getGroceriesAsync = createAsyncThunk(
   actionTypes.GET_GROCERIES,
@@ -40,7 +41,9 @@ export const updateGroceryAsync = createAsyncThunk(
   actionTypes.UPDATE_GROCERY,
   async (grocery, { dispatch }) => {
     const response = await GroceryService.updateGrocery(grocery);
-    if (response) {
+    if (response.deleted) {
+      dispatch(deleteGrocery(grocery._id));
+    } else {
       await dispatch(getEventsAsync(response.groupID));
     }
     return response;

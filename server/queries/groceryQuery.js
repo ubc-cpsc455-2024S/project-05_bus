@@ -51,6 +51,11 @@ const groceryQueries = {
   },
   updateGrocery: async function (groceryData) {
     try {
+      const existingGrocery = await Groceries.findById(groceryData._id);
+      if (groceryData.quantity <= 0 && !existingGrocery.favourite && existingGrocery.restockNotificationDate === null) {
+        await Groceries.findByIdAndDelete(groceryData._id);
+        return null; 
+      }
       const result = await Groceries.findOneAndUpdate(
         { _id: groceryData._id },
         groceryData,
@@ -58,10 +63,7 @@ const groceryQueries = {
       );
       return result;
     } catch (error) {
-      console.error(
-        `Error updating grocery with id ${groceryData._id}:`,
-        error
-      );
+      console.error(`Error updating grocery with id ${groceryData._id}:`, error);
       throw error;
     }
   },

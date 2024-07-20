@@ -24,6 +24,8 @@ import {
   useToast,
   useDisclosure,
   useOutsideClick,
+  Select,
+  HStack,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 import { useState } from "react";
@@ -36,7 +38,12 @@ import {
   isValidNewLocation,
 } from "../utils/CreateNewSelectOptions";
 import moment from "moment";
-import { updateGroceryAsync } from "../../../redux/groceries/thunks";
+import {
+  updateGroceryAsync,
+  deleteGroceryAsync,
+} from "../../../redux/groceries/thunks";
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import { COMMON_UNITS } from "../utils/commonUnits";
 
 export default function EditGroceryPopover({ groceryItem }) {
   const [name, setName] = useState(groceryItem.name);
@@ -44,11 +51,14 @@ export default function EditGroceryPopover({ groceryItem }) {
   const [category, setCategory] = useState(groceryItem.categoryId);
   const [expiryDate, setExpiryDate] = useState(groceryItem.expiryDate);
   const [quantity, setQuantity] = useState(groceryItem.quantity);
+  const [quantityUnit, setQuantityUnit] = useState(groceryItem.quantityUnit);
+  const [ownerId, setOwnerId] = useState(groceryItem.ownerId);
   const [errors, setErrors] = useState({});
   const ref = useRef();
 
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
+  const members = useCurrentGroupMembers();
 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -69,10 +79,8 @@ export default function EditGroceryPopover({ groceryItem }) {
   const validateForm = () => {
     const newErrors = {};
     if (name.trim().length === 0) newErrors.name = "Name is required";
-    if (!location) newErrors.location = "Location is required";
-    if (!category) newErrors.category = "Category is required";
-    if (!quantity || quantity <= 0)
-      newErrors.quantity = "Quantity must be greater than 0";
+    if (!quantity || quantity < 0)
+      newErrors.quantity = "Quantity must be greater or equal to 0";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -98,6 +106,18 @@ export default function EditGroceryPopover({ groceryItem }) {
       );
       onClose();
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteGroceryAsync(groceryItem._id));
+    toast({
+      title: "Grocery item deleted.",
+      description: "Your item has been removed.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+    onClose();
   };
 
   return (
@@ -127,6 +147,13 @@ export default function EditGroceryPopover({ groceryItem }) {
               >
                 Save
               </Button>
+              <Button
+                className="material-symbols-outlined"
+                size="sm"
+                onClick={handleDelete}
+              >
+                delete
+              </Button>
               <PopoverCloseButton position="static" size="md" />
             </ButtonGroup>
           </Box>
@@ -137,7 +164,7 @@ export default function EditGroceryPopover({ groceryItem }) {
             <Input value={name} onChange={(e) => setName(e.target.value)} />
             {errors.name && <FormErrorMessage>{errors.name}</FormErrorMessage>}
           </FormControl>
-          <FormControl isInvalid={errors.location} pb={2}>
+          <FormControl pb={2}>
             <FormLabel>Location</FormLabel>
             <CreatableSelect
               options={locations.map((loc) => ({
@@ -166,7 +193,7 @@ export default function EditGroceryPopover({ groceryItem }) {
               <FormErrorMessage>{errors.location}</FormErrorMessage>
             )}
           </FormControl>
-          <FormControl isInvalid={errors.category} pb={2}>
+          <FormControl pb={2}>
             <FormLabel>Category</FormLabel>
             <CreatableSelect
               options={categories.map((cat) => ({
@@ -198,6 +225,20 @@ export default function EditGroceryPopover({ groceryItem }) {
             )}
           </FormControl>
           <FormControl pb={2}>
+            <FormLabel>Owner</FormLabel>
+            <Select
+              value={ownerId}
+              onChange={(e) => setOwnerId(e.target.value)}
+            >
+              <option value={null}>Shared</option>
+              {members.map((member) => (
+                <option key={member._id} value={member._id}>
+                  {`${member.firstName} ${member.lastName}`}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl pb={2}>
             <FormLabel>Expiry Date</FormLabel>
             <Input
               type="date"
@@ -205,23 +246,42 @@ export default function EditGroceryPopover({ groceryItem }) {
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </FormControl>
-          <FormControl isInvalid={errors.quantity} pb={2}>
-            <FormLabel>Quantity</FormLabel>
-            <NumberInput
-              min={0}
-              value={quantity}
-              onChange={(value) => setQuantity(value)}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
+          <HStack spacing={4}>
+            <FormControl isInvalid={errors.quantity} pb={2}>
+              <FormLabel>Quantity</FormLabel>
+
+              <NumberInput
+                min={0}
+                value={quantity}
+                onChange={(value) => setQuantity(value)}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+            <FormControl pb={2}>
+              <FormLabel>Units</FormLabel>
+              <Select
+                id="quantity-unit"
+                placeholder="Select unit"
+                value={quantityUnit}
+                onChange={(e) => setQuantityUnit(e.target.value)}
+              >
+                {COMMON_UNITS.map((unit) => (
+                  <option key={unit.value} value={unit.value}>
+                    {unit.label}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+
             {errors.quantity && (
               <FormErrorMessage>{errors.quantity}</FormErrorMessage>
             )}
-          </FormControl>
+          </HStack>
         </PopoverBody>
       </PopoverContent>
     </Popover>
