@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -22,6 +22,7 @@ import {
   useDisclosure,
   useOutsideClick,
   ButtonGroup,
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
@@ -31,7 +32,12 @@ import { updateGroceryAsync } from "../../../redux/groceries/thunks";
 import { addEventAsync } from "../../../redux/events/thunks";
 
 export default function NotificationPopover({ groceryItem }) {
-  const [selectedNotifications, setSelectedNotifications] = useState([]);
+  const [selectedNotifications, setSelectedNotifications] = useState(() => {
+    const initialNotifications = [];
+    if (groceryItem.expiryNotificationDate) initialNotifications.push("expiry");
+    if (groceryItem.restockThreshold) initialNotifications.push("restock");
+    return initialNotifications;
+  });
   const [expiryNotificationTime, setExpiryNotificationTime] = useState("7");
   const [restockQuantity, setRestockQuantity] = useState(
     groceryItem.restockThreshold
@@ -43,84 +49,81 @@ export default function NotificationPopover({ groceryItem }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const ref = useRef();
+  const toast = useToast();
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const initialNotifications = [];
-    if (groceryItem.expiryNotificationDate) initialNotifications.push("expiry");
-    if (groceryItem.restockThreshold) initialNotifications.push("restock");
-    setSelectedNotifications(initialNotifications);
-  }, [groceryItem]);
 
   useOutsideClick({
     ref: ref,
     handler: () => {
       onClose();
-    },
+    }
   });
 
-  const handleSave = () => {
-    if (selectedNotifications.includes("expiry")) {
-      const expiryDate = new Date(groceryItem.expiryDate);
-      const notificationDate = moment(expiryDate)
-        .subtract(expiryNotificationTime, "days")
-        .format();
+  const handleSave = async () => {
+    try {
+      const updates = { _id: groceryItem._id };
 
-      if (groceryItem.expiryNotificationDate !== notificationDate) {
-        dispatch(
-          addEventAsync({
-            title: `${groceryItem.name} will expire on ${moment(
-              groceryItem.expiryDate
-            ).format("MMMM Do YYYY")}`,
-            start: notificationDate,
-            allDay: true,
-            backgroundColor: "#c49bad",
-            borderColor: "#c49bad",
-            groupID: group._id,
-            extendedProps: {
-              groceryId: groceryItem._id,
-              type: "expiry",
-              memberId: currentUserID,
-              done: false,
-            },
-          })
-        );
-        dispatch(
-          updateGroceryAsync({
-            _id: groceryItem._id,
-            expiryNotificationDate: notificationDate,
-          })
-        );
+      if (selectedNotifications.includes("expiry")) {
+        const expiryDate = new Date(groceryItem.expiryDate);
+        const notificationDate = moment(expiryDate)
+          .subtract(expiryNotificationTime, "days")
+          .format();
+
+        if (groceryItem.expiryNotificationDate !== notificationDate) {
+          dispatch(
+            addEventAsync({
+              title: `${groceryItem.name} will expire on ${moment(
+                groceryItem.expiryDate
+              ).format("MMMM Do YYYY")}`,
+              start: notificationDate,
+              allDay: true,
+              backgroundColor: "#c49bad",
+              borderColor: "#c49bad",
+              groupID: group._id,
+              extendedProps: {
+                groceryId: groceryItem._id,
+                type: "expiry",
+                memberId: currentUserID,
+                done: false,
+              },
+            })
+          );
+          updates.expiryNotificationDate = notificationDate;
+        }
+      } else {
+        updates.expiryNotificationDate = null;
       }
-    } else {
-      dispatch(
-        updateGroceryAsync({
-          _id: groceryItem._id,
-          expiryNotificationDate: null,
-        })
-      );
-    }
 
-    if (selectedNotifications.includes("restock")) {
-      dispatch(
-        updateGroceryAsync({
-          _id: groceryItem._id,
-          restockThreshold: restockQuantity,
-          restockerId: assignedUser,
-        })
-      );
-    } else {
-      dispatch(
-        updateGroceryAsync({
-          _id: groceryItem._id,
-          restockNotificationDate: null,
-          restockThreshold: null,
-          restockerId: null,
-        })
-      );
+      if (selectedNotifications.includes("restock")) {
+        updates.restockThreshold = restockQuantity;
+        updates.restockerId = assignedUser;
+      } else {
+        updates.restockNotificationDate = null;
+        updates.restockThreshold = null;
+        updates.restockerId = null;
+      }
+
+      dispatch(updateGroceryAsync(updates));
+
+      toast({
+        title: "Notifications updated.",
+        description: "Your notifications have been successfully updated.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      onClose();
+    } catch (error) {
+      toast({
+        title: "An error occurred.",
+        description: "Unable to update notifications.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-    onClose();
   };
 
   return (
@@ -128,12 +131,14 @@ export default function NotificationPopover({ groceryItem }) {
       <PopoverTrigger>
         <IconButton
           aria-label="Notifications"
-          icon={<span className='material-symbols-outlined'>notifications</span>}
+          icon={
+            <span className="material-symbols-outlined">notifications</span>
+          }
           bg="transparent"
           onClick={onOpen}
           color={selectedNotifications.length > 0 ? "yellow.500" : "gray.600"}
           _hover={{ color: "yellow.300" }}
-          _active={{ color: "yellow.700"  }}
+          _active={{ color: "yellow.700" }}
         />
       </PopoverTrigger>
       <PopoverContent shadow="lg" pt={0} pb={2} position="relative">
