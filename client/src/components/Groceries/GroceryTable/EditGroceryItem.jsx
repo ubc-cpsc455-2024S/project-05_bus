@@ -27,7 +27,6 @@ import {
   Select,
   HStack,
 } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { CreatableSelect } from "chakra-react-select";
 import { useSelector, useDispatch } from "react-redux";
@@ -125,9 +124,11 @@ export default function EditGroceryPopover({ groceryItem }) {
       <PopoverTrigger>
         <IconButton
           aria-label="Edit Grocery Item"
-          icon={<EditIcon />}
+          icon={<span className='material-symbols-outlined'>edit</span>}
           bg="transparent"
           onClick={onOpen}
+          _hover={{ color:  "teal.300"}}
+          _active={{ color: "teal.700" }}
         />
       </PopoverTrigger>
       <PopoverContent shadow="lg">

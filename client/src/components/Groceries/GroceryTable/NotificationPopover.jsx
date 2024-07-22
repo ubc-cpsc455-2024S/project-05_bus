@@ -23,7 +23,6 @@ import {
   useOutsideClick,
   ButtonGroup,
 } from "@chakra-ui/react";
-import { BellIcon } from "@chakra-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
@@ -129,9 +128,12 @@ export default function NotificationPopover({ groceryItem }) {
       <PopoverTrigger>
         <IconButton
           aria-label="Notifications"
-          icon={<BellIcon />}
+          icon={<span className='material-symbols-outlined'>notifications</span>}
           bg="transparent"
           onClick={onOpen}
+          color={selectedNotifications.length > 0 ? "yellow.500" : "gray.600"}
+          _hover={{ color: "yellow.300" }}
+          _active={{ color: "yellow.700"  }}
         />
       </PopoverTrigger>
       <PopoverContent shadow="lg" pt={0} pb={2} position="relative">

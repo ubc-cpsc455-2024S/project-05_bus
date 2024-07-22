@@ -212,7 +212,7 @@ export default function GroceriesTable() {
                         )}
                       </Td>
                     ))}
-                    <Td>
+                    <Td maxWidth="180px">
                       <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
                       <FavoriteButton groceryItem={row.original} />
