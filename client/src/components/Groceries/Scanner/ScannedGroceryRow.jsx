@@ -3,28 +3,32 @@ import {
   HStack,
   FormControl,
   Input,
+  Select,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  FormLabel,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import { COMMON_UNITS } from "../utils/commonUnits";
 
-export default function GroceryRow({
-  grocery,
-  setUpdatedGrocery,
-}) {
+export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
   const [name, setName] = useState(grocery.name || "");
   const [locationId, setLocationId] = useState(grocery.locationId || "");
   const [categoryId, setCategoryId] = useState(grocery.categoryId || "");
   const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || "");
   const [quantity, setQuantity] = useState(grocery.quantity || "");
+  const [quantityUnit, setQuantityUnit] = useState(grocery.quantityUnit || "");
+  const [ownerId, setOwnerId] = useState(grocery.ownerId || "");
 
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
+  const members = useCurrentGroupMembers();
 
   const currentLocation = locations.find((loc) => loc._id === locationId);
   const currentCategory = categories.find((cat) => cat._id === categoryId);
@@ -60,12 +64,19 @@ export default function GroceryRow({
   };
 
   return (
-    <HStack spacing={2} justifyContent="space-between" width="100%">
-      <FormControl w="25%">
+    <HStack
+      spacing={2}
+      justifyContent="space-between"
+      width="100%"
+      display="flex"
+    >
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Name</FormLabel>}
         <Input placeholder="Name" value={name} onChange={handleNameChange} />
       </FormControl>
 
-      <FormControl w="25%">
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Location</FormLabel>}
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
@@ -78,10 +89,17 @@ export default function GroceryRow({
               : null
           }
           onChange={handleLocationChange}
+          chakraStyles={{
+            dropdownIndicator: (provided) => ({
+              ...provided,
+              width: "16px",
+            }),
+          }}
         />
       </FormControl>
 
-      <FormControl w="25%">
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Category</FormLabel>}
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
@@ -94,10 +112,17 @@ export default function GroceryRow({
               : null
           }
           onChange={handleCategoryChange}
+          chakraStyles={{
+            dropdownIndicator: (provided) => ({
+              ...provided,
+              width: "16px",
+            }),
+          }}
         />
       </FormControl>
 
-      <FormControl w="20%">
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Expiry Date</FormLabel>}
         <Input
           placeholder="Expiry Date"
           type="date"
@@ -106,19 +131,46 @@ export default function GroceryRow({
         />
       </FormControl>
 
-      <FormControl w="10%">
-        <NumberInput
-          placeholder="Quantity"
-          value={quantity}
-          onChange={handleQuantityChange}
-          min={0}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Owner</FormLabel>}
+        <Select value={ownerId} onChange={(e) => setOwnerId(e.target.value)}>
+          <option value={null}>Shared</option>
+          {members.map((member) => (
+            <option key={member._id} value={member._id}>
+              {`${member.firstName} ${member.lastName}`}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl flex={1}>
+        {index === 0 && <FormLabel>Quantity</FormLabel>}
+        <HStack display="flex" spacing={2}>
+          <NumberInput
+            placeholder="Quantity"
+            value={quantity}
+            onChange={handleQuantityChange}
+            min={0}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <Select
+            placeholder="Unit"
+            value={quantityUnit}
+            onChange={(e) => setQuantityUnit(e.target.value)}
+            flex={1}
+          >
+            {COMMON_UNITS.map((unit) => (
+              <option key={unit.value} value={unit.value}>
+                {unit.label}
+              </option>
+            ))}
+          </Select>
+        </HStack>
       </FormControl>
     </HStack>
   );
