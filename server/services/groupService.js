@@ -48,6 +48,29 @@ const removeMember = async (groupID, userID) => {
   return await userQueries.updateUserGroup(userID, null);
 };
 
+const addAdmin = async (groupID, userID) => {
+  return await groupQueries.addAdmin(groupID, userID);
+};
+
+const removeAdmin = async (groupID, userID) => {
+  try {
+    const group = await groupQueries.getGroup(groupID);
+    if (!group) throw new Error(`Could not find group with id ${groupID}`);
+
+    const isMember = group.memberIDs.includes(userID);
+    const isAdmin = group.adminIDs.includes(userID);
+    const adminCount = group.adminIDs.length;
+
+    if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
+    if (!isAdmin) throw new Error(`User ${userID} is not an admin of group ${groupID}`);
+    if (adminCount <= 1) throw new Error(`Cannot remove user ${userID} as an admin. Groups must have at least one admin`);
+
+    return await groupQueries.removeAdmin(groupID, userID);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteGroup = async (groupID) => {
   const group = await groupQueries.deleteGroup(groupID);
   const members = group.memberIDs;
@@ -65,5 +88,7 @@ export default {
   updateName,
   addMember,
   removeMember,
+  addAdmin,
+  removeAdmin,
   deleteGroup,
 };

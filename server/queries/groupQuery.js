@@ -37,6 +37,32 @@ const groupQueries = {
       throw error;
     }
   },  
+  addAdmin: async function (groupID, userID) {
+    try {
+      const updatedGroup = await Groups.findOneAndUpdate(
+        {
+          _id: groupID,
+          memberIDs: userID, 
+          adminIDs: { $ne: userID } 
+        },
+        {
+          $addToSet: { adminIDs: userID }
+        },
+        {
+          new: true
+        }
+      );
+  
+      if (updatedGroup) {
+        return updatedGroup;
+      } else {
+        throw new Error(`User could not be added as an admin. Ensure the user is a member and not already an admin.`);
+      }
+    } catch (error) {
+      console.error(`Error adding user ${userID} as an admin for group ${groupID}: `, error);
+      throw error;
+    }
+  },
   deleteGroup: async function(groupID) {
     try {
       return await Groups.findByIdAndDelete(groupID);
@@ -50,6 +76,21 @@ const groupQueries = {
       return await Groups.findByIdAndUpdate(groupID, {$pull: {memberIDs: userID}}, {new: true});
     } catch (error) {
       console.error(`Error removing user ${userID} from group ${groupID}: `, error);
+      throw error;
+    }
+  },
+  removeAdmin: async function (groupID, userID) {
+    try {
+      const updatedGroup = await Groups.findOneAndUpdate(
+        { _id: groupID },
+        { $pull: { adminIDs: userID } },
+        { new: true }
+      );
+  
+      if(!updatedGroup) throw new Error(`Could not remove user as admin.`);
+      return updatedGroup;
+    } catch (error) {
+      console.error(`Error removing user ${userID} as admin of group ${groupID}: `, error);
       throw error;
     }
   },
