@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Box,
   TableContainer,
@@ -62,15 +62,14 @@ export default function GroceriesTable() {
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
   };
+  
+  const memoizedColumns = useMemo(() => {
+    return columns(locations, categories, members, dateFilterType);
+  }, [locations, categories, members, dateFilterType]);
 
   const table = useReactTable({
     data: groceriesData,
-    columns: columns(
-      locations,
-      categories,
-      members,
-      dateFilterType,
-    ),
+    columns: memoizedColumns,
     state: {
       sorting,
       columnFilters,
@@ -83,6 +82,7 @@ export default function GroceriesTable() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
   });
 
   return (
