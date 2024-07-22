@@ -90,8 +90,7 @@ export default function Calendar() {
             borderColor: chore.colour,
             extendedProps: {
               choreId: chore.id,
-              memberId: eventDetails.memberId,
-              done: eventDetails.done,
+              ...eventDetails.extendedProps,
             },
           })
         );
@@ -106,10 +105,8 @@ export default function Calendar() {
             backgroundColor: eventDetails.backgroundColor,
             borderColor: eventDetails.borderColor,
             extendedProps: {
-              type: "expiry",
-              memberId: eventDetails.memberId,
-              done: eventDetails.done,
-            },
+              ...eventDetails.extendedProps,
+            }
           })
         );
         closePopover();
