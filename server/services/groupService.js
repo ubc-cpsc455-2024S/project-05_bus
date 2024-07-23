@@ -44,8 +44,23 @@ const addMember = async (groupID, userID) => {
 };
 
 const removeMember = async (groupID, userID) => {
-  await groupQueries.removeMember(groupID, userID);
-  return await userQueries.updateUserGroup(userID, null);
+  try {
+    const group = await groupQueries.getGroup(groupID);
+    if (!group) throw new Error(`Could not find group with id ${groupID}`);
+
+    const isMember = group.memberIDs.includes(userID);
+    const isAdmin = group.adminIDs.includes(userID);
+
+    if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
+    if (isAdmin) {
+      await removeAdmin(groupID, userID);
+    }
+
+    await groupQueries.removeMember(groupID, userID);
+    return await userQueries.updateUserGroup(userID, null);
+  } catch (error) {
+    throw error;
+  }
 };
 
 const addAdmin = async (groupID, userID) => {
