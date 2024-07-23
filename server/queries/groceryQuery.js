@@ -1,5 +1,5 @@
 import { Groceries } from "../models/grocerySchema.js";
-import mongoose from "mongoose";
+import eventQueries from "./eventQuery.js";
 
 const groceryQueries = {
   getAllGroceries: async function (groupID) {
@@ -31,11 +31,13 @@ const groceryQueries = {
     }
   },
   postManyGroceries: async function (groceryData) {
-    const filteredData = groceryData.filter(grocery => {
+    const filteredData = groceryData.filter((grocery) => {
       const { categoryId, locationId, groupID } = grocery;
 
-      const isValidCategoryId = categoryId === null || mongoose.Types.ObjectId.isValid(categoryId);
-      const isValidLocationId = locationId === null || mongoose.Types.ObjectId.isValid(locationId);
+      const isValidCategoryId =
+        categoryId === null || mongoose.Types.ObjectId.isValid(categoryId);
+      const isValidLocationId =
+        locationId === null || mongoose.Types.ObjectId.isValid(locationId);
       const isValidGroupId = mongoose.Types.ObjectId.isValid(groupID);
 
       return isValidCategoryId && isValidLocationId && isValidGroupId;
@@ -52,18 +54,34 @@ const groceryQueries = {
   updateGrocery: async function (groceryData) {
     try {
       const existingGrocery = await Groceries.findById(groceryData._id);
-      if (groceryData.quantity <= 0 && !existingGrocery.favourite && existingGrocery.restockNotificationDate === null) {
-        await Groceries.findByIdAndDelete(groceryData._id);
-        return null; 
+      if (!existingGrocery) {
+        throw new Error(`Grocery item with id ${groceryData._id} not found.`);
       }
-      const result = await Groceries.findOneAndUpdate(
+
+      if (shouldDeleteGrocery(groceryData, existingGrocery)) {
+        await Groceries.findByIdAndDelete(groceryData._id);
+        return null;
+      }
+
+      await handleExpiryEvents(groceryData, existingGrocery);
+      await handleRestockNotifications(groceryData, existingGrocery);
+
+      const updatedGrocery = await Groceries.findOneAndUpdate(
         { _id: groceryData._id },
-        groceryData,
+        { $set: groceryData },
         { new: true }
       );
-      return result;
+
+      if (updatedGrocery && updatedGrocery.restockNotificationDate) {
+        await createRestockNotification(updatedGrocery);
+      }
+
+      return updatedGrocery;
     } catch (error) {
-      console.error(`Error updating grocery with id ${groceryData._id}:`, error);
+      console.error(
+        `Error updating grocery with id ${groceryData._id}:`,
+        error
+      );
       throw error;
     }
   },
@@ -92,6 +110,60 @@ const groceryQueries = {
       throw error;
     }
   },
+};
+
+const shouldDeleteGrocery = (groceryData, existingGrocery) =>
+  groceryData.quantity <= 0 &&
+  !existingGrocery.favourite &&
+  !existingGrocery.restockNotificationDate;
+
+const handleExpiryEvents = async (groceryData, existingGrocery) => {
+  if (
+    "expiryDate" in groceryData ||
+    ("expiryNotificationDate" in groceryData &&
+      !groceryData.expiryNotificationDate)
+  ) {
+    await eventQueries.deleteExpiryEvents(existingGrocery._id);
+    groceryData.expiryNotificationDate = null;
+  }
+};
+
+const handleRestockNotifications = async (groceryData, existingGrocery) => {
+  if ("quantity" in groceryData) {
+    if (
+      groceryData.quantity <= existingGrocery.restockThreshold &&
+      existingGrocery.restockerId
+    ) {
+      groceryData.restockNotificationDate = new Date();
+    } else if (groceryData.quantity > existingGrocery.restockThreshold) {
+      groceryData.restockNotificationDate = null;
+    }
+  }
+
+  if (
+    "restockNotificationDate" in groceryData &&
+    !groceryData.restockNotificationDate
+  ) {
+    await eventQueries.deleteRestockNotifications(existingGrocery._id);
+  }
+};
+
+const createRestockNotification = async (groceryItem) => {
+  const event = {
+    title: `Restock ${groceryItem.name}`,
+    start: new Date(),
+    allDay: true,
+    backgroundColor: "#c49bad",
+    borderColor: "#c49bad",
+    groupID: groceryItem.groupID,
+    extendedProps: {
+      groceryId: groceryItem._id,
+      type: "restock",
+      memberId: groceryItem.restockerId,
+      done: false,
+    },
+  };
+  await eventQueries.postEvent(event);
 };
 
 export default groceryQueries;
