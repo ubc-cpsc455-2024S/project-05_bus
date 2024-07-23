@@ -1,0 +1,48 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  box-sizing: border-box;
+  margin: 2.5% 2.5% 2.5% 2.5%;
+}
+
+.group-settings-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.group-settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-settings-heading {
+  display: flex;
+  align-items: center;
+}
+
+.group-settings-heading-text {
+  font-weight: bold;
+  font-size: 25px;
+  color: teal;
+}
+
+.settings-group-icon {
+  margin-right: 15px;
+}
+
+.group-settings-edit-button {
+  background: none !important;
+}
+
+.group-settings-edit-icon {
+  color: rgba(0, 128, 128, 0.631);
+  font-size: 30px;
+}
+
+.group-settings-leave-button {
+  margin-right: 25px;
+}

@@ -41,6 +41,20 @@ export const removeMemberAsync = createAsyncThunk(
   }
 );
 
+export const addAdminAsync = createAsyncThunk(
+  actionTypes.ADD_ADMIN,
+  async ({groupID, userID}) => {
+    return await GroupsService.addAdmin(groupID, userID);
+  }
+);
+
+export const removeAdminAsync = createAsyncThunk(
+  actionTypes.REMOVE_ADMIN,
+  async ({groupID, userID}) => {
+    return await GroupsService.removeAdmin(groupID, userID);
+  }
+);
+
 export const deleteGroupAsync = createAsyncThunk(
   actionTypes.DELETE_GROUP,
   async (id) => {

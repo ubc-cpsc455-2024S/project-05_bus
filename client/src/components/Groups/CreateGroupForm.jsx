@@ -60,7 +60,8 @@ export default function CreateGroupForm() {
     const memberIDs = members.map(member => member._id);
     const group = {
       name: groupName,
-      memberIDs
+      memberIDs,
+      adminIDs: [currentUser._id]
     }
      
     try {

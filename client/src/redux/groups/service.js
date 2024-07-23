@@ -80,6 +80,32 @@ const removeGroupMember = async (groupID, userID) => {
   }
 };
 
+const addAdmin = async (groupID, userID) => {
+  try {
+    const response = await fetch(`http://localhost:3000/groups/admins/${groupID}/${userID}`, {
+      method: "PATCH"
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error adding group admin: ", error);
+    throw error;
+  }
+}; 
+
+const removeAdmin = async (groupID, userID) => {
+  try {
+    const response = await fetch(`http://localhost:3000/groups/admins/remove/${groupID}/${userID}`, {
+      method: "PATCH"
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error removing group admin: ", error);
+    throw error;
+  }
+};
+
 const deleteGroup = async (id) => {
   try {
     const response = await fetch(`http://localhost:3000/groups/${id}`, {
@@ -93,4 +119,14 @@ const deleteGroup = async (id) => {
   }
 };
 
-export default { getAllGroups, getGroup, createGroup, updateGroupName, addGroupMember, removeGroupMember, deleteGroup};
+export default { 
+  getAllGroups,
+  getGroup,
+  createGroup,
+  updateGroupName,
+  addGroupMember,
+  removeGroupMember,
+  addAdmin,
+  removeAdmin,
+  deleteGroup
+};

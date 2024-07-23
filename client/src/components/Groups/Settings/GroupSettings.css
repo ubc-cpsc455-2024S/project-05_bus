@@ -1,0 +1,47 @@
+.group-name-container {
+  margin-bottom: 25px;
+}
+
+.group-name-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group-name-heading {
+  font-weight: bold;
+  font-size: 20px;
+  color: teal;
+  margin-bottom: 5px;
+}
+
+.group-id-container {
+  color: grey;
+  display: flex;
+  align-items: center;
+}
+
+.copy-button {
+  padding: 0;
+  background: none !important;
+}
+
+.copy-icon {
+  color: rgba(0, 128, 128, 0.631);
+  font-size: 25px;
+}
+
+.members-settings-container {
+  margin: 25px 0px 25px 0px;
+}
+
+.members-settings-heading, .admins-settings-heading {
+  font-weight: bold;
+  font-size: 20px;
+  color: teal;
+  margin-bottom: 5px;
+}
+
+.admins-settings-container {
+  margin: 25px 0px 0px 0px;
+}

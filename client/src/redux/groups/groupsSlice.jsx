@@ -1,6 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from "../utils";
-import { getGroupsAsync, getGroupAsync, createGroupAsync, updateGroupNameAsync, addMemberAsync, removeMemberAsync, deleteGroupAsync } from "./thunks";
+import { 
+  getGroupsAsync,
+  getGroupAsync,
+  createGroupAsync,
+  updateGroupNameAsync,
+  addMemberAsync,
+  removeMemberAsync,
+  addAdminAsync,
+  removeAdminAsync,
+  deleteGroupAsync 
+} from "./thunks";
 
 const initialState = {
   groups: [],
@@ -11,6 +21,8 @@ const initialState = {
   updateGroupName: REQUEST_STATE.IDLE,
   addMember: REQUEST_STATE.IDLE,
   removeMember: REQUEST_STATE.IDLE,
+  addAdmin: REQUEST_STATE.IDLE,
+  removeAdmin: REQUEST_STATE.IDLE,
   deleteGroup: REQUEST_STATE.IDLE,
 };
 
@@ -62,8 +74,8 @@ const groupsSlice = createSlice({
         );
         if (index !== -1) {
           state.groups[index] = action.payload;
+          state.updateGroupName = REQUEST_STATE.FULFILLED;
         }
-        state.updateGroupName = REQUEST_STATE.FULFILLED;
       })
       .addCase(updateGroupNameAsync.rejected, (state) => {
         state.updateGroupName = REQUEST_STATE.REJECTED;
@@ -77,8 +89,8 @@ const groupsSlice = createSlice({
         );
         if (index !== -1) {
           state.groups[index] = action.payload;
+          state.addMember = REQUEST_STATE.FULFILLED;
         }
-        state.addMember = REQUEST_STATE.FULFILLED;
       })
       .addCase(addMemberAsync.rejected, (state) => {
         state.addMember = REQUEST_STATE.REJECTED;
@@ -92,11 +104,41 @@ const groupsSlice = createSlice({
         );
         if (index !== -1) {
           state.groups[index] = action.payload;
+          state.removeMember = REQUEST_STATE.FULFILLED;
         }
-        state.removeMember = REQUEST_STATE.FULFILLED;
       })
       .addCase(removeMemberAsync.rejected, (state) => {
         state.removeMember = REQUEST_STATE.REJECTED;
+      })
+      .addCase(addAdminAsync.pending, (state) => {
+        state.addAdmin = REQUEST_STATE.PENDING;
+      })
+      .addCase(addAdminAsync.fulfilled, (state, action) => {
+        const index = state.groups.findIndex(
+          (group) => group._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.groups[index] = action.payload;
+          state.addAdmin = REQUEST_STATE.FULFILLED;
+        } 
+      })
+      .addCase(addAdminAsync.rejected, (state) => {
+        state.addAdmin = REQUEST_STATE.REJECTED;
+      })
+      .addCase(removeAdminAsync.pending, (state) => {
+        state.removeAdmin = REQUEST_STATE.PENDING;
+      })
+      .addCase(removeAdminAsync.fulfilled, (state, action) => {
+        const index = state.groups.findIndex(
+          (group) => group._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.groups[index] = action.payload;
+          state.removeAdmin = REQUEST_STATE.FULFILLED;
+        }
+      })
+      .addCase(removeAdminAsync.rejected, (state) => {
+        state.removeAdmin = REQUEST_STATE.REJECTED;
       })
       .addCase(deleteGroupAsync.pending, (state) => {
         state.deleteGroup = REQUEST_STATE.PENDING;
