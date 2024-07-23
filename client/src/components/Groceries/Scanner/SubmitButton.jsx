@@ -22,6 +22,8 @@ const SubmitButton = ({
   clearCroppedImage,
   type,
   setGroceries,
+  setLoading,
+  setModalOpen,
 }) => {
   const [selectedMode, setSelectedMode] = useState("cheap");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -57,6 +59,8 @@ const SubmitButton = ({
 
     if (processorFunction) {
       try {
+        setLoading(true);
+        setModalOpen(true);
         const data = await processorFunction(
           croppedImageBlob,
           locations,
@@ -65,6 +69,7 @@ const SubmitButton = ({
         const jsonData = extractAndParseJson(data);
         if (jsonData && jsonData.groceries) {
           setGroceries(jsonData.groceries);
+          setLoading(false);
         } else {
           throw new Error("Invalid JSON data");
         }

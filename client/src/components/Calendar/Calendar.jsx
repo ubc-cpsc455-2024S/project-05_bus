@@ -16,6 +16,7 @@ import useCurrentGroup from "../../hooks/useCurrentGroup";
 import { updateMonthView } from "../../redux/events/calendarSlice";
 import moment from "moment";
 import { getChoresAsync } from "../../redux/chores/thunks";
+import { getGroceryAsync } from "../../redux/groceries/thunks";
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -58,9 +59,12 @@ export default function Calendar() {
     });
   };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async () => {
     if (popoverInfo.event) {
-      dispatch(deleteEventAsync(popoverInfo.event.id));
+      await dispatch(deleteEventAsync(popoverInfo.event.id));
+      if (popoverInfo.event.extendedProps.type !== "chore") {
+        await dispatch(getGroceryAsync(popoverInfo.event.extendedProps.groceryId));
+      }
       popoverInfo.event.remove();
       closePopover();
     }
@@ -90,9 +94,23 @@ export default function Calendar() {
             borderColor: chore.colour,
             extendedProps: {
               choreId: chore.id,
-              memberId: eventDetails.memberId,
-              done: eventDetails.done,
+              ...eventDetails.extendedProps,
             },
+          })
+        );
+        closePopover();
+      } else if (eventDetails.type !== "chore") {
+        dispatch(
+          updateEventAsync({
+            _id: eventDetails._id,
+            title: eventDetails.title,
+            start: eventDetails.start,
+            end: eventDetails.end,
+            backgroundColor: eventDetails.backgroundColor,
+            borderColor: eventDetails.borderColor,
+            extendedProps: {
+              ...eventDetails.extendedProps,
+            }
           })
         );
         closePopover();

@@ -17,10 +17,12 @@ import {
   MenuItem,
   useDisclosure,
   Text,
+  Select,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
 import { AddIcon } from "@chakra-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
+import moment from "moment";
 import {
   handleCreateCategory,
   handleCreateLocation,
@@ -28,14 +30,17 @@ import {
   isValidNewLocation,
 } from "../utils/CreateNewSelectOptions";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
 import { addGroceryAsync } from "../../../redux/groceries/thunks";
 import Scanner from "../Scanner/Scanner";
+import { COMMON_UNITS } from "../utils/commonUnits";
 
 export default function AddGrocery() {
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
   const dispatch = useDispatch();
   const group = useCurrentGroup();
+  const members = useCurrentGroupMembers();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -44,6 +49,8 @@ export default function AddGrocery() {
   const [category, setCategory] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [quantity, setQuantity] = useState(0);
+  const [quantityUnit, setQuantityUnit] = useState("");
+  const [ownerId, setOwnerId] = useState("");
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [scannerType, setScannerType] = useState(null);
 
@@ -63,8 +70,6 @@ export default function AddGrocery() {
     const newErrors = {};
 
     if (!name) newErrors.name = "Name is required";
-    if (!location) newErrors.locationId = "Location is required";
-    if (!category) newErrors.categoryId = "Category is required";
     if (quantity <= 0) newErrors.quantity = "Cannot be 0";
 
     setErrors(newErrors);
@@ -77,6 +82,8 @@ export default function AddGrocery() {
           categoryId: category,
           expiryDate,
           quantity,
+          quantityUnit,
+          ownerId,
           groupID: group._id,
         })
       );
@@ -95,15 +102,6 @@ export default function AddGrocery() {
     }
   };
 
-  const handleDateChange = (e) => {
-    const selectedDate = new Date(e.target.value);
-    setExpiryDate(
-      selectedDate.toLocaleDateString("en-US", {
-        timeZone: "America/Los_Angeles",
-      })
-    );
-  };
-
   const resetFields = () => {
     setName("");
     setLocation("");
@@ -113,8 +111,8 @@ export default function AddGrocery() {
   };
 
   return (
-    <HStack spacing={2} justifyContent="space-between" width="100%">
-      <FormControl isInvalid={errors.name} w="25%" position="relative">
+    <HStack spacing={2} display="flex" justifyContent="space-between" width="100%">
+      <FormControl flex={1} isInvalid={errors.name}>
         <FormErrorMessage position="absolute" bottom="100%" left="0">
           {errors.name}
         </FormErrorMessage>
@@ -125,10 +123,7 @@ export default function AddGrocery() {
         />
       </FormControl>
 
-      <FormControl isInvalid={errors.locationId} w="25%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.locationId}
-        </FormErrorMessage>
+      <FormControl flex={1}>
         <CreatableSelect
           placeholder="Location"
           options={locations.map((loc) => ({
@@ -150,10 +145,7 @@ export default function AddGrocery() {
         />
       </FormControl>
 
-      <FormControl isInvalid={errors.categoryId} w="25%" position="relative">
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
-          {errors.categoryId}
-        </FormErrorMessage>
+      <FormControl flex={1}>
         <CreatableSelect
           placeholder="Category"
           options={categories.map((cat) => ({
@@ -175,34 +167,65 @@ export default function AddGrocery() {
         />
       </FormControl>
 
-      <FormControl w="20%">
+      <FormControl flex={1}>
         <Input
           placeholder="Expiry Date"
           type="date"
           value={
-            expiryDate ? new Date(expiryDate).toISOString().split("T")[0] : ""
+            expiryDate ? moment(expiryDate).format("YYYY-MM-DD") : ""
           }
-          onChange={handleDateChange}
+          onChange={(e) => setExpiryDate(moment(e.target.value))}
         />
       </FormControl>
 
-      <FormControl isInvalid={errors.quantity} w="10%" position="relative">
+      <FormControl flex={1}>
+        <Select
+          placeholder="Owner"
+          value={ownerId}
+          onChange={(e) => setOwnerId(e.target.value)}
+        >
+          <option value={null}>Shared</option>
+          {members.map((member) => (
+            <option key={member._id} value={member._id}>
+              {`${member.firstName} ${member.lastName}`}
+            </option>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl isInvalid={errors.quantity} flex={1}>
         <FormErrorMessage position="absolute" bottom="100%" left="0">
           {errors.quantity}
         </FormErrorMessage>
-        <NumberInput
-          placeholder="Quantity"
-          value={quantity}
-          onChange={(value) => setQuantity(value)}
-          min={0}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
+        <HStack display="flex" spacing={2}>
+          <NumberInput
+            placeholder="Quantity"
+            value={quantity}
+            onChange={(value) => setQuantity(value)}
+            min={0}
+            flex={1}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <Select
+            placeholder="Unit"
+            value={quantityUnit}
+            onChange={(e) => setQuantityUnit(e.target.value)}
+            flex={1}
+          >
+            {COMMON_UNITS.map((unit) => (
+              <option key={unit.value} value={unit.value}>
+                {unit.label}
+              </option>
+            ))}
+          </Select>
+        </HStack>
       </FormControl>
+
       <Menu isOpen={isOpen}>
         <MenuButton
           as={Button}
@@ -235,7 +258,11 @@ export default function AddGrocery() {
           </MenuItem>
         </MenuList>
       </Menu>
-      <Scanner isOpen={isScannerOpen} onClose={closeScanner} type={scannerType} />
+      <Scanner
+        isOpen={isScannerOpen}
+        onClose={closeScanner}
+        type={scannerType}
+      />
     </HStack>
   );
 }

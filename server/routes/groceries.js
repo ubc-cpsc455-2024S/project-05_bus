@@ -54,6 +54,9 @@ router.post("/many", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const updatedGrocery = await groceryQueries.updateGrocery(req.body);
+    if (!updatedGrocery) {
+      return res.status(204).end();
+    }
     return res.json(updatedGrocery);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -62,9 +65,9 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await groceryQueries.deleteGrocery(req.params.id);
+    const deletedGrocery = await groceryQueries.deleteGrocery(req.params.id);
     await eventQueries.deleteGroceryEvents(req.params.id);
-    return res.status(200).send({ message: "Grocery and related events deleted successfully" });
+    return res.status(200).json(deletedGrocery);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -110,9 +113,9 @@ router.patch("/locations/:id", async (req, res) => {
 router.delete("/locations/:id", async (req, res) => {
   const locationId = req.params.id;
   try {
-    await groceryLocationQueries.deleteLocation(locationId);
+    const deletedLocation = await groceryLocationQueries.deleteLocation(locationId);
     await groceryQueries.deleteManyGroceries({ locationId });
-    return res.status(200).send({ message: "Location and related groceries deleted successfully" });
+    return res.status(200).json(deletedLocation);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -158,9 +161,9 @@ router.patch("/categories/:id", async (req, res) => {
 router.delete("/categories/:id", async (req, res) => {
   const categoryId = req.params.id;
   try {
-    await groceryCategoryQueries.deleteCategory(categoryId);
+    const deletedCategory = await groceryCategoryQueries.deleteCategory(categoryId);
     await groceryQueries.deleteMany({ categoryId });
-    return res.status(200).send({ message: "Category and related groceries deleted successfully" });
+    return res.status(200).json(deletedCategory);
   } catch (error) {
     return res.status(500).send(error.message);
   }
