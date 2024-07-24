@@ -11,6 +11,7 @@ import choresRouter from "./routes/chores.js";
 import groceriesRouter from "./routes/groceries.js";
 import groupsRouter from "./routes/groups.js";
 import receiptRouter from "./routes/receipt.js";
+import recipeRouter from "./routes/recipe.js";
 
 dotenv.config();
 
@@ -35,6 +36,7 @@ app.use("/chores", choresRouter);
 app.use("/groceries", groceriesRouter);
 app.use("/groups", groupsRouter);
 app.use("/receipt", receiptRouter);
+app.use("/recipes", recipeRouter);
 
 // Connect Database
 async function connectDB() {

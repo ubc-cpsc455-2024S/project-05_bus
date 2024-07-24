@@ -1,10 +1,10 @@
-const addMeal = async (newMeal) => {
-    const response = await fetch(`http://localhost:3000/groceries/meals`, {
+const addRecipe = async (newRecipe) => {
+    const response = await fetch(`http://localhost:3000/recipes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newMeal)
+      body: JSON.stringify(newRecipe)
     });
   
     const data = await response.json();
@@ -16,22 +16,22 @@ const addMeal = async (newMeal) => {
     return data;
   };
   
-  const getMeals = async () => {
-    const response = await fetch(`http://localhost:3000/groceries/meals`, {
+  const getRecipes = async () => {
+    const response = await fetch(`http://localhost:3000/recipes`, {
       method: 'GET'
     });
     return response.json();
   };
 
-  const removeMeal = async (id) => {
-    const response = await fetch(`http://localhost:3000/groceries/meals/${id}`, {
+  const removeRecipe = async (id) => {
+    const response = await fetch(`http://localhost:3000/recipes/${id}`, {
       method: 'DELETE'
     });
     return response.json();
   };
 
-  const generateMeal = async (list) => {
-    const response = await fetch('http://localhost:3000/groceries/generateMeal', {
+  const generateRecipe = async (list) => {
+    const response = await fetch('http://localhost:3000/recipes/generateRecipe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -49,8 +49,8 @@ const addMeal = async (newMeal) => {
   };
   
   export default {
-    addMeal,
-    getMeals,
-    removeMeal,
-    generateMeal
+    addRecipe,
+    getRecipes,
+    removeRecipe,
+    generateRecipe
   };

@@ -2,7 +2,7 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
-import { addMealAsync, generateMealAsync } from '../../../redux/meals/thunks';
+import { addRecipeAsync, generateRecipeAsync } from '../../../redux/recipes/thunks';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function MealPlanBox() {
 
   const selectedMealItems = items.filter(item => item.selectMeal);
 
-  const recipe = useSelector((state) => state.meals.recipe);
+  const recipe = useSelector((state) => state.recipes.recipe);
 
   const [quantities, setQuantities] = useState(
     selectedMealItems.reduce((acc, item) => {
@@ -25,12 +25,12 @@ export default function MealPlanBox() {
   };
 
   const saveMeal = () => {
-    const newMeal = {
+    const newRecipe = {
       recipe: recipe.Recipe,
       ingredients: recipe.Ingredients,
       instructions: recipe.Instructions,
   };
-    dispatch(addMealAsync(newMeal));
+    dispatch(addRecipeAsync(newRecipe));
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
       dispatch(updateMealSelect({ _id: item._id, selectMeal: false }));
@@ -55,7 +55,7 @@ export default function MealPlanBox() {
       selectedItems.push({ name: item.name, quantity });
     });
     
-    dispatch(generateMealAsync(selectedItems));
+    dispatch(generateRecipeAsync(selectedItems));
     setShowRecipe(true);
   };
 
@@ -116,7 +116,7 @@ export default function MealPlanBox() {
           Need Help <br /> Planning a Meal?
         </Heading>
         <Heading mb={4} size="sm" color="teal" textAlign="center">
-          Select from the table the <br /> grocery items you would <br /> like to incorporate
+          Select from the table the grocery items you would like to incorporate
         </Heading>
         <VStack align="start" spacing={3}>
           {selectedMealItems.map((item) => (
@@ -165,7 +165,7 @@ export default function MealPlanBox() {
             _hover={{ bg: "teal.600" }}
             onClick={generateRecipe}
           >
-            Generate Meal
+            Generate Recipe
           </Button>
         </Box>
       </Box>
