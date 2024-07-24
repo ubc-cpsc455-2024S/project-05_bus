@@ -39,8 +39,8 @@ const addMember = async (groupID, userID) => {
   if (userGroup) {
     throw new Error(`User ${userID} is already in group ${userGroup}`);
   }
-  await groupQueries.addMember(groupID, userID);
-  return await userQueries.updateUserGroup(userID, groupID);
+  await userQueries.updateUserGroup(userID, groupID);
+  return await groupQueries.addMember(groupID, userID);
 };
 
 const removeMember = async (groupID, userID) => {
@@ -56,8 +56,8 @@ const removeMember = async (groupID, userID) => {
       await removeAdmin(groupID, userID);
     }
 
-    await groupQueries.removeMember(groupID, userID);
-    return await userQueries.updateUserGroup(userID, null);
+    await userQueries.updateUserGroup(userID, null);
+    return await groupQueries.removeMember(groupID, userID);
   } catch (error) {
     throw error;
   }
@@ -94,6 +94,8 @@ const deleteGroup = async (groupID) => {
     await userQueries.updateUserGroup(userID, null);
   });
   await Promise.all(updatePromises);
+
+  return group;
 };
 
 export default {
