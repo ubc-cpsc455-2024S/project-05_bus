@@ -84,7 +84,6 @@ export default function MealPlanBox() {
 
   return (
     <>
-      <RecipeDrawer />
       {showRecipe ? (
         <Box p={5}>
           <Box display="flex" justifyContent="space-between">
@@ -126,64 +125,67 @@ export default function MealPlanBox() {
           ))}</Text>
         </Box>
       ) : (
-        <Box p={5}>
-          <Heading mb={4} size="lg" color="black" textAlign="center">
-            Need Help <br /> Planning a Meal?
-          </Heading>
-          <Heading mb={4} size="sm" color="teal" textAlign="center">
-            Select from the table the grocery items you would like to incorporate
-          </Heading>
-          <VStack align="start" spacing={3}>
-            {selectedMealItems.map((item) => (
-              <Box
-                key={item._id}
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-              >
-                <IconButton
-                  icon={<span className="material-symbols-outlined">close_small</span>}
-                  bg="transparent"
-                  color="red"
-                  variant="unstyled"
-                  onClick={() => removeSelect(item)}
-                />
-                <Text color="black">{item.name}</Text>
-                <NumberInput 
-                  defaultValue={item.quantity} 
-                  max={item.quantity} 
-                  min={1} 
-                  size="sm"
-                  width="62px"
-                  border="transparent"
-                  value={quantities[item._id]}
-                  onChange={(valueString) => handleQuantityChange(item._id, parseInt(valueString))}
+        <>
+          <RecipeDrawer />
+          <Box p={5}>
+            <Heading mb={4} size="lg" color="black" textAlign="center">
+              Need Help <br /> Planning a Meal?
+            </Heading>
+            <Heading mb={4} size="sm" color="teal" textAlign="center">
+              Select from the table the grocery items you would like to incorporate
+            </Heading>
+            <VStack align="start" spacing={3}>
+              {selectedMealItems.map((item) => (
+                <Box
+                  key={item._id}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="space-between"
                 >
-                  <NumberInputField fontWeight="bold" />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper border="none" />
-                    <NumberDecrementStepper border="none" />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Box>
-            ))}
-          </VStack>
-          <Box
-            p={4}
-            display="flex"
-            justifyContent="center"
-          >
-            <Button
-              size="md"
-              bg="teal.500"
-              color="white"
-              _hover={{ bg: "teal.600" }}
-              onClick={generateRecipe}
+                  <IconButton
+                    icon={<span className="material-symbols-outlined">close_small</span>}
+                    bg="transparent"
+                    color="red"
+                    variant="unstyled"
+                    onClick={() => removeSelect(item)}
+                  />
+                  <Text color="black">{item.name}</Text>
+                  <NumberInput 
+                    defaultValue={item.quantity} 
+                    max={item.quantity} 
+                    min={1} 
+                    size="sm"
+                    width="62px"
+                    border="transparent"
+                    value={quantities[item._id]}
+                    onChange={(valueString) => handleQuantityChange(item._id, parseInt(valueString))}
+                  >
+                    <NumberInputField fontWeight="bold" />
+                    <NumberInputStepper>
+                      <NumberIncrementStepper border="none" />
+                      <NumberDecrementStepper border="none" />
+                    </NumberInputStepper>
+                  </NumberInput>
+                </Box>
+              ))}
+            </VStack>
+            <Box
+              p={4}
+              display="flex"
+              justifyContent="center"
             >
-              Generate Recipe
-            </Button>
+              <Button
+                size="md"
+                bg="teal.500"
+                color="white"
+                _hover={{ bg: "teal.600" }}
+                onClick={generateRecipe}
+              >
+                Generate Recipe
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        </>
       )}
     </ >
   );

@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { REQUEST_STATE } from "../utils";
-import { addRecipeAsync, getRecipesAsync, removeRecipeAsync, generateRecipeAsync } from './thunks';
+import { addRecipeAsync, getRecipesAsync, deleteRecipeAsync, generateRecipeAsync } from './thunks';
 
 const INITIAL_STATE = {
+  list: [],
   recipe: {},
   getRecipesAsync: REQUEST_STATE.IDLE,
   addRecipeAsync: REQUEST_STATE.IDLE,
-  removeRecipeAsync: REQUEST_STATE.IDLE,
+  deleteRecipeAsync: REQUEST_STATE.IDLE,
   generateRecipeAsync: REQUEST_STATE.IDLE,
   error: null
 }
@@ -40,15 +41,15 @@ const recipeSlice = createSlice({
           state.addRecipe = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
-        .addCase(removeRecipeAsync.pending, (state) => {
-          state.removeRecipe = REQUEST_STATE.PENDING;
+        .addCase(deleteRecipeAsync.pending, (state) => {
+          state.deleteRecipe = REQUEST_STATE.PENDING;
           state.error = null;
         })
-        .addCase(removeRecipeAsync.fulfilled, (state) => {
+        .addCase(deleteRecipeAsync.fulfilled, (state) => {
           state.removeRecipe = REQUEST_STATE.FULFILLED;
         })
-        .addCase(removeRecipeAsync.rejected, (state, action) => {
-          state.removeRecipe = REQUEST_STATE.REJECTED;
+        .addCase(deleteRecipeAsync.rejected, (state, action) => {
+          state.deleteRecipe = REQUEST_STATE.REJECTED;
           state.error = action.error;
         })
         .addCase(generateRecipeAsync.pending, (state) => {

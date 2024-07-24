@@ -23,7 +23,7 @@ const addRecipe = async (newRecipe) => {
     return response.json();
   };
 
-  const removeRecipe = async (id) => {
+  const deleteRecipe = async (id) => {
     const response = await fetch(`http://localhost:3000/recipes/${id}`, {
       method: 'DELETE'
     });
@@ -51,6 +51,6 @@ const addRecipe = async (newRecipe) => {
   export default {
     addRecipe,
     getRecipes,
-    removeRecipe,
+    deleteRecipe,
     generateRecipe
   };
