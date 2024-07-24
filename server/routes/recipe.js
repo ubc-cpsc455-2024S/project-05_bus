@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
   router.post("/generateRecipe", async (req, res) => {
     try {
       let foodItemsList = req.body.map(item => `${item.name}: ${item.quantity}`).join(', ');
-      const user_message = `Given the food items and their quantity in the list ${foodItemsList}, give me a recipe with the format recipe name, ingredients, and instructions that uses all or most of the food items listed specified without needing to use more than their specified quantity. Do no include any small talk or Here is a recipe, just give the recipe on its own. List ingredients and instructions out in a list. Can you give the recipe as an object in the form {"Recipe": "Apple pie", "Ingredients": ["1 onion", "2 bell peppers"], "Instructions": ["1. Prepare all the vegetables", "2. Heat olive oil in large pan"]}`;
+      const user_message = `Given the food items and their quantity in the list ${foodItemsList}, give me a recipe with the format recipe name, ingredients, and instructions that uses all or most of the food items listed specified without needing to use more than their specified quantity. You can incorporate other food items not in this list like salt, sugar, butter, etc. Do no include any small talk or Here is a recipe, just give the recipe on its own. List ingredients and instructions out in a list. Can you give the recipe as an object in the form {"Recipe": "Apple pie", "Ingredients": ["1 onion", "2 bell peppers"], "Instructions": ["1. Prepare all the vegetables", "2. Heat olive oil in large pan"]}`;
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
