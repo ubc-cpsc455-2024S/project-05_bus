@@ -1,5 +1,5 @@
 import './Home.css';
-import { Box, Card, CardHeader, CardBody, CardFooter, Button } from '@chakra-ui/react';
+import { Box, Card, CardHeader, CardBody } from '@chakra-ui/react';
 
 export default function HomeNotifications() {
   return (
@@ -12,11 +12,6 @@ export default function HomeNotifications() {
         <CardBody className="home-card-body">
           <p className="notifications-placeholder">No new notifications</p>
         </CardBody>
-        <CardFooter className="home-card-footer">
-          <Button className="settings-button">
-            <span className="material-symbols-outlined settings-icon">settings</span>
-          </Button>
-        </CardFooter>
       </Card>
     </Box>
   )
