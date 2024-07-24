@@ -100,7 +100,9 @@ export default function EditGroceryPopover({ groceryItem }) {
           locationId: location,
           categoryId: category,
           expiryDate: expiryDate,
+          ownerId,
           quantity,
+          quantityUnit,
         })
       );
       onClose();
@@ -124,10 +126,10 @@ export default function EditGroceryPopover({ groceryItem }) {
       <PopoverTrigger>
         <IconButton
           aria-label="Edit Grocery Item"
-          icon={<span className='material-symbols-outlined'>edit</span>}
+          icon={<span className="material-symbols-outlined">edit</span>}
           bg="transparent"
           onClick={onOpen}
-          _hover={{ color:  "teal.300"}}
+          _hover={{ color: "teal.300" }}
           _active={{ color: "teal.700" }}
         />
       </PopoverTrigger>
@@ -229,9 +231,11 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Owner</FormLabel>
             <Select
               value={ownerId}
-              onChange={(e) => setOwnerId(e.target.value)}
+              onChange={(e) =>
+                setOwnerId(e.target.value === "" ? null : e.target.value)
+              }
             >
-              <option value={null}>Shared</option>
+              <option value={""}>Shared</option>
               {members.map((member) => (
                 <option key={member._id} value={member._id}>
                   {`${member.firstName} ${member.lastName}`}

@@ -1,4 +1,5 @@
 import { Groceries } from "../models/grocerySchema.js";
+import Events from "../models/eventSchema.js";
 import eventQueries from "./eventQuery.js";
 
 const groceryQueries = {
@@ -73,7 +74,14 @@ const groceryQueries = {
       );
 
       if (updatedGrocery && updatedGrocery.restockNotificationDate) {
-        await createRestockNotification(updatedGrocery);
+        const existingNotification = await Events.findOne({
+          "extendedProps.groceryId": updatedGrocery._id,
+          "extendedProps.type": "restock"
+        });
+  
+        if (!existingNotification) {
+          await createRestockNotification(updatedGrocery);
+        }
       }
 
       return updatedGrocery;

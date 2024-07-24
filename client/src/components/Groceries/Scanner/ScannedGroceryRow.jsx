@@ -133,8 +133,13 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
 
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Owner</FormLabel>}
-        <Select value={ownerId} onChange={(e) => setOwnerId(e.target.value)}>
-          <option value={null}>Shared</option>
+        <Select
+          value={ownerId}
+          onChange={(e) =>
+            setOwnerId(e.target.value === "" ? null : e.target.value)
+          }
+        >
+          <option value={""}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
               {`${member.firstName} ${member.lastName}`}

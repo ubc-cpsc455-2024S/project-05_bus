@@ -182,9 +182,9 @@ export default function AddGrocery() {
         <Select
           placeholder="Owner"
           value={ownerId}
-          onChange={(e) => setOwnerId(e.target.value)}
+          onChange={(e) => setOwnerId(e.target.value === "" ? null : e.target.value)}
         >
-          <option value={null}>Shared</option>
+          <option value={""}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
               {`${member.firstName} ${member.lastName}`}
