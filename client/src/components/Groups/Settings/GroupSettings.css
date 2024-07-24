@@ -15,6 +15,14 @@
   margin-bottom: 5px;
 }
 
+.group-name-edit-container {
+  display: flex;
+}
+
+.group-name-edit-input {
+  margin-right: 20px;
+}
+
 .group-id-container {
   color: grey;
   display: flex;
@@ -22,13 +30,17 @@
   flex-wrap: wrap;
 }
 
-.copy-button {
-  padding: 0;
+.copy-button, .remove-button {
   background: none !important;
 }
 
 .copy-icon {
   color: rgba(0, 128, 128, 0.631);
+  font-size: 25px;
+}
+
+.remove-icon {
+  color: rgba(206, 116, 116, 0.631);
   font-size: 25px;
 }
 

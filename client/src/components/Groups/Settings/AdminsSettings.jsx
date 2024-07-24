@@ -3,7 +3,7 @@ import { Box, Avatar } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { selectAdmins } from '../../../selectors/groupsSelectors';
 
-export default function AdminsSettings({ group }) {
+export default function AdminsSettings({ group, isEditMode }) {
   const admins = useSelector((state) => selectAdmins(state, group));
 
   return (

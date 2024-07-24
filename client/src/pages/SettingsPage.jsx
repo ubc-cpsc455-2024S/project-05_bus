@@ -29,14 +29,16 @@ function LeaveGroupModal({ isOnlyMember, isOnlyAdmin, isOpen, onClose, onConfirm
           )}
         </ModalBody>
         <ModalFooter>
-          <Button 
-            bgColor={"rgba(253, 163, 163, 0.631)"}
-            _hover={{background: "rgba(246, 134, 134, 0.631)"}}
-            mr={3}
-            onClick={onConfirm}
-          >
-            Confirm
-          </Button>
+          {!isOnlyAdmin || isOnlyMember ? (
+            <Button 
+              bgColor={"rgba(253, 163, 163, 0.631)"}
+              _hover={{background: "rgba(246, 134, 134, 0.631)"}}
+              mr={3}
+              onClick={onConfirm}
+            >
+              Confirm
+            </Button>
+          ) : null}
           <Button variant="outline" onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
@@ -95,6 +97,8 @@ export default function Settings() {
   }, [currentGroup, navigate]);
 
   const handleLeaveGroup = async () => {
+    setError('');
+
     if (isOnlyMember) {
       return await handleDeleteGroup();
     } else {
@@ -108,6 +112,8 @@ export default function Settings() {
   };
 
   const handleDeleteGroup = async () => {
+    setError('');
+
     try {
       await dispatch(deleteGroupAsync({groupID: currentGroup._id, currentUserID})).unwrap();
     } catch (error) {
@@ -116,6 +122,8 @@ export default function Settings() {
   };
 
   const handleSave = async () => {
+    setError('');
+    
     try {
       if (groupName !== currentGroup.name) {
         await dispatch(updateGroupNameAsync({id: currentGroup._id, newName: groupName})).unwrap();
@@ -160,7 +168,13 @@ export default function Settings() {
                 setGroupName={setGroupName}
               />
               <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
-              <MembersSettings isEditMode={isEditMode} />
+              <MembersSettings 
+                isEditMode={isEditMode}
+                currentUserID={currentUserID}
+                currentGroup={currentGroup}
+                openLeaveGroupModal={openLeaveGroupModal} 
+                setError={setError}
+              />
               <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
               <AdminsSettings group={currentGroup} isEditMode={isEditMode}/>
             </CardBody>
