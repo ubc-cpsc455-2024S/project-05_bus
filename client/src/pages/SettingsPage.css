@@ -17,6 +17,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .group-settings-heading {
@@ -43,6 +44,15 @@
   font-size: 30px;
 }
 
+.group-settings-footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .group-settings-leave-button {
-  margin-right: 25px;
+  margin: 10px 25px 10px 0px;
+}
+
+.group-settings-delete-button {
+  margin: 10px 0px 10px 0px;
 }
