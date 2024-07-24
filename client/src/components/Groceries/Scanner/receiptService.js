@@ -1,3 +1,5 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const receiptProcessor = async (img, locations, categories, endpoint) => {
   try {
     const formData = new FormData();
@@ -5,7 +7,7 @@ const receiptProcessor = async (img, locations, categories, endpoint) => {
     formData.append("locations", JSON.stringify(locations));
     formData.append("categories", JSON.stringify(categories));
 
-    const response = await fetch(`http://localhost:3000/receipt/${endpoint}`, {
+    const response = await fetch(`${SERVER_URL}/receipt/${endpoint}`, {
       method: "POST",
       body: formData,
     });

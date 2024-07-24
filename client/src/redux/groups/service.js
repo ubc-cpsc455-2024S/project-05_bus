@@ -1,6 +1,8 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const getAllGroups = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/groups`);
+    const response = await fetch(`${SERVER_URL}/groups`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -11,7 +13,7 @@ const getAllGroups = async () => {
 
 const getGroup = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/${id}`);
+    const response = await fetch(`${SERVER_URL}/groups/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -22,7 +24,7 @@ const getGroup = async (id) => {
 
 const createGroup = async (group) => {
   try {
-    const response = await fetch("http://localhost:3000/groups", {
+    const response = await fetch("${SERVER_URL}/groups", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +41,7 @@ const createGroup = async (group) => {
 
 const updateGroupName = async (id, nameData) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/${id}`, {
+    const response = await fetch(`${SERVER_URL}/groups/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +58,7 @@ const updateGroupName = async (id, nameData) => {
 
 const addGroupMember = async (groupID, userID) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/${groupID}/${userID}`, {
+    const response = await fetch(`${SERVER_URL}/groups/${groupID}/${userID}`, {
       method: "PATCH"
     });
     const data = await response.json();
@@ -69,7 +71,7 @@ const addGroupMember = async (groupID, userID) => {
 
 const removeGroupMember = async (groupID, userID) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/remove/${groupID}/${userID}`, {
+    const response = await fetch(`${SERVER_URL}/groups/remove/${groupID}/${userID}`, {
       method: "PATCH"
     });
     const data = await response.json();
@@ -82,7 +84,7 @@ const removeGroupMember = async (groupID, userID) => {
 
 const deleteGroup = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/${id}`, {
+    const response = await fetch(`${SERVER_URL}/groups/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();

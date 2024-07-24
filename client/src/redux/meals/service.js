@@ -1,5 +1,7 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const addMeal = async (newMeal) => {
-    const response = await fetch(`http://localhost:3000/groceries/meals`, {
+    const response = await fetch(`${SERVER_URL}/groceries/meals`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -17,21 +19,21 @@ const addMeal = async (newMeal) => {
   };
   
   const getMeals = async () => {
-    const response = await fetch(`http://localhost:3000/groceries/meals`, {
+    const response = await fetch(`${SERVER_URL}/groceries/meals`, {
       method: 'GET'
     });
     return response.json();
   };
 
   const removeMeal = async (id) => {
-    const response = await fetch(`http://localhost:3000/groceries/meals/${id}`, {
+    const response = await fetch(`${SERVER_URL}/groceries/meals/${id}`, {
       method: 'DELETE'
     });
     return response.json();
   };
 
   const generateMeal = async (list) => {
-    const response = await fetch('http://localhost:3000/groceries/generateMeal', {
+    const response = await fetch(`${SERVER_URL}/groceries/generateMeal`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

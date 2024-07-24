@@ -1,7 +1,9 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const getAllGroceries = async (groupID) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/group/${groupID}`
+      `${SERVER_URL}/groceries/group/${groupID}`
     );
     const data = await response.json();
     return data;
@@ -13,7 +15,7 @@ const getAllGroceries = async (groupID) => {
 
 const getOneGrocery = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/${id}`);
+    const response = await fetch(`${SERVER_URL}/groceries/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -24,7 +26,7 @@ const getOneGrocery = async (id) => {
 
 const postGrocery = async (grocery) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries", {
+    const response = await fetch("${SERVER_URL}/groceries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +43,7 @@ const postGrocery = async (grocery) => {
 
 const postManyGroceries = async (groceries) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/many", {
+    const response = await fetch("${SERVER_URL}/groceries/many", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +62,7 @@ const postManyGroceries = async (groceries) => {
 const updateGrocery = async (grocery) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/${grocery._id}`,
+      `${SERVER_URL}/groceries/${grocery._id}`,
       {
         method: "PATCH",
         headers: {
@@ -84,7 +86,7 @@ const updateGrocery = async (grocery) => {
 
 const deleteGrocery = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/groceries/${id}`, {
+    const response = await fetch(`${SERVER_URL}/groceries/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -98,7 +100,7 @@ const deleteGrocery = async (id) => {
 const getCategories = async (groupID) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/categories/group/${groupID}`
+      `${SERVER_URL}/groceries/categories/group/${groupID}`
     );
     const data = await response.json();
     return data;
@@ -111,7 +113,7 @@ const getCategories = async (groupID) => {
 const getCategory = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/categories/${id}`
+      `${SERVER_URL}/groceries/categories/${id}`
     );
     const data = await response.json();
     return data;
@@ -123,7 +125,7 @@ const getCategory = async (id) => {
 
 const addCategory = async (category) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/categories", {
+    const response = await fetch("${SERVER_URL}/groceries/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -141,7 +143,7 @@ const addCategory = async (category) => {
 const deleteCategory = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/categories/${id}`,
+      `${SERVER_URL}/groceries/categories/${id}`,
       {
         method: "DELETE",
       }
@@ -157,7 +159,7 @@ const deleteCategory = async (id) => {
 const updateCategory = async (category) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/categories/${category._id}`,
+      `${SERVER_URL}/groceries/categories/${category._id}`,
       {
         method: "PATCH",
         headers: {
@@ -177,7 +179,7 @@ const updateCategory = async (category) => {
 const getLocations = async (groupID) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/locations/group/${groupID}`
+      `${SERVER_URL}/groceries/locations/group/${groupID}`
     );
     const data = await response.json();
     return data;
@@ -190,7 +192,7 @@ const getLocations = async (groupID) => {
 const getLocation = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/locations/${id}`
+      `${SERVER_URL}/groceries/locations/${id}`
     );
     const data = await response.json();
     return data;
@@ -202,7 +204,7 @@ const getLocation = async (id) => {
 
 const addLocation = async (location) => {
   try {
-    const response = await fetch("http://localhost:3000/groceries/locations", {
+    const response = await fetch("${SERVER_URL}/groceries/locations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +222,7 @@ const addLocation = async (location) => {
 const deleteLocation = async (id) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/locations/${id}`,
+      `${SERVER_URL}/groceries/locations/${id}`,
       {
         method: "DELETE",
       }
@@ -236,7 +238,7 @@ const deleteLocation = async (id) => {
 const updateLocation = async (location) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/groceries/locations/${location._id}`,
+      `${SERVER_URL}/groceries/locations/${location._id}`,
       {
         method: "PATCH",
         headers: {
