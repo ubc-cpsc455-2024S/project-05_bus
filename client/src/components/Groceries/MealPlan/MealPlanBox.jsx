@@ -1,4 +1,4 @@
-import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack, Spinner } from '@chakra-ui/react';
+import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack, Spinner, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
@@ -7,6 +7,7 @@ import RecipeDrawer from "./RecipeDrawer";
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
+  const toast = useToast();
   const items = useSelector((state) => state.groceries.groceries);
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,12 @@ export default function MealPlanBox() {
       instructions: recipe.Instructions,
   };
     dispatch(addRecipeAsync(newRecipe));
+    toast({
+      title: "Recipe Has Been Added to Favourites",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
     setShowRecipe(!showRecipe);
     selectedMealItems.forEach(item => {
       dispatch(updateMealSelect({ _id: item._id, selectMeal: false }));

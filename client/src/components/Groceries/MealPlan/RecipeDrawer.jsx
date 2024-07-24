@@ -63,7 +63,7 @@ export default function RecipeDrawer() {
               {selectedRecipe ? (
                 <Button mt={5} p={4} fontSize="xl" fontWeight="bold" bg="transparent" color="black" onClick={handleBack}>Back to Recipes</Button>
               ) : (
-                <DrawerHeader mt={5} ml={4} p={1} fontSize="xl" fontWeight="bold" color="teal.600">Recipe List</DrawerHeader>
+                <DrawerHeader mt={5} ml={4} p={1} fontSize="xl" fontWeight="bold" color="teal.600">Favourited Recipes</DrawerHeader>
               )}
                 <DrawerCloseButton mt={6} mr={4} p={4} fontSize="xl" />
               </Box>
