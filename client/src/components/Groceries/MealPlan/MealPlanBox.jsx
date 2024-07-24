@@ -35,7 +35,7 @@ export default function MealPlanBox() {
   };
     dispatch(addRecipeAsync(newRecipe));
     toast({
-      title: "Recipe Has Been Added to Favourites",
+      title: "Recipe Successfully Added to Favourites",
       status: "success",
       duration: 3000,
       isClosable: true,
