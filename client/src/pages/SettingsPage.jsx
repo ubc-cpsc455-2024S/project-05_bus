@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectIsCurrentUserAdmin } from '../selectors/groupsSelectors';
-import { deleteGroupAsync, removeMemberAsync } from '../redux/groups/thunks';
+import { deleteGroupAsync, removeMemberAsync, updateGroupNameAsync } from '../redux/groups/thunks';
 
 function LeaveGroupModal({ isOnlyMember, isOnlyAdmin, isOpen, onClose, onConfirm }) {
   if (!isOpen) return null;
@@ -82,6 +82,8 @@ export default function Settings() {
   const isOnlyMember = currentGroup ? currentGroup.memberIDs.length === 1 : null;
   const isOnlyAdmin = currentGroup ? isAdmin && currentGroup.adminIDs.length === 1 : null;
   const [error, setError] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [groupName, setGroupName] = useState(currentGroup.name);
 
   const { isOpen: isLeaveGroupOpen, onOpen: openLeaveGroupModal, onClose: closeLeaveGroupModal } = useDisclosure();
   const { isOpen: isDeleteGroupOpen, onOpen: openDeleteGroupModal, onClose: closeDeleteGroupModal } = useDisclosure();
@@ -113,6 +115,17 @@ export default function Settings() {
     }
   };
 
+  const handleSave = async () => {
+    try {
+      if (groupName !== currentGroup.name) {
+        await dispatch(updateGroupNameAsync({id: currentGroup._id, newName: groupName})).unwrap();
+      }
+      setIsEditMode(false);
+    } catch (error) {
+      setError('Could not save changes');
+    }
+  }
+
   return (
     <Box className="settings-container">
       {currentGroup && 
@@ -125,20 +138,31 @@ export default function Settings() {
                   <h1 className="group-settings-heading-text">Group Settings</h1>
                 </div>
                 <div className="group-settings-edit-container">
-                  <Tooltip label="Only admins can edit groups." isDisabled={isAdmin}>
-                    <Button className="group-settings-edit-button" isDisabled={!isAdmin}>
-                      <span className="material-symbols-outlined group-settings-edit-icon">edit_square</span>
+                  {isEditMode ? 
+                    <Button className="group-settings-edit-button" onClick={handleSave}>
+                      <span className="material-symbols-outlined group-settings-done-icon">priority</span>
                     </Button>
-                  </Tooltip>
+                    :
+                    <Tooltip label="Only admins can edit groups." isDisabled={isAdmin}>
+                      <Button className="group-settings-edit-button" isDisabled={!isAdmin} onClick={() => setIsEditMode(true)}>
+                        <span className="material-symbols-outlined group-settings-edit-icon">edit_square</span>
+                      </Button>
+                    </Tooltip>
+                  }
                 </div>
               </div>
             </CardHeader>
             <CardBody className="home-card-body">
-              <GroupNameSettings group={currentGroup}/>
+              <GroupNameSettings 
+                group={currentGroup}
+                isEditMode={isEditMode}
+                groupName={groupName}
+                setGroupName={setGroupName}
+              />
               <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
-              <MembersSettings />
+              <MembersSettings isEditMode={isEditMode} />
               <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
-              <AdminsSettings group={currentGroup}/>
+              <AdminsSettings group={currentGroup} isEditMode={isEditMode}/>
             </CardBody>
             <CardFooter className="group-settings-footer">
               <Button className="group-settings-leave-button" onClick={openLeaveGroupModal}>

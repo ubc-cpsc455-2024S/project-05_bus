@@ -44,6 +44,11 @@
   font-size: 30px;
 }
 
+.group-settings-done-icon {
+  color: rgba(0, 128, 128, 0.631);
+  font-size: 35px;
+}
+
 .group-settings-footer {
   display: flex;
   flex-wrap: wrap;
