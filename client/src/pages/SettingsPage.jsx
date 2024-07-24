@@ -123,7 +123,7 @@ export default function Settings() {
 
   const handleSave = async () => {
     setError('');
-    
+
     try {
       if (groupName !== currentGroup.name) {
         await dispatch(updateGroupNameAsync({id: currentGroup._id, newName: groupName})).unwrap();
@@ -176,7 +176,14 @@ export default function Settings() {
                 setError={setError}
               />
               <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
-              <AdminsSettings group={currentGroup} isEditMode={isEditMode}/>
+              <AdminsSettings 
+                group={currentGroup}
+                isEditMode={isEditMode}
+                setIsEditMode={setIsEditMode}
+                currentUserID={currentUserID}
+                currentGroup={currentGroup}
+                setError={setError}
+              />
             </CardBody>
             <CardFooter className="group-settings-footer">
               <Button className="group-settings-leave-button" onClick={openLeaveGroupModal}>

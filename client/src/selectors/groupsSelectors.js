@@ -26,3 +26,12 @@ export const selectIsCurrentUserAdmin = createSelector(
     return currentGroup && currentGroup.adminIDs.includes(currentUserID);
   }
 );
+
+export const selectGroupMembersExcludingAdmins = createSelector(
+  [selectUsers, selectCurrentGroup],
+  (users, currentGroup) => {
+    const adminIDs = new Set(currentGroup.adminIDs);
+    const memberIDs = new Set(currentGroup.memberIDs);
+    return users.filter(user => memberIDs.has(user._id) && !adminIDs.has(user._id));
+  }
+);

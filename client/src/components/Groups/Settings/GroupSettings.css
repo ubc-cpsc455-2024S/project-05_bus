@@ -30,7 +30,7 @@
   flex-wrap: wrap;
 }
 
-.copy-button, .remove-button {
+.copy-button, .remove-button, .add-button {
   background: none !important;
 }
 
@@ -57,4 +57,14 @@
 
 .admins-settings-container {
   margin: 25px 0px 0px 0px;
+}
+
+.add-admin-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-icon {
+  color: rgba(0, 128, 128, 0.631);
+  font-size: 28px;
 }
