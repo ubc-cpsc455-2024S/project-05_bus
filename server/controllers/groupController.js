@@ -60,6 +60,26 @@ const removeMember = async (req, res) => {
   }
 };
 
+const addAdmin = async (req, res) => {
+  try {
+    const result = await GroupService.addAdmin(req.params.groupID, req.params.userID);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: err.message });
+  }
+};
+
+const removeAdmin = async (req, res) => {
+  try {
+    const result = await GroupService.removeAdmin(req.params.groupID, req.params.userID);
+    return res.status(200).json(result);;
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: err.message });
+  }
+};
+
 const deleteGroup = async (req, res) => {
   try {
     const result = await GroupService.deleteGroup(req.params.id);
@@ -77,5 +97,7 @@ export default {
   updateName,
   addMember,
   removeMember,
+  addAdmin,
+  removeAdmin,
   deleteGroup,
 };

@@ -2,6 +2,11 @@ const getAllGroups = async () => {
   try {
     const response = await fetch(`http://localhost:3000/groups`);
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching groups: ", error);
@@ -13,6 +18,11 @@ const getGroup = async (id) => {
   try {
     const response = await fetch(`http://localhost:3000/groups/${id}`);
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
     return data;
   } catch (error) {
     console.error("Error fetching group: ", error);
@@ -30,6 +40,11 @@ const createGroup = async (group) => {
       body: JSON.stringify(group),
     });
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
     return data;
   } catch (error) {
     console.error("Error creating group: ", error);
@@ -47,6 +62,11 @@ const updateGroupName = async (id, nameData) => {
       body: JSON.stringify(nameData),
     });
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+    
     return data;
   } catch (error) {
     console.error("Error updating group name: ", error);
@@ -60,6 +80,11 @@ const addGroupMember = async (groupID, userID) => {
       method: "PATCH"
     });
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
     return data;
   } catch (error) {
     console.error("Error adding group member: ", error);
@@ -73,9 +98,50 @@ const removeGroupMember = async (groupID, userID) => {
       method: "PATCH"
     });
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
     return data;
   } catch (error) {
     console.error("Error removing group member: ", error);
+    throw error;
+  }
+};
+
+const addAdmin = async (groupID, userID) => {
+  try {
+    const response = await fetch(`http://localhost:3000/groups/admins/${groupID}/${userID}`, {
+      method: "PATCH"
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error adding group admin: ", error);
+    throw error;
+  }
+}; 
+
+const removeAdmin = async (groupID, userID) => {
+  try {
+    const response = await fetch(`http://localhost:3000/groups/admins/remove/${groupID}/${userID}`, {
+      method: "PATCH"
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error removing group admin: ", error);
     throw error;
   }
 };
@@ -86,6 +152,11 @@ const deleteGroup = async (id) => {
       method: "DELETE",
     });
     const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || "An error occurred";
+      throw new Error(errorMessage);
+    }
+    
     return data;
   } catch (error) {
     console.error("Error deleting group: ", error);
@@ -93,4 +164,14 @@ const deleteGroup = async (id) => {
   }
 };
 
-export default { getAllGroups, getGroup, createGroup, updateGroupName, addGroupMember, removeGroupMember, deleteGroup};
+export default { 
+  getAllGroups,
+  getGroup,
+  createGroup,
+  updateGroupName,
+  addGroupMember,
+  removeGroupMember,
+  addAdmin,
+  removeAdmin,
+  deleteGroup
+};
