@@ -42,9 +42,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/many", async (req, res) => {
+  try {
+    const newGroceries = await groceryQueries.postManyGroceries(req.body);
+    return res.status(201).json(newGroceries);
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+});
+
 router.patch("/:id", async (req, res) => {
   try {
     const updatedGrocery = await groceryQueries.updateGrocery(req.body);
+    if (!updatedGrocery) {
+      return res.status(204).end();
+    }
     return res.json(updatedGrocery);
   } catch (error) {
     return res.status(500).send(error.message);
@@ -53,9 +65,9 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await groceryQueries.deleteGrocery(req.params.id);
+    const deletedGrocery = await groceryQueries.deleteGrocery(req.params.id);
     await eventQueries.deleteGroceryEvents(req.params.id);
-    return res.status(200).send({ message: "Grocery and related events deleted successfully" });
+    return res.status(200).json(deletedGrocery);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -101,9 +113,9 @@ router.patch("/locations/:id", async (req, res) => {
 router.delete("/locations/:id", async (req, res) => {
   const locationId = req.params.id;
   try {
-    await groceryLocationQueries.deleteLocation(locationId);
+    const deletedLocation = await groceryLocationQueries.deleteLocation(locationId);
     await groceryQueries.deleteManyGroceries({ locationId });
-    return res.status(200).send({ message: "Location and related groceries deleted successfully" });
+    return res.status(200).json(deletedLocation);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -149,9 +161,9 @@ router.patch("/categories/:id", async (req, res) => {
 router.delete("/categories/:id", async (req, res) => {
   const categoryId = req.params.id;
   try {
-    await groceryCategoryQueries.deleteCategory(categoryId);
+    const deletedCategory = await groceryCategoryQueries.deleteCategory(categoryId);
     await groceryQueries.deleteMany({ categoryId });
-    return res.status(200).send({ message: "Category and related groceries deleted successfully" });
+    return res.status(200).json(deletedCategory);
   } catch (error) {
     return res.status(500).send(error.message);
   }
@@ -190,7 +202,7 @@ router.post("/generateMeal", async (req, res) => {
     let foodItemsList = req.body.map(item => `${item.name}: ${item.quantity}`).join(', ');
     const user_message = `Given the food items and their quantity in the list ${foodItemsList}, give me a recipe with the format recipe name, ingredients, and instructions that uses all or most of the food items listed specified without needing to use more than their specified quantity. Do no include any small talk or Here is a recipe, just give the recipe on its own. List ingredients and instructions out in a list. Can you give the recipe as an object in the form {"Recipe": "Apple pie", "Ingredients": ["1 onion", "2 bell peppers"], "Instructions": ["1. Prepare all the vegetables", "2. Heat olive oil in large pan"]}`;
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: [
         { role: "system", content: user_message },
       ],

@@ -22,9 +22,10 @@ import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 import { updateEventAsync } from "../../redux/events/thunks";
+import ChoreBadge from "./ChoreBadge";
 
 export default function ChoresList() {
-  const [dailyMode, setDailyMode] = useState(true);
+  const [dailyMode, setDailyMode] = useState(false);
   const [showDone, setShowDone] = useState(true);
   const events = useSelector((state) => state.events.events);
   const currentStart = useSelector((state) => state.events.currentStart);
@@ -223,6 +224,7 @@ export default function ChoresList() {
                                   <Box flex="1" ml={3}>
                                     <Text fontSize="md">{chore.title}</Text>
                                   </Box>
+                                  {!dailyMode && <ChoreBadge chore={chore} />}
                                 </ListItem>
                               ))}
                             </List>

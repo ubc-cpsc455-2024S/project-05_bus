@@ -4,6 +4,7 @@ import {
   getGroceriesAsync,
   getGroceryAsync,
   addGroceryAsync,
+  addGroceriesAsync,
   updateGroceryAsync,
   deleteGroceryAsync,
   getCategoriesAsync,
@@ -25,6 +26,7 @@ const initialState = {
   getGroceries: REQUEST_STATE.IDLE,
   getGrocery: REQUEST_STATE.IDLE,
   addGrocery: REQUEST_STATE.IDLE,
+  addGroceries: REQUEST_STATE.IDLE,
   updateGrocery: REQUEST_STATE.IDLE,
   deleteGrocery: REQUEST_STATE.IDLE,
   getCategories: REQUEST_STATE.IDLE,
@@ -45,7 +47,7 @@ const groceriesSlice = createSlice({
   reducers: {
     updateMealSelect: (state, action) => {
       const index = state.groceries.findIndex(
-        (grocery) => grocery.id === action.payload.id
+        (grocery) => grocery._id === action.payload._id
       );
       if (index !== -1) {
         if (action.payload.expiryDate) {
@@ -56,6 +58,11 @@ const groceriesSlice = createSlice({
           ...action.payload,
         };
       }
+    },
+    deleteGrocery(state, action) {
+      state.groceries = state.groceries.filter(
+        (grocery) => grocery._id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
@@ -81,7 +88,12 @@ const handleGroceriesCases = (builder) => {
       state.getGroceries = REQUEST_STATE.PENDING;
     })
     .addCase(getGroceryAsync.fulfilled, (state, action) => {
-      state.groceries = [...state.groceries, action.payload];
+      const existingGroceryIndex = state.groceries.findIndex(grocery => grocery._id === action.payload._id);
+      if (existingGroceryIndex >= 0) {
+        state.groceries[existingGroceryIndex] = action.payload;
+      } else {
+        state.groceries.push(action.payload);
+      }
       state.getGroceries = REQUEST_STATE.FULFILLED;
     })
     .addCase(getGroceryAsync.rejected, (state) => {
@@ -96,6 +108,16 @@ const handleGroceriesCases = (builder) => {
     })
     .addCase(addGroceryAsync.rejected, (state) => {
       state.addGrocery = REQUEST_STATE.REJECTED;
+    })
+    .addCase(addGroceriesAsync.pending, (state) => {
+      state.addGroceries = REQUEST_STATE.PENDING;
+    })
+    .addCase(addGroceriesAsync.fulfilled, (state, action) => {
+      state.groceries = [...state.groceries, ...action.payload];
+      state.addGroceries = REQUEST_STATE.FULFILLED;
+    })
+    .addCase(addGroceriesAsync.rejected, (state) => {
+      state.addGroceries = REQUEST_STATE.REJECTED;
     })
     .addCase(updateGroceryAsync.pending, (state) => {
       state.updateGrocery = REQUEST_STATE.PENDING;
@@ -248,8 +270,6 @@ const handleLocationsCases = (builder) => {
     });
 };
 
-export const {
-  updateMealSelect,
-} = groceriesSlice.actions;
+export const { updateMealSelect, deleteGrocery } = groceriesSlice.actions;
 
 export default groceriesSlice.reducer;

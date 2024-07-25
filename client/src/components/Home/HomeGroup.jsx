@@ -1,14 +1,14 @@
 import './Home.css';
 import { Box, Card, CardHeader, CardBody, CardFooter, Avatar, Button } from '@chakra-ui/react';
 import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
-import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { useNavigate } from 'react-router-dom';
 
 export default function HomeGroup({ group }) {
-  const currentGroup = useCurrentGroup();
+  const navigate = useNavigate();
   const members = useCurrentGroupMembers();
 
   const handleCopyGroupID = () => {
-    navigator.clipboard.writeText(currentGroup._id);
+    navigator.clipboard.writeText(group._id);
   };
 
   return (
@@ -20,7 +20,7 @@ export default function HomeGroup({ group }) {
             <span className="material-symbols-outlined icon">house</span>
           </div>
           <div className="home-card-group-id">
-            Group ID: {currentGroup._id}
+            Group ID: {group._id}
             <Button className="copy-button" onClick={handleCopyGroupID} ml={2} size="sm" colorScheme="blue">
               <span className="material-symbols-outlined settings-icon">content_copy</span>
             </Button>
@@ -37,7 +37,7 @@ export default function HomeGroup({ group }) {
           </ul>
         </CardBody>
         <CardFooter className="home-card-footer">
-          <Button className="settings-button">
+          <Button className="settings-button" onClick={() => navigate("/settings")}>
             <span className="material-symbols-outlined settings-icon">settings</span>
           </Button>
         </CardFooter>

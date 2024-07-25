@@ -19,6 +19,7 @@ import MiniGroceryList from "./MiniGroceryList";
 import FloatingAddButton from "./AddButton";
 import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addCategoryAsync, addLocationAsync } from "../../../redux/groceries/thunks";
+import getRandomMutedColour from "./generateColours";
 
 export default function GroceriesDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,7 +40,7 @@ export default function GroceriesDrawer() {
       ) {
         hasError = true;
       } else {
-        dispatch(addLocationAsync({ name: value, groupID: group._id }));
+        dispatch(addLocationAsync({ name: value, colour: getRandomMutedColour(), groupID: group._id }));
       }
     } else if (tabIndex === 1) {
       if (
@@ -48,7 +49,7 @@ export default function GroceriesDrawer() {
       ) {
         hasError = true;
       } else {
-        dispatch(addCategoryAsync({ name: value, groupID: group._id }));
+        dispatch(addCategoryAsync({ name: value, colour: getRandomMutedColour(), groupID: group._id }));
       }
     }
     setError(hasError);

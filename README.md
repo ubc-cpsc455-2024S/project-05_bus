@@ -21,12 +21,11 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 - Notifications for upcoming chores
 - Notifications for expiring fridge items (fridge item expiration dates synced with calendar)
 - User preferences (e.g. turn off notifications)
-- Filling in nutritional gaps based on profile of users living together within allocated budget
 - Users can ask AI to help with meal planning (e.g. what meals to cook with certain grocery items)
+- Users can save any recipes generated, see the list of all saved recipes, and remove any saved recipes
 ### Stretch Requirements
-- AI image recognition for processing refrigerator items
+- AI image recognition for processing pictures of groceries and receipts to quickly add grocery items
 - Budgeting functionality (similar to Splitwise)
-- Ability for users to create floorplan/ accessorize their unit of living space
 - Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
 ## Team Members

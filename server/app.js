@@ -10,15 +10,22 @@ import eventsRouter from "./routes/events.js";
 import choresRouter from "./routes/chores.js";
 import groceriesRouter from "./routes/groceries.js";
 import groupsRouter from "./routes/groups.js";
+import receiptRouter from "./routes/receipt.js";
 
 dotenv.config();
 
 const app = express();
 const __dirname = path.resolve();
 const db_uri = process.env.DB_URI;
-const clientOptions = { serverApi: { version: "1", strict: true, deprecationErrors: true } };
+const clientOptions = {
+  serverApi: { version: "1", strict: true, deprecationErrors: true },
+};
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+};
+
+app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -31,16 +38,17 @@ app.use("/calendar", eventsRouter);
 app.use("/chores", choresRouter);
 app.use("/groceries", groceriesRouter);
 app.use("/groups", groupsRouter);
+app.use("/receipt", receiptRouter);
 
 // Connect Database
 async function connectDB() {
-    try {
-        await mongoose.connect(db_uri, clientOptions);
-        console.log("Successfully connected to MongoDB.");
-    } catch (err) {
-        console.error("MongoDB connection error:", err);
-        throw err;
-    }
+  try {
+    await mongoose.connect(db_uri, clientOptions);
+    console.log("Successfully connected to MongoDB.");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    throw err;
+  }
 }
 
 export { app, connectDB };

@@ -20,6 +20,14 @@ const usersSlice = createSlice({
     setCurrentUserID: (state, action) => {
       state.currentUserID = action.payload;
     },
+    setUserGroupID: (state, action) => {
+      const index = state.users.findIndex(
+        (user) => user._id === action.payload.userID
+      );
+      if (index !== -1) {
+        state.users[index] = {...state.users[index], groupID: action.payload.groupID};
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -74,5 +82,5 @@ const usersSlice = createSlice({
   }
 });
 
-export const { setCurrentUserID } = usersSlice.actions;
+export const { setCurrentUserID, setUserGroupID } = usersSlice.actions;
 export default usersSlice.reducer;

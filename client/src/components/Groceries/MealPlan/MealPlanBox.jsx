@@ -1,7 +1,7 @@
 import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, VStack } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addMealAsync, generateMealAsync } from '../../../redux/meals/thunks';
 
 export default function MealPlanBox() {
@@ -13,14 +13,6 @@ export default function MealPlanBox() {
 
   const recipe = useSelector((state) => state.meals.recipe);
 
-  useEffect(() => {
-    return () => {
-      selectedMealItems.forEach(item => {
-        dispatch(updateMealSelect({ id: item.id, selectMeal: false }));
-      });
-    };
-  }, [dispatch, selectedMealItems]);
-
   const [quantities, setQuantities] = useState(
     selectedMealItems.reduce((acc, item) => {
       acc[item._id] = item.quantity;
@@ -29,7 +21,7 @@ export default function MealPlanBox() {
   );
 
   const removeSelect = (item) => {
-    dispatch(updateMealSelect({ id: item.id, selectMeal: false }));
+    dispatch(updateMealSelect({ _id: item._id, selectMeal: false }));
   };
 
   const saveMeal = () => {
@@ -66,6 +58,16 @@ export default function MealPlanBox() {
     dispatch(generateMealAsync(selectedItems));
     setShowRecipe(true);
   };
+
+  useEffect(() => {
+    return () => {
+      selectedMealItems.forEach(item => {
+        if (selectedMealItems.selectMeal) {
+          dispatch(updateMealSelect({ _id: item._id, selectMeal: false }));
+        }
+      });
+    };
+  }, );
 
   return (
     showRecipe ? (
@@ -139,8 +141,8 @@ export default function MealPlanBox() {
                 size="sm"
                 width="62px"
                 border="transparent"
-                value={quantities[item.id]}
-                onChange={(valueString) => handleQuantityChange(item.id, parseInt(valueString))}
+                value={quantities[item._id]}
+                onChange={(valueString) => handleQuantityChange(item._id, parseInt(valueString))}
               >
                 <NumberInputField fontWeight="bold" />
                 <NumberInputStepper>
