@@ -1,36 +1,45 @@
 import "./Home.css";
-import { useState } from "react";
-import {
-  Box,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Button,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Card, CardHeader, CardBody, VStack } from "@chakra-ui/react";
 import NotificationCard from "./NotificationCard";
-import { useSelector } from "react-redux";
-import {
-  selectCurrentUserEvents,
-  selectCurrentUserGroceries,
-} from "../../selectors/userSelectors";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentUserGroceries } from "../../selectors/userSelectors";
 import GroceryCard from "./GroceryCard";
+import useCurrentUser from "../../hooks/useCurrentUser";
+import { updateEventAsync } from "../../redux/events/thunks";
+import ReminderCard from "./Reminders";
+import {
+  selectActiveEvents,
+  selectDismissedEvents,
+} from "../../selectors/eventSelectors";
 
 export default function HomeNotifications() {
-  const [dismissedNotifications, setDismissedNotifications] = useState([]);
-  const events = useSelector(selectCurrentUserEvents)
-    .filter(
-      (event) =>
-        event.extendedProps.done === false &&
-        !dismissedNotifications.includes(event.id)
-    )
-    .sort((a, b) => new Date(a.start) - new Date(b.start));
+  const userId = useCurrentUser()._id;
+  const activeEvents = useSelector(selectActiveEvents);
+  const dismissedEvents = useSelector(selectDismissedEvents);
 
   const groceries = useSelector(selectCurrentUserGroceries);
+  const dispatch = useDispatch();
 
-  const handleDismiss = (id) => {
-    setDismissedNotifications((prev) => [...prev, id]);
+  const handleDismiss = (event) => {
+    dispatch(
+      updateEventAsync({
+        ...event,
+        extendedProps: {
+          ...event.extendedProps,
+          dismissedBy: userId,
+          reminded: false,
+        },
+      })
+    );
+  };
+
+  const handleDone = (event) => {
+    dispatch(
+      updateEventAsync({
+        ...event,
+        extendedProps: { ...event.extendedProps, done: true },
+      })
+    );
   };
 
   return (
@@ -42,27 +51,22 @@ export default function HomeNotifications() {
         </CardHeader>
         <CardBody className="home-card-body">
           <VStack spacing={4}>
-            {events.length !== 0 ? (
-              events.map((event) => (
+            {activeEvents.length !== 0 ? (
+              activeEvents.map((event) => (
                 <NotificationCard
                   key={event.id}
                   event={event}
                   onDismiss={handleDismiss}
+                  onDone={handleDone}
                 />
               ))
             ) : (
               <p className="notifications-placeholder">No new notifications</p>
             )}
             {groceries.length !== 0 && <GroceryCard groceries={groceries} />}
+            <ReminderCard dismissedEvents={dismissedEvents} />
           </VStack>
         </CardBody>
-        <CardFooter className="home-card-footer">
-          <Button className="settings-button">
-            <span className="material-symbols-outlined settings-icon">
-              settings
-            </span>
-          </Button>
-        </CardFooter>
       </Card>
     </Box>
   );

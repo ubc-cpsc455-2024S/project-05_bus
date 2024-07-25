@@ -55,12 +55,10 @@ export default function CreateChore() {
           <IconButton icon={<EditIcon />} bg={newColor} />
         </PopoverTrigger>
         <PopoverContent
-          p={2}
-          boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
-          borderRadius="lg"
+          boxShadow="md"
+          border={0}
           w="auto"
-          bg="teal"
-          borderColor="teal"
+          bg="white"
         >
           <PopoverArrow bg="teal" borderColor="teal" />
           <PopoverCloseButton />

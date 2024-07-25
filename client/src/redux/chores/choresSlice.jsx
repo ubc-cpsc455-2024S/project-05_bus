@@ -66,7 +66,7 @@ const choresSlice = createSlice({
         state.deleteChore = REQUEST_STATE.PENDING;
       })
       .addCase(deleteChoreAsync.fulfilled, (state, action) => {
-        state.chores = state.chores.filter((chore) => chore._id !== action.payload);
+        state.chores = state.chores.filter((chore) => chore._id !== action.payload._id);
         state.deleteChore = REQUEST_STATE.FULFILLED;
       })
       .addCase(deleteChoreAsync.rejected, (state) => {

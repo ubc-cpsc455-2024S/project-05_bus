@@ -6,21 +6,20 @@ const GroceryList = ({ groceries }) => {
     <Box
       p={4}
       w="100%"
-      borderWidth={1}
-      borderRadius="lg"
-      boxShadow="md"
       bg="white"
       overflowX="auto"
+      borderTop="2px solid"
+      borderColor="gray.200"
     >
-      <Text fontSize="2xl" fontWeight="bold" mb={4}>
+      <Text fontSize="xl" fontWeight="bold" mb={4}>
         My Groceries
       </Text>
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>Name</Th>
-            <Th textAlign="right">Expiry Date</Th>
-            <Th textAlign="right" isNumeric>
+            <Th fontSize="sm">Name</Th>
+            <Th fontSize="sm">Expiry Date</Th>
+            <Th fontSize="sm" isNumeric>
               Quantity
             </Th>
           </Tr>
@@ -29,14 +28,14 @@ const GroceryList = ({ groceries }) => {
           {groceries.map((grocery, index) => (
             <Tr key={index}>
               <Td>
-                <Text fontWeight="semibold">{grocery.name}</Text>
+                <Text fontWeight="semibold" fontSize="sm">{grocery.name}</Text>
               </Td>
-              <Td textAlign="right">
+              <Td fontSize="sm">
                 {grocery.expiryDate
                   ? moment(grocery.expiryDate).format("MMM D, YYYY")
                   : "N/A"}
               </Td>
-              <Td isNumeric textAlign="right">
+              <Td isNumeric fontSize="sm">
                 {grocery.quantity} {grocery.quantityUnit || ""}
               </Td>
             </Tr>
