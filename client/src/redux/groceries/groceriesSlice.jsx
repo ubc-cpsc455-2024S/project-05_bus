@@ -59,6 +59,11 @@ const groceriesSlice = createSlice({
         };
       }
     },
+    deleteGrocery(state, action) {
+      state.groceries = state.groceries.filter(
+        (grocery) => grocery._id !== action.payload
+      );
+    },
   },
   extraReducers: (builder) => {
     handleGroceriesCases(builder);
@@ -83,7 +88,12 @@ const handleGroceriesCases = (builder) => {
       state.getGroceries = REQUEST_STATE.PENDING;
     })
     .addCase(getGroceryAsync.fulfilled, (state, action) => {
-      state.groceries = [...state.groceries, action.payload];
+      const existingGroceryIndex = state.groceries.findIndex(grocery => grocery._id === action.payload._id);
+      if (existingGroceryIndex >= 0) {
+        state.groceries[existingGroceryIndex] = action.payload;
+      } else {
+        state.groceries.push(action.payload);
+      }
       state.getGroceries = REQUEST_STATE.FULFILLED;
     })
     .addCase(getGroceryAsync.rejected, (state) => {
@@ -260,8 +270,6 @@ const handleLocationsCases = (builder) => {
     });
 };
 
-export const {
-  updateMealSelect,
-} = groceriesSlice.actions;
+export const { updateMealSelect, deleteGrocery } = groceriesSlice.actions;
 
 export default groceriesSlice.reducer;

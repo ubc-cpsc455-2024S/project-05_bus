@@ -1,7 +1,9 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const getAllChores = async (groupID) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/chores/group/${groupID}`
+      `${SERVER_URL}/chores/group/${groupID}`
     );
     const data = await response.json();
     return data;
@@ -13,7 +15,7 @@ const getAllChores = async (groupID) => {
 
 const getOneChore = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/chores/${id}`);
+    const response = await fetch(`${SERVER_URL}/chores/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -24,7 +26,7 @@ const getOneChore = async (id) => {
 
 const addChore = async (chore) => {
   try {
-    const response = await fetch("http://localhost:3000/chores", {
+    const response = await fetch("${SERVER_URL}/chores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +43,7 @@ const addChore = async (chore) => {
 
 const updateChore = async (chore) => {
   try {
-    const response = await fetch(`http://localhost:3000/chores/${chore._id}`, {
+    const response = await fetch(`${SERVER_URL}/chores/${chore._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +60,7 @@ const updateChore = async (chore) => {
 
 const deleteChore = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/chores/${id}`, {
+    const response = await fetch(`${SERVER_URL}/chores/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();

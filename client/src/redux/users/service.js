@@ -1,6 +1,8 @@
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 const getAllUsers = async () => {
   try {
-    const response = await fetch(`http://localhost:3000/users`);
+    const response = await fetch(`${SERVER_URL}/users`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -11,7 +13,7 @@ const getAllUsers = async () => {
 
 const getGroupMembers = async (groupID) => {
   try {
-    const response = await fetch(`http://localhost:3000/users/group/${groupID}`);
+    const response = await fetch(`${SERVER_URL}/users/group/${groupID}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -22,7 +24,7 @@ const getGroupMembers = async (groupID) => {
 
 const getUser = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/users/${id}`);
+    const response = await fetch(`${SERVER_URL}/users/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -33,7 +35,7 @@ const getUser = async (id) => {
 
 const addUser = async (user) => {
   try {
-    const response = await fetch("http://localhost:3000/users", {
+    const response = await fetch(`${SERVER_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +52,7 @@ const addUser = async (user) => {
 
 const deleteUser = async (id) => {
   try {
-    const response = await fetch(`http://localhost:3000/users/${id}`, {
+    const response = await fetch(`${SERVER_URL}/users/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();

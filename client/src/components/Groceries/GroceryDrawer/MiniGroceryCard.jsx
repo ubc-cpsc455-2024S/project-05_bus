@@ -62,12 +62,12 @@ export default function GroceryCard({
     setIsEditing(false);
   };
 
-  const handleDeleteClick = (id, type) => {
+  const handleDeleteClick = (item, type) => {
     if (confirm("Are you sure you want to delete this?") === false) return;
     if (type === "category") {
-      dispatch(deleteCategoryAsync(id));
+      dispatch(deleteCategoryAsync(item));
     } else if (type === "location") {
-      dispatch(deleteLocationAsync(id));
+      dispatch(deleteLocationAsync(item));
     }
   };
 
@@ -78,7 +78,7 @@ export default function GroceryCard({
           <IconButton
             size="xs"
             icon={<DeleteIcon />}
-            onClick={() => handleDeleteClick(item._id, type)}
+            onClick={() => handleDeleteClick(item, type)}
             backgroundColor="red.400"
             color="white"
             _hover={{ bg: "red.500" }}

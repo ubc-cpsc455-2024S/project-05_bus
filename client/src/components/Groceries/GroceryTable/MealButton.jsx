@@ -19,12 +19,12 @@ export default function SelectMealButton({ groceryItem }) {
   return (
     <IconButton
       aria-label="Toggle Select"
-      icon={<span className='material-symbols-outlined'>restaurant</span>}
+      icon={<span className="material-symbols-outlined">skillet</span>}
       color={isSelect ? "orange.500" : "gray.600"}
       onClick={toggleSelect}
       bg="transparent"
-      _hover={{ color: isSelect ? "orange.300" : "gray.400" }}
-      _active={{ color: isSelect ? "orange.700" : "gray.800" }}
+      _hover={{ color: "orange.300" }}
+      _active={{ color: "orange.700" }}
     />
   );
 }

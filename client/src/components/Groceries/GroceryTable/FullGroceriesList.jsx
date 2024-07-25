@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Box,
   TableContainer,
@@ -30,7 +30,7 @@ import {
   getPaginationRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
@@ -42,6 +42,9 @@ import EditGroceryPopover from "./EditGroceryItem";
 import FavoriteButton from "./FavouriteButton";
 import SelectMealButton from "./MealButton";
 
+import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import NotePopover from "./NotePopover";
+
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
@@ -52,26 +55,21 @@ export default function GroceriesTable() {
   const groceriesData = useSelector((state) => state.groceries.groceries);
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
-
-  const events = useSelector((state) => state.events.events);
-
-  const dispatch = useDispatch();
+  const members = useCurrentGroupMembers();
 
   const tooltipColumns = ['name', 'categoryId', 'locationId'];
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
   };
+  
+  const memoizedColumns = useMemo(() => {
+    return columns(locations, categories, members, dateFilterType);
+  }, [locations, categories, members, dateFilterType]);
 
   const table = useReactTable({
     data: groceriesData,
-    columns: columns(
-      locations,
-      categories,
-      dispatch,
-      events,
-      dateFilterType,
-    ),
+    columns: memoizedColumns,
     state: {
       sorting,
       columnFilters,
@@ -84,6 +82,7 @@ export default function GroceriesTable() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
   });
 
   return (
@@ -213,10 +212,11 @@ export default function GroceriesTable() {
                         )}
                       </Td>
                     ))}
-                    <Td>
+                    <Td maxWidth="180px">
                       <EditGroceryPopover groceryItem={row.original} />
                       <NotificationPopover groceryItem={row.original} />
                       <FavoriteButton groceryItem={row.original} />
+                      <NotePopover groceryItem={row.original} />
                       <SelectMealButton groceryItem={row.original} />
                     </Td>
                   </Tr>

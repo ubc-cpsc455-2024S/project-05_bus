@@ -1,4 +1,5 @@
 import Events from "../models/eventSchema.js";
+import groceryQueries from "./groceryQuery.js";
 
 const eventQueries = {
   getAllEvents: async function (groupID) {
@@ -53,8 +54,11 @@ const eventQueries = {
   },
   deleteEvent: async function (id) {
     try {
-      const result = await Events.findOneAndDelete({ _id: id });
-      return result;
+      const event = await Events.findOneAndDelete({ _id: id });
+      if (event.extendedProps.type === "expiry") {
+        await groceryQueries.updateGrocery({ _id: event.extendedProps.groceryId, expiryNotificationDate: null });
+      }
+      return event;
     } catch (error) {
       console.error(`Error deleting event with id ${id}:`, error);
       throw error;

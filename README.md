@@ -26,7 +26,6 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 ### Stretch Requirements
 - AI image recognition for processing pictures of groceries and receipts to quickly add grocery items
 - Budgeting functionality (similar to Splitwise)
-- Ability for users to create floorplan/ accessorize their unit of living space
 - Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
 ## Team Members
