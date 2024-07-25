@@ -34,7 +34,7 @@ const getGroup = async (id) => {
 
 const createGroup = async (group) => {
   try {
-    const response = await fetch("${SERVER_URL}/groups", {
+    const response = await fetch(`${SERVER_URL}/groups`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ const removeGroupMember = async (groupID, userID) => {
 
 const addAdmin = async (groupID, userID) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/admins/${groupID}/${userID}`, {
+    const response = await fetch(`${SERVER_URL}/groups/admins/${groupID}/${userID}`, {
       method: "PATCH"
     });
     const data = await response.json();
@@ -132,7 +132,7 @@ const addAdmin = async (groupID, userID) => {
 
 const removeAdmin = async (groupID, userID) => {
   try {
-    const response = await fetch(`http://localhost:3000/groups/admins/remove/${groupID}/${userID}`, {
+    const response = await fetch(`${SERVER_URL}/groups/admins/remove/${groupID}/${userID}`, {
       method: "PATCH"
     });
     const data = await response.json();

@@ -26,7 +26,7 @@ const getOneChore = async (id) => {
 
 const addChore = async (chore) => {
   try {
-    const response = await fetch("${SERVER_URL}/chores", {
+    const response = await fetch(`${SERVER_URL}/chores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
