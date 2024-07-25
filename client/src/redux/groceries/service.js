@@ -26,7 +26,7 @@ const getOneGrocery = async (id) => {
 
 const postGrocery = async (grocery) => {
   try {
-    const response = await fetch("${SERVER_URL}/groceries", {
+    const response = await fetch(`${SERVER_URL}/groceries`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const postGrocery = async (grocery) => {
 
 const postManyGroceries = async (groceries) => {
   try {
-    const response = await fetch("${SERVER_URL}/groceries/many", {
+    const response = await fetch(`${SERVER_URL}/groceries/many`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -125,7 +125,7 @@ const getCategory = async (id) => {
 
 const addCategory = async (category) => {
   try {
-    const response = await fetch("${SERVER_URL}/groceries/categories", {
+    const response = await fetch(`${SERVER_URL}/groceries/categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -204,7 +204,7 @@ const getLocation = async (id) => {
 
 const addLocation = async (location) => {
   try {
-    const response = await fetch("${SERVER_URL}/groceries/locations", {
+    const response = await fetch(`${SERVER_URL}/groceries/locations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

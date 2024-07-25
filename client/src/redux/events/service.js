@@ -26,7 +26,7 @@ const getOneEvent = async (id) => {
 
 const addEvent = async (event) => {
   try {
-    const response = await fetch("${SERVER_URL}/calendar", {
+    const response = await fetch(`${SERVER_URL}/calendar`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
