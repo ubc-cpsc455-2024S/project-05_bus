@@ -1,12 +1,6 @@
 name: Test Build and Deploy
 
-on:
-  push:
-    branches:
-      - deploy-render
-  pull_request:
-    branches:
-      - deploy-render
+on: [push, pull_request]
 
 jobs:
   test-and-deploy:
@@ -53,10 +47,18 @@ jobs:
       working-directory: client
       run: npm run build
 
-    - name: Build backend
+    - name: Check for runtime errors in backend
       working-directory: server
-      run: npm run build
-
+      env:
+        DB_URI: ${{ secrets.DB_URI }}
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        CLIENT_URL: 'http://localhost:3000'
+      run: |
+        npm start &
+        SERVER_PID=$!
+        sleep 10
+        kill $SERVER_PID
+        
     - name: Deploy backend to Render
       if: success()
       run: |
