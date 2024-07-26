@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import calendarReducer from "./events/calendarSlice";
 import choresReducer from "./chores/choresSlice";
 import groceriesReducer from "./groceries/groceriesSlice";
-import mealsReducer from "./meals/mealsSlice";
+import recipeReducer from "./recipes/recipeSlice";
 import usersReducer from "./users/usersSlice";
 import groupsReducer from "./groups/groupsSlice";
 import { persistStore, persistReducer } from 'redux-persist'
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   events: calendarReducer,
   chores: choresReducer,
   groceries: groceriesReducer,
-  meals: mealsReducer,
+  recipes: recipeReducer,
   users: usersReducer,
   groups: groupsReducer,
 });

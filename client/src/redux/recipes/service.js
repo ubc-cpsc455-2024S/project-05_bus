@@ -1,12 +1,12 @@
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-const addMeal = async (newMeal) => {
-    const response = await fetch(`${SERVER_URL}/groceries/meals`, {
+const addRecipe = async (newRecipe) => {
+    const response = await fetch(`${SERVER_URL}/recipes`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(newMeal)
+      body: JSON.stringify(newRecipe)
     });
   
     const data = await response.json();
@@ -18,22 +18,22 @@ const addMeal = async (newMeal) => {
     return data;
   };
   
-  const getMeals = async () => {
-    const response = await fetch(`${SERVER_URL}/groceries/meals`, {
+  const getRecipes = async () => {
+    const response = await fetch(`${SERVER_URL}/recipes`, {
       method: 'GET'
     });
     return response.json();
   };
 
-  const removeMeal = async (id) => {
-    const response = await fetch(`${SERVER_URL}/groceries/meals/${id}`, {
+  const deleteRecipe = async (id) => {
+    const response = await fetch(`${SERVER_URL}/recipes/${id}`, {
       method: 'DELETE'
     });
     return response.json();
   };
 
-  const generateMeal = async (list) => {
-    const response = await fetch(`${SERVER_URL}/groceries/generateMeal`, {
+  const generateRecipe = async (list) => {
+    const response = await fetch(`${SERVER_URL}/recipes/generateRecipe`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,8 +51,8 @@ const addMeal = async (newMeal) => {
   };
   
   export default {
-    addMeal,
-    getMeals,
-    removeMeal,
-    generateMeal
+    addRecipe,
+    getRecipes,
+    deleteRecipe,
+    generateRecipe
   };
