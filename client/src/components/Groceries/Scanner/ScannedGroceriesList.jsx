@@ -105,7 +105,7 @@ export default function ScannedGroceriesList({
         setLoading={setLoading}
         setModalOpen={setIsOpen}
       />
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="4xl">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="6xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scanned Groceries</ModalHeader>
