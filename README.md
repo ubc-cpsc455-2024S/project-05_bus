@@ -1,5 +1,7 @@
 # Roommates
 
+![CI/CD](https://github.com/ubc-cpsc455-2024S/project-05_bus/actions/workflows/main.yml/badge.svg)
+
 ## Project Description
 The Roommates app helps users track groceries and expiring food, meal plan based on groceries, and fairly divide up chores. Anyone looking for an easy, consolidated way to manage their household chores, whether living alone or with roommates/family, can use the Roommates app to get timely notifications on things like groceries running low or expiring, or chores that need to be done. The app stores data related to user profile information, households/groups, calendar details, and fridge contents. With this data, users will be able to create and manage their household/group and individual account, create and interact with events and chores in the calendar (including sending chore reminders to roommates), and add and remove fridge and grocery items. Some additional functionality may include a budgeting section (like splitwise) where users can divide expenses between members of their household, or AI image recognition for fridge items to help with the meal planning expiration tracking.
 
