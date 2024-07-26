@@ -12,21 +12,22 @@ The Roommates app helps users track groceries and expiring food, meal plan based
   - Set up MongoDB connection in back end
   - Set up MongoDB collection for users
   - Enable OAuth in the back end for user verification
-- Users can create a unit of living space (a.k.a. groups), and add other users to this unit
-- Users can create a list of items in their fridge
+- Users can create a household (group), and add other users to this household
+- Users can create a list to track food items and expiry dates in their household
+  - Food items can be tagged for 'shared' or 'personal' use in this list
 - Users can view a basic calendar implementation and create events (e.g. assigning chores to users)
   - Set up MongoDB collection for chores/events
   - Create front end for calendar + side navbar
   - Add functionality for adding an event/chore
   - Add functionality for assigning a user to a chore
 ### Standard Requirements 
-- Notifications for upcoming chores
-- Notifications for expiring fridge items (fridge item expiration dates synced with calendar)
+- Users receive notifications for upcoming chores
+- Users receive notifications for expiring food items (food item expiration dates are synced with the calendar)
 - User preferences (e.g. turn off notifications)
-- Users can ask AI to help with meal planning (e.g. what meals to cook with certain grocery items)
-- Users can save any recipes generated, see the list of all saved recipes, and remove any saved recipes
+- Users can ask AI to help with meal planning (e.g. suggest recipes using selected food items)
+  - Users can save any recipes generated, see the list of all saved recipes, and remove any saved recipes
 ### Stretch Requirements
-- AI image recognition for processing pictures of groceries and receipts to quickly add grocery items
+- AI image recognition for processing pictures of groceries and receipts to quickly add food items to the list
 - Budgeting functionality (similar to Splitwise)
 - Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
