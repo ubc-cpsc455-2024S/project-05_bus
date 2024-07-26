@@ -52,12 +52,23 @@ export default function ScannedGroceriesList({
 
   const handleSubmit = () => {
     const validation = validateGroceries(groceries);
-
+  
     if (validation.isValid) {
-      const groceriesToSubmit = groceries.map((grocery) => ({
-        ...grocery,
-        groupID,
-      }));
+      const groceriesToSubmit = groceries.map((grocery) => {
+        const sanitizedGrocery = { ...grocery };
+  
+        Object.keys(sanitizedGrocery).forEach((key) => {
+          if (sanitizedGrocery[key] === "") {
+            sanitizedGrocery[key] = null;
+          }
+        });
+  
+        return {
+          ...sanitizedGrocery,
+          groupID,
+        };
+      });
+  
       dispatch(addGroceriesAsync(groceriesToSubmit));
       toast({
         title: `${groceries.length} Groceries added`,
@@ -77,7 +88,7 @@ export default function ScannedGroceriesList({
         });
       });
     }
-  };
+  };  
 
   const handleClose = () => {
     setIsOpen(false);
