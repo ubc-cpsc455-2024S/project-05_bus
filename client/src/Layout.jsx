@@ -13,11 +13,19 @@ import SettingsPage from './pages/SettingsPage'
 import SignupPage from './pages/SignupPage'
 import LandingPage from './pages/LandingPage'
 import GroupsPage from './pages/GroupsPage'
+import { PageLoader } from './components/Auth/PageLoader';
+import ProfileCreationPage from './pages/ProfileCreationPage';
 
 export default function Layout() {
   const location = useLocation();
-  const noNavbarPaths = ['/', '/login', '/signup', '/groups'];
-  const { isAuthenticated } = useAuth0();
+  const noNavbarPaths = ['/', '/login', '/signup', '/profile-creation', '/groups'];
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return (
+      <PageLoader />
+    )
+  }
 
   return (
     <>
@@ -28,6 +36,7 @@ export default function Layout() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/callback" element={<CallbackPage />} />
+          <Route path="profile-creation" element={<AuthenticationGuard component={ProfileCreationPage} />} />
           <Route path="/home" element={<AuthenticationGuard component={HomePage} />} />
           <Route path="/calendar" element={<AuthenticationGuard component={CalendarPage} />} />
           <Route path="/groceries" element={<AuthenticationGuard component={GroceriesPage} />} />

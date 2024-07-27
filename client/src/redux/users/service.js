@@ -35,17 +35,19 @@ const getUser = async (id) => {
 
 const addUser = async (user) => {
   try {
+    console.log(`user: ${JSON.stringify(user)}`)
     const response = await fetch(`${SERVER_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(user)
     });
     const data = await response.json();
+    console.log(`data: ${data}`)
     return data;
   } catch (error) {
-    console.error("Error adding user: ", error);
+    console.error(`Error adding user: ${error}`);
     throw error;
   }
 };
@@ -58,7 +60,7 @@ const deleteUser = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error deleting user: ", error);
+    console.error(`Error deleting user: ${error}`);
     throw error;
   }
 };

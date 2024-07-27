@@ -2,7 +2,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const CallbackPage = () => {
+export function CallbackPage() {
   const { error } = useAuth0();
 
   if (error) {
@@ -19,5 +19,5 @@ export const CallbackPage = () => {
 
   return (
     <h1>Success</h1>
-  )
-};
+  );
+}

@@ -40,7 +40,7 @@ router.get("/:id", async function(req, res, next) {
 });
 
 /* POST user listing. */
-router.post("/", async function(req, res, next) {
+router.post("/users", async function(req, res, next) {
   try {
       const result = await userQueries.postUser(req.body);
       return res.status(201).json(result);

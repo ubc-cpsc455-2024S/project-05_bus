@@ -17,7 +17,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Navbar() {
   const currentUser = useCurrentUser();
   const location = useLocation();
-  const { logout } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
 
   const getPageName = (pathname) => {
     const pageName = pathname.split('/').filter(Boolean)[0];
@@ -35,7 +35,8 @@ export default function Navbar() {
   }
 
   return (
-    <div className="container">
+    isAuthenticated && (
+      <div className="container">
       <h1 className="page-name">{pageName}</h1>
       <ButtonGroup className="page-buttons">
         <nav>
@@ -72,7 +73,7 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">{`${currentUser.firstName} ${currentUser.lastName}`}</h2>
+            <h2 className="profile-popover-name">{`${user.name}`}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
@@ -83,5 +84,7 @@ export default function Navbar() {
         </PopoverContent>
       </Popover>
     </div>
+    )
+    
   )
 }

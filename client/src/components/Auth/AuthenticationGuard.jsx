@@ -1,10 +1,10 @@
 import { withAuthenticationRequired } from "@auth0/auth0-react";
-import { NoAccess } from "./NoAccess";
+import { PageLoader } from "./PageLoader";
 
 export const AuthenticationGuard = ({ component }) => {
   const Component = withAuthenticationRequired(component, {
-    onRedirecting: () => ( 
-      <NoAccess />
+    onRedirecting: () => (
+      <PageLoader />
     ),
   });
 

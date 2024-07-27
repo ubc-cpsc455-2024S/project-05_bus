@@ -8,7 +8,7 @@ export default function LandingPage() {
   const handleSignup = async () => {
     await loginWithRedirect({
       appState: {
-        returnTo: "/home",
+        returnTo: "/profile-creation",
       },
       authorizationParams: {
         screen_hint: "signup",
