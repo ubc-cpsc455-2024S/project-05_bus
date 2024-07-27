@@ -2,7 +2,6 @@ import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { postUserByEmailAsync } from "../redux/users/thunks";
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from "@reduxjs/toolkit";
 import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 
@@ -34,10 +33,8 @@ export default function LandingPage() {
       const newUser = unwrapResult(result);
       dispatch(setCurrentUserID(newUser._id));
       const name = newUser.firstName + newUser.lastName;
-      console.log(name)
       dispatch(setCurrentUserName(name));
     })
-
   }
 
   return (
