@@ -1,31 +1,31 @@
 import Recipes from "../models/recipeSchema.js";
 
 const recipeQueries = {
-    getAllMeals: async function () {
+    getAllRecipes: async function () {
         try {
-            const meals = await Recipes.find();
-            return meals;
+            const recipes = await Recipes.find();
+            return recipes;
         } catch (error) {
-            console.error("Error fetching meals:", error);
+            console.error("Error fetching recipes:", error);
             throw error;
         }
     },
-    postMeal: async function (mealData) {
+    postRecipe: async function (recipeData) {
         try {
-            const newMeal = new Recipes(mealData);
-            const savedMeal = await newMeal.save();
-            return savedMeal;
+            const newRecipe = new Recipes(recipeData);
+            const savedRecipe = await newRecipe.save();
+            return savedRecipe;
         } catch (error) {
-            console.error("Error saving new meal:", error);
+            console.error("Error saving new recipe:", error);
             throw error;
         }
     },
-    deleteMeal: async function (id) {
+    deleteRecipe: async function (id) {
         try {
             const result = await Recipes.deleteOne({ _id: id });
             return result;
         } catch (error) {
-            console.error(`Error deleting meal with id ${id}:`, error);
+            console.error(`Error deleting recipe with id ${id}:`, error);
             throw error;
         }
     } 
