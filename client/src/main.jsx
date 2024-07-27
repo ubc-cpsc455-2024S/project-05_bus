@@ -6,15 +6,21 @@ import { store, persistor } from "./redux/store";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'
+import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
+import { BrowserRouter } from 'react-router-dom'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ChakraProvider>
-          <App />
-        </ChakraProvider>
-      </PersistGate>
-    </Provider>
+    <BrowserRouter>
+      <Auth0ProviderWithNavigate>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <ChakraProvider>
+              <App />
+            </ChakraProvider>
+          </PersistGate>
+        </Provider>
+      </Auth0ProviderWithNavigate>
+    </BrowserRouter>
   </React.StrictMode>
 );

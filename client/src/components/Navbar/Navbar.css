@@ -97,3 +97,7 @@ nav {
   flex-direction: column;
   font-weight: 200;
 }
+
+.profile-popover-logout {
+  margin-top: 10px;
+}

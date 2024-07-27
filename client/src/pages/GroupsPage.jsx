@@ -1,4 +1,4 @@
-import './LoginPage.css';
+import '../components/Login/LoginPage.css'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoginSidebar from '../components/Login/LoginSidebar'
