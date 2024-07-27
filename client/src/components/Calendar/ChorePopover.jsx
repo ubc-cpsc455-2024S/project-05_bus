@@ -30,6 +30,7 @@ export default function ChorePopover({ chore }) {
   const [eventType, setEventType] = useState("one-time");
   const [assignee, setAssignee] = useState("");
   const [repeatInterval, setRepeatInterval] = useState(1);
+  const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   const group = useCurrentGroup();
   const members = useCurrentGroupMembers();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,21 +44,39 @@ export default function ChorePopover({ chore }) {
 
   const handleSave = () => {
     if (eventType === "one-time") {
-      dispatchEvent(moment().format());
+      dispatchEvent(moment(startDate).format());
     } else if (eventType === "daily") {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment().add(i, "days").format());
+        dispatchEvent(moment(startDate).add(i, "days").format());
       }
     } else if (eventType === "weekly") {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment().add(i, "weeks").format());
+        dispatchEvent(moment(startDate).add(i, "weeks").format());
       }
     } else if (eventType === "monthly") {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment().add(i, "months").format());
+        dispatchEvent(moment(startDate).add(i, "months").format());
       }
     }
     onClose();
+  };
+
+  const calculateEndDate = () => {
+    if (eventType === "one-time") {
+      return startDate;
+    } else if (eventType === "daily") {
+      return moment(startDate)
+        .add(repeatInterval - 1, "days")
+        .format("YYYY-MM-DD");
+    } else if (eventType === "weekly") {
+      return moment(startDate)
+        .add(repeatInterval - 1, "weeks")
+        .format("YYYY-MM-DD");
+    } else if (eventType === "monthly") {
+      return moment(startDate)
+        .add(repeatInterval - 1, "months")
+        .format("YYYY-MM-DD");
+    }
   };
 
   const dispatchEvent = (date) => {
@@ -80,12 +99,7 @@ export default function ChorePopover({ chore }) {
   };
 
   return (
-    <Popover
-      isOpen={isOpen}
-      onClose={onClose}
-      placement="left"
-      boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
-    >
+    <Popover isOpen={isOpen} onClose={onClose} placement="left" boxShadow="md">
       <PopoverTrigger>
         <Button
           onClick={onOpen}
@@ -103,7 +117,7 @@ export default function ChorePopover({ chore }) {
           <PopoverHeader>{chore.title}</PopoverHeader>
           <PopoverBody>
             <FormControl as="fieldset" mb="4">
-              <FormLabel as="legend">Event Type</FormLabel>
+              <FormLabel as="legend">Event Frequency</FormLabel>
               <RadioGroup value={eventType} onChange={setEventType}>
                 <Stack direction="column">
                   <Radio value="one-time">One-Time</Radio>
@@ -115,7 +129,7 @@ export default function ChorePopover({ chore }) {
             </FormControl>
             {eventType !== "one-time" && (
               <FormControl mb="4">
-                <FormLabel>Repeat Interval</FormLabel>
+                <FormLabel>Interval (Number of Times)</FormLabel>
                 <Input
                   type="number"
                   min={1}
@@ -124,6 +138,18 @@ export default function ChorePopover({ chore }) {
                 />
               </FormControl>
             )}
+            <FormControl mb="4">
+              <FormLabel>Start Date</FormLabel>
+              <Input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </FormControl>
+            <FormControl mb="4">
+              <FormLabel>End Date</FormLabel>
+              <Input type="date" value={calculateEndDate()} readOnly />
+            </FormControl>
             <FormControl mb="4">
               <FormLabel>Assign to</FormLabel>
               <Select
