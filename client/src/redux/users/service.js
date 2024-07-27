@@ -33,6 +33,23 @@ const getUser = async (id) => {
   }
 };
 
+const postUserByEmail = async (email) => {
+  try {
+    const response = await fetch(`${SERVER_URL}/users/userInfo`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email)
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching user: ", error);
+    throw error;
+  }
+}
+
 const addUser = async (user) => {
   try {
     console.log(`user: ${JSON.stringify(user)}`)
@@ -65,4 +82,4 @@ const deleteUser = async (id) => {
   }
 };
 
-export default { getAllUsers, getGroupMembers, getUser, addUser, deleteUser};
+export default { getAllUsers, getGroupMembers, getUser, addUser, postUserByEmail, deleteUser};

@@ -1,9 +1,15 @@
 import { Box, Button, Heading, Image, Text } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { postUserByEmailAsync } from "../redux/users/thunks";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { unwrapResult } from "@reduxjs/toolkit";
+import { setCurrentUserID } from '../redux/users/usersSlice';
 
 export default function LandingPage() {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, user } = useAuth0();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     await loginWithRedirect({
@@ -21,7 +27,15 @@ export default function LandingPage() {
       appState: {
         returnTo: "/home",
       },
-    });
+    }).then(async () => {
+      const userEmail = {
+        email: user.email
+      }
+      const result = await dispatch(postUserByEmailAsync(userEmail));
+      const newUser = unwrapResult(result);
+      dispatch(setCurrentUserID(newUser._id));
+    })
+
   }
 
   return (
