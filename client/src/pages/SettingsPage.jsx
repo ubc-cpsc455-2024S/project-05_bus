@@ -85,7 +85,7 @@ export default function Settings() {
   const isOnlyAdmin = currentGroup ? isAdmin && currentGroup.adminIDs.length === 1 : null;
   const [error, setError] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
-  const [groupName, setGroupName] = useState(currentGroup.name);
+  const [groupName, setGroupName] = useState(currentGroup ? currentGroup.name : null);
 
   const { isOpen: isLeaveGroupOpen, onOpen: openLeaveGroupModal, onClose: closeLeaveGroupModal } = useDisclosure();
   const { isOpen: isDeleteGroupOpen, onOpen: openDeleteGroupModal, onClose: closeDeleteGroupModal } = useDisclosure();

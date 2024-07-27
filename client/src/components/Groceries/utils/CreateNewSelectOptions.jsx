@@ -1,11 +1,17 @@
 import { addCategoryAsync, addLocationAsync } from "../../../redux/groceries/thunks";
 
-export const handleCreateCategory = (inputValue, dispatch, groupID) => {
-  dispatch(addCategoryAsync({name: inputValue, groupID}));
+export const handleCreateCategory = async (inputValue, dispatch, groupID, setCategory) => {
+  const resultAction = await dispatch(addCategoryAsync({ name: inputValue, groupID }));
+  if (addCategoryAsync.fulfilled.match(resultAction)) {
+    setCategory(resultAction.payload._id);
+  }
 };
 
-export const handleCreateLocation = (inputValue, dispatch, groupID) => {
-  dispatch(addLocationAsync({name: inputValue, groupID}));
+export const handleCreateLocation = async (inputValue, dispatch, groupID, setLocation) => {
+  const resultAction = await dispatch(addLocationAsync({ name: inputValue, groupID }));
+  if (addLocationAsync.fulfilled.match(resultAction)) {
+    setLocation(resultAction.payload._id);
+  }
 };
 
 export const isValidNewCategory = (inputValue, categories) => {

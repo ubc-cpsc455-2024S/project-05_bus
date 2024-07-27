@@ -66,7 +66,7 @@ const eventQueries = {
   },
   deleteChoreEvents: async function (choreId) {
     try {
-      const result = await Events.deleteMany({ choreId });
+      const result = await Events.deleteMany({ "extendedProps.choreId": choreId });
       return result;
     } catch (error) {
       console.error(`Error deleting events with choreId ${choreId}:`, error);

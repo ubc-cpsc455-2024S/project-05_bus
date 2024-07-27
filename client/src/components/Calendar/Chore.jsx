@@ -34,7 +34,7 @@ export default function Chore({ chore, handleDelete }) {
       <ButtonGroup>
         <ChorePopover chore={chore} />
         <DeleteAlert
-          handleDelete={() => handleDelete(chore._id)}
+          handleDelete={() => handleDelete(chore)}
           type={"chore"}
           style={{ backgroundColor: "whiteAlpha.500" }}
         />

@@ -1,4 +1,5 @@
 import { Groceries } from "../models/grocerySchema.js";
+import Events from "../models/eventSchema.js";
 import eventQueries from "./eventQuery.js";
 
 const groceryQueries = {
@@ -31,20 +32,8 @@ const groceryQueries = {
     }
   },
   postManyGroceries: async function (groceryData) {
-    const filteredData = groceryData.filter((grocery) => {
-      const { categoryId, locationId, groupID } = grocery;
-
-      const isValidCategoryId =
-        categoryId === null || mongoose.Types.ObjectId.isValid(categoryId);
-      const isValidLocationId =
-        locationId === null || mongoose.Types.ObjectId.isValid(locationId);
-      const isValidGroupId = mongoose.Types.ObjectId.isValid(groupID);
-
-      return isValidCategoryId && isValidLocationId && isValidGroupId;
-    });
-
     try {
-      const savedGroceries = await Groceries.insertMany(filteredData);
+      const savedGroceries = await Groceries.insertMany(groceryData);
       return savedGroceries;
     } catch (error) {
       console.error("Error saving new groceries:", error);
@@ -73,7 +62,14 @@ const groceryQueries = {
       );
 
       if (updatedGrocery && updatedGrocery.restockNotificationDate) {
-        await createRestockNotification(updatedGrocery);
+        const existingNotification = await Events.findOne({
+          "extendedProps.groceryId": updatedGrocery._id,
+          "extendedProps.type": "restock"
+        });
+  
+        if (!existingNotification) {
+          await createRestockNotification(updatedGrocery);
+        }
       }
 
       return updatedGrocery;

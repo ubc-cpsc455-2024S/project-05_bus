@@ -13,11 +13,14 @@ import {
   Image,
   Flex,
   ButtonGroup,
+  Icon,
 } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import CropModal from "./CropModal";
 import sampleReceiptImage from "./images/sample_receipt.jpg";
 import sampleGroceriesImage from "./images/sample_groceries.jpg";
+import croppedReceiptImage from "./images/cropped_receipt.jpg";
 import ScannedGroceriesList from "./ScannedGroceriesList";
 
 export default function Scanner({ isOpen, onClose, type }) {
@@ -93,13 +96,31 @@ export default function Scanner({ isOpen, onClose, type }) {
               alignItems="flex-start"
               justifyContent="space-between"
             >
-              <Image
-                src={type === "Receipt" ? sampleReceiptImage : sampleGroceriesImage}
-                w="100%"
-                maxW="30vh"
-                objectFit="contain"
-                mb="4"
-              />
+              <Flex align="center">
+                <Image
+                  src={
+                    type === "Receipt"
+                      ? sampleReceiptImage
+                      : sampleGroceriesImage
+                  }
+                  w="100%"
+                  maxW="35vh"
+                  objectFit="contain"
+                  mb="4"
+                />
+                {type === "Receipt" && (
+                  <>
+                    <Icon as={ArrowForwardIcon} boxSize={8} mx={4} />
+                    <Image
+                      src={croppedReceiptImage}
+                      w="100%"
+                      maxW="30vh"
+                      objectFit="contain"
+                      mb="4"
+                    />
+                  </>
+                )}
+              </Flex>
               <VStack alignItems="flex-start" spacing="4" w="100%">
                 <Text fontSize="lg" fontWeight="bold">
                   Instructions:

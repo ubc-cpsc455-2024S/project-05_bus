@@ -1,20 +1,31 @@
 import './CreateGroupForm.css';
 import { Button, Box, Input, Tag, TagLabel, TagCloseButton, VStack, Text, HStack, FormControl, FormLabel } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { createGroupAsync } from '../../redux/groups/thunks';
 import { getUsersAsync } from '../../redux/users/thunks';
 import { getGroupsAsync } from '../../redux/groups/thunks';
+import { getEventsAsync } from '../../redux/events/thunks';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { getChoresAsync } from '../../redux/chores/thunks';
 
 export default function CreateGroupForm() {
   const dispatch = useDispatch();
   const users = useSelector(state => state.users.users);
   const currentUser = useCurrentUser();
+  const currentGroup = useCurrentGroup();
   const [groupName, setGroupName] = useState('');
   const [emailInput, setEmailInput] = useState('');
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (currentGroup) {
+      dispatch(getEventsAsync(currentGroup._id));
+      dispatch(getChoresAsync(currentGroup._id));
+    }
+  }, [currentGroup, dispatch]);
 
   const handleGroupNameChange = (e) => {
     setGroupName(e.target.value);
@@ -65,9 +76,9 @@ export default function CreateGroupForm() {
     }
      
     try {
-      await dispatch(createGroupAsync(group));
-      await dispatch(getUsersAsync());
-      await dispatch(getGroupsAsync());
+      await dispatch(createGroupAsync(group)).unwrap();
+      await dispatch(getUsersAsync()).unwrap();
+      await dispatch(getGroupsAsync()).unwrap();
     } catch (error) {
       setError('Could not create group.');
     }
