@@ -4,7 +4,7 @@ import { Box, Button, Input, Stack, Text } from "@chakra-ui/react";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addUserAsync } from '../redux/users/thunks';
-import { setCurrentUserID } from '../redux/users/usersSlice';
+import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 export default function ProfileCreationPage() {
@@ -36,6 +36,8 @@ export default function ProfileCreationPage() {
     const result = await dispatch(addUserAsync(userData));
     const newUser = unwrapResult(result);
     dispatch(setCurrentUserID(newUser._id));
+    const name = newUser.firstName + newUser.lastName;
+    dispatch(setCurrentUserName(name));
     navigate('/groups');
   }
 

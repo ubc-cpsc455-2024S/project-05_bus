@@ -4,12 +4,11 @@ import { postUserByEmailAsync } from "../redux/users/thunks";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { unwrapResult } from "@reduxjs/toolkit";
-import { setCurrentUserID } from '../redux/users/usersSlice';
+import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 
 export default function LandingPage() {
   const { loginWithRedirect, user } = useAuth0();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSignup = async () => {
     await loginWithRedirect({
@@ -34,6 +33,9 @@ export default function LandingPage() {
       const result = await dispatch(postUserByEmailAsync(userEmail));
       const newUser = unwrapResult(result);
       dispatch(setCurrentUserID(newUser._id));
+      const name = newUser.firstName + newUser.lastName;
+      console.log(name)
+      dispatch(setCurrentUserName(name));
     })
 
   }
