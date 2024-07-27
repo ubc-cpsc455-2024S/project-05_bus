@@ -10,8 +10,12 @@ const userQueries = {
         const members = await Users.find({ groupID });
         return members;
     },
-    getOneUser: async function (id) {
+    getUserById: async function (id) {
         const user = await Users.findOne({ _id: id });
+        return user;
+    },
+    postUserByEmail: async function (email) {
+        const user = await Users.findOne({ email: email });
         return user;
     },
     postUser: async function (userData) {

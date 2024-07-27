@@ -28,7 +28,7 @@ router.get("/group/:groupID", async function(req, res, next) {
 /* GET user listing. */
 router.get("/:id", async function(req, res, next) {
   try {
-      const result = await userQueries.getOneUser(req.params.id);
+      const result = await userQueries.getUserById(req.params.id);
       if (!result) {
         return res.status(404).send({ message: "User not found" });
       }
@@ -40,9 +40,20 @@ router.get("/:id", async function(req, res, next) {
 });
 
 /* POST user listing. */
-router.post("/users", async function(req, res, next) {
+router.post("/", async function(req, res, next) {
   try {
       const result = await userQueries.postUser(req.body);
+      return res.status(201).json(result);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).send({ error: "Internal Server Error" });
+  }
+});
+
+/* POST user info via email bc apparently it is bad to do it with GET */
+router.post("/userInfo", async function(req, res, next) {
+  try {
+      const result = await userQueries.postUserByEmail(req.body);
       return res.status(201).json(result);
   } catch (err) {
       console.error(err);

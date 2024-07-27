@@ -22,13 +22,11 @@ const clientOptions = {
   serverApi: { version: "1", strict: true, deprecationErrors: true },
 };
 
-// const corsOptions = {
-//   origin: process.env.CLIENT_URL,
-// };
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+};
 
-// app.use(cors(corsOptions));
-
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
