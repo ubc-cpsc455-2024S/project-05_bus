@@ -33,8 +33,6 @@ export default function Layout() {
       <div className={noNavbarPaths.includes(location.pathname) ? "" : "navbar-padding"}>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
           <Route path="/callback" element={<CallbackPage />} />
           <Route path="profile-creation" element={<AuthenticationGuard component={ProfileCreationPage} />} />
           <Route path="/home" element={<AuthenticationGuard component={HomePage} />} />
