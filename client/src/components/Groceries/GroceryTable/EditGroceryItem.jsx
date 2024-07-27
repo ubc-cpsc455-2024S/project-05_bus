@@ -42,6 +42,7 @@ import {
   deleteGroceryAsync,
 } from "../../../redux/groceries/thunks";
 import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { COMMON_UNITS } from "../utils/commonUnits";
 
 export default function EditGroceryPopover({ groceryItem }) {
@@ -58,6 +59,7 @@ export default function EditGroceryPopover({ groceryItem }) {
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
   const members = useCurrentGroupMembers();
+  const group = useCurrentGroup();
 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -182,7 +184,7 @@ export default function EditGroceryPopover({ groceryItem }) {
                   : null
               }
               onCreateOption={(input) =>
-                handleCreateLocation(input, dispatch, setLocation)
+                handleCreateLocation(input, dispatch, group._id, setLocation)
               }
               chakraStyles={{
                 singleValue: (provided) => ({
@@ -213,7 +215,7 @@ export default function EditGroceryPopover({ groceryItem }) {
                 isValidNewCategory(input, categories)
               }
               onCreateOption={(input) =>
-                handleCreateCategory(input, dispatch, setLocation)
+                handleCreateCategory(input, dispatch, group._id, setCategory)
               }
               chakraStyles={{
                 singleValue: (provided) => ({

@@ -14,7 +14,6 @@ import {
   Flex,
   ButtonGroup,
   Icon,
-  Spinner,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { useState } from "react";
@@ -29,14 +28,6 @@ export default function Scanner({ isOpen, onClose, type }) {
   const [croppedImageUrl, setCroppedImageUrl] = useState(null);
   const [croppedImageBlob, setCroppedImageBlob] = useState(null);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
-  const [isImageLoaded, setImageLoaded] = useState(false);
-
-  // const sampleReceiptImage =
-  //   "https://via.placeholder.com/300x200?text=Loading...&delay=5000";
-  // const sampleGroceriesImage =
-  //   "https://via.placeholder.com/300x200?text=Loading...&delay=5000";
-  // const croppedReceiptImage =
-  //   "https://via.placeholder.com/300x200?text=Cropped&delay=5000";
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -105,36 +96,31 @@ export default function Scanner({ isOpen, onClose, type }) {
               alignItems="flex-start"
               justifyContent="space-between"
             >
-              {!isImageLoaded ? (
-                <Spinner size="xl" />
-              ) : (
-                <Flex align="center">
-                  <Image
-                    src={
-                      type === "Receipt"
-                        ? sampleReceiptImage
-                        : sampleGroceriesImage
-                    }
-                    w="100%"
-                    maxW="35vh"
-                    objectFit="contain"
-                    onLoad={() => setImageLoaded(true)}
-                    mb="4"
-                  />
-                  {type === "Receipt" && (
-                    <>
-                      <Icon as={ArrowForwardIcon} boxSize={8} mx={4} />
-                      <Image
-                        src={croppedReceiptImage}
-                        w="100%"
-                        maxW="30vh"
-                        objectFit="contain"
-                        mb="4"
-                      />
-                    </>
-                  )}
-                </Flex>
-              )}
+              <Flex align="center">
+                <Image
+                  src={
+                    type === "Receipt"
+                      ? sampleReceiptImage
+                      : sampleGroceriesImage
+                  }
+                  w="100%"
+                  maxW="35vh"
+                  objectFit="contain"
+                  mb="4"
+                />
+                {type === "Receipt" && (
+                  <>
+                    <Icon as={ArrowForwardIcon} boxSize={8} mx={4} />
+                    <Image
+                      src={croppedReceiptImage}
+                      w="100%"
+                      maxW="30vh"
+                      objectFit="contain"
+                      mb="4"
+                    />
+                  </>
+                )}
+              </Flex>
               <VStack alignItems="flex-start" spacing="4" w="100%">
                 <Text fontSize="lg" fontWeight="bold">
                   Instructions:

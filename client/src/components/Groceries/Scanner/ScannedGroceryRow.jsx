@@ -12,19 +12,30 @@ import {
   FormLabel,
 } from "@chakra-ui/react";
 import { CreatableSelect } from "chakra-react-select";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import moment from "moment";
 import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
 import { COMMON_UNITS } from "../utils/commonUnits";
+import {
+  handleCreateCategory,
+  isValidNewCategory,
+  handleCreateLocation,
+  isValidNewLocation,
+} from "../utils/CreateNewSelectOptions";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
 export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
   const [name, setName] = useState(grocery.name || "");
-  const [locationId, setLocationId] = useState(grocery.locationId || "");
-  const [categoryId, setCategoryId] = useState(grocery.categoryId || "");
-  const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || "");
+  const [locationId, setLocationId] = useState(grocery.locationId || null);
+  const [categoryId, setCategoryId] = useState(grocery.categoryId || null);
+  const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || null);
   const [quantity, setQuantity] = useState(grocery.quantity || "");
-  const [quantityUnit, setQuantityUnit] = useState(grocery.quantityUnit || "");
-  const [ownerId, setOwnerId] = useState(grocery.ownerId || "");
+  const [quantityUnit, setQuantityUnit] = useState(
+    grocery.quantityUnit || null
+  );
+  const [ownerId, setOwnerId] = useState(grocery.ownerId || null);
+  const dispatch = useDispatch();
+  const group = useCurrentGroup();
 
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
@@ -39,22 +50,26 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
     setUpdatedGrocery({ ...grocery, name: newName });
   };
 
-  const handleLocationChange = (e) => {
-    const newLocationId = e.value;
-    setLocationId(newLocationId);
-    setUpdatedGrocery({ ...grocery, locationId: newLocationId });
+  const handleLocationChange = (selectedOption) => {
+    setLocationId(selectedOption);
+    setUpdatedGrocery({ ...grocery, locationId: selectedOption });
   };
 
-  const handleCategoryChange = (e) => {
-    const newCategoryId = e.value;
-    setCategoryId(newCategoryId);
-    setUpdatedGrocery({ ...grocery, categoryId: newCategoryId });
+  const handleCategoryChange = (selectedOption) => {
+    setCategoryId(selectedOption);
+    setUpdatedGrocery({ ...grocery, categoryId: selectedOption });
   };
 
   const handleQuantityChange = (valueString) => {
     const newQuantity = parseInt(valueString, 10);
     setQuantity(newQuantity);
     setUpdatedGrocery({ ...grocery, quantity: newQuantity });
+  };
+
+  const handleOwnerChange = (e) => {
+    const newOwnerId = e.target.value === "" ? null : e.target.value;
+    setOwnerId(newOwnerId);
+    setUpdatedGrocery({ ...grocery, ownerId: newOwnerId });
   };
 
   const handleDateChange = (e) => {
@@ -88,7 +103,16 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
               ? { value: currentLocation._id, label: currentLocation.name }
               : null
           }
-          onChange={handleLocationChange}
+          onChange={(e) => handleLocationChange(e.value)}
+          isValidNewOption={(input) => isValidNewLocation(input, locations)}
+          onCreateOption={(input) =>
+            handleCreateLocation(
+              input,
+              dispatch,
+              group._id,
+              handleLocationChange
+            )
+          }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
@@ -111,7 +135,16 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
               ? { value: currentCategory._id, label: currentCategory.name }
               : null
           }
-          onChange={handleCategoryChange}
+          onChange={(e) => handleCategoryChange(e.value)}
+          isValidNewOption={(input) => isValidNewCategory(input, categories)}
+          onCreateOption={(input) =>
+            handleCreateCategory(
+              input,
+              dispatch,
+              group._id,
+              handleCategoryChange
+            )
+          }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
@@ -133,12 +166,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
 
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Owner</FormLabel>}
-        <Select
-          value={ownerId}
-          onChange={(e) =>
-            setOwnerId(e.target.value === "" ? null : e.target.value)
-          }
-        >
+        <Select value={ownerId} onChange={handleOwnerChange}>
           <option value={""}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
