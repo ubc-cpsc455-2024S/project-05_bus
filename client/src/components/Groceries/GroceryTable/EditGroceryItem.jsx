@@ -42,6 +42,7 @@ import {
   deleteGroceryAsync,
 } from "../../../redux/groceries/thunks";
 import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { COMMON_UNITS } from "../utils/commonUnits";
 
 export default function EditGroceryPopover({ groceryItem }) {
@@ -58,6 +59,7 @@ export default function EditGroceryPopover({ groceryItem }) {
   const locations = useSelector((state) => state.groceries.locations);
   const categories = useSelector((state) => state.groceries.categories);
   const members = useCurrentGroupMembers();
+  const group = useCurrentGroup();
 
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -100,7 +102,9 @@ export default function EditGroceryPopover({ groceryItem }) {
           locationId: location,
           categoryId: category,
           expiryDate: expiryDate,
+          ownerId,
           quantity,
+          quantityUnit,
         })
       );
       onClose();
@@ -124,10 +128,10 @@ export default function EditGroceryPopover({ groceryItem }) {
       <PopoverTrigger>
         <IconButton
           aria-label="Edit Grocery Item"
-          icon={<span className='material-symbols-outlined'>edit</span>}
+          icon={<span className="material-symbols-outlined">edit</span>}
           bg="transparent"
           onClick={onOpen}
-          _hover={{ color:  "teal.300"}}
+          _hover={{ color: "teal.300" }}
           _active={{ color: "teal.700" }}
         />
       </PopoverTrigger>
@@ -180,7 +184,7 @@ export default function EditGroceryPopover({ groceryItem }) {
                   : null
               }
               onCreateOption={(input) =>
-                handleCreateLocation(input, dispatch, setLocation)
+                handleCreateLocation(input, dispatch, group._id, setLocation)
               }
               chakraStyles={{
                 singleValue: (provided) => ({
@@ -211,7 +215,7 @@ export default function EditGroceryPopover({ groceryItem }) {
                 isValidNewCategory(input, categories)
               }
               onCreateOption={(input) =>
-                handleCreateCategory(input, dispatch, setLocation)
+                handleCreateCategory(input, dispatch, group._id, setCategory)
               }
               chakraStyles={{
                 singleValue: (provided) => ({
@@ -229,9 +233,11 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormLabel>Owner</FormLabel>
             <Select
               value={ownerId}
-              onChange={(e) => setOwnerId(e.target.value)}
+              onChange={(e) =>
+                setOwnerId(e.target.value === "" ? null : e.target.value)
+              }
             >
-              <option value={null}>Shared</option>
+              <option value={""}>Shared</option>
               {members.map((member) => (
                 <option key={member._id} value={member._id}>
                   {`${member.firstName} ${member.lastName}`}

@@ -12,6 +12,12 @@ const eventSchema = new Schema({
         type: { type: String, required: true },
         memberId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
         done: { type: Boolean, default: false,  required: true },
+        dismissedBy: { type: Schema.Types.ObjectId, required: false, default: null, ref: "User" },
+        reminder: {
+            senderId: { type: Schema.Types.ObjectId, required: false, ref: "User" },
+            sendDate: { type: Date, required: false },
+        },
+        reminded: { type: Boolean, default: false, required: true },
     },
     groupID: { type: Schema.Types.ObjectId, required: true, ref: "Group" },
 });

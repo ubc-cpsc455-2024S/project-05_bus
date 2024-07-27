@@ -21,7 +21,7 @@ const initialState = {
 };
 
 const calendarSlice = createSlice({
-  name: "calendar",
+  name: "events",
   initialState,
   reducers: {
     toggleFilter: (state) => {

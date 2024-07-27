@@ -14,7 +14,7 @@ import {
 
 const initialState = {
   groups: [],
-  selectedMemberID: "6690889a83dc6d85ca91af4f",
+  selectedMemberID: null,
   getGroups: REQUEST_STATE.IDLE,
   getGroup: REQUEST_STATE.IDLE,
   createGroup: REQUEST_STATE.IDLE,

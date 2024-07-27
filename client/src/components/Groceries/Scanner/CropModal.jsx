@@ -71,7 +71,7 @@ export default function CropModal({ aspect, isOpen, onClose, imageSrc, onCropCom
       <ModalContent>
         <ModalHeader>Crop Receipt</ModalHeader>
         <ModalBody>
-          <Box position="relative" width="100%" height="80vh">
+          <Box position="relative" width="100%" height="70vh">
             <Cropper
               image={imageSrc}
               crop={crop}

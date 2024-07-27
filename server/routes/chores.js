@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await choreQueries.deleteChore(req.params.id);
+    const result = await choreQueries.deleteChore(req.params.id);
     await eventQueries.deleteChoreEvents(req.params.id);
     return res.json(result);
   } catch (error) {
