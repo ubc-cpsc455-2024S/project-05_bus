@@ -12,12 +12,11 @@ import {
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
 import useCurrentUser from '../../hooks/useCurrentUser';
-import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Navbar() {
   const currentUser = useCurrentUser();
+
   const location = useLocation();
-  const { user, isAuthenticated, logout } = useAuth0();
 
   const getPageName = (pathname) => {
     const pageName = pathname.split('/').filter(Boolean)[0];
@@ -26,17 +25,9 @@ export default function Navbar() {
 
   const pageName = getPageName(location.pathname);
 
-  const handleLogout = () => {
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
-  }
 
   return (
-    isAuthenticated && (
-      <div className="container">
+    <div className="container">
       <h1 className="page-name">{pageName}</h1>
       <ButtonGroup className="page-buttons">
         <nav>
@@ -73,18 +64,15 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">{`${user.name}`}</h2>
+            <h2 className="profile-popover-name">{`${currentUser.firstName} ${currentUser.lastName}`}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
             <Link to="/profile">Profile</Link>
             <Link to="/settings">Settings</Link>
-            <Button className='profile-popover-logout' onClick={handleLogout}>Logout</Button>
           </PopoverBody>
         </PopoverContent>
       </Popover>
     </div>
-    )
-    
   )
 }

@@ -20,10 +20,6 @@ export const getUserAsync = createAsyncThunk(actionTypes.GET_USER, async (id) =>
   return await UsersService.getUser(id);
 });
 
-export const postUserByEmailAsync = createAsyncThunk(actionTypes.POST_USER, async (email) => {
-  return await UsersService.postUserByEmail(email);
-})
-
 export const addUserAsync = createAsyncThunk(
   actionTypes.ADD_USER,
   async (user) => {

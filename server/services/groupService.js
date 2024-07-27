@@ -15,7 +15,7 @@ const createGroup = async (groupData) => {
   const members = group.memberIDs;
 
   const updatePromises = members.map(async (userID) => {
-    const user = await userQueries.getUserById(userID);
+    const user = await userQueries.getOneUser(userID);
     const userGroup = user.groupID;
     if (userGroup) {
       console.log(`User ${userID} is already in group ${userGroup}`);
@@ -34,7 +34,7 @@ const updateName = async (groupID, newName) => {
 };
 
 const addMember = async (groupID, userID) => {
-  const user = await userQueries.getUserById(userID);
+  const user = await userQueries.getOneUser(userID);
   const userGroup = user.groupID
   if (userGroup) {
     throw new Error(`User ${userID} is already in group ${userGroup}`);

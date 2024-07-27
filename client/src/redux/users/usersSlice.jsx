@@ -5,7 +5,6 @@ import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, delete
 const initialState = {
   users: [],
   currentUserID: "668de09e1cecc096caffda9e",
-  currentUserName: "",
   getUsers: REQUEST_STATE.IDLE,
   getGroupMembers: REQUEST_STATE.IDLE,
   getUser: REQUEST_STATE.IDLE,
@@ -21,9 +20,6 @@ const usersSlice = createSlice({
     setCurrentUserID: (state, action) => {
       state.currentUserID = action.payload;
     },
-    setCurrentUserName: (state, action) => {
-      state.currentUserName = action.payload;
-    },
     setUserGroupID: (state, action) => {
       const index = state.users.findIndex(
         (user) => user._id === action.payload.userID
@@ -31,7 +27,7 @@ const usersSlice = createSlice({
       if (index !== -1) {
         state.users[index] = {...state.users[index], groupID: action.payload.groupID};
       }
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -86,5 +82,5 @@ const usersSlice = createSlice({
   }
 });
 
-export const { setCurrentUserID, setCurrentUserName, setUserGroupID } = usersSlice.actions;
+export const { setCurrentUserID, setUserGroupID } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -1,4 +1,5 @@
 import './App.css'
+import { BrowserRouter as Router } from 'react-router-dom'
 import Layout from './Layout'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -14,6 +15,8 @@ export default function App() {
   }, [dispatch]);
 
  return (
+  <Router>
     <Layout />
+  </Router>
   );
 }
