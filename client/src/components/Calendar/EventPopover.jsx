@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
+  Box,
   Popover,
+  PopoverTrigger,
   PopoverContent,
   PopoverArrow,
   PopoverCloseButton,
@@ -14,13 +16,15 @@ import {
   Input,
   Select,
   Checkbox,
+  Tooltip,
+  Portal,
 } from "@chakra-ui/react";
 import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
 
-function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
+function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
   const [eventDetails, setEventDetails] = useState({
     _id: event.id,
     title: event.title,
@@ -28,22 +32,16 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     restockerId: event.extendedProps.restockerId,
-    backgroundColor: event.extendedProps.backgroundColor,
-    borderColor: event.extendedProps.borderColor,
+    backgroundColor: event.backgroundColor,
+    borderColor: event.borderColor,
+    textColor: event.textColor,
     done: event.extendedProps.done,
     type: event.extendedProps.type,
   });
   const chores = useSelector((state) => state.chores.chores);
   const members = useCurrentGroupMembers();
-  const popoverRef = useRef();
-
-  useEffect(() => {
-    if (popoverRef.current) {
-      popoverRef.current.style.position = "absolute";
-      popoverRef.current.style.top = `${coordinates.y}px`;
-      popoverRef.current.style.left = `${coordinates.x}px`;
-    }
-  }, [coordinates]);
+  const member = members.find((member) => member._id === eventDetails.memberId);
+  const memberName = member ? member.firstName : "Unassigned Chore";
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,89 +70,113 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   };
 
   return (
-    <Popover isOpen onClose={onClose}>
-      <PopoverContent
-        bg="gray.100"
-        border="none"
-        ref={popoverRef}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
-      >
-        <PopoverArrow />
-        <PopoverCloseButton color="black" />
-        <PopoverHeader color="black">Edit Chore</PopoverHeader>
-        <PopoverBody>
-          <FormControl pb={2}>
-            <FormLabel color="black">Person</FormLabel>
-            <Select
-              variant="filled"
-              border="none"
-              bg="white"
-              name="memberId"
-              value={eventDetails.memberId}
-              onChange={handleChange}
+    <Popover isOpen={isOpen} onClose={onClose}>
+      <PopoverTrigger>
+        <Box
+          position="relative"
+          width="100%"
+          height="100%"
+          borderRadius="md"
+          backgroundColor={eventDetails.backgroundColor}
+          boxShadow="0 1px 2px rgba(0, 0, 0, 0.3)"
+          overflow="hidden"
+        >
+          <Tooltip label={event.title} placement="bottom">
+            <Box
+              color={eventDetails.textColor}
+              padding="2px 4px 0px 4px"
+              textDecoration={eventDetails.done ? "line-through" : "none"}
+              position="relative"
+              isTruncated
             >
-              {members.map((member) => (
-                <option key={member._id} value={member._id}>
-                  {`${member.firstName} ${member.lastName}`}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-          {eventDetails.type === "chore" && (
+              {`${memberName} - ${eventDetails.title}`}
+            </Box>
+          </Tooltip>
+        </Box>
+      </PopoverTrigger>
+      <Portal>
+        <PopoverContent
+          bg="gray.100"
+          border="none"
+          boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        >
+          <PopoverArrow />
+          <PopoverCloseButton color="black" onClick={onClose} />
+          <PopoverHeader color="black">Edit Chore</PopoverHeader>
+          <PopoverBody>
             <FormControl pb={2}>
-              <FormLabel color="black">Type of Chore</FormLabel>
+              <FormLabel color="black">Person</FormLabel>
               <Select
                 variant="filled"
                 border="none"
                 bg="white"
-                name="choreId"
-                value={eventDetails.choreId}
+                name="memberId"
+                value={eventDetails.memberId}
                 onChange={handleChange}
               >
-                {chores.map((chore) => (
-                  <option key={chore._id} value={chore._id}>
-                    {chore.title}
+                {members.map((member) => (
+                  <option key={member._id} value={member._id}>
+                    {`${member.firstName} ${member.lastName}`}
                   </option>
                 ))}
               </Select>
-              <FormLabel color="black">Date</FormLabel>
-              <Input
-                type="date"
-                name="start"
-                bg="white"
-                value={eventDetails.start.split("T")[0]}
-                onChange={handleChange}
-              />
             </FormControl>
-          )}
-        </PopoverBody>
-        <PopoverFooter>
-          <ButtonGroup spacing={4}>
-            <Button
-              leftIcon={<DeleteIcon />}
-              colorScheme="red"
-              onClick={onDelete}
-            >
-              Delete
-            </Button>
-            <Button
-              rightIcon={<CheckIcon />}
-              colorScheme="teal"
-              onClick={handleSubmit}
-            >
-              Save
-            </Button>
-            <Checkbox
-              name="done"
-              color="black"
-              isChecked={eventDetails.done}
-              onChange={handleChange}
-            >
-              Done
-            </Checkbox>
-          </ButtonGroup>
-        </PopoverFooter>
-      </PopoverContent>
+            {eventDetails.type === "chore" && (
+              <FormControl pb={2}>
+                <FormLabel color="black">Type of Chore</FormLabel>
+                <Select
+                  variant="filled"
+                  border="none"
+                  bg="white"
+                  name="choreId"
+                  value={eventDetails.choreId}
+                  onChange={handleChange}
+                >
+                  {chores.map((chore) => (
+                    <option key={chore._id} value={chore._id}>
+                      {chore.title}
+                    </option>
+                  ))}
+                </Select>
+                <FormLabel color="black">Date</FormLabel>
+                <Input
+                  type="date"
+                  name="start"
+                  bg="white"
+                  value={eventDetails.start.split("T")[0]}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            )}
+          </PopoverBody>
+          <PopoverFooter>
+            <ButtonGroup spacing={4}>
+              <Button
+                leftIcon={<DeleteIcon />}
+                colorScheme="red"
+                onClick={() => onDelete(event)}
+              >
+                Delete
+              </Button>
+              <Button
+                rightIcon={<CheckIcon />}
+                colorScheme="teal"
+                onClick={handleSubmit}
+              >
+                Save
+              </Button>
+              <Checkbox
+                name="done"
+                color="black"
+                isChecked={eventDetails.done}
+                onChange={handleChange}
+              >
+                Done
+              </Checkbox>
+            </ButtonGroup>
+          </PopoverFooter>
+        </PopoverContent>
+      </Portal>
     </Popover>
   );
 }

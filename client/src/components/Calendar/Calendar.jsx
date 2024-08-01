@@ -10,8 +10,7 @@ import {
   deleteEventAsync,
 } from "../../redux/events/thunks";
 import EventPopover from "./EventPopover";
-import { Box, Tooltip } from "@chakra-ui/react";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import useCurrentGroup from "../../hooks/useCurrentGroup";
 import { updateMonthView } from "../../redux/events/calendarSlice";
 import moment from "moment";
@@ -22,7 +21,6 @@ export default function Calendar() {
   const events = useSelector((state) => state.events.events);
   const chores = useSelector((state) => state.chores.chores);
   const group = useCurrentGroup();
-  const members = useCurrentGroupMembers();
   const selectedMemberID = useSelector(
     (state) => state.groups.selectedMemberID
   );
@@ -40,14 +38,12 @@ export default function Calendar() {
   const [popoverInfo, setPopoverInfo] = useState({
     visible: false,
     event: null,
-    coordinates: { x: 0, y: 0 },
   });
 
   const handleEventClick = (info) => {
     setPopoverInfo({
       visible: true,
       event: info.event,
-      coordinates: { x: info.jsEvent.pageX, y: info.jsEvent.pageY },
     });
   };
 
@@ -55,19 +51,17 @@ export default function Calendar() {
     setPopoverInfo({
       visible: false,
       event: null,
-      coordinates: { x: 0, y: 0 },
     });
   };
 
-  const handleDeleteEvent = async () => {
-    if (popoverInfo.event) {
-      await dispatch(deleteEventAsync(popoverInfo.event.id));
-      if (popoverInfo.event.extendedProps.type !== "chore") {
-        await dispatch(getGroceryAsync(popoverInfo.event.extendedProps.groceryId));
-      }
-      popoverInfo.event.remove();
-      closePopover();
+  const aspectRatio = useBreakpointValue({ base: 0.8, md: 1.35 });
+
+  const handleDeleteEvent = async (event) => {
+    await dispatch(deleteEventAsync(event.id));
+    if (event.extendedProps.type !== "chore") {
+      await dispatch(getGroceryAsync(event.extendedProps.groceryId));
     }
+    closePopover();
   };
 
   const handleDragEvent = (info) => {
@@ -81,91 +75,65 @@ export default function Calendar() {
   };
 
   const handleEditEvent = (eventDetails) => {
-    if (popoverInfo.event) {
-      const chore = chores.find((ch) => ch.title === eventDetails.title);
-      if (chore) {
-        dispatch(
-          updateEventAsync({
-            _id: popoverInfo.event.id,
-            title: eventDetails.title,
-            start: eventDetails.start,
-            end: eventDetails.end,
-            backgroundColor: chore.colour,
-            borderColor: chore.colour,
-            extendedProps: {
-              choreId: chore.id,
-              ...eventDetails.extendedProps,
-            },
-          })
-        );
-        closePopover();
-      } else if (eventDetails.type !== "chore") {
-        dispatch(
-          updateEventAsync({
-            _id: eventDetails._id,
-            title: eventDetails.title,
-            start: eventDetails.start,
-            end: eventDetails.end,
-            backgroundColor: eventDetails.backgroundColor,
-            borderColor: eventDetails.borderColor,
-            extendedProps: {
-              ...eventDetails.extendedProps,
-            }
-          })
-        );
-        closePopover();
-      }
+    const chore = chores.find((ch) => ch.title === eventDetails.title);
+    if (chore) {
+      dispatch(
+        updateEventAsync({
+          _id: popoverInfo.event.id,
+          title: eventDetails.title,
+          start: eventDetails.start,
+          end: eventDetails.end,
+          backgroundColor: chore.colour,
+          borderColor: chore.colour,
+          extendedProps: {
+            choreId: chore.id,
+            ...eventDetails.extendedProps,
+          },
+        })
+      );
+      closePopover();
+    } else if (eventDetails.type !== "chore") {
+      dispatch(
+        updateEventAsync({
+          _id: eventDetails._id,
+          title: eventDetails.title,
+          start: eventDetails.start,
+          end: eventDetails.end,
+          backgroundColor: eventDetails.backgroundColor,
+          borderColor: eventDetails.borderColor,
+          extendedProps: {
+            ...eventDetails.extendedProps,
+          },
+        })
+      );
+      closePopover();
     }
   };
 
   const renderEventContent = (eventInfo) => {
-    const member = members.find(
-      (member) => member._id === eventInfo.event.extendedProps.memberId
-    );
-    const isDone = eventInfo.event.extendedProps.done;
-
     return (
-      <div className="event-wrapper">
-        <div
-          className="event-background"
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            borderRadius: "4px",
-            backgroundColor: eventInfo.event.backgroundColor,
-            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
-          }}
-        ></div>
-        <Tooltip label={eventInfo.event.title}>
-          <div
-            className="event-title"
-            style={{
-              color: "white",
-              mixBlendMode: "difference",
-              position: "relative",
-              padding: "2px 2px 0px 4px",
-              textDecoration: isDone ? "line-through" : "none",
-              overflow: "hidden",
-            }}
-          >
-            {`${member.firstName} ${member.lastName} - ${eventInfo.event.title}`}
-          </div>
-        </Tooltip>
-      </div>
+      <EventPopover
+        isOpen={
+          popoverInfo.visible && popoverInfo.event.id === eventInfo.event.id
+        }
+        event={eventInfo.event}
+        onClose={closePopover}
+        onDelete={handleDeleteEvent}
+        onEdit={handleEditEvent}
+      />
     );
   };
 
   return (
     <Box
-      p={5}
-      flex="7"
-      boxShadow="base"
+      p={4}
+      flex={["1", "1", "1", "4"]}
       bg="white"
       className="calendar-container"
-      height="100vh"
+      minHeight={["50vh", "50vh", "100vh"]}
     >
       <FullCalendar
+        aspectRatio={aspectRatio}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         datesSet={(dateInfo) => {
@@ -210,17 +178,7 @@ export default function Calendar() {
           }
         }}
         eventContent={renderEventContent}
-        height="100%"
       />
-      {popoverInfo.visible && (
-        <EventPopover
-          event={popoverInfo.event}
-          onClose={closePopover}
-          onDelete={handleDeleteEvent}
-          onEdit={handleEditEvent}
-          coordinates={popoverInfo.coordinates}
-        />
-      )}
     </Box>
   );
 }

@@ -6,6 +6,7 @@ const eventSchema = new Schema({
     allDay: { type: Boolean, required: true },
     backgroundColor: { type: String, required: true },
     borderColor: { type: String, required: true },
+    textColor: { type: String, default: "black", required: true },
     extendedProps: {
         groceryId: { type: Schema.Types.ObjectId, required: false, ref: "Grocery" },
         choreId: { type: Schema.Types.ObjectId, required: false, ref: "Chore" },

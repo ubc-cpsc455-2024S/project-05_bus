@@ -11,13 +11,15 @@ import Chore from "./Chore";
 export default function CalendarChores() {
   const eventsRef = useRef(null);
   const chores = useSelector((state) => state.chores.chores);
-  const selectedMemberID = useSelector((state) => state.groups.selectedMemberID);
+  const selectedMemberID = useSelector(
+    (state) => state.groups.selectedMemberID
+  );
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteChoreAsync(id));
   };
-  
+
   useEffect(() => {
     if (selectedMemberID) {
       const containerEl = eventsRef.current;
@@ -26,11 +28,12 @@ export default function CalendarChores() {
         eventData: (eventEl) => {
           const choreId = eventEl.getAttribute("data-chore-id");
           const eventTitleEl = eventEl.querySelector(".event-title");
-          return {
+          const data = {
             title: eventTitleEl.innerText,
             allDay: true,
             backgroundColor: eventEl.style.backgroundColor,
             borderColor: eventEl.style.backgroundColor,
+            textColor: eventTitleEl.style.color,
             extendedProps: {
               choreId: choreId,
               type: "chore",
@@ -38,6 +41,8 @@ export default function CalendarChores() {
               done: false,
             },
           };
+  
+          return data;
         },
       });
 
@@ -48,9 +53,15 @@ export default function CalendarChores() {
   }, [chores, selectedMemberID]);
 
   return (
-    <Box bg="white" flex="3" p="4" overflowY="auto" height="100vh">
+    <Box
+      bg="white"
+      flex={["1", "1", "1", "2"]}
+      p="4"
+      overflowY="auto"
+      height={["50vh", "50vh", "100vh"]}
+    >
       <Box
-        p={5}
+        p={4}
         flex="1"
         borderRadius="md"
         marginBottom={4}
