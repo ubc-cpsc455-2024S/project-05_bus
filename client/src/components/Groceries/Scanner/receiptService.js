@@ -20,10 +20,6 @@ const receiptProcessor = async (img, locations, categories, endpoint) => {
   }
 };
 
-export const cheapReceiptProcessor = async (img, locations, categories) => {
-  return await receiptProcessor(img, locations, categories, "cheap");
-};
-
 export const imageReceiptProcessor = async (img, locations, categories) => {
   return await receiptProcessor(img, locations, categories, "image");
 };

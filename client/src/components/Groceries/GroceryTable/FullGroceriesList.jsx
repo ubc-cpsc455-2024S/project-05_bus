@@ -14,6 +14,7 @@ import {
   Text,
   Spacer,
   Tooltip,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import {
   TriangleDownIcon,
@@ -34,8 +35,7 @@ import { useSelector } from "react-redux";
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
-import AddGrocery from "./AddGrocery";
-import GroceriesDrawer from "../GroceryDrawer/Drawer";
+import GroceryFooter from "./GroceryFooter";
 import columns from "./TableColumns";
 
 import EditGroceryPopover from "./EditGroceryItem";
@@ -57,15 +57,23 @@ export default function GroceriesTable() {
   const locations = useSelector((state) => state.groceries.locations);
   const members = useCurrentGroupMembers();
 
-  const tooltipColumns = ['name', 'categoryId', 'locationId'];
+  const tooltipColumns = ["name", "categoryId", "locationId"];
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
   };
-  
+
+  const breakpoint = useBreakpointValue({
+    base: "base",
+    sm: "sm",
+    md: "md",
+    lg: "lg",
+    xl: "xl",
+  });
+
   const memoizedColumns = useMemo(() => {
-    return columns(locations, categories, members, dateFilterType);
-  }, [locations, categories, members, dateFilterType]);
+    return columns(locations, categories, members, dateFilterType, breakpoint);
+  }, [locations, categories, members, dateFilterType, breakpoint]);
 
   const table = useReactTable({
     data: groceriesData,
@@ -96,7 +104,7 @@ export default function GroceriesTable() {
       <VStack spacing={4} height="100%">
         <Box overflow="auto" width="100%" height="100%">
           <TableContainer>
-            <Table variant="striped" colorScheme="cyan" size="sm">
+            <Table variant="simple" colorScheme="teal" bg="teal.50" size="sm">
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <Tr key={headerGroup.id} bg="gray.100">
@@ -165,6 +173,7 @@ export default function GroceriesTable() {
                       py={3}
                       px={4}
                       borderTopRightRadius="md"
+                      display={{ base: "none", md: "table-cell" }}
                       _hover={{ bg: "teal.600" }}
                     >
                       Actions
@@ -174,17 +183,31 @@ export default function GroceriesTable() {
               </Thead>
               <Tbody>
                 {table.getRowModel().rows.map((row) => (
-                  <Tr key={row.id}>
-                    {row.getVisibleCells().map((cell) => (
-                      <Td key={cell.id} maxWidth="180px">
-                        {tooltipColumns.includes(cell.column.id) ? (
-                          <Tooltip
-                            label={flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                            hasArrow
-                          >
+                  <>
+                    <Tr key={row.id}>
+                      {row.getVisibleCells().map((cell) => (
+                        <Td key={cell.id} maxWidth="180px">
+                          {tooltipColumns.includes(cell.column.id) ? (
+                            <Tooltip
+                              label={flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext()
+                              )}
+                              hasArrow
+                            >
+                              <Box
+                                overflow="hidden"
+                                textOverflow="ellipsis"
+                                whiteSpace="nowrap"
+                                p={1}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </Box>
+                            </Tooltip>
+                          ) : (
                             <Box
                               overflow="hidden"
                               textOverflow="ellipsis"
@@ -196,39 +219,38 @@ export default function GroceriesTable() {
                                 cell.getContext()
                               )}
                             </Box>
-                          </Tooltip>
-                        ) : (
-                          <Box
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                            whiteSpace="nowrap"
-                            p={1}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </Box>
-                        )}
+                          )}
+                        </Td>
+                      ))}
+                      <Td
+                        maxWidth="180px"
+                        display={{ base: "none", md: "table-cell" }}
+                      >
+                        <EditGroceryPopover groceryItem={row.original} />
+                        <NotificationPopover groceryItem={row.original} />
+                        <FavoriteButton groceryItem={row.original} />
+                        <NotePopover groceryItem={row.original} />
+                        <SelectMealButton groceryItem={row.original} />
                       </Td>
-                    ))}
-                    <Td maxWidth="180px">
-                      <EditGroceryPopover groceryItem={row.original} />
-                      <NotificationPopover groceryItem={row.original} />
-                      <FavoriteButton groceryItem={row.original} />
-                      <NotePopover groceryItem={row.original} />
-                      <SelectMealButton groceryItem={row.original} />
-                    </Td>
-                  </Tr>
+                    </Tr>
+                    <Tr display={{ base: "table-row", md: "none" }}>
+                      <Td colSpan={row.getVisibleCells().length}>
+                        <HStack spacing={2} justifyContent="flex-end">
+                          <EditGroceryPopover groceryItem={row.original} />
+                          <NotificationPopover groceryItem={row.original} />
+                          <FavoriteButton groceryItem={row.original} />
+                          <NotePopover groceryItem={row.original} />
+                          <SelectMealButton groceryItem={row.original} />
+                        </HStack>
+                      </Td>
+                    </Tr>
+                  </>
                 ))}
               </Tbody>
             </Table>
           </TableContainer>
         </Box>
-        <HStack w="100%">
-          <AddGrocery />
-          <GroceriesDrawer />
-        </HStack>
+        <GroceryFooter />
         <HStack spacing={2} justifyContent="space-between" width="100%">
           <IconButton
             onClick={() => table.previousPage()}

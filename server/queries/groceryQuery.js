@@ -111,7 +111,7 @@ const groceryQueries = {
 const shouldDeleteGrocery = (groceryData, existingGrocery) =>
   groceryData.quantity <= 0 &&
   !existingGrocery.favourite &&
-  !existingGrocery.restockNotificationDate;
+  !existingGrocery.restockerId;
 
 const handleExpiryEvents = async (groceryData, existingGrocery) => {
   if (
