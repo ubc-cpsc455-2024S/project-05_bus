@@ -55,6 +55,7 @@ export default function Calendar() {
   };
 
   const aspectRatio = useBreakpointValue({ base: 0.8, md: 1.35 });
+  const titleFormat = useBreakpointValue({ base: { year: 'numeric', month: 'short' }, md: { year: 'numeric', month: 'long' } });
 
   const handleDeleteEvent = async (event) => {
     await dispatch(deleteEventAsync(event.id));
@@ -134,6 +135,7 @@ export default function Calendar() {
     >
       <FullCalendar
         aspectRatio={aspectRatio}
+        titleFormat={titleFormat}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         datesSet={(dateInfo) => {

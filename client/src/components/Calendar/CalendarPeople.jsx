@@ -23,8 +23,7 @@ export default function CalendarPeople() {
   const isFiltered = useSelector((state) => state.events.filter);
 
   const handleRadioChange = (value) => {
-    const selectedMemberId = value !== "" ? value : null;
-    dispatch(setSelectedMemberID(selectedMemberId));
+    dispatch(setSelectedMemberID(value));
   };
 
   const handleToggleChange = () => {
@@ -38,7 +37,7 @@ export default function CalendarPeople() {
       </Heading>
       <RadioGroup
         onChange={handleRadioChange}
-        value={selectedMemberID ? selectedMemberID : ""}
+        value={selectedMemberID}
       >
         <VStack align="start" spacing={3}>
           {members.map((member) => (
