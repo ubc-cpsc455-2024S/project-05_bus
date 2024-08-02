@@ -113,7 +113,7 @@ export default function ChorePopover({ chore }) {
         </Button>
       </PopoverTrigger>
       <Portal>
-        <PopoverContent boxShadow="lg" bg="brand.lightGray">
+        <PopoverContent boxShadow="lg">
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverHeader>{chore.title}</PopoverHeader>

@@ -53,7 +53,7 @@ router.post("/", async function(req, res, next) {
 /* POST user info via email bc apparently it is bad to do it with GET */
 router.post("/userInfo", async function(req, res, next) {
   try {
-      const result = await userQueries.postUserByEmail(req.body);
+      const result = await userQueries.postUserByEmail(req.body.email);
       return res.status(201).json(result);
   } catch (err) {
       console.error(err);
