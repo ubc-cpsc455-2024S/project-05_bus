@@ -169,7 +169,8 @@ export default function ChoresList() {
                         const member = members.find(
                           (member) => member._id === memberId
                         );
-                        return `${member.firstName} ${member.lastName}`;
+                        const memberName = member ? `${member.firstName} ${member.lastName}` : "Unassigned Chore";
+                        return memberName;
                       })()}
                     </Box>
                     <AccordionIcon />
