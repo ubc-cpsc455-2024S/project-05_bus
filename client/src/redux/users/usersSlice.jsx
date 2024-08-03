@@ -4,7 +4,7 @@ import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, delete
 
 const initialState = {
   users: [],
-  currentUserID: "668de09e1cecc096caffda9e",
+  currentUserID: "",
   currentUserName: "",
   getUsers: REQUEST_STATE.IDLE,
   getGroupMembers: REQUEST_STATE.IDLE,
