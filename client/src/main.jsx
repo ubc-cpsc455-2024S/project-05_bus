@@ -7,7 +7,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/integration/react'
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom';
+import Theme from './theme.js';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Auth0ProviderWithNavigate>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <ChakraProvider>
+            <ChakraProvider theme={Theme}>
               <App />
             </ChakraProvider>
           </PersistGate>

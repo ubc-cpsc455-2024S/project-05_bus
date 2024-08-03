@@ -29,6 +29,7 @@
   color: grey;
   display: flex;
   align-items: center;
+  overflow: scroll;
 }
 
 .icon {

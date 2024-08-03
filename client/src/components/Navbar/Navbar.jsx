@@ -11,11 +11,9 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react'
 import { useLocation, Link } from 'react-router-dom'
-import useCurrentUser from '../../hooks/useCurrentUser';
 import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Navbar() {
-  const currentUser = useCurrentUser();
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth0();
 
@@ -34,27 +32,28 @@ export default function Navbar() {
     });
   }
 
+  const buttonSize = { base: "xs", sm: "sm", md: "md", lg: "lg"};
+
   return (
-    isAuthenticated && (
-      <div className="container">
+    isAuthenticated && (<div className="container">
       <h1 className="page-name">{pageName}</h1>
       <ButtonGroup className="page-buttons">
         <nav>
           <div className="page-button-container">
-            <Button className="page-button" as={Link} to="/home" size="lg">
-              <span className="material-symbols-outlined icon">home</span>
+            <Button className="page-button" as={Link} to="/home" size={buttonSize}>
+              <span className="material-symbols-outlined page-icon">home</span>
             </Button>
             <p className="page-label">Home</p>
           </div>
           <div className="page-button-container">
-            <Button className="page-button" as={Link} to="/calendar" size="lg">
-              <span className="material-symbols-outlined icon">calendar_month</span>
+            <Button className="page-button" as={Link} to="/calendar" size={buttonSize}>
+              <span className="material-symbols-outlined page-icon">calendar_month</span>
             </Button>
             <p className="page-label">Calendar</p>
           </div>
           <div className="page-button-container">
-            <Button className="page-button" as={Link} to="/groceries" size="lg">
-              <span className="material-symbols-outlined icon">restaurant</span>
+            <Button className="page-button" as={Link} to="/groceries" size={buttonSize}>
+              <span className="material-symbols-outlined page-icon">restaurant</span>
             </Button>
             <p className="page-label">Groceries</p>
           </div>
@@ -62,11 +61,11 @@ export default function Navbar() {
       </ButtonGroup>
       <Popover placement="right-start" isLazy>
         <PopoverTrigger>
-          <Button className="profile-button" size="lg">
+          <Button className="profile-button" size={buttonSize}>
             <Avatar 
               size="sm"
               bg="none"
-              icon={<span className="icon profile-icon material-symbols-outlined">person</span>}
+              icon={<span className="profile-icon material-symbols-outlined">person</span>}
             />
           </Button>
         </PopoverTrigger>
@@ -83,8 +82,7 @@ export default function Navbar() {
           </PopoverBody>
         </PopoverContent>
       </Popover>
-    </div>
-    )
+    </div>)
     
   )
 }
