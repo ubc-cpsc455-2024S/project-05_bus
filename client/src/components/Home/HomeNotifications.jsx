@@ -25,6 +25,7 @@ export default function HomeNotifications() {
   const userId = useCurrentUser()._id;
   const activeEvents = useSelector(selectActiveEvents);
   const dismissedEvents = useSelector(selectDismissedEvents);
+  console.log("dismissedEvents", dismissedEvents)
   const groceries = useSelector(selectCurrentUserGroceries);
   const dispatch = useDispatch();
 

@@ -59,6 +59,8 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
     }
   };
 
+  const avatarSize = { base: "xs", sm: "sm"};
+
   return (
     <Box className="admins-settings-container">
       <h1 className="admins-settings-heading">Admins</h1>
@@ -70,7 +72,7 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
                 <span className="material-symbols-outlined remove-icon">do_not_disturb_on</span>
               </Button>
             }
-            <Avatar className="group-member-avatar" size="sm" />
+            <Avatar className="group-member-avatar" size={avatarSize} />
             <p>{`${admin.firstName} ${admin.lastName}`}</p>
           </div>
         ))}

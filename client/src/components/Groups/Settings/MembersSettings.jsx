@@ -22,6 +22,8 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
     }
   }
 
+  const avatarSize = { base: "xs", sm: "sm"};
+
   return (
     <Box className="members-settings-container">
       <h1 className="members-settings-heading">Members</h1>
@@ -33,7 +35,7 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
                 <span className="material-symbols-outlined remove-icon">do_not_disturb_on</span>
               </Button>
             }
-            <Avatar className="group-member-avatar" size="sm" />
+            <Avatar className="group-member-avatar" size={avatarSize} />
             <p>{`${member.firstName} ${member.lastName}`}</p>
           </div>
         ))}

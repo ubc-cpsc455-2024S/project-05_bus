@@ -20,6 +20,9 @@ export default function NotificationCard({ event, onDismiss, onDone }) {
   const reminder = event.extendedProps?.reminder;
   const reminderUser = members.find((member) => member._id === reminder?.senderId);
 
+  const eventFontSize = { base: "md", sm: "lg"};
+  const eventFromNowFontSize = { base: "xs", sm: "sm"};
+
   return (
     <Box
       borderWidth="1px"
@@ -58,11 +61,11 @@ export default function NotificationCard({ event, onDismiss, onDone }) {
           mb={2}
           transition="transform 0.3s ease"
         >
-          <Text fontWeight="bold" fontSize="lg">
+          <Text fontWeight="bold" fontSize={eventFontSize}>
             {event.title}
           </Text>
           <HStack>
-            <Text color="gray.500" fontSize="sm">
+            <Text color="gray.500" fontSize={eventFromNowFontSize}>
               {moment(event.start).fromNow()}
             </Text>
             <ChoreBadge chore={event} />

@@ -11,6 +11,9 @@ export default function HomeGroup({ group }) {
     navigator.clipboard.writeText(group._id);
   };
 
+  const buttonSize = { base: "xs", sm: "sm", md: "md", lg: "lg"};
+  const avatarSize = { base: "xs", sm: "sm"};
+
   return (
     <Box className="home-card-container">
       <Card className="home-card">
@@ -21,7 +24,7 @@ export default function HomeGroup({ group }) {
           </div>
           <div className="home-card-group-id">
             Group ID: {group._id}
-            <Button className="copy-button" onClick={handleCopyGroupID} ml={2} size="sm" colorScheme="blue">
+            <Button className="copy-button" onClick={handleCopyGroupID} ml={2} size={buttonSize}>
               <span className="material-symbols-outlined settings-icon">content_copy</span>
             </Button>
           </div>
@@ -30,7 +33,7 @@ export default function HomeGroup({ group }) {
           <ul>
             {members.map(member => (
               <div key={member._id} className="group-member-container">
-                <Avatar className="group-member-avatar" size="sm" />
+                <Avatar className="group-member-avatar" size={avatarSize} />
                 <p>{`${member.firstName} ${member.lastName}`}</p>
               </div>
             ))}
