@@ -43,5 +43,5 @@ export default function HomeGroup({ group }) {
         </CardFooter>
       </Card>
     </Box>
-  )
+  );
 }

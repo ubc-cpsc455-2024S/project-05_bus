@@ -22,24 +22,24 @@ export default function ProfileCreationPage() {
         returnTo: window.location.origin,
       },
     });
-  }
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const profileData = new FormData(e.currentTarget)
+    e.preventDefault();
+    const profileData = new FormData(e.currentTarget);
     const userData = {
       firstName: profileData.get('firstName'),
       lastName: profileData.get('lastName'),
       email: user.email
-    }
-    console.log(`userData: ${JSON.stringify(userData)}`)
+    };
+    console.log(`userData: ${JSON.stringify(userData)}`);
     const result = await dispatch(addUserAsync(userData));
     const newUser = unwrapResult(result);
     dispatch(setCurrentUserID(newUser._id));
     const name = newUser.firstName + newUser.lastName;
     dispatch(setCurrentUserName(name));
     navigate('/groups');
-  }
+  };
 
   return (
     <Box padding='50px'>

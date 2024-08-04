@@ -22,6 +22,7 @@ module.exports = {
     'no-unused-vars': 'warn',
     'indent': ['error', 2],
     'quotes': ['error', 'single'],
+    "semi": ["error", "always"]
     // 'import/no-unresolved': 'error',
     // 'import/extensions': ['error', 'always', {
     //   'js': 'never',

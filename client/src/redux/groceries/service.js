@@ -51,7 +51,7 @@ const postManyGroceries = async (groceries) => {
       body: JSON.stringify(groceries),
     });
     const data = await response.json();
-    console.log(data)
+    console.log(data);
     return data;
   } catch (error) {
     console.error('Error posting groceries:', error);

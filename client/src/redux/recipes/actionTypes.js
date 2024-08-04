@@ -3,4 +3,4 @@ export const actionTypes = {
   ADD_RECIPE: 'recipes/addRecipe',
   DELETE_RECIPE: 'recipes/deleteRecipe',
   GENERATE_RECIPE: 'recipes/generateRecipe',
-}
+};

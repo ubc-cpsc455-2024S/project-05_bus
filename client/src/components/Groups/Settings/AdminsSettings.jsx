@@ -15,7 +15,7 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
 
   useEffect(() => {
     setIsOnlyAdmin(admins.length === 1);
-  }, [admins])
+  }, [admins]);
 
   const handleRemoveClick = async (id) => {
     setError('');
@@ -25,7 +25,7 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
     } else {
       handleRemoveAdmin(id);
     }
-  }
+  };
 
   const handleRemoveAdmin = async (id) => {
     setError('');
@@ -35,7 +35,7 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
     } catch (error) {
       setError('Could not remove admin from group');
     }
-  }
+  };
 
   const handleConfirmRemoveAdmin = async () => {
     setRemoveAdminModalOpen(false);
@@ -117,5 +117,5 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
         </ModalContent>
       </Modal>
     </Box>
-  )
+  );
 }

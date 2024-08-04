@@ -18,7 +18,7 @@ export default function LandingPage() {
         screen_hint: 'signup',
       },
     });
-  }
+  };
 
   const handleLogin = async () => {
     await loginWithRedirect({
@@ -28,14 +28,14 @@ export default function LandingPage() {
     }).then(async () => {
       const userEmail = {
         email: user.email
-      }
+      };
       const result = await dispatch(postUserByEmailAsync(userEmail));
       const newUser = unwrapResult(result);
       dispatch(setCurrentUserID(newUser._id));
       const name = newUser.firstName + newUser.lastName;
       dispatch(setCurrentUserName(name));
-    })
-  }
+    });
+  };
 
   return (
     <Box
@@ -81,5 +81,5 @@ export default function LandingPage() {
         <Image src='https://img.freepik.com/free-vector/couple-sitting-drinking-coffee-sofa-home-romantic-characters-talking-eating-room-apartment-hygge-scandinavian-style-flat-vector-illustration-love-interior-furniture-concept_74855-24055.jpg?t=st=1722059080~exp=1722062680~hmac=efa9dfcf6969c5eed4bc3edafc9b38df9aa0779af7646b267677d33b1a781a58&w=1480' alt='Roommates Landing' />
       </Box>
     </Box>
-  )
+  );
 }

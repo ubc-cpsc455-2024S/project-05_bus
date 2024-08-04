@@ -58,7 +58,7 @@ const calendarSlice = createSlice({
         state.addEvent = REQUEST_STATE.PENDING;
       })
       .addCase(addEventAsync.fulfilled, (state, action) => {
-        const event = { ...action.payload, id: action.payload._id}
+        const event = { ...action.payload, id: action.payload._id};
         state.events = [...state.events, event];
         state.addEvent = REQUEST_STATE.FULFILLED;
       })

@@ -1,4 +1,4 @@
-import './Navbar.css'
+import './Navbar.css';
 import { 
   Button,
   ButtonGroup,
@@ -9,8 +9,8 @@ import {
   PopoverHeader,
   PopoverBody,
   PopoverCloseButton,
-} from '@chakra-ui/react'
-import { useLocation, Link } from 'react-router-dom'
+} from '@chakra-ui/react';
+import { useLocation, Link } from 'react-router-dom';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { useAuth0 } from '@auth0/auth0-react';
 
@@ -22,7 +22,7 @@ export default function Navbar() {
   const getPageName = (pathname) => {
     const pageName = pathname.split('/').filter(Boolean)[0];
     return pageName.charAt(0).toUpperCase() + pageName.slice(1);
-  }
+  };
 
   const pageName = getPageName(location.pathname);
 
@@ -32,7 +32,7 @@ export default function Navbar() {
         returnTo: window.location.origin,
       },
     });
-  }
+  };
 
   return (
     isAuthenticated && (
@@ -86,5 +86,5 @@ export default function Navbar() {
       </div>
     )
     
-  )
+  );
 }

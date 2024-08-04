@@ -8,7 +8,7 @@ export default function Profile() {
   const currentUserName = useSelector(state => state.users.currentUserName);
 
   if (isLoading) {
-    return <PageLoader />
+    return <PageLoader />;
   }
 
   return (
@@ -27,5 +27,5 @@ export default function Profile() {
       )}
 
     </Box>
-  )
+  );
 }

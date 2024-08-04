@@ -69,5 +69,5 @@ export default function JoinGroupForm() {
         Join
       </Button>
     </Box>
-  )
+  );
 }

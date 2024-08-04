@@ -11,7 +11,7 @@ const initialState = {
   getUser: REQUEST_STATE.IDLE,
   addUser: REQUEST_STATE.IDLE,
   deleteUser: REQUEST_STATE.IDLE,
-}
+};
 
 
 const usersSlice = createSlice({

@@ -43,7 +43,7 @@ function LeaveGroupModal({ isOnlyMember, isOnlyAdmin, isOpen, onClose, onConfirm
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 
@@ -132,7 +132,7 @@ export default function Settings() {
     } catch (error) {
       setError('Could not save changes');
     }
-  }
+  };
 
   return (
     <Box className='settings-container'>
@@ -230,5 +230,5 @@ export default function Settings() {
         </div>
       }
     </Box>
-  )
+  );
 }
