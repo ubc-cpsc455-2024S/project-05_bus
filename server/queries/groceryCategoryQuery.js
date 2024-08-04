@@ -1,4 +1,4 @@
-import { GroceryCategories } from "../models/grocerySchema.js";
+import { GroceryCategories } from '../models/grocerySchema.js';
 
 const groceryCategoryQueries = {
   getAllCategories: async function (groupID) {
@@ -6,7 +6,7 @@ const groceryCategoryQueries = {
       const categories = await GroceryCategories.find({ groupID });
       return categories;
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error('Error fetching categories:', error);
       throw error;
     }
   },
@@ -25,7 +25,7 @@ const groceryCategoryQueries = {
       const savedCategory = await newCategory.save();
       return savedCategory;
     } catch (error) {
-      console.error("Error saving new category:", error);
+      console.error('Error saving new category:', error);
       throw error;
     }
   },

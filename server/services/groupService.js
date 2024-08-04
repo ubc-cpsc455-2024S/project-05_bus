@@ -1,5 +1,5 @@
-import groupQueries from "../queries/groupQuery.js";
-import userQueries from "../queries/userQuery.js";
+import groupQueries from '../queries/groupQuery.js';
+import userQueries from '../queries/userQuery.js';
 
 const getAllGroups = async () => {
   return await groupQueries.getAllGroups();

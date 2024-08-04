@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import OpenAI from 'openai';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -84,14 +84,14 @@ export const chatCompletion = async (content, locations, categories) => {
   try {
     const response = await openai.chat.completions.create({
       messages: [
-        { role: "user", content: ocrPrompt + content },
-        { role: "user", content: consolidatePrompt(locations, categories) },
+        { role: 'user', content: ocrPrompt + content },
+        { role: 'user', content: consolidatePrompt(locations, categories) },
       ],
-      model: "gpt-4o-mini",
+      model: 'gpt-4o-mini',
     });
     return response.choices[0].message.content;
   } catch (error) {
-    console.error("Error completing chat:", error);
+    console.error('Error completing chat:', error);
     throw error;
   }
 };
@@ -99,30 +99,30 @@ export const chatCompletion = async (content, locations, categories) => {
 export const chatCompletionImage = async (image, locations, categories) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: 'gpt-4o-mini',
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: [
-            { type: "text", text: imagePrompt },
+            { type: 'text', text: imagePrompt },
             {
-              type: "image_url",
+              type: 'image_url',
               image_url: {
                 url: `data:image/jpeg;base64, ${Buffer.from(image).toString(
-                  "base64"
+                  'base64'
                 )}`,
-                detail: "high",
+                detail: 'high',
               },
             },
           ],
         },
-        { role: "user", content: consolidatePrompt(locations, categories) },
+        { role: 'user', content: consolidatePrompt(locations, categories) },
       ],
       max_tokens: 1000,
     });
     return response.choices[0].message.content;
   } catch (error) {
-    console.error("Error completing chat:", error);
+    console.error('Error completing chat:', error);
     throw error;
   }
 };
@@ -134,30 +134,30 @@ export const chatCompletionGroceryImage = async (
 ) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: 'gpt-4o-mini',
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: [
-            { type: "text", text: groceryImagePrompt },
+            { type: 'text', text: groceryImagePrompt },
             {
-              type: "image_url",
+              type: 'image_url',
               image_url: {
                 url: `data:image/jpeg;base64, ${Buffer.from(image).toString(
-                  "base64"
+                  'base64'
                 )}`,
-                detail: "low",
+                detail: 'low',
               },
             },
           ],
         },
-        { role: "user", content: consolidatePrompt(locations, categories) },
+        { role: 'user', content: consolidatePrompt(locations, categories) },
       ],
       max_tokens: 1000,
     });
     return response.choices[0].message.content;
   } catch (error) {
-    console.error("Error completing chat:", error);
+    console.error('Error completing chat:', error);
     throw error;
   }
 };

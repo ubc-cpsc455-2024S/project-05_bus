@@ -13,5 +13,8 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'no-unused-vars': 'warn',
+    'indent': ['error', 2],
+    'quotes': ['error', 'single'],
   }
 };
