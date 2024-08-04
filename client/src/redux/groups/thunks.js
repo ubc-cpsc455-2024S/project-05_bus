@@ -1,7 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import GroupsService from "./service";
-import { setUserGroupID } from "../users/usersSlice";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import GroupsService from './service';
+import { setUserGroupID } from '../users/usersSlice';
 
 export const getGroupsAsync = createAsyncThunk(
   actionTypes.GET_GROUPS,

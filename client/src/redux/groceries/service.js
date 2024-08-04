@@ -8,7 +8,7 @@ const getAllGroceries = async (groupID) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching groceries:", error);
+    console.error('Error fetching groceries:', error);
     throw error;
   }
 };
@@ -19,7 +19,7 @@ const getOneGrocery = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching grocery:", error);
+    console.error('Error fetching grocery:', error);
     throw error;
   }
 };
@@ -27,16 +27,16 @@ const getOneGrocery = async (id) => {
 const postGrocery = async (grocery) => {
   try {
     const response = await fetch(`${SERVER_URL}/groceries`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(grocery),
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error posting grocery:", error);
+    console.error('Error posting grocery:', error);
     throw error;
   }
 };
@@ -44,9 +44,9 @@ const postGrocery = async (grocery) => {
 const postManyGroceries = async (groceries) => {
   try {
     const response = await fetch(`${SERVER_URL}/groceries/many`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(groceries),
     });
@@ -54,7 +54,7 @@ const postManyGroceries = async (groceries) => {
     console.log(data)
     return data;
   } catch (error) {
-    console.error("Error posting groceries:", error);
+    console.error('Error posting groceries:', error);
     throw error;
   }
 };
@@ -64,9 +64,9 @@ const updateGrocery = async (grocery) => {
     const response = await fetch(
       `${SERVER_URL}/groceries/${grocery._id}`,
       {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(grocery),
       }
@@ -79,7 +79,7 @@ const updateGrocery = async (grocery) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error updating grocery:", error);
+    console.error('Error updating grocery:', error);
     throw error;
   }
 };
@@ -87,12 +87,12 @@ const updateGrocery = async (grocery) => {
 const deleteGrocery = async (id) => {
   try {
     const response = await fetch(`${SERVER_URL}/groceries/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error deleting grocery:", error);
+    console.error('Error deleting grocery:', error);
     throw error;
   }
 };
@@ -105,7 +105,7 @@ const getCategories = async (groupID) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    console.error('Error fetching categories:', error);
     throw error;
   }
 };
@@ -118,7 +118,7 @@ const getCategory = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching category:", error);
+    console.error('Error fetching category:', error);
     throw error;
   }
 };
@@ -126,16 +126,16 @@ const getCategory = async (id) => {
 const addCategory = async (category) => {
   try {
     const response = await fetch(`${SERVER_URL}/groceries/categories`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(category),
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error adding category:", error);
+    console.error('Error adding category:', error);
     throw error;
   }
 };
@@ -145,13 +145,13 @@ const deleteCategory = async (id) => {
     const response = await fetch(
       `${SERVER_URL}/groceries/categories/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
       }
     );
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error removing category:", error);
+    console.error('Error removing category:', error);
     throw error;
   }
 };
@@ -161,9 +161,9 @@ const updateCategory = async (category) => {
     const response = await fetch(
       `${SERVER_URL}/groceries/categories/${category._id}`,
       {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(category),
       }
@@ -171,7 +171,7 @@ const updateCategory = async (category) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error updating category:", error);
+    console.error('Error updating category:', error);
     throw error;
   }
 };
@@ -184,7 +184,7 @@ const getLocations = async (groupID) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching locations:", error);
+    console.error('Error fetching locations:', error);
     throw error;
   }
 };
@@ -197,7 +197,7 @@ const getLocation = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching location:", error);
+    console.error('Error fetching location:', error);
     throw error;
   }
 };
@@ -205,16 +205,16 @@ const getLocation = async (id) => {
 const addLocation = async (location) => {
   try {
     const response = await fetch(`${SERVER_URL}/groceries/locations`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(location),
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error adding location:", error);
+    console.error('Error adding location:', error);
     throw error;
   }
 };
@@ -224,13 +224,13 @@ const deleteLocation = async (id) => {
     const response = await fetch(
       `${SERVER_URL}/groceries/locations/${id}`,
       {
-        method: "DELETE",
+        method: 'DELETE',
       }
     );
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error removing location:", error);
+    console.error('Error removing location:', error);
     throw error;
   }
 };
@@ -240,9 +240,9 @@ const updateLocation = async (location) => {
     const response = await fetch(
       `${SERVER_URL}/groceries/locations/${location._id}`,
       {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(location),
       }
@@ -250,7 +250,7 @@ const updateLocation = async (location) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error updating location:", error);
+    console.error('Error updating location:', error);
     throw error;
   }
 };

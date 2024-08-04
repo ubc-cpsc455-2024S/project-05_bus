@@ -60,32 +60,32 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
   };
 
   return (
-    <Box className="admins-settings-container">
-      <h1 className="admins-settings-heading">Admins</h1>
+    <Box className='admins-settings-container'>
+      <h1 className='admins-settings-heading'>Admins</h1>
       <ul>
         {admins.map(admin => (
-          <div key={admin._id} className="group-member-container">
+          <div key={admin._id} className='group-member-container'>
             {isEditMode &&
-              <Button className="remove-button" onClick={() => handleRemoveClick(admin._id)} ml={2} size="sm">
-                <span className="material-symbols-outlined remove-icon">do_not_disturb_on</span>
+              <Button className='remove-button' onClick={() => handleRemoveClick(admin._id)} ml={2} size='sm'>
+                <span className='material-symbols-outlined remove-icon'>do_not_disturb_on</span>
               </Button>
             }
-            <Avatar className="group-member-avatar" size="sm" />
+            <Avatar className='group-member-avatar' size='sm' />
             <p>{`${admin.firstName} ${admin.lastName}`}</p>
           </div>
         ))}
       </ul>
       {isEditMode && (
-        <div className="add-admin-container">
-          <Select w="200px" placeholder="Select member" value={selectedMember} onChange={(e) => setSelectedMember(e.target.value)}>
+        <div className='add-admin-container'>
+          <Select w='200px' placeholder='Select member' value={selectedMember} onChange={(e) => setSelectedMember(e.target.value)}>
             {members.map(member => (
               <option key={member._id} value={member._id}>
                 {`${member.firstName} ${member.lastName}`}
               </option>
             ))}
           </Select>
-          <Button className="add-button" onClick={handleAddAdmin} ml={2} size="sm">
-            <span className="material-symbols-outlined add-icon">add_circle</span>
+          <Button className='add-button' onClick={handleAddAdmin} ml={2} size='sm'>
+            <span className='material-symbols-outlined add-icon'>add_circle</span>
           </Button>
         </div>
       )}
@@ -104,15 +104,15 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
           <ModalFooter>
             {!isOnlyAdmin && (
               <Button
-                bgColor={"rgba(253, 163, 163, 0.631)"}
-                _hover={{ background: "rgba(246, 134, 134, 0.631)" }}
+                bgColor={'rgba(253, 163, 163, 0.631)'}
+                _hover={{ background: 'rgba(246, 134, 134, 0.631)' }}
                 mr={3}
                 onClick={handleConfirmRemoveAdmin}
               >
                 Confirm
               </Button>
             )}
-            <Button variant="outline" onClick={() => setRemoveAdminModalOpen(false)}>Cancel</Button>
+            <Button variant='outline' onClick={() => setRemoveAdminModalOpen(false)}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { REQUEST_STATE } from "../utils";
+import { createSlice } from '@reduxjs/toolkit';
+import { REQUEST_STATE } from '../utils';
 import {
   getEventsAsync,
   getEventAsync,
   addEventAsync,
   deleteEventAsync,
   updateEventAsync,
-} from "./thunks";
+} from './thunks';
 
 const initialState = {
   events: [],
@@ -16,12 +16,12 @@ const initialState = {
   updateEvent: REQUEST_STATE.IDLE,
   deleteEvent: REQUEST_STATE.IDLE,
   filter: false,
-  currentStart: "",
-  currentEnd: "",
+  currentStart: '',
+  currentEnd: '',
 };
 
 const calendarSlice = createSlice({
-  name: "events",
+  name: 'events',
   initialState,
   reducers: {
     toggleFilter: (state) => {

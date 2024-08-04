@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { REQUEST_STATE } from "../utils";
+import { createSlice } from '@reduxjs/toolkit'
+import { REQUEST_STATE } from '../utils';
 import { addRecipeAsync, getRecipesAsync, deleteRecipeAsync, generateRecipeAsync } from './thunks';
 
 const INITIAL_STATE = {

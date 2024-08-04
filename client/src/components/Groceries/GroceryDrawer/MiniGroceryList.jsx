@@ -1,5 +1,5 @@
-import { SimpleGrid } from "@chakra-ui/react";
-import MiniGroceryCard from "./MiniGroceryCard";
+import { SimpleGrid } from '@chakra-ui/react';
+import MiniGroceryCard from './MiniGroceryCard';
 
 export default function MiniGroceryList({ data, type, groceries }) {
   return (
@@ -7,9 +7,9 @@ export default function MiniGroceryList({ data, type, groceries }) {
       {data
         .map((item) => {
           const matchingGroceries = groceries.filter((grocery) => {
-            if (type === "category") {
+            if (type === 'category') {
               return grocery.categoryId === item._id;
-            } else if (type === "location") {
+            } else if (type === 'location') {
               return grocery.locationId === item._id;
             }
             return false;

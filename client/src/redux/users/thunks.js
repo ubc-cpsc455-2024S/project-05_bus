@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import UsersService from "./service";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import UsersService from './service';
 
 export const getUsersAsync = createAsyncThunk(
   actionTypes.GET_USERS,

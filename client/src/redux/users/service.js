@@ -6,7 +6,7 @@ const getAllUsers = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching users: ", error);
+    console.error('Error fetching users: ', error);
     throw error;
   }
 };
@@ -17,7 +17,7 @@ const getGroupMembers = async (groupID) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching group members: ", error);
+    console.error('Error fetching group members: ', error);
     throw error;
   }
 };
@@ -28,7 +28,7 @@ const getUser = async (id) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching user: ", error);
+    console.error('Error fetching user: ', error);
     throw error;
   }
 };
@@ -36,16 +36,16 @@ const getUser = async (id) => {
 const postUserByEmail = async (email) => {
   try {
     const response = await fetch(`${SERVER_URL}/users/userInfo`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(email)
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching user: ", error);
+    console.error('Error fetching user: ', error);
     throw error;
   }
 }
@@ -54,9 +54,9 @@ const addUser = async (user) => {
   try {
     console.log(`user: ${JSON.stringify(user)}`)
     const response = await fetch(`${SERVER_URL}/users`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(user)
     });
@@ -72,7 +72,7 @@ const addUser = async (user) => {
 const deleteUser = async (id) => {
   try {
     const response = await fetch(`${SERVER_URL}/users/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
     const data = await response.json();
     return data;

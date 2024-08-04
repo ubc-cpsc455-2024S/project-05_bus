@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -19,8 +19,8 @@ import {
   Radio,
   RadioGroup,
   Stack,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+} from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 export default function ColumnFilter({
   column,
@@ -29,7 +29,7 @@ export default function ColumnFilter({
   dateFilterType,
   setDateFilterType,
 }) {
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState('');
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
 
@@ -47,25 +47,25 @@ export default function ColumnFilter({
 
   const renderInput = () => {
     const inputStyleProps = {
-      variant: "filled",
-      size: "sm",
-      focusBorderColor: "teal.400",
-      errorBorderColor: "red.300",
+      variant: 'filled',
+      size: 'sm',
+      focusBorderColor: 'teal.400',
+      errorBorderColor: 'red.300',
       _hover: {
-        bg: "teal.50",
+        bg: 'teal.50',
       },
       _focus: {
-        bg: "white",
-        borderColor: "teal.400",
+        bg: 'white',
+        borderColor: 'teal.400',
       },
     };
 
     switch (column.columnDef.header) {
-    case "Location":
+    case 'Location':
       return (
         <Select
           placeholder={`Select ${column.columnDef.header}`}
-          value={column.getFilterValue() || ""}
+          value={column.getFilterValue() || ''}
           onChange={(e) => handleChange(e)}
           {...inputStyleProps}
         >
@@ -76,11 +76,11 @@ export default function ColumnFilter({
           ))}
         </Select>
       );
-    case "Category":
+    case 'Category':
       return (
         <Select
           placeholder={`Select ${column.columnDef.header}`}
-          value={column.getFilterValue() || ""}
+          value={column.getFilterValue() || ''}
           onChange={(e) => handleChange(e)}
           {...inputStyleProps}
         >
@@ -91,35 +91,35 @@ export default function ColumnFilter({
           ))}
         </Select>
       );
-    case "Expiry Date":
+    case 'Expiry Date':
       return (
         <HStack spacing={2} px={2}>
           <RadioGroup
             onChange={setDateFilterType}
             value={dateFilterType}
-            size="sm"
+            size='sm'
           >
-            <Stack direction="column">
-              <Radio value="before">Before</Radio>
-              <Radio value="on">On</Radio>
-              <Radio value="after">After</Radio>
+            <Stack direction='column'>
+              <Radio value='before'>Before</Radio>
+              <Radio value='on'>On</Radio>
+              <Radio value='after'>After</Radio>
               <Input
-                type="date"
+                type='date'
                 value={selectedDate}
                 onChange={handleDateChange}
-                size="sm"
-                bg="white"
-                width="auto"
+                size='sm'
+                bg='white'
+                width='auto'
                 {...inputStyleProps}
               />
             </Stack>
           </RadioGroup>
         </HStack>
       );
-    case "Quantity":
+    case 'Quantity':
       return (
         <NumberInput
-          value={column.getFilterValue() || ""}
+          value={column.getFilterValue() || ''}
           onChange={(valueString) => {
             column.setFilterValue(valueString || undefined);
           }}
@@ -136,7 +136,7 @@ export default function ColumnFilter({
       return (
         <Input
           placeholder={`Search ${column.columnDef.header}`}
-          value={column.getFilterValue() || ""}
+          value={column.getFilterValue() || ''}
           onChange={(e) => column.setFilterValue(e.target.value || undefined)}
           {...inputStyleProps}
         />
@@ -145,34 +145,34 @@ export default function ColumnFilter({
   };
 
   return (
-    <Popover isOpen={isOpen} onClose={() => onToggle(null)} colorScheme="teal">
+    <Popover isOpen={isOpen} onClose={() => onToggle(null)} colorScheme='teal'>
       <PopoverTrigger>
         <Button
-          size="xs"
-          variant="solid"
-          className="material-symbols-outlined"
+          size='xs'
+          variant='solid'
+          className='material-symbols-outlined'
           onClick={() => onToggle(column.id)}
-          colorScheme="teal"
-          _hover={{ bg: "teal.100" }}
-          _active={{ bg: "teal.200" }}
+          colorScheme='teal'
+          _hover={{ bg: 'teal.100' }}
+          _active={{ bg: 'teal.200' }}
         >
-          {column.getIsFiltered() ? "filter_alt" : "filter_alt_off"}
+          {column.getIsFiltered() ? 'filter_alt' : 'filter_alt_off'}
         </Button>
       </PopoverTrigger>
-      <PopoverContent border="0" boxShadow="xl" w="100%">
-        <PopoverArrow bg="teal.50" />
+      <PopoverContent border='0' boxShadow='xl' w='100%'>
+        <PopoverArrow bg='teal.50' />
         <PopoverHeader
-          flexDirection="column"
-          alignItems="center"
-          borderBottom="0"
+          flexDirection='column'
+          alignItems='center'
+          borderBottom='0'
         >
           <Button
             mt={2}
-            size="sm"
-            variant="outline"
-            colorScheme="teal"
+            size='sm'
+            variant='outline'
+            colorScheme='teal'
             onClick={() => {
-              column.setFilterValue("");
+              column.setFilterValue('');
               onToggle(null);
             }}
           >
@@ -180,13 +180,13 @@ export default function ColumnFilter({
           </Button>
         </PopoverHeader>
         <PopoverCloseButton
-          position="absolute"
-          top="1"
-          right="1"
-          zIndex="1"
-          color="black"
+          position='absolute'
+          top='1'
+          right='1'
+          zIndex='1'
+          color='black'
         />
-        <PopoverBody color="teal.600">{renderInput()}</PopoverBody>
+        <PopoverBody color='teal.600'>{renderInput()}</PopoverBody>
       </PopoverContent>
     </Popover>
   );

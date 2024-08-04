@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 import {
   Popover,
   PopoverContent,
@@ -14,17 +14,17 @@ import {
   Input,
   Select,
   Checkbox,
-} from "@chakra-ui/react";
-import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
-import moment from "moment";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+} from '@chakra-ui/react';
+import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
 
 function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   const [eventDetails, setEventDetails] = useState({
     _id: event.id,
     title: event.title,
-    start: moment(event.start).format("YYYY-MM-DDTHH:mm"),
+    start: moment(event.start).format('YYYY-MM-DDTHH:mm'),
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     restockerId: event.extendedProps.restockerId,
@@ -39,7 +39,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
 
   useEffect(() => {
     if (popoverRef.current) {
-      popoverRef.current.style.position = "absolute";
+      popoverRef.current.style.position = 'absolute';
       popoverRef.current.style.top = `${coordinates.y}px`;
       popoverRef.current.style.left = `${coordinates.x}px`;
     }
@@ -47,7 +47,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const updatedValue = type === "checkbox" ? checked : value;
+    const updatedValue = type === 'checkbox' ? checked : value;
     setEventDetails({ ...eventDetails, [name]: updatedValue });
   };
 
@@ -65,7 +65,7 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
         type: eventDetails.type,
       },
     };
-    if (eventDetails.type === "restock") {
+    if (eventDetails.type === 'restock') {
       updatedEventDetails.extendedProps.restockerId = eventDetails.memberId;
     }
     onEdit(updatedEventDetails);
@@ -74,22 +74,22 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
   return (
     <Popover isOpen onClose={onClose}>
       <PopoverContent
-        bg="gray.100"
-        border="none"
+        bg='gray.100'
+        border='none'
         ref={popoverRef}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
       >
         <PopoverArrow />
-        <PopoverCloseButton color="black" />
-        <PopoverHeader color="black">Edit Chore</PopoverHeader>
+        <PopoverCloseButton color='black' />
+        <PopoverHeader color='black'>Edit Chore</PopoverHeader>
         <PopoverBody>
           <FormControl pb={2}>
-            <FormLabel color="black">Person</FormLabel>
+            <FormLabel color='black'>Person</FormLabel>
             <Select
-              variant="filled"
-              border="none"
-              bg="white"
-              name="memberId"
+              variant='filled'
+              border='none'
+              bg='white'
+              name='memberId'
               value={eventDetails.memberId}
               onChange={handleChange}
             >
@@ -100,14 +100,14 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
               ))}
             </Select>
           </FormControl>
-          {eventDetails.type === "chore" && (
+          {eventDetails.type === 'chore' && (
             <FormControl pb={2}>
-              <FormLabel color="black">Type of Chore</FormLabel>
+              <FormLabel color='black'>Type of Chore</FormLabel>
               <Select
-                variant="filled"
-                border="none"
-                bg="white"
-                name="choreId"
+                variant='filled'
+                border='none'
+                bg='white'
+                name='choreId'
                 value={eventDetails.choreId}
                 onChange={handleChange}
               >
@@ -117,12 +117,12 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
                   </option>
                 ))}
               </Select>
-              <FormLabel color="black">Date</FormLabel>
+              <FormLabel color='black'>Date</FormLabel>
               <Input
-                type="date"
-                name="start"
-                bg="white"
-                value={eventDetails.start.split("T")[0]}
+                type='date'
+                name='start'
+                bg='white'
+                value={eventDetails.start.split('T')[0]}
                 onChange={handleChange}
               />
             </FormControl>
@@ -132,21 +132,21 @@ function EventPopover({ event, onClose, onDelete, onEdit, coordinates }) {
           <ButtonGroup spacing={4}>
             <Button
               leftIcon={<DeleteIcon />}
-              colorScheme="red"
+              colorScheme='red'
               onClick={onDelete}
             >
               Delete
             </Button>
             <Button
               rightIcon={<CheckIcon />}
-              colorScheme="teal"
+              colorScheme='teal'
               onClick={handleSubmit}
             >
               Save
             </Button>
             <Checkbox
-              name="done"
-              color="black"
+              name='done'
+              color='black'
               isChecked={eventDetails.done}
               onChange={handleChange}
             >

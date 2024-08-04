@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { REQUEST_STATE } from "../utils";
+import { createSlice } from '@reduxjs/toolkit';
+import { REQUEST_STATE } from '../utils';
 import {
   getGroceriesAsync,
   getGroceryAsync,
@@ -17,7 +17,7 @@ import {
   addLocationAsync,
   updateLocationAsync,
   deleteLocationAsync,
-} from "./thunks";
+} from './thunks';
 
 const initialState = {
   groceries: [],
@@ -42,7 +42,7 @@ const initialState = {
 };
 
 const groceriesSlice = createSlice({
-  name: "groceries",
+  name: 'groceries',
   initialState,
   reducers: {
     updateMealSelect: (state, action) => {
@@ -51,7 +51,7 @@ const groceriesSlice = createSlice({
       );
       if (index !== -1) {
         if (action.payload.expiryDate) {
-          state.groceries[index].expiryNotificationDate = "";
+          state.groceries[index].expiryNotificationDate = '';
         }
         state.groceries[index] = {
           ...state.groceries[index],

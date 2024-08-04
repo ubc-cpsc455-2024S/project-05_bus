@@ -1,9 +1,9 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image } from '@chakra-ui/react';
 
 export const PageLoader = () => {
   return (
-    <Box display="flex" alignContent="center" alignItems="center" justifyContent="center">
-      <Image src="/images/roommates-landing.png" alt="Loading" />
+    <Box display='flex' alignContent='center' alignItems='center' justifyContent='center'>
+      <Image src='/images/roommates-landing.png' alt='Loading' />
     </Box>
   )
 }

@@ -14,14 +14,14 @@ import {
   Flex,
   ButtonGroup,
   Icon,
-} from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { useState } from "react";
-import CropModal from "./CropModal";
-import sampleReceiptImage from "./images/sample_receipt.jpg";
-import sampleGroceriesImage from "./images/sample_groceries.jpg";
-import croppedReceiptImage from "./images/cropped_receipt.jpg";
-import ScannedGroceriesList from "./ScannedGroceriesList";
+} from '@chakra-ui/react';
+import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
+import CropModal from './CropModal';
+import sampleReceiptImage from './images/sample_receipt.jpg';
+import sampleGroceriesImage from './images/sample_groceries.jpg';
+import croppedReceiptImage from './images/cropped_receipt.jpg';
+import ScannedGroceriesList from './ScannedGroceriesList';
 
 export default function Scanner({ isOpen, onClose, type }) {
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
@@ -49,35 +49,35 @@ export default function Scanner({ isOpen, onClose, type }) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+      <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scan {type}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody display="flex">
-            <Box flex="1" p="4" borderRightWidth="1px">
+          <ModalBody display='flex'>
+            <Box flex='1' p='4' borderRightWidth='1px'>
               <Flex
-                direction="column"
-                justifyContent="space-between"
-                height="100%"
+                direction='column'
+                justifyContent='space-between'
+                height='100%'
               >
                 {croppedImageUrl ? (
                   <Image
                     src={croppedImageUrl}
-                    maxH="80vh"
-                    objectFit="contain"
+                    maxH='80vh'
+                    objectFit='contain'
                   />
                 ) : (
                   <Text>No image uploaded</Text>
                 )}
                 <ButtonGroup>
                   <Button
-                    mt="4"
-                    colorScheme="blue"
+                    mt='4'
+                    colorScheme='blue'
                     onClick={() => setIsCropModalOpen(true)}
                     disabled={!uploadedImageUrl}
                     rightIcon={
-                      <Text className="material-symbols-outlined">crop</Text>
+                      <Text className='material-symbols-outlined'>crop</Text>
                     }
                   >
                     Crop Image
@@ -91,62 +91,62 @@ export default function Scanner({ isOpen, onClose, type }) {
               </Flex>
             </Box>
             <VStack
-              flex="1"
-              p="4"
-              alignItems="flex-start"
-              justifyContent="space-between"
+              flex='1'
+              p='4'
+              alignItems='flex-start'
+              justifyContent='space-between'
             >
-              <Flex align="center">
+              <Flex align='center'>
                 <Image
                   src={
-                    type === "Receipt"
+                    type === 'Receipt'
                       ? sampleReceiptImage
                       : sampleGroceriesImage
                   }
-                  w="100%"
-                  maxW="35vh"
-                  objectFit="contain"
-                  mb="4"
+                  w='100%'
+                  maxW='35vh'
+                  objectFit='contain'
+                  mb='4'
                 />
-                {type === "Receipt" && (
+                {type === 'Receipt' && (
                   <>
                     <Icon as={ArrowForwardIcon} boxSize={8} mx={4} />
                     <Image
                       src={croppedReceiptImage}
-                      w="100%"
-                      maxW="30vh"
-                      objectFit="contain"
-                      mb="4"
+                      w='100%'
+                      maxW='30vh'
+                      objectFit='contain'
+                      mb='4'
                     />
                   </>
                 )}
               </Flex>
-              <VStack alignItems="flex-start" spacing="4" w="100%">
-                <Text fontSize="lg" fontWeight="bold">
+              <VStack alignItems='flex-start' spacing='4' w='100%'>
+                <Text fontSize='lg' fontWeight='bold'>
                   Instructions:
                 </Text>
                 <Text>1. Ensure good lighting and focus.</Text>
                 <Text>
-                  {type == "Receipt"
-                    ? "2. Take the photo straight from above."
-                    : "2. Take the photo straight on, ensuring full visibility."}
+                  {type == 'Receipt'
+                    ? '2. Take the photo straight from above.'
+                    : '2. Take the photo straight on, ensuring full visibility.'}
                 </Text>
                 <Text>3. Crop to isolate content</Text>
                 <Button
-                  mt="4"
-                  colorScheme="blue"
+                  mt='4'
+                  colorScheme='blue'
                   rightIcon={
-                    <Text className="material-symbols-outlined">
+                    <Text className='material-symbols-outlined'>
                       photo_camera
                     </Text>
                   }
                 >
-                  <label htmlFor="file-upload">Upload Photo</label>
+                  <label htmlFor='file-upload'>Upload Photo</label>
                   <input
-                    id="file-upload"
-                    type="file"
-                    accept="image/*"
-                    style={{ display: "none" }}
+                    id='file-upload'
+                    type='file'
+                    accept='image/*'
+                    style={{ display: 'none' }}
                     onChange={handleImageUpload}
                   />
                 </Button>
@@ -159,7 +159,7 @@ export default function Scanner({ isOpen, onClose, type }) {
         </ModalContent>
       </Modal>
       <CropModal
-        aspect={type === "Receipt" ? 1 / 2 : 4 / 3}
+        aspect={type === 'Receipt' ? 1 / 2 : 4 / 3}
         isOpen={isCropModalOpen}
         onClose={() => setIsCropModalOpen(false)}
         imageSrc={uploadedImageUrl}

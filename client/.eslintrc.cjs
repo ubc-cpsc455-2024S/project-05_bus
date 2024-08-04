@@ -20,6 +20,12 @@ module.exports = {
     ],
     'no-console': 'warn',
     'no-unused-vars': 'warn',
-    'indent': ['error', 2]
+    'indent': ['error', 2],
+    'quotes': ['error', 'single'],
+    // 'import/no-unresolved': 'error',
+    // 'import/extensions': ['error', 'always', {
+    //   'js': 'never',
+    //   'jsx': 'never',
+    // }],
   },
 }

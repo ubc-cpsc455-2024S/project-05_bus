@@ -1,4 +1,4 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from '@reduxjs/toolkit';
 
 const selectEvents = (state) => state.events.events;
 const selectCurrentUser = (state) => state.users.currentUserID;
