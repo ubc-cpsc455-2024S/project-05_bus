@@ -32,7 +32,7 @@ export default function MealPlanBox() {
       recipe: recipe.Recipe,
       ingredients: recipe.Ingredients,
       instructions: recipe.Instructions,
-  };
+    };
     dispatch(addRecipeAsync(newRecipe));
     toast({
       title: "Recipe Successfully Added to Favourites",
@@ -117,19 +117,19 @@ export default function MealPlanBox() {
           <Text><strong>Ingredients:</strong></Text>
           <Text>
             {recipe.Ingredients && recipe.Ingredients.map((ingredient, index) => (
-            <React.Fragment key={index}>
-              <span>- {ingredient}</span>
-              <br />
-            </React.Fragment>
-          ))}<br /></Text>
+              <React.Fragment key={index}>
+                <span>- {ingredient}</span>
+                <br />
+              </React.Fragment>
+            ))}<br /></Text>
           <Text><strong>Instructions:</strong></Text>
           <Text>
             {recipe.Instructions && recipe.Instructions.map((instruction, index) => (
-            <React.Fragment key={index}>
-              <span>{instruction}</span>
-              <br />
-            </React.Fragment>
-          ))}</Text>
+              <React.Fragment key={index}>
+                <span>{instruction}</span>
+                <br />
+              </React.Fragment>
+            ))}</Text>
         </Box>
       ) : (
         <>

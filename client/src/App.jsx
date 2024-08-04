@@ -13,7 +13,7 @@ export default function App() {
     dispatch(getUsersAsync());
   }, [dispatch]);
 
- return (
+  return (
     <Layout />
   );
 }

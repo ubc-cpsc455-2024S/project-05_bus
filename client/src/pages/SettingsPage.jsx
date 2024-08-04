@@ -60,7 +60,7 @@ function DeleteGroupAlert({ isOpen, onClose, onConfirm }) {
           <Text>Are you sure you want to delete this group? This action cannot be undone.</Text>
         </ModalBody>
         <ModalFooter>
-        <Button 
+          <Button 
             bgColor={"rgba(253, 163, 163, 0.631)"}
             _hover={{background: "rgba(246, 134, 134, 0.631)"}}
             mr={3}
@@ -209,25 +209,25 @@ export default function Settings() {
           </Card>
 
           <LeaveGroupModal 
-          isOpen={isLeaveGroupOpen} 
-          onClose={closeLeaveGroupModal}
-          onConfirm={async () => {
-            closeLeaveGroupModal();
-            await handleLeaveGroup();
-          }}
-          isOnlyMember={isOnlyMember}
-          isOnlyAdmin={isOnlyAdmin}
-        />
+            isOpen={isLeaveGroupOpen} 
+            onClose={closeLeaveGroupModal}
+            onConfirm={async () => {
+              closeLeaveGroupModal();
+              await handleLeaveGroup();
+            }}
+            isOnlyMember={isOnlyMember}
+            isOnlyAdmin={isOnlyAdmin}
+          />
 
-        <DeleteGroupAlert 
-          isOpen={isDeleteGroupOpen} 
-          onClose={closeDeleteGroupModal} 
-          onConfirm={async () => {
-            closeDeleteGroupModal();
-            await handleDeleteGroup();
-          }}
-        />
-      </div>
+          <DeleteGroupAlert 
+            isOpen={isDeleteGroupOpen} 
+            onClose={closeDeleteGroupModal} 
+            onConfirm={async () => {
+              closeDeleteGroupModal();
+              await handleDeleteGroup();
+            }}
+          />
+        </div>
       }
     </Box>
   )

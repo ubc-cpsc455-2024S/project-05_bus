@@ -184,8 +184,8 @@ export default function Calendar() {
         events={
           isFiltered
             ? events.filter(
-                (event) => event.extendedProps.memberId === selectedMemberID
-              )
+              (event) => event.extendedProps.memberId === selectedMemberID
+            )
             : events
         }
         eventReceive={(info) => {

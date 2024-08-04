@@ -38,7 +38,7 @@ export default function NotificationCard({ event, onDismiss, onDone }) {
       display="flex"
       alignItems="center"
     >
-       {reminder && (
+      {reminder && (
         <Tooltip label={`Reminded by ${reminderUser?.firstName} ${moment(reminder.sendDate).fromNow()}`}>
           <Box position="absolute" top="-15px" left="-10px">
             <BellIcon color="blue.500"  boxSize={6}/>

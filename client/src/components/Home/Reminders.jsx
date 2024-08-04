@@ -92,8 +92,8 @@ const ReminderCard = ({ dismissedEvents }) => {
               <Td whiteSpace="nowrap" fontSize="sm">
                 {event.extendedProps.memberId
                   ? members.find(
-                      (member) => member._id === event.extendedProps.memberId
-                    )?.firstName
+                    (member) => member._id === event.extendedProps.memberId
+                  )?.firstName
                   : null}
               </Td>
               <Td whiteSpace="nowrap" fontSize="sm">

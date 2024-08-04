@@ -55,11 +55,11 @@ export default function JoinGroupForm() {
         <span className="material-symbols-outlined icon">group_add</span>
       </div>
       <Input
-          value={groupInput}
-          onChange={handleGroupChange}
-          onKeyDown={handleKeyPress}
-          placeholder="Group ID (e.g. GTCqAx1EblTelfU0CJACa)"
-        />
+        value={groupInput}
+        onChange={handleGroupChange}
+        onKeyDown={handleKeyPress}
+        placeholder="Group ID (e.g. GTCqAx1EblTelfU0CJACa)"
+      />
       {error && (
         <Text color="red.500" mb="10px">
           {error}

@@ -29,5 +29,5 @@ export const imageReceiptProcessor = async (img, locations, categories) => {
 };
 
 export const groceryImageReceiptProcessor = async (img, locations, categories) => {
-    return await receiptProcessor(img, locations, categories, "groceryImage");
-  };
+  return await receiptProcessor(img, locations, categories, "groceryImage");
+};
