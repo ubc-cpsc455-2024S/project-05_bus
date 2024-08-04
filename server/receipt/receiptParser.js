@@ -1,4 +1,4 @@
-import { createWorker } from "tesseract.js";
+import { createWorker } from "tesseract";
 import sharp from "sharp";
 
 const worker = await createWorker("eng");

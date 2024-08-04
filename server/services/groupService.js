@@ -1,5 +1,5 @@
-import groupQueries from '../queries/groupQuery.js';
-import userQueries from '../queries/userQuery.js';
+import groupQueries from '../queries/groupQuery';
+import userQueries from '../queries/userQuery';
 
 const getAllGroups = async () => {
   return await groupQueries.getAllGroups();
@@ -35,7 +35,7 @@ const updateName = async (groupID, newName) => {
 
 const addMember = async (groupID, userID) => {
   const user = await userQueries.getUserById(userID);
-  const userGroup = user.groupID
+  const userGroup = user.groupID;
   if (userGroup) {
     throw new Error(`User ${userID} is already in group ${userGroup}`);
   }

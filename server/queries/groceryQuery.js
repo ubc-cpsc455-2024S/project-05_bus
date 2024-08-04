@@ -1,6 +1,6 @@
-import { Groceries } from '../models/grocerySchema.js';
-import Events from '../models/eventSchema.js';
-import eventQueries from './eventQuery.js';
+import { Groceries } from '../models/grocerySchema';
+import Events from '../models/eventSchema';
+import eventQueries from './eventQuery';
 
 const groceryQueries = {
   getAllGroceries: async function (groupID) {

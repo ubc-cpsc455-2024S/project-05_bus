@@ -1,5 +1,5 @@
-import Users from '../models/userSchema.js';
-import groupQueries from '../queries/groupQuery.js';
+import Users from '../models/userSchema';
+import groupQueries from '../queries/groupQuery';
 
 const userQueries = {
   getAllUsers: async function () {
@@ -35,6 +35,6 @@ const userQueries = {
     const result = await Users.findByIdAndUpdate(userID, {groupID});
     return result;
   }
-}
+};
 
 export default userQueries;

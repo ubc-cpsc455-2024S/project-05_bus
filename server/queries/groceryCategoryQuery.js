@@ -1,4 +1,4 @@
-import { GroceryCategories } from '../models/grocerySchema.js';
+import { GroceryCategories } from '../models/grocerySchema';
 
 const groceryCategoryQueries = {
   getAllCategories: async function (groupID) {

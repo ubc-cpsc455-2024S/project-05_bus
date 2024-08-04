@@ -1,4 +1,4 @@
-import Groups from '../models/groupSchema.js';
+import Groups from '../models/groupSchema';
 
 const groupQueries = {
   getAllGroups: async function () {
@@ -102,6 +102,6 @@ const groupQueries = {
       throw error;
     }
   }
-}
+};
 
 export default groupQueries;
