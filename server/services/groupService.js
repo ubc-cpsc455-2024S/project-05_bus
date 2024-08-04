@@ -22,7 +22,7 @@ const createGroup = async (groupData) => {
       await groupQueries.removeMember(groupID, userID);
     } else {
       await userQueries.updateUserGroup(userID, groupID);
-    };
+    }
   });
   await Promise.all(updatePromises);
 
@@ -44,23 +44,19 @@ const addMember = async (groupID, userID) => {
 };
 
 const removeMember = async (groupID, userID) => {
-  try {
-    const group = await groupQueries.getGroup(groupID);
-    if (!group) throw new Error(`Could not find group with id ${groupID}`);
+  const group = await groupQueries.getGroup(groupID);
+  if (!group) throw new Error(`Could not find group with id ${groupID}`);
 
-    const isMember = group.memberIDs.includes(userID);
-    const isAdmin = group.adminIDs.includes(userID);
+  const isMember = group.memberIDs.includes(userID);
+  const isAdmin = group.adminIDs.includes(userID);
 
-    if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
-    if (isAdmin) {
-      await removeAdmin(groupID, userID);
-    }
-
-    await userQueries.updateUserGroup(userID, null);
-    return await groupQueries.removeMember(groupID, userID);
-  } catch (error) {
-    throw error;
+  if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
+  if (isAdmin) {
+    await removeAdmin(groupID, userID);
   }
+
+  await userQueries.updateUserGroup(userID, null);
+  return await groupQueries.removeMember(groupID, userID);
 };
 
 const addAdmin = async (groupID, userID) => {
@@ -68,22 +64,18 @@ const addAdmin = async (groupID, userID) => {
 };
 
 const removeAdmin = async (groupID, userID) => {
-  try {
-    const group = await groupQueries.getGroup(groupID);
-    if (!group) throw new Error(`Could not find group with id ${groupID}`);
+  const group = await groupQueries.getGroup(groupID);
+  if (!group) throw new Error(`Could not find group with id ${groupID}`);
 
-    const isMember = group.memberIDs.includes(userID);
-    const isAdmin = group.adminIDs.includes(userID);
-    const adminCount = group.adminIDs.length;
+  const isMember = group.memberIDs.includes(userID);
+  const isAdmin = group.adminIDs.includes(userID);
+  const adminCount = group.adminIDs.length;
 
-    if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
-    if (!isAdmin) throw new Error(`User ${userID} is not an admin of group ${groupID}`);
-    if (adminCount <= 1) throw new Error(`Cannot remove user ${userID} as an admin. Groups must have at least one admin`);
+  if (!isMember) throw new Error(`User ${userID} is not a member of group ${groupID}`);
+  if (!isAdmin) throw new Error(`User ${userID} is not an admin of group ${groupID}`);
+  if (adminCount <= 1) throw new Error(`Cannot remove user ${userID} as an admin. Groups must have at least one admin`);
 
-    return await groupQueries.removeAdmin(groupID, userID);
-  } catch (error) {
-    throw error;
-  }
+  return await groupQueries.removeAdmin(groupID, userID);
 };
 
 const deleteGroup = async (groupID) => {

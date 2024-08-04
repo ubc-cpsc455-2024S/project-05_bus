@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
       });
       console.log(response.choices[0].message.content);
       const recipeObject = JSON.parse(response.choices[0].message.content);
-      return res.status(200).json(recipeObject);;
+      return res.status(200).json(recipeObject);
     } catch (err) {
       console.log(err);
       res.status(500).send(err.message);

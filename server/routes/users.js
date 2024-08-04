@@ -4,7 +4,7 @@ import userQueries from "../queries/userQuery.js";
 const router = express.Router();
 
 /* GET all users listing. */
-router.get("/", async function(req, res, next) {
+router.get("/", async function(req, res) {
   try {
       const result = await userQueries.getAllUsers();
       return res.json(result);
@@ -15,7 +15,7 @@ router.get("/", async function(req, res, next) {
 });
 
 /* GET group members listing. */
-router.get("/group/:groupID", async function(req, res, next) {
+router.get("/group/:groupID", async function(req, res) {
   try {
       const result = await userQueries.getGroupMembers(req.params.groupID);
       return res.json(result);
@@ -26,7 +26,7 @@ router.get("/group/:groupID", async function(req, res, next) {
 });
 
 /* GET user listing. */
-router.get("/:id", async function(req, res, next) {
+router.get("/:id", async function(req, res) {
   try {
       const result = await userQueries.getUserById(req.params.id);
       if (!result) {
@@ -40,7 +40,7 @@ router.get("/:id", async function(req, res, next) {
 });
 
 /* POST user listing. */
-router.post("/", async function(req, res, next) {
+router.post("/", async function(req, res) {
   try {
       const result = await userQueries.postUser(req.body);
       return res.status(201).json(result);
@@ -51,7 +51,7 @@ router.post("/", async function(req, res, next) {
 });
 
 /* POST user info via email bc apparently it is bad to do it with GET */
-router.post("/userInfo", async function(req, res, next) {
+router.post("/userInfo", async function(req, res) {
   try {
       const result = await userQueries.postUserByEmail(req.body);
       return res.status(201).json(result);
@@ -62,13 +62,13 @@ router.post("/userInfo", async function(req, res, next) {
 });
 
 /* DELETE user listing. */
-router.delete("/:id", async function(req, res, next) {
+router.delete("/:id", async function(req, res) {
   try {
       const result = await userQueries.deleteUser(req.params.id);
       if (!result) {
         return res.status(404).send({ message: "User not found" });
       }
-      return res.status(200).json(result);;
+      return res.status(200).json(result);
   } catch (err) {
       console.error(err);
       return res.status(500).json({ error: "Internal Server Error" });
