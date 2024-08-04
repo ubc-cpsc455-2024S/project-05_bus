@@ -1,4 +1,4 @@
-import Recipes from '../models/recipeSchema';
+import Recipes from '../models/recipeSchema.js';
 
 const recipeQueries = {
   getAllRecipes: async function () {
@@ -29,6 +29,6 @@ const recipeQueries = {
       throw error;
     }
   } 
-};
+}
 
 export default recipeQueries;

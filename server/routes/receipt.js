@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
-import { receiptImgPreprocess, groceryImgPreprocess, processReceipt } from '../receipt/receiptParser';
-import { chatCompletion, chatCompletionImage, chatCompletionGroceryImage } from '../receipt/openAi';
+import { receiptImgPreprocess, groceryImgPreprocess, processReceipt } from '../receipt/receiptParser.js';
+import { chatCompletion, chatCompletionImage, chatCompletionGroceryImage } from '../receipt/openAi.js';
 
 const router = express.Router();
 const upload = multer();

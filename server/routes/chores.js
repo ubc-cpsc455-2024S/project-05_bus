@@ -1,6 +1,6 @@
 import express from 'express';
-import choreQueries from '../queries/choreQuery';
-import eventQueries from '../queries/eventQuery';
+import choreQueries from '../queries/choreQuery.js';
+import eventQueries from '../queries/eventQuery.js';
 
 const router = express.Router();
 

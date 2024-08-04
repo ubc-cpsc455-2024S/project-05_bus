@@ -1,4 +1,4 @@
-import GroupService from '../services/groupService';
+import GroupService from '../services/groupService.js';
 
 const getAllGroups = async (req, res) => {
   try {

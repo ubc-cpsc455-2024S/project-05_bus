@@ -1,8 +1,8 @@
 import express from 'express';
-import eventQueries from '../queries/eventQuery';
-import groceryQueries from '../queries/groceryQuery';
-import groceryLocationQueries from '../queries/groceryLocationQuery';
-import groceryCategoryQueries from '../queries/groceryCategoryQuery';
+import eventQueries from '../queries/eventQuery.js';
+import groceryQueries from '../queries/groceryQuery.js';
+import groceryLocationQueries from '../queries/groceryLocationQuery.js';
+import groceryCategoryQueries from '../queries/groceryCategoryQuery.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

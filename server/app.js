@@ -5,13 +5,13 @@ import logger from 'morgan';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import usersRouter from './routes/users';
-import eventsRouter from './routes/events';
-import choresRouter from './routes/chores';
-import groceriesRouter from './routes/groceries';
-import groupsRouter from './routes/groups';
-import receiptRouter from './routes/receipt';
-import recipeRouter from './routes/recipe';
+import usersRouter from './routes/users.js';
+import eventsRouter from './routes/events.js';
+import choresRouter from './routes/chores.js';
+import groceriesRouter from './routes/groceries.js';
+import groupsRouter from './routes/groups.js';
+import receiptRouter from './routes/receipt.js';
+import recipeRouter from './routes/recipe.js';
 
 dotenv.config();
 

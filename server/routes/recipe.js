@@ -1,5 +1,5 @@
 import express from 'express';
-import recipeQueries from '../queries/recipeQuery';
+import recipeQueries from '../queries/recipeQuery.js';
 import dotenv from 'dotenv';
 import { OpenAI } from 'openai';
 
@@ -55,6 +55,6 @@ router.post('/generateRecipe', async (req, res) => {
     console.log(err);
     res.status(500).send(err.message);
   }
-});
+})
   
 export default router;

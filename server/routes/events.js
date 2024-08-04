@@ -1,5 +1,5 @@
 import express from 'express';
-import eventQueries from '../queries/eventQuery';
+import eventQueries from '../queries/eventQuery.js';
 
 const router = express.Router();
 
