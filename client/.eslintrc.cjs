@@ -10,7 +10,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'import'],
   rules: {
     'react/prop-types': 'off',
     'react/jsx-no-target-blank': 'off',
@@ -22,11 +22,10 @@ module.exports = {
     'no-unused-vars': 'warn',
     'indent': ['error', 2],
     'quotes': ['error', 'single'],
-    "semi": ["error", "always"]
-    // 'import/no-unresolved': 'error',
-    // 'import/extensions': ['error', 'always', {
-    //   'js': 'never',
-    //   'jsx': 'never',
-    // }],
+    'semi': ['error', 'always'],
+    'import/extensions': ['error', 'never', {
+      'js': 'never',
+      'jsx': 'never',
+    }],
   },
 }

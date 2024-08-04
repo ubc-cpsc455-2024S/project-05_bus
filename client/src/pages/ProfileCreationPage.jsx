@@ -71,7 +71,7 @@ export default function ProfileCreationPage() {
             <Button onClick={handleLogout}>Logout</Button>
           </Box>
         </Box>
-      </form >
-    </Box >
+      </form>
+    </Box>
   );
 }

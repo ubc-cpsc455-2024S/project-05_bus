@@ -2,8 +2,8 @@ import './App.css';
 import Layout from './Layout';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getUsersAsync } from './redux/users/thunks.js';
-import { getGroupsAsync } from './redux/groups/thunks.js';
+import { getUsersAsync } from './redux/users/thunks';
+import { getGroupsAsync } from './redux/groups/thunks';
 
 export default function App() {
   const dispatch = useDispatch();

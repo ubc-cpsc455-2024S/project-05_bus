@@ -11,11 +11,9 @@ import {
   PopoverCloseButton,
 } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
-import useCurrentUser from '../../hooks/useCurrentUser';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Navbar() {
-  const currentUser = useCurrentUser();
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth0();
 
