@@ -18,5 +18,8 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    'no-console': 'warn',
+    'no-unused-vars': 'warn',
+    'indent': ['error', 2]
   },
 }
