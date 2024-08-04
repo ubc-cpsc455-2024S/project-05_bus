@@ -33,10 +33,10 @@ import {
 } from '@tanstack/react-table';
 import { useSelector } from 'react-redux';
 
-import ColumnFilter from "./ColumnFilter";
-import NotificationPopover from "./NotificationPopover";
-import GroceryFooter from "./GroceryFooter";
-import columns from "./TableColumns";
+import ColumnFilter from './ColumnFilter';
+import NotificationPopover from './NotificationPopover';
+import GroceryFooter from './GroceryFooter';
+import columns from './TableColumns';
 
 import EditGroceryPopover from './EditGroceryItem';
 import FavoriteButton from './FavouriteButton';
@@ -57,18 +57,18 @@ export default function GroceriesTable() {
   const locations = useSelector((state) => state.groceries.locations);
   const members = useCurrentGroupMembers();
 
-  const tooltipColumns = ["name", "categoryId", "locationId"];
+  const tooltipColumns = ['name', 'categoryId', 'locationId'];
 
   const handleToggle = (columnId) => {
     setOpenFilter(columnId === openFilter ? null : columnId);
   };
 
   const breakpoint = useBreakpointValue({
-    base: "base",
-    sm: "sm",
-    md: "md",
-    lg: "lg",
-    xl: "xl",
+    base: 'base',
+    sm: 'sm',
+    md: 'md',
+    lg: 'lg',
+    xl: 'xl',
   });
 
   const memoizedColumns = useMemo(() => {
@@ -173,7 +173,7 @@ export default function GroceriesTable() {
                       py={3}
                       px={4}
                       borderTopRightRadius='md'
-                      display={{ base: "none", md: "table-cell" }}
+                      display={{ base: 'none', md: 'table-cell' }}
                       _hover={{ bg: 'teal.600' }}
                     >
                       Actions
@@ -224,7 +224,7 @@ export default function GroceriesTable() {
                       ))}
                       <Td
                         maxWidth='180px'
-                        display={{ base: "none", md: "table-cell" }}
+                        display={{ base: 'none', md: 'table-cell' }}
                       >
                         <EditGroceryPopover groceryItem={row.original} />
                         <NotificationPopover groceryItem={row.original} />
@@ -233,7 +233,7 @@ export default function GroceriesTable() {
                         <SelectMealButton groceryItem={row.original} />
                       </Td>
                     </Tr>
-                    <Tr display={{ base: "table-row", md: "none" }}>
+                    <Tr display={{ base: 'table-row', md: 'none' }}>
                       <Td colSpan={row.getVisibleCells().length}>
                         <HStack spacing={2} justifyContent="flex-end">
                           <EditGroceryPopover groceryItem={row.original} />

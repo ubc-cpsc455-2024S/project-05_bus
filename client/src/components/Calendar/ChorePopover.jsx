@@ -25,7 +25,7 @@ import useCurrentGroup from '../../hooks/useCurrentGroup';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import { addEventAsync } from '../../redux/events/thunks';
-import getTextColour from "./utils/getTextColour";
+import getTextColour from './utils/getTextColour';
 
 export default function ChorePopover({ chore }) {
   const [eventType, setEventType] = useState('one-time');

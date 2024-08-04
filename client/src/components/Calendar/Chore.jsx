@@ -1,7 +1,7 @@
 import { HStack, Text, Tooltip, ButtonGroup } from '@chakra-ui/react';
 import DeleteAlert from '../DeleteAlert';
 import ChorePopover from './ChorePopover';
-import getTextColour from "./utils/getTextColour";
+import getTextColour from './utils/getTextColour';
 
 export default function Chore({ chore, handleDelete }) {
   const textColour = getTextColour(chore.colour);
@@ -25,9 +25,9 @@ export default function Chore({ chore, handleDelete }) {
           className='event-title'
           style={{
             color: textColour,
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
           }}
         >
           {chore.title}

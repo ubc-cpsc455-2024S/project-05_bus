@@ -32,9 +32,9 @@ const SubmitButton = ({
     }
 
     let processorFunction;
-    if (type === "Receipt") {
+    if (type === 'Receipt') {
       processorFunction = imageReceiptProcessor;
-    } else if (type === "Groceries") {
+    } else if (type === 'Groceries') {
       processorFunction = groceryImageReceiptProcessor;
     }
 

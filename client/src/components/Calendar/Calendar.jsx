@@ -8,14 +8,14 @@ import {
   updateEventAsync,
   addEventAsync,
   deleteEventAsync,
-} from "../../redux/events/thunks";
-import EventPopover from "./EventPopover";
-import { Box, useBreakpointValue } from "@chakra-ui/react";
-import useCurrentGroup from "../../hooks/useCurrentGroup";
-import { updateMonthView } from "../../redux/events/calendarSlice";
-import moment from "moment";
-import { getChoresAsync } from "../../redux/chores/thunks";
-import { getGroceryAsync } from "../../redux/groceries/thunks";
+} from '../../redux/events/thunks';
+import EventPopover from './EventPopover';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { updateMonthView } from '../../redux/events/calendarSlice';
+import moment from 'moment';
+import { getChoresAsync } from '../../redux/chores/thunks';
+import { getGroceryAsync } from '../../redux/groceries/thunks';
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -59,7 +59,7 @@ export default function Calendar() {
 
   const handleDeleteEvent = async (event) => {
     await dispatch(deleteEventAsync(event.id));
-    if (event.extendedProps.type !== "chore") {
+    if (event.extendedProps.type !== 'chore') {
       await dispatch(getGroceryAsync(event.extendedProps.groceryId));
     }
     closePopover();
@@ -93,7 +93,7 @@ export default function Calendar() {
         })
       );
       closePopover();
-    } else if (eventDetails.type !== "chore") {
+    } else if (eventDetails.type !== 'chore') {
       dispatch(
         updateEventAsync({
           _id: eventDetails._id,
@@ -128,10 +128,10 @@ export default function Calendar() {
   return (
     <Box
       p={4}
-      flex={["1", "1", "1", "4"]}
+      flex={['1', '1', '1', '4']}
       bg="white"
       className="calendar-container"
-      minHeight={["50vh", "50vh", "100vh"]}
+      minHeight={['50vh', '50vh', '100vh']}
     >
       <FullCalendar
         aspectRatio={aspectRatio}

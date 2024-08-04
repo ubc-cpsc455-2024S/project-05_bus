@@ -72,10 +72,10 @@ export default function CalendarChores() {
   return (
     <Box
       bg="white"
-      flex={["1", "1", "1", "2"]}
+      flex={['1', '1', '1', '2']}
       p="4"
       overflowY="auto"
-      height={["50vh", "50vh", "100vh"]}
+      height={['50vh', '50vh', '100vh']}
     >
       <Box
         p={4}

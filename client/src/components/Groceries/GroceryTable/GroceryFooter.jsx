@@ -36,7 +36,7 @@ import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
 import { addGroceryAsync } from '../../../redux/groceries/thunks';
 import Scanner from '../Scanner/Scanner';
 import { COMMON_UNITS } from '../utils/commonUnits';
-import GroceriesDrawer from "../GroceryDrawer/Drawer";
+import GroceriesDrawer from '../GroceryDrawer/Drawer';
 
 export default function GroceryFooter() {
   const categories = useSelector((state) => state.groceries.categories);
@@ -110,18 +110,18 @@ export default function GroceryFooter() {
     setCategory('');
     setExpiryDate('');
     setQuantity(0);
-    setQuantityUnit("");
-    setOwnerId("");
+    setQuantityUnit('');
+    setOwnerId('');
   };
 
   return (
     <Grid
-      templateColumns={{ base: "repeat(6, 1fr)", lg: "repeat(14, 1fr)" }}
+      templateColumns={{ base: 'repeat(6, 1fr)', lg: 'repeat(14, 1fr)' }}
       gap={2}
       alignItems="center"
     >
       <FormControl
-        gridColumn={{ base: "span 2", lg: "span 2" }}
+        gridColumn={{ base: 'span 2', lg: 'span 2' }}
         isInvalid={errors.name}
       >
         <FormErrorMessage position="absolute" bottom="100%" left="0">
@@ -134,7 +134,7 @@ export default function GroceryFooter() {
         />
       </FormControl>
 
-      <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
+      <FormControl gridColumn={{ base: 'span 2', lg: 'span 2' }}>
         <CreatableSelect
           placeholder='Location'
           options={locations.map((loc) => ({
@@ -156,7 +156,7 @@ export default function GroceryFooter() {
         />
       </FormControl>
 
-      <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
+      <FormControl gridColumn={{ base: 'span 2', lg: 'span 2' }}>
         <CreatableSelect
           placeholder='Category'
           options={categories.map((cat) => ({
@@ -178,7 +178,7 @@ export default function GroceryFooter() {
         />
       </FormControl>
 
-      <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
+      <FormControl gridColumn={{ base: 'span 2', lg: 'span 2' }}>
         <Input
           placeholder='Expiry Date'
           type='date'
@@ -187,7 +187,7 @@ export default function GroceryFooter() {
         />
       </FormControl>
 
-      <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
+      <FormControl gridColumn={{ base: 'span 2', lg: 'span 2' }}>
         <Select
           placeholder='Owner'
           value={ownerId}
@@ -245,7 +245,7 @@ export default function GroceryFooter() {
         alignItems="center"
       >
         <IconButton onClick={handleAdd}>
-        <AddIcon />
+          <AddIcon />
         </IconButton>
         <Menu>
           <MenuButton as={Button}>

@@ -41,7 +41,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
   const chores = useSelector((state) => state.chores.chores);
   const members = useCurrentGroupMembers();
   const member = members.find((member) => member._id === eventDetails.memberId);
-  const memberName = member ? member.firstName : "Unassigned Chore";
+  const memberName = member ? member.firstName : 'Unassigned Chore';
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -85,7 +85,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
             <Box
               color={eventDetails.textColor}
               padding="2px 4px 0px 4px"
-              textDecoration={eventDetails.done ? "line-through" : "none"}
+              textDecoration={eventDetails.done ? 'line-through' : 'none'}
               position="relative"
               isTruncated
             >
