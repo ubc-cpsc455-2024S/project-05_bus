@@ -1,6 +1,6 @@
-import moment from "moment";
-import { DateFilter } from "../utils/FilterFns";
-import { HStack, Text, Badge } from "@chakra-ui/react";
+import moment from 'moment';
+import { DateFilter } from '../utils/FilterFns';
+import { HStack, Text, Badge } from '@chakra-ui/react';
 
 const columns = (locations, categories, members, dateFilterType, breakpoint) => {
   const allColumns = [
@@ -9,13 +9,13 @@ const columns = (locations, categories, members, dateFilterType, breakpoint) => 
       header: "Name",
       cell: (info) => (
         <HStack>
-          <Text overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+          <Text overflow='hidden' textOverflow='ellipsis' whiteSpace='nowrap'>
             {info.getValue()}
           </Text>
           {!info.row.original.ownerId ? (
-            <Badge colorScheme="green">Shared</Badge>
+            <Badge colorScheme='green'>Shared</Badge>
           ) : (
-            <Badge colorScheme="blue">
+            <Badge colorScheme='blue'>
               {
                 members.find((m) => m._id === String(info.row.original.ownerId))
                   .firstName

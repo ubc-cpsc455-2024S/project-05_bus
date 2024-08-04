@@ -1,4 +1,4 @@
-import { addCategoryAsync, addLocationAsync } from "../../../redux/groceries/thunks";
+import { addCategoryAsync, addLocationAsync } from '../../../redux/groceries/thunks';
 
 export const handleCreateCategory = async (inputValue, dispatch, groupID, setCategory) => {
   const resultAction = await dispatch(addCategoryAsync({ name: inputValue, groupID }));

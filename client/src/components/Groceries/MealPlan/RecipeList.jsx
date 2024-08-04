@@ -19,8 +19,8 @@ const RecipeList = ({ onRecipeSelect }) => {
 
   if (loading) {
     return (
-      <Box textAlign="center" p={4}>
-        <Spinner size="lg" color="teal.500" />
+      <Box textAlign='center' p={4}>
+        <Spinner size='lg' color='teal.500' />
       </Box>
     );
   }
@@ -32,10 +32,10 @@ const RecipeList = ({ onRecipeSelect }) => {
           <ListItem
             key={recipe._id}
             p={2}
-            borderWidth="1px"
-            borderRadius="md"
-            cursor="pointer"
-            _hover={{ bg: "gray.100" }}
+            borderWidth='1px'
+            borderRadius='md'
+            cursor='pointer'
+            _hover={{ bg: 'gray.100' }}
             onClick={() => onRecipeSelect(recipe)}
           >
             {recipe.recipe}

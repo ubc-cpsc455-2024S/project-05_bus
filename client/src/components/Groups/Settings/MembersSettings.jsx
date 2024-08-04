@@ -20,7 +20,7 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
         setError('Could not remove user from group');
       }
     }
-  }
+  };
 
   return (
     <Box className="members-settings-container">
@@ -39,5 +39,5 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
         ))}
       </ul>
     </Box>
-  )
+  );
 }

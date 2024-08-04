@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { REQUEST_STATE } from "../utils";
+import { REQUEST_STATE } from '../utils';
 import { 
   getGroupsAsync,
   getGroupAsync,
@@ -10,7 +10,7 @@ import {
   addAdminAsync,
   removeAdminAsync,
   deleteGroupAsync 
-} from "./thunks";
+} from './thunks';
 
 const initialState = {
   groups: [],
@@ -27,7 +27,7 @@ const initialState = {
 };
 
 const groupsSlice = createSlice({
-  name: "groups",
+  name: 'groups',
   initialState,
   reducers: {
     setSelectedMemberID: (state, action) => {

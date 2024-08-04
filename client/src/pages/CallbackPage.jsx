@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { postUserByEmailAsync } from "../redux/users/thunks";

@@ -18,16 +18,16 @@ import {
   InputRightAddon,
   useOutsideClick,
   IconButton,
-} from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+} from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   deleteCategoryAsync,
   deleteLocationAsync,
   updateCategoryAsync,
   updateLocationAsync,
-} from "../../../redux/groceries/thunks";
+} from '../../../redux/groceries/thunks';
 
 export default function GroceryCard({
   item,
@@ -54,74 +54,74 @@ export default function GroceryCard({
   };
 
   const handleSaveClick = () => {
-    if (type === "category") {
+    if (type === 'category') {
       dispatch(updateCategoryAsync({ _id: item._id, name: cardName }));
-    } else if (type === "location") {
+    } else if (type === 'location') {
       dispatch(updateLocationAsync({ _id: item._id, name: cardName }));
     }
     setIsEditing(false);
   };
 
   const handleDeleteClick = (item, type) => {
-    if (confirm("Are you sure you want to delete this?") === false) return;
-    if (type === "category") {
+    if (confirm('Are you sure you want to delete this?') === false) return;
+    if (type === 'category') {
       dispatch(deleteCategoryAsync(item));
-    } else if (type === "location") {
+    } else if (type === 'location') {
       dispatch(deleteLocationAsync(item));
     }
   };
 
   return (
     <>
-      <Card key={item._id} backgroundColor={bgColor} ref={ref} shadow="xl">
+      <Card key={item._id} backgroundColor={bgColor} ref={ref} shadow='xl'>
         {isEditing ? (
           <IconButton
-            size="xs"
+            size='xs'
             icon={<DeleteIcon />}
             onClick={() => handleDeleteClick(item, type)}
-            backgroundColor="red.400"
-            color="white"
-            _hover={{ bg: "red.500" }}
-            position="absolute"
-            borderRadius="full"
-            top="-10px"
-            left="-10px"
-            m="0"
-            p="0"
-            shadow="lg"
+            backgroundColor='red.400'
+            color='white'
+            _hover={{ bg: 'red.500' }}
+            position='absolute'
+            borderRadius='full'
+            top='-10px'
+            left='-10px'
+            m='0'
+            p='0'
+            shadow='lg'
           />
         ) : null}
         <CardHeader
-          fontSize="lg"
+          fontSize='lg'
           pt={2}
           pb={2}
-          bg="teal.500"
-          color="white"
-          borderTopRadius="md"
+          bg='teal.500'
+          color='white'
+          borderTopRadius='md'
           p={3}
-          textAlign="center"
+          textAlign='center'
         >
           <InputGroup>
             <Input
-              variant="unstyled"
+              variant='unstyled'
               value={cardName}
               onChange={handleInputChange}
               isDisabled={!isEditing}
-              _disabled={{ color: "white" }}
+              _disabled={{ color: 'white' }}
             />
-            <InputRightAddon bg="none" border="none" m={0} p={0}>
+            <InputRightAddon bg='none' border='none' m={0} p={0}>
               {isEditing ? (
                 <Button
-                  className="material-symbols-outlined"
-                  colorScheme="teal"
+                  className='material-symbols-outlined'
+                  colorScheme='teal'
                   onClick={handleSaveClick}
                 >
                   save
                 </Button>
               ) : (
                 <Button
-                  className="material-symbols-outlined"
-                  colorScheme="teal"
+                  className='material-symbols-outlined'
+                  colorScheme='teal'
                   onClick={handleEditClick}
                 >
                   edit
@@ -132,11 +132,11 @@ export default function GroceryCard({
         </CardHeader>
         <CardBody m={1} p={0}>
           {matchingGroceries.length > 0 ? (
-            <TableContainer overflowX="hidden" overflowY="scroll">
-              <Table variant="unstyled">
+            <TableContainer overflowX='hidden' overflowY='scroll'>
+              <Table variant='unstyled'>
                 <Thead>
                   <Tr>
-                    <Th minWidth="80%">Name</Th>
+                    <Th minWidth='80%'>Name</Th>
                     <Th isNumeric>Qty</Th>
                   </Tr>
                 </Thead>
@@ -144,12 +144,12 @@ export default function GroceryCard({
                   {matchingGroceries.map((grocery) => (
                     <Tr key={grocery._id}>
                       <Td>
-                        <Tooltip label={grocery.name} aria-label="grocery-name">
+                        <Tooltip label={grocery.name} aria-label='grocery-name'>
                           <Box
-                            maxWidth="90%"
-                            overflow="hidden"
-                            textOverflow="ellipsis"
-                            whiteSpace="nowrap"
+                            maxWidth='90%'
+                            overflow='hidden'
+                            textOverflow='ellipsis'
+                            whiteSpace='nowrap'
                             p={0.8}
                           >
                             {grocery.name}
@@ -163,7 +163,7 @@ export default function GroceryCard({
               </Table>
             </TableContainer>
           ) : (
-            <Text mt={1} textAlign="center" color="gray.500" mb={4}>
+            <Text mt={1} textAlign='center' color='gray.500' mb={4}>
               No items found
             </Text>
           )}

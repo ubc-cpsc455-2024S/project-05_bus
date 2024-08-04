@@ -1,4 +1,4 @@
-import Chores from "../models/choreSchema.js";
+import Chores from '../models/choreSchema.js';
 
 const choreQueries = {
   getAllChores: async function (groupID) {
@@ -6,7 +6,7 @@ const choreQueries = {
       const chores = await Chores.find({ groupID });
       return chores;
     } catch (error) {
-      console.error("Error fetching chores:", error);
+      console.error('Error fetching chores:', error);
       throw error;
     }
   },
@@ -25,7 +25,7 @@ const choreQueries = {
       const savedChore = await newChore.save();
       return savedChore;
     } catch (error) {
-      console.error("Error saving new chore:", error);
+      console.error('Error saving new chore:', error);
       throw error;
     }
   },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Box,
   Grid,
@@ -20,22 +20,22 @@ import {
   MenuItem,
   Text,
   Select,
-} from "@chakra-ui/react";
-import { CreatableSelect } from "chakra-react-select";
-import { AddIcon } from "@chakra-ui/icons";
-import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
+} from '@chakra-ui/react';
+import { CreatableSelect } from 'chakra-react-select';
+import { AddIcon } from '@chakra-ui/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
 import {
   handleCreateCategory,
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "../utils/CreateNewSelectOptions";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
-import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
-import { addGroceryAsync } from "../../../redux/groceries/thunks";
-import Scanner from "../Scanner/Scanner";
-import { COMMON_UNITS } from "../utils/commonUnits";
+} from '../utils/CreateNewSelectOptions';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
+import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
+import { addGroceryAsync } from '../../../redux/groceries/thunks';
+import Scanner from '../Scanner/Scanner';
+import { COMMON_UNITS } from '../utils/commonUnits';
 import GroceriesDrawer from "../GroceryDrawer/Drawer";
 
 export default function GroceryFooter() {
@@ -46,13 +46,13 @@ export default function GroceryFooter() {
   const members = useCurrentGroupMembers();
   const toast = useToast();
 
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [category, setCategory] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [category, setCategory] = useState('');
+  const [expiryDate, setExpiryDate] = useState('');
   const [quantity, setQuantity] = useState(0);
-  const [quantityUnit, setQuantityUnit] = useState("");
-  const [ownerId, setOwnerId] = useState("");
+  const [quantityUnit, setQuantityUnit] = useState('');
+  const [ownerId, setOwnerId] = useState('');
   const [isScannerOpen, setIsScannerOpen] = useState(false);
   const [scannerType, setScannerType] = useState(null);
 
@@ -71,8 +71,8 @@ export default function GroceryFooter() {
   const handleAdd = () => {
     const newErrors = {};
 
-    if (!name) newErrors.name = "Name is required";
-    if (quantity <= 0) newErrors.quantity = "Cannot be 0";
+    if (!name) newErrors.name = 'Name is required';
+    if (quantity <= 0) newErrors.quantity = 'Cannot be 0';
 
     setErrors(newErrors);
 
@@ -90,13 +90,13 @@ export default function GroceryFooter() {
         })
       );
       toast({
-        title: "Grocery Added",
+        title: 'Grocery Added',
         description: `${name}${
-          quantity > 1 ? "'s" : ""
+          quantity > 1 ? '\'s' : ''
         } has been added to the ${
           locations.find((l) => l._id === location).name
         }`,
-        status: "success",
+        status: 'success',
         duration: 3000,
         isClosable: true,
       });
@@ -105,10 +105,10 @@ export default function GroceryFooter() {
   };
 
   const resetFields = () => {
-    setName("");
-    setLocation("");
-    setCategory("");
-    setExpiryDate("");
+    setName('');
+    setLocation('');
+    setCategory('');
+    setExpiryDate('');
     setQuantity(0);
     setQuantityUnit("");
     setOwnerId("");
@@ -128,7 +128,7 @@ export default function GroceryFooter() {
           {errors.name}
         </FormErrorMessage>
         <Input
-          placeholder="Name"
+          placeholder='Name'
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -136,21 +136,21 @@ export default function GroceryFooter() {
 
       <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
         <CreatableSelect
-          placeholder="Location"
+          placeholder='Location'
           options={locations.map((loc) => ({
             value: loc._id,
             label: loc.name,
           }))}
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
-          menuPlacement="auto"
+          menuPlacement='auto'
           onCreateOption={(input) =>
             handleCreateLocation(input, dispatch, group._id)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
-              width: "16px",
+              width: '16px',
             }),
           }}
         />
@@ -158,21 +158,21 @@ export default function GroceryFooter() {
 
       <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
         <CreatableSelect
-          placeholder="Category"
+          placeholder='Category'
           options={categories.map((cat) => ({
             value: cat._id,
             label: cat.name,
           }))}
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
-          menuPlacement="auto"
+          menuPlacement='auto'
           onCreateOption={(input) =>
             handleCreateCategory(input, dispatch, group._id)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
-              width: "16px",
+              width: '16px',
             }),
           }}
         />
@@ -180,22 +180,20 @@ export default function GroceryFooter() {
 
       <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
         <Input
-          placeholder="Expiry Date"
-          type="date"
-          value={expiryDate ? moment(expiryDate).format("YYYY-MM-DD") : ""}
+          placeholder='Expiry Date'
+          type='date'
+          value={expiryDate ? moment(expiryDate).format('YYYY-MM-DD') : ''}
           onChange={(e) => setExpiryDate(moment(e.target.value))}
         />
       </FormControl>
 
       <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
         <Select
-          placeholder="Owner"
+          placeholder='Owner'
           value={ownerId}
-          onChange={(e) =>
-            setOwnerId(e.target.value === "" ? null : e.target.value)
-          }
+          onChange={(e) => setOwnerId(e.target.value === '' ? null : e.target.value)}
         >
-          <option value={""}>Shared</option>
+          <option value={''}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
               {`${member.firstName} ${member.lastName}`}
@@ -205,15 +203,15 @@ export default function GroceryFooter() {
       </FormControl>
 
       <FormControl
-        gridColumn={{ base: "span 2", lg: "span 2" }}
+        gridColumn={{ base: 'span 2', lg: 'span 2' }}
         isInvalid={errors.quantity}
       >
-        <FormErrorMessage position="absolute" bottom="100%" left="0">
+        <FormErrorMessage position='absolute' bottom='100%' left='0'>
           {errors.quantity}
         </FormErrorMessage>
         <HStack spacing={2}>
           <NumberInput
-            placeholder="Quantity"
+            placeholder='Quantity'
             value={quantity}
             onChange={(value) => setQuantity(value)}
             min={0}
@@ -226,7 +224,7 @@ export default function GroceryFooter() {
             </NumberInputStepper>
           </NumberInput>
           <Select
-            placeholder="Unit"
+            placeholder='Unit'
             value={quantityUnit}
             onChange={(e) => setQuantityUnit(e.target.value)}
             flex={1}
@@ -241,7 +239,7 @@ export default function GroceryFooter() {
       </FormControl>
 
       <Box
-        gridColumn={{ base: "span 6", lg: "span 2" }}
+        gridColumn={{ base: 'span 6', lg: 'span 2' }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -257,9 +255,9 @@ export default function GroceryFooter() {
           </MenuButton>
           <MenuList>
             <MenuItem
-              onClick={() => openScanner("Receipt")}
+              onClick={() => openScanner('Receipt')}
               icon={
-                <Text color="gray.600" className="material-symbols-outlined">
+                <Text color='gray.600' className='material-symbols-outlined'>
                   receipt_long
                 </Text>
               }
@@ -267,9 +265,9 @@ export default function GroceryFooter() {
               Scan Receipt
             </MenuItem>
             <MenuItem
-              onClick={() => openScanner("Groceries")}
+              onClick={() => openScanner('Groceries')}
               icon={
-                <Text color="gray.600" className="material-symbols-outlined">
+                <Text color='gray.600' className='material-symbols-outlined'>
                   grocery
                 </Text>
               }

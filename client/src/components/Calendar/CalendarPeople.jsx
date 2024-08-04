@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Radio,
   RadioGroup,
@@ -9,11 +9,11 @@ import {
   Switch,
   FormLabel,
   Text,
-} from "@chakra-ui/react";
-import { setSelectedMemberID } from "../../redux/groups/groupsSlice";
-import { toggleFilter } from "../../redux/events/calendarSlice";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
-import useCurrentGroup from "../../hooks/useCurrentGroup";
+} from '@chakra-ui/react';
+import { setSelectedMemberID } from '../../redux/groups/groupsSlice';
+import { toggleFilter } from '../../redux/events/calendarSlice';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
 
 export default function CalendarPeople() {
   const dispatch = useDispatch();
@@ -32,44 +32,44 @@ export default function CalendarPeople() {
 
   return (
     <Box p={0}>
-      <Heading mb={4} size="lg" color="black">
+      <Heading mb={4} size='lg' color='black'>
         {currentGroup.name}
       </Heading>
       <RadioGroup
         onChange={handleRadioChange}
         value={selectedMemberID}
       >
-        <VStack align="start" spacing={3}>
+        <VStack align='start' spacing={3}>
           {members.map((member) => (
             <Radio
               key={member._id}
               value={String(member._id)}
-              size="lg"
-              colorScheme="whiteAlpha"
-              _hover={{ bg: "teal.100" }}
+              size='lg'
+              colorScheme='whiteAlpha'
+              _hover={{ bg: 'teal.100' }}
               _checked={{
-                bg: "teal.500",
-                borderColor: "teal.500",
-                color: "white",
+                bg: 'teal.500',
+                borderColor: 'teal.500',
+                color: 'white',
               }}
               _focus={{
-                boxShadow: "0 0 0 3px rgba(56, 178, 172, 0.6)",
+                boxShadow: '0 0 0 3px rgba(56, 178, 172, 0.6)',
               }}
-              color="black"
+              color='black'
             >
-              <Text color="black">{`${member.firstName} ${member.lastName}`}</Text>
+              <Text color='black'>{`${member.firstName} ${member.lastName}`}</Text>
             </Radio>
           ))}
         </VStack>
       </RadioGroup>
-      <FormControl display="flex" alignItems="center" mt={4}>
-        <FormLabel htmlFor="calendar-filter" mb="0" color="black">
+      <FormControl display='flex' alignItems='center' mt={4}>
+        <FormLabel htmlFor='calendar-filter' mb='0' color='black'>
           Filter Calendar
         </FormLabel>
         <Switch
-          id="calendar-filter"
-          colorScheme="teal"
-          size="lg"
+          id='calendar-filter'
+          colorScheme='teal'
+          size='lg'
           isChecked={isFiltered}
           onChange={handleToggleChange}
         />

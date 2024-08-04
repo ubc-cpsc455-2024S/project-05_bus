@@ -1,16 +1,16 @@
-import express from "express";
-import eventQueries from "../queries/eventQuery.js";
-import groceryQueries from "../queries/groceryQuery.js";
-import groceryLocationQueries from "../queries/groceryLocationQuery.js";
-import groceryCategoryQueries from "../queries/groceryCategoryQuery.js";
-import dotenv from "dotenv";
+import express from 'express';
+import eventQueries from '../queries/eventQuery.js';
+import groceryQueries from '../queries/groceryQuery.js';
+import groceryLocationQueries from '../queries/groceryLocationQuery.js';
+import groceryCategoryQueries from '../queries/groceryCategoryQuery.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const router = express.Router();
 
 // Grocery routes
-router.get("/group/:groupID", async (req, res) => {
+router.get('/group/:groupID', async (req, res) => {
   try {
     const groceries = await groceryQueries.getAllGroceries(req.params.groupID);
     return res.json(groceries);
@@ -19,7 +19,7 @@ router.get("/group/:groupID", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const grocery = await groceryQueries.getOneGrocery(req.params.id);
     return res.json(grocery);
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newGrocery = await groceryQueries.postGrocery(req.body);
     return res.status(201).json(newGrocery);
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/many", async (req, res) => {
+router.post('/many', async (req, res) => {
   try {
     const newGroceries = await groceryQueries.postManyGroceries(req.body);
     return res.status(201).json(newGroceries);
@@ -46,7 +46,7 @@ router.post("/many", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
     const updatedGrocery = await groceryQueries.updateGrocery(req.body);
     if (!updatedGrocery) {
@@ -58,7 +58,7 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const deletedGrocery = await groceryQueries.deleteGrocery(req.params.id);
     await eventQueries.deleteGroceryEvents(req.params.id);
@@ -69,7 +69,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Grocery Location Routes
-router.get("/locations/group/:groupID", async (req, res) => {
+router.get('/locations/group/:groupID', async (req, res) => {
   try {
     const locations = await groceryLocationQueries.getAllLocations(req.params.groupID);
     return res.json(locations);
@@ -78,7 +78,7 @@ router.get("/locations/group/:groupID", async (req, res) => {
   }
 });
 
-router.get("/locations/:id", async (req, res) => {
+router.get('/locations/:id', async (req, res) => {
   try {
     const location = await groceryLocationQueries.getOneLocation(req.params.id);
     return res.json(location);
@@ -87,7 +87,7 @@ router.get("/locations/:id", async (req, res) => {
   }
 });
 
-router.post("/locations", async (req, res) => {
+router.post('/locations', async (req, res) => {
   try {
     const newLocation = await groceryLocationQueries.postLocation(req.body);
     return res.status(201).json(newLocation);
@@ -96,7 +96,7 @@ router.post("/locations", async (req, res) => {
   }
 });
 
-router.patch("/locations/:id", async (req, res) => {
+router.patch('/locations/:id', async (req, res) => {
   try {
     const updatedLocation = await groceryLocationQueries.updateLocation(req.body);
     return res.json(updatedLocation);
@@ -105,7 +105,7 @@ router.patch("/locations/:id", async (req, res) => {
   }
 });
 
-router.delete("/locations/:id", async (req, res) => {
+router.delete('/locations/:id', async (req, res) => {
   const locationId = req.params.id;
   try {
     const deletedLocation = await groceryLocationQueries.deleteLocation(locationId);
@@ -117,7 +117,7 @@ router.delete("/locations/:id", async (req, res) => {
 });
 
 // Grocery Category Routes
-router.get("/categories/group/:groupID", async (req, res) => {
+router.get('/categories/group/:groupID', async (req, res) => {
   try {
     const categories = await groceryCategoryQueries.getAllCategories(req.params.groupID);
     return res.json(categories);
@@ -126,7 +126,7 @@ router.get("/categories/group/:groupID", async (req, res) => {
   }
 });
 
-router.get("/categories/:id", async (req, res) => {
+router.get('/categories/:id', async (req, res) => {
   try {
     const category = await groceryCategoryQueries.getOneCategory(req.params.id);
     return res.json(category);
@@ -135,7 +135,7 @@ router.get("/categories/:id", async (req, res) => {
   }
 });
 
-router.post("/categories", async (req, res) => {
+router.post('/categories', async (req, res) => {
   try {
     const newCategory = await groceryCategoryQueries.postCategory(req.body);
     return res.status(201).json(newCategory);
@@ -144,7 +144,7 @@ router.post("/categories", async (req, res) => {
   }
 });
 
-router.patch("/categories/:id", async (req, res) => {
+router.patch('/categories/:id', async (req, res) => {
   try {
     const updatedCategory = await groceryCategoryQueries.updateCategory(req.body);
     return res.json(updatedCategory);
@@ -153,7 +153,7 @@ router.patch("/categories/:id", async (req, res) => {
   }
 });
 
-router.delete("/categories/:id", async (req, res) => {
+router.delete('/categories/:id', async (req, res) => {
   const categoryId = req.params.id;
   try {
     const deletedCategory = await groceryCategoryQueries.deleteCategory(categoryId);

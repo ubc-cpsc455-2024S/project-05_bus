@@ -1,4 +1,4 @@
-import Groups from "../models/groupSchema.js";
+import Groups from '../models/groupSchema.js';
 
 const groupQueries = {
   getAllGroups: async function () {
@@ -6,7 +6,7 @@ const groupQueries = {
       const groups = await Groups.find();
       return groups;
     } catch (error) {
-      console.error("Error fetching all groups: ", error);
+      console.error('Error fetching all groups: ', error);
       throw error;
     }
   },
@@ -25,7 +25,7 @@ const groupQueries = {
       const savedGroup = await newGroup.save();
       return savedGroup;
     } catch (error) {
-      console.error("Error saving new group: ", error);
+      console.error('Error saving new group: ', error);
       throw error;
     }
   },
@@ -56,7 +56,7 @@ const groupQueries = {
       if (updatedGroup) {
         return updatedGroup;
       } else {
-        throw new Error(`User could not be added as an admin. Ensure the user is a member and not already an admin.`);
+        throw new Error('User could not be added as an admin. Ensure the user is a member and not already an admin.');
       }
     } catch (error) {
       console.error(`Error adding user ${userID} as an admin for group ${groupID}: `, error);
@@ -87,7 +87,7 @@ const groupQueries = {
         { new: true }
       );
   
-      if(!updatedGroup) throw new Error(`Could not remove user as admin.`);
+      if(!updatedGroup) throw new Error('Could not remove user as admin.');
       return updatedGroup;
     } catch (error) {
       console.error(`Error removing user ${userID} as admin of group ${groupID}: `, error);
@@ -102,6 +102,6 @@ const groupQueries = {
       throw error;
     }
   }
-}
+};
 
 export default groupQueries;

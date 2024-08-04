@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getEventsAsync,
   updateEventAsync,
@@ -137,7 +137,7 @@ export default function Calendar() {
         aspectRatio={aspectRatio}
         titleFormat={titleFormat}
         plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        initialView='dayGridMonth'
         datesSet={(dateInfo) => {
           dispatch(
             updateMonthView({
@@ -147,15 +147,15 @@ export default function Calendar() {
           );
         }}
         eventStartEditable={(info) => {
-          return info.event.extendedProps.type == "chore";
+          return info.event.extendedProps.type == 'chore';
         }}
         droppable
         eventDurationEditable={false}
         events={
           isFiltered
             ? events.filter(
-                (event) => event.extendedProps.memberId === selectedMemberID
-              )
+              (event) => event.extendedProps.memberId === selectedMemberID
+            )
             : events
         }
         eventReceive={(info) => {
@@ -175,7 +175,7 @@ export default function Calendar() {
         }}
         eventClick={handleEventClick}
         eventDrop={(info) => {
-          if (info.event.extendedProps.type == "chore") {
+          if (info.event.extendedProps.type == 'chore') {
             handleDragEvent(info);
           }
         }}

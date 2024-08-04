@@ -11,5 +11,5 @@ export default function HomePage() {
       <HomeNotifications />
       {currentGroup && <HomeGroup group={currentGroup}/>}
     </div>
-  )
+  );
 }

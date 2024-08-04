@@ -1,7 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import ChoreService from "./service";
-import { getEventsAsync } from "../events/thunks";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import ChoreService from './service';
+import { getEventsAsync } from '../events/thunks';
 
 export const getChoresAsync = createAsyncThunk(
   actionTypes.GET_CHORES,

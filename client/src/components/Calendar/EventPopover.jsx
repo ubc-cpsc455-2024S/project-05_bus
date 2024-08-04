@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Box,
   Popover,
@@ -18,17 +18,17 @@ import {
   Checkbox,
   Tooltip,
   Portal,
-} from "@chakra-ui/react";
-import { CheckIcon, DeleteIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
-import moment from "moment";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
+} from '@chakra-ui/react';
+import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
 
 function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
   const [eventDetails, setEventDetails] = useState({
     _id: event.id,
     title: event.title,
-    start: moment(event.start).format("YYYY-MM-DDTHH:mm"),
+    start: moment(event.start).format('YYYY-MM-DDTHH:mm'),
     choreId: event.extendedProps.choreId,
     memberId: event.extendedProps.memberId,
     restockerId: event.extendedProps.restockerId,
@@ -45,7 +45,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const updatedValue = type === "checkbox" ? checked : value;
+    const updatedValue = type === 'checkbox' ? checked : value;
     setEventDetails({ ...eventDetails, [name]: updatedValue });
   };
 
@@ -63,7 +63,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
         type: eventDetails.type,
       },
     };
-    if (eventDetails.type === "restock") {
+    if (eventDetails.type === 'restock') {
       updatedEventDetails.extendedProps.restockerId = eventDetails.memberId;
     }
     onEdit(updatedEventDetails);
@@ -96,21 +96,21 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
       </PopoverTrigger>
       <Portal>
         <PopoverContent
-          bg="gray.100"
-          border="none"
-          boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+          bg='gray.100'
+          border='none'
+          boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
         >
           <PopoverArrow />
-          <PopoverCloseButton color="black" onClick={onClose} />
-          <PopoverHeader color="black">Edit Chore</PopoverHeader>
+          <PopoverCloseButton color='black' onClick={onClose} />
+          <PopoverHeader color='black'>Edit Chore</PopoverHeader>
           <PopoverBody>
             <FormControl pb={2}>
-              <FormLabel color="black">Person</FormLabel>
+              <FormLabel color='black'>Person</FormLabel>
               <Select
-                variant="filled"
-                border="none"
-                bg="white"
-                name="memberId"
+                variant='filled'
+                border='none'
+                bg='white'
+                name='memberId'
                 value={eventDetails.memberId}
                 onChange={handleChange}
               >
@@ -121,14 +121,14 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
                 ))}
               </Select>
             </FormControl>
-            {eventDetails.type === "chore" && (
+            {eventDetails.type === 'chore' && (
               <FormControl pb={2}>
-                <FormLabel color="black">Type of Chore</FormLabel>
+                <FormLabel color='black'>Type of Chore</FormLabel>
                 <Select
-                  variant="filled"
-                  border="none"
-                  bg="white"
-                  name="choreId"
+                  variant='filled'
+                  border='none'
+                  bg='white'
+                  name='choreId'
                   value={eventDetails.choreId}
                   onChange={handleChange}
                 >
@@ -138,12 +138,12 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
                     </option>
                   ))}
                 </Select>
-                <FormLabel color="black">Date</FormLabel>
+                <FormLabel color='black'>Date</FormLabel>
                 <Input
-                  type="date"
-                  name="start"
-                  bg="white"
-                  value={eventDetails.start.split("T")[0]}
+                  type='date'
+                  name='start'
+                  bg='white'
+                  value={eventDetails.start.split('T')[0]}
                   onChange={handleChange}
                 />
               </FormControl>
@@ -153,21 +153,21 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
             <ButtonGroup spacing={4}>
               <Button
                 leftIcon={<DeleteIcon />}
-                colorScheme="red"
+                colorScheme='red'
                 onClick={() => onDelete(event)}
               >
                 Delete
               </Button>
               <Button
                 rightIcon={<CheckIcon />}
-                colorScheme="teal"
+                colorScheme='teal'
                 onClick={handleSubmit}
               >
                 Save
               </Button>
               <Checkbox
-                name="done"
-                color="black"
+                name='done'
+                color='black'
                 isChecked={eventDetails.done}
                 onChange={handleChange}
               >

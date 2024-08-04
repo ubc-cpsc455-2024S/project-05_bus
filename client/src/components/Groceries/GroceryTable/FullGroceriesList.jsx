@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 import {
   Box,
   TableContainer,
@@ -15,14 +15,14 @@ import {
   Spacer,
   Tooltip,
   useBreakpointValue,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   TriangleDownIcon,
   TriangleUpIcon,
   ArrowRightIcon,
   ArrowLeftIcon,
   UpDownIcon,
-} from "@chakra-ui/icons";
+} from '@chakra-ui/icons';
 import {
   useReactTable,
   getCoreRowModel,
@@ -30,27 +30,27 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   flexRender,
-} from "@tanstack/react-table";
-import { useSelector } from "react-redux";
+} from '@tanstack/react-table';
+import { useSelector } from 'react-redux';
 
 import ColumnFilter from "./ColumnFilter";
 import NotificationPopover from "./NotificationPopover";
 import GroceryFooter from "./GroceryFooter";
 import columns from "./TableColumns";
 
-import EditGroceryPopover from "./EditGroceryItem";
-import FavoriteButton from "./FavouriteButton";
-import SelectMealButton from "./MealButton";
+import EditGroceryPopover from './EditGroceryItem';
+import FavoriteButton from './FavouriteButton';
+import SelectMealButton from './MealButton';
 
-import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
-import NotePopover from "./NotePopover";
+import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
+import NotePopover from './NotePopover';
 
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 12 });
-  const [openFilter, setOpenFilter] = useState("");
-  const [dateFilterType, setDateFilterType] = useState("on");
+  const [openFilter, setOpenFilter] = useState('');
+  const [dateFilterType, setDateFilterType] = useState('on');
 
   const groceriesData = useSelector((state) => state.groceries.groceries);
   const categories = useSelector((state) => state.groceries.categories);
@@ -96,55 +96,55 @@ export default function GroceriesTable() {
   return (
     <Box
       p={5}
-      boxShadow="base"
-      bg="white"
-      className="groceries-container"
-      height="100vh"
+      boxShadow='base'
+      bg='white'
+      className='groceries-container'
+      height='100vh'
     >
-      <VStack spacing={4} height="100%">
-        <Box overflow="auto" width="100%" height="100%">
+      <VStack spacing={4} height='100%'>
+        <Box overflow='auto' width='100%' height='100%'>
           <TableContainer>
-            <Table variant="simple" colorScheme="teal" bg="teal.50" size="sm">
+            <Table variant='simple' colorScheme='teal" bg="teal.50' size='sm'>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <Tr key={headerGroup.id} bg="gray.100">
+                  <Tr key={headerGroup.id} bg='gray.100'>
                     {headerGroup.headers.map((header) => (
                       <Th
                         key={header.id}
-                        cursor="pointer"
-                        bg="teal.500"
-                        color="white"
+                        cursor='pointer'
+                        bg='teal.500'
+                        color='white'
                         py={2}
                         px={3}
                         borderTopLeftRadius={
                           header.id === headerGroup.headers[0].id
-                            ? "md"
-                            : "none"
+                            ? 'md'
+                            : 'none'
                         }
-                        _hover={{ bg: "teal.600" }}
+                        _hover={{ bg: 'teal.600' }}
                       >
                         <HStack
                           spacing={2}
-                          w="full"
-                          justifyContent="space-between"
+                          w='full'
+                          justifyContent='space-between'
                         >
                           <Box
                             onClick={header.column.getToggleSortingHandler()}
-                            cursor="pointer"
-                            display="flex"
-                            alignItems="center"
+                            cursor='pointer'
+                            display='flex'
+                            alignItems='center'
                           >
                             {flexRender(
                               header.column.columnDef.header,
                               header.getContext()
                             )}
                             <Box
-                              display="inline-flex"
-                              alignItems="center"
-                              ml="4px"
+                              display='inline-flex'
+                              alignItems='center'
+                              ml='4px'
                             >
                               {header.column.getIsSorted() ? (
-                                header.column.getIsSorted() === "desc" ? (
+                                header.column.getIsSorted() === 'desc' ? (
                                   <TriangleDownIcon />
                                 ) : (
                                   <TriangleUpIcon />
@@ -168,13 +168,13 @@ export default function GroceriesTable() {
                       </Th>
                     ))}
                     <Th
-                      bg="teal.500"
-                      color="white"
+                      bg='teal.500'
+                      color='white'
                       py={3}
                       px={4}
-                      borderTopRightRadius="md"
+                      borderTopRightRadius='md'
                       display={{ base: "none", md: "table-cell" }}
-                      _hover={{ bg: "teal.600" }}
+                      _hover={{ bg: 'teal.600' }}
                     >
                       Actions
                     </Th>
@@ -186,7 +186,7 @@ export default function GroceriesTable() {
                   <>
                     <Tr key={row.id}>
                       {row.getVisibleCells().map((cell) => (
-                        <Td key={cell.id} maxWidth="180px">
+                        <Td key={cell.id} maxWidth='180px'>
                           {tooltipColumns.includes(cell.column.id) ? (
                             <Tooltip
                               label={flexRender(
@@ -196,9 +196,9 @@ export default function GroceriesTable() {
                               hasArrow
                             >
                               <Box
-                                overflow="hidden"
-                                textOverflow="ellipsis"
-                                whiteSpace="nowrap"
+                                overflow='hidden'
+                                textOverflow='ellipsis'
+                                whiteSpace='nowrap'
                                 p={1}
                               >
                                 {flexRender(
@@ -209,9 +209,9 @@ export default function GroceriesTable() {
                             </Tooltip>
                           ) : (
                             <Box
-                              overflow="hidden"
-                              textOverflow="ellipsis"
-                              whiteSpace="nowrap"
+                              overflow='hidden'
+                              textOverflow='ellipsis'
+                              whiteSpace='nowrap'
                               p={1}
                             >
                               {flexRender(
@@ -223,7 +223,7 @@ export default function GroceriesTable() {
                         </Td>
                       ))}
                       <Td
-                        maxWidth="180px"
+                        maxWidth='180px'
                         display={{ base: "none", md: "table-cell" }}
                       >
                         <EditGroceryPopover groceryItem={row.original} />
@@ -256,10 +256,10 @@ export default function GroceriesTable() {
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
             icon={<ArrowLeftIcon />}
-            aria-label="Previous Page"
+            aria-label='Previous Page'
           />
           <Text>
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            Page {table.getState().pagination.pageIndex + 1} of{' '}
             {table.getPageCount()}
           </Text>
           <IconButton
@@ -268,7 +268,7 @@ export default function GroceriesTable() {
             }}
             disabled={!table.getCanNextPage()}
             icon={<ArrowRightIcon />}
-            aria-label="Next Page"
+            aria-label='Next Page'
           />
         </HStack>
       </VStack>

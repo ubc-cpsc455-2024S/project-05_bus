@@ -1,4 +1,4 @@
-import GroupService from "../services/groupService.js";
+import GroupService from '../services/groupService.js';
 
 const getAllGroups = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getGroup = async (req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    return res.status(404).send({ error: "Group not found" });
+    return res.status(404).send({ error: 'Group not found' });
   }
 };
 
@@ -53,7 +53,7 @@ const addMember = async (req, res) => {
 const removeMember = async (req, res) => {
   try {
     const result = await GroupService.removeMember(req.params.groupID, req.params.userID);
-    return res.status(200).json(result);;
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -73,7 +73,7 @@ const addAdmin = async (req, res) => {
 const removeAdmin = async (req, res) => {
   try {
     const result = await GroupService.removeAdmin(req.params.groupID, req.params.userID);
-    return res.status(200).json(result);;
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
     return res.status(500).send({ error: err.message });
@@ -83,10 +83,10 @@ const removeAdmin = async (req, res) => {
 const deleteGroup = async (req, res) => {
   try {
     const result = await GroupService.deleteGroup(req.params.id);
-    return res.status(200).json(result);;
+    return res.status(200).json(result);
   } catch (err) {
     console.error(err);
-    return res.status(404).send({ message: "Group not found" });
+    return res.status(404).send({ message: 'Group not found' });
   }
 };
 

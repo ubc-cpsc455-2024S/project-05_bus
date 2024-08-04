@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
 import { addRecipeAsync, generateRecipeAsync } from '../../../redux/recipes/thunks';
-import RecipeDrawer from "./RecipeDrawer";
+import RecipeDrawer from './RecipeDrawer';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
@@ -32,11 +32,11 @@ export default function MealPlanBox() {
       recipe: recipe.Recipe,
       ingredients: recipe.Ingredients,
       instructions: recipe.Instructions,
-  };
+    };
     dispatch(addRecipeAsync(newRecipe));
     toast({
-      title: "Recipe Successfully Added to Favourites",
-      status: "success",
+      title: 'Recipe Successfully Added to Favourites',
+      status: 'success',
       duration: 3000,
       isClosable: true,
     });
@@ -83,8 +83,8 @@ export default function MealPlanBox() {
 
   if (loading) {
     return (
-      <Box p={5} display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Spinner size="xl" color="teal.500" />
+      <Box p={5} display='flex' justifyContent='center' alignItems='center' height='100vh'>
+        <Spinner size='xl' color='teal.500' />
       </Box>
     );
   }
@@ -93,84 +93,84 @@ export default function MealPlanBox() {
     <>
       {showRecipe ? (
         <Box p={5}>
-          <Box display="flex" justifyContent="space-between">
+          <Box display='flex' justifyContent='space-between'>
             <IconButton
-              icon={<span className="material-symbols-outlined" style={{ fontSize: '2rem' }}>bookmark</span>}
-              bg="transparent"
-              size="lg"
-              color="orange.300"
-              variant="unstyled"
-              _hover={{color: "orange.500"}}
+              icon={<span className='material-symbols-outlined' style={{ fontSize: '2rem' }}>bookmark</span>}
+              bg='transparent'
+              size='lg'
+              color='orange.300'
+              variant='unstyled'
+              _hover={{color: 'orange.500'}}
               onClick={() => saveMeal()}
             />
             <IconButton
-              icon={<span className="material-symbols-outlined"  style={{ fontSize: '2rem' }}>close</span>}
-              bg="transparent"
-              size="lg"
-              color="red.500"
-              variant="unstyled"
-              _hover={{color: "red.700"}}
+              icon={<span className='material-symbols-outlined'  style={{ fontSize: '2rem' }}>close</span>}
+              bg='transparent'
+              size='lg'
+              color='red.500'
+              variant='unstyled'
+              _hover={{color: 'red.700'}}
               onClick={() => cancelMeal()}
             />
           </Box>
-          <Text textAlign="center" color="teal.500" fontSize="2xl" mb={4}><strong>{recipe.Recipe}</strong><br /></Text>
+          <Text textAlign='center' color='teal.500' fontSize='2xl' mb={4}><strong>{recipe.Recipe}</strong><br /></Text>
           <Text><strong>Ingredients:</strong></Text>
           <Text>
             {recipe.Ingredients && recipe.Ingredients.map((ingredient, index) => (
-            <React.Fragment key={index}>
-              <span>- {ingredient}</span>
-              <br />
-            </React.Fragment>
-          ))}<br /></Text>
+              <React.Fragment key={index}>
+                <span>- {ingredient}</span>
+                <br />
+              </React.Fragment>
+            ))}<br /></Text>
           <Text><strong>Instructions:</strong></Text>
           <Text>
             {recipe.Instructions && recipe.Instructions.map((instruction, index) => (
-            <React.Fragment key={index}>
-              <span>{instruction}</span>
-              <br />
-            </React.Fragment>
-          ))}</Text>
+              <React.Fragment key={index}>
+                <span>{instruction}</span>
+                <br />
+              </React.Fragment>
+            ))}</Text>
         </Box>
       ) : (
         <>
           <RecipeDrawer />
           <Box p={5}>
-            <Heading mb={4} size="lg" color="black" textAlign="center">
+            <Heading mb={4} size='lg' color='black' textAlign='center'>
               Need Help <br /> Planning a Meal?
             </Heading>
-            <Heading mb={4} size="sm" color="teal" textAlign="center">
+            <Heading mb={4} size='sm' color='teal' textAlign='center'>
               Select from the table the grocery items you would like to incorporate
             </Heading>
-            <VStack align="start" spacing={3}>
+            <VStack align='start' spacing={3}>
               {selectedMealItems.map((item) => (
                 <Box
                   key={item._id}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="space-between"
+                  display='flex'
+                  alignItems='center'
+                  justifyContent='space-between'
                 >
                   <IconButton
-                    icon={<span className="material-symbols-outlined">close_small</span>}
-                    bg="transparent"
-                    color="red"
-                    variant="unstyled"
+                    icon={<span className='material-symbols-outlined'>close_small</span>}
+                    bg='transparent'
+                    color='red'
+                    variant='unstyled'
                     onClick={() => removeSelect(item)}
                   />
-                  <Text color="black">{item.name}</Text>
+                  <Text color='black'>{item.name}</Text>
                   <NumberInput 
                     defaultValue={item.quantity} 
                     max={item.quantity} 
                     min={1} 
-                    size="sm"
-                    width="62px"
-                    border="transparent"
+                    size='sm'
+                    width='62px'
+                    border='transparent'
                     value={quantities[item._id]}
                     onChange={(valueString) => handleQuantityChange(item._id, parseInt(valueString))}
                   >
-                    <NumberInputField fontWeight="bold" />
+                    <NumberInputField fontWeight='bold' />
                     <NumberInputStepper>
-                      <NumberIncrementStepper border="none" />
-                      <NumberDecrementStepper border="none" />
+                      <NumberIncrementStepper border='none' />
+                      <NumberDecrementStepper border='none' />
                     </NumberInputStepper>
                   </NumberInput>
                 </Box>
@@ -178,14 +178,14 @@ export default function MealPlanBox() {
             </VStack>
             <Box
               p={4}
-              display="flex"
-              justifyContent="center"
+              display='flex'
+              justifyContent='center'
             >
               <Button
-                size="md"
-                bg="teal.500"
-                color="white"
-                _hover={{ bg: "teal.600" }}
+                size='md'
+                bg='teal.500'
+                color='white'
+                _hover={{ bg: 'teal.600' }}
                 onClick={generateRecipe}
               >
                 Generate Recipe

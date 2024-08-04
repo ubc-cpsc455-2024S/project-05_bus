@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 import {
   Box,
   Popover,
@@ -26,24 +26,24 @@ import {
   useOutsideClick,
   Select,
   HStack,
-} from "@chakra-ui/react";
-import { useState } from "react";
-import { CreatableSelect } from "chakra-react-select";
-import { useSelector, useDispatch } from "react-redux";
+} from '@chakra-ui/react';
+import { useState } from 'react';
+import { CreatableSelect } from 'chakra-react-select';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   handleCreateCategory,
   handleCreateLocation,
   isValidNewCategory,
   isValidNewLocation,
-} from "../utils/CreateNewSelectOptions";
-import moment from "moment";
+} from '../utils/CreateNewSelectOptions';
+import moment from 'moment';
 import {
   updateGroceryAsync,
   deleteGroceryAsync,
-} from "../../../redux/groceries/thunks";
-import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
-import { COMMON_UNITS } from "../utils/commonUnits";
+} from '../../../redux/groceries/thunks';
+import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
+import { COMMON_UNITS } from '../utils/commonUnits';
 
 export default function EditGroceryPopover({ groceryItem }) {
   const [name, setName] = useState(groceryItem.name);
@@ -79,9 +79,9 @@ export default function EditGroceryPopover({ groceryItem }) {
 
   const validateForm = () => {
     const newErrors = {};
-    if (name.trim().length === 0) newErrors.name = "Name is required";
+    if (name.trim().length === 0) newErrors.name = 'Name is required';
     if (!quantity || quantity < 0)
-      newErrors.quantity = "Quantity must be greater or equal to 0";
+      newErrors.quantity = 'Quantity must be greater or equal to 0';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -89,9 +89,9 @@ export default function EditGroceryPopover({ groceryItem }) {
   const handleSave = () => {
     if (validateForm()) {
       toast({
-        title: "Grocery item updated.",
-        description: "Your changes have been saved.",
-        status: "success",
+        title: 'Grocery item updated.',
+        description: 'Your changes have been saved.',
+        status: 'success',
         duration: 5000,
         isClosable: true,
       });
@@ -114,9 +114,9 @@ export default function EditGroceryPopover({ groceryItem }) {
   const handleDelete = () => {
     dispatch(deleteGroceryAsync(groceryItem._id));
     toast({
-      title: "Grocery item deleted.",
-      description: "Your item has been removed.",
-      status: "success",
+      title: 'Grocery item deleted.',
+      description: 'Your item has been removed.',
+      status: 'success',
       duration: 5000,
       isClosable: true,
     });
@@ -127,39 +127,39 @@ export default function EditGroceryPopover({ groceryItem }) {
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
         <IconButton
-          aria-label="Edit Grocery Item"
-          icon={<span className="material-symbols-outlined">edit</span>}
-          bg="transparent"
+          aria-label='Edit Grocery Item'
+          icon={<span className='material-symbols-outlined'>edit</span>}
+          bg='transparent'
           onClick={onOpen}
-          _hover={{ color: "teal.300" }}
-          _active={{ color: "teal.700" }}
+          _hover={{ color: 'teal.300' }}
+          _active={{ color: 'teal.700' }}
         />
       </PopoverTrigger>
-      <PopoverContent shadow="lg">
+      <PopoverContent shadow='lg'>
         <PopoverArrow />
         <PopoverHeader>
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
           >
             <Text>Edit Grocery Item</Text>
             <ButtonGroup>
               <Button
-                className="material-symbols-outlined"
-                size="sm"
+                className='material-symbols-outlined'
+                size='sm'
                 onClick={handleSave}
               >
                 Save
               </Button>
               <Button
-                className="material-symbols-outlined"
-                size="sm"
+                className='material-symbols-outlined'
+                size='sm'
                 onClick={handleDelete}
               >
                 delete
               </Button>
-              <PopoverCloseButton position="static" size="md" />
+              <PopoverCloseButton position='static' size='md' />
             </ButtonGroup>
           </Box>
         </PopoverHeader>
@@ -234,10 +234,10 @@ export default function EditGroceryPopover({ groceryItem }) {
             <Select
               value={ownerId}
               onChange={(e) =>
-                setOwnerId(e.target.value === "" ? null : e.target.value)
+                setOwnerId(e.target.value === '' ? null : e.target.value)
               }
             >
-              <option value={""}>Shared</option>
+              <option value={''}>Shared</option>
               {members.map((member) => (
                 <option key={member._id} value={member._id}>
                   {`${member.firstName} ${member.lastName}`}
@@ -248,8 +248,8 @@ export default function EditGroceryPopover({ groceryItem }) {
           <FormControl pb={2}>
             <FormLabel>Expiry Date</FormLabel>
             <Input
-              type="date"
-              value={moment(expiryDate).format("YYYY-MM-DD")}
+              type='date'
+              value={moment(expiryDate).format('YYYY-MM-DD')}
               onChange={(e) => setExpiryDate(e.target.value)}
             />
           </FormControl>
@@ -272,8 +272,8 @@ export default function EditGroceryPopover({ groceryItem }) {
             <FormControl pb={2}>
               <FormLabel>Units</FormLabel>
               <Select
-                id="quantity-unit"
-                placeholder="Select unit"
+                id='quantity-unit'
+                placeholder='Select unit'
                 value={quantityUnit}
                 onChange={(e) => setQuantityUnit(e.target.value)}
               >
