@@ -35,7 +35,7 @@ const updateName = async (groupID, newName) => {
 
 const addMember = async (groupID, userID) => {
   const user = await userQueries.getUserById(userID);
-  const userGroup = user.groupID
+  const userGroup = user.groupID;
   if (userGroup) {
     throw new Error(`User ${userID} is already in group ${userGroup}`);
   }

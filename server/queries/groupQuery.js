@@ -102,6 +102,6 @@ const groupQueries = {
       throw error;
     }
   }
-}
+};
 
 export default groupQueries;

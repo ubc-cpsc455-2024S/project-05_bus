@@ -29,6 +29,6 @@ const recipeQueries = {
       throw error;
     }
   } 
-}
+};
 
 export default recipeQueries;

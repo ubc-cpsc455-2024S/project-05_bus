@@ -35,6 +35,6 @@ const userQueries = {
     const result = await Users.findByIdAndUpdate(userID, {groupID});
     return result;
   }
-}
+};
 
 export default userQueries;

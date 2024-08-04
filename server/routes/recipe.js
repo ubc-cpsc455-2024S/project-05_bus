@@ -55,6 +55,6 @@ router.post('/generateRecipe', async (req, res) => {
     console.log(err);
     res.status(500).send(err.message);
   }
-})
+});
   
 export default router;
