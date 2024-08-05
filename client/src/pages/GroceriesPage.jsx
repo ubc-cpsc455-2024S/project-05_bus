@@ -1,10 +1,10 @@
-import { Box, useBreakpointValue } from "@chakra-ui/react";
-import FullGroceriesList from "../components/Groceries/GroceryTable/FullGroceriesList";
-import MealPlanBox from "../components/Groceries/MealPlan/MealPlanBox";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getGroceriesAsync } from "../redux/groceries/thunks";
-import useCurrentGroup from "../hooks/useCurrentGroup";
+import { Box, useBreakpointValue } from '@chakra-ui/react';
+import FullGroceriesList from '../components/Groceries/GroceryTable/FullGroceriesList';
+import MealPlanBox from '../components/Groceries/MealPlan/MealPlanBox';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getGroceriesAsync } from '../redux/groceries/thunks';
+import useCurrentGroup from '../hooks/useCurrentGroup';
 
 export default function GroceriesPage() {
   const dispatch = useDispatch();

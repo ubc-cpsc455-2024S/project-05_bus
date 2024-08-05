@@ -1,12 +1,12 @@
 import {
   Button,
   useToast,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+} from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import {
   imageReceiptProcessor,
   groceryImageReceiptProcessor,
-} from "./receiptService";
+} from './receiptService';
 
 const SubmitButton = ({
   croppedImageBlob,
@@ -23,8 +23,8 @@ const SubmitButton = ({
   const handleSubmit = async () => {
     if (!croppedImageBlob) {
       toast({
-        title: "No image selected",
-        status: "error",
+        title: 'No image selected',
+        status: 'error',
         duration: 1000,
         isClosable: true,
       });
@@ -32,9 +32,9 @@ const SubmitButton = ({
     }
 
     let processorFunction;
-    if (type === "Receipt") {
+    if (type === 'Receipt') {
       processorFunction = imageReceiptProcessor;
-    } else if (type === "Groceries") {
+    } else if (type === 'Groceries') {
       processorFunction = groceryImageReceiptProcessor;
     }
 
@@ -52,13 +52,13 @@ const SubmitButton = ({
           setGroceries(jsonData.groceries);
           setLoading(false);
         } else {
-          throw new Error("Invalid JSON data");
+          throw new Error('Invalid JSON data');
         }
       } catch (error) {
         toast({
-          title: "Error processing image",
+          title: 'Error processing image',
           description: error.message,
-          status: "error",
+          status: 'error',
           duration: 3000,
           isClosable: true,
         });
@@ -69,15 +69,15 @@ const SubmitButton = ({
 
   function extractAndParseJson(data) {
     const jsonString = data.trim();
-    const startIndex = jsonString.indexOf("{");
-    const endIndex = jsonString.lastIndexOf("}");
+    const startIndex = jsonString.indexOf('{');
+    const endIndex = jsonString.lastIndexOf('}');
     const cleanedJsonString = jsonString.substring(startIndex, endIndex + 1);
     try {
       return JSON.parse(cleanedJsonString);
     } catch (error) {
       toast({
-        title: "Please try submitting again",
-        status: "error",
+        title: 'Please try submitting again',
+        status: 'error',
         duration: 1000,
         isClosable: true,
       });

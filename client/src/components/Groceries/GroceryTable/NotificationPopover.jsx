@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -23,22 +23,22 @@ import {
   useOutsideClick,
   ButtonGroup,
   useToast,
-} from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
-import { updateGroceryAsync } from "../../../redux/groceries/thunks";
-import { addEventAsync } from "../../../redux/events/thunks";
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
+import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
+import { updateGroceryAsync } from '../../../redux/groceries/thunks';
+import { addEventAsync } from '../../../redux/events/thunks';
 
 export default function NotificationPopover({ groceryItem }) {
   const [selectedNotifications, setSelectedNotifications] = useState(() => {
     const initialNotifications = [];
-    if (groceryItem.expiryNotificationDate) initialNotifications.push("expiry");
-    if (groceryItem.restockThreshold) initialNotifications.push("restock");
+    if (groceryItem.expiryNotificationDate) initialNotifications.push('expiry');
+    if (groceryItem.restockThreshold) initialNotifications.push('restock');
     return initialNotifications;
   });
-  const [expiryNotificationTime, setExpiryNotificationTime] = useState("7");
+  const [expiryNotificationTime, setExpiryNotificationTime] = useState('7');
   const [restockQuantity, setRestockQuantity] = useState(
     groceryItem.restockThreshold
   );
@@ -64,10 +64,10 @@ export default function NotificationPopover({ groceryItem }) {
     try {
       const updates = { _id: groceryItem._id };
 
-      if (selectedNotifications.includes("expiry")) {
+      if (selectedNotifications.includes('expiry')) {
         const expiryDate = new Date(groceryItem.expiryDate);
         const notificationDate = moment(expiryDate)
-          .subtract(expiryNotificationTime, "days")
+          .subtract(expiryNotificationTime, 'days')
           .format();
 
         if (groceryItem.expiryNotificationDate !== notificationDate) {
@@ -75,15 +75,15 @@ export default function NotificationPopover({ groceryItem }) {
             addEventAsync({
               title: `${groceryItem.name} will expire on ${moment(
                 groceryItem.expiryDate
-              ).format("MMMM Do YYYY")}`,
+              ).format('MMMM Do YYYY')}`,
               start: notificationDate,
               allDay: true,
-              backgroundColor: "#c49bad",
-              borderColor: "#c49bad",
+              backgroundColor: '#c49bad',
+              borderColor: '#c49bad',
               groupID: group._id,
               extendedProps: {
                 groceryId: groceryItem._id,
-                type: "expiry",
+                type: 'expiry',
                 memberId: currentUserID,
                 done: false,
               },
@@ -95,7 +95,7 @@ export default function NotificationPopover({ groceryItem }) {
         updates.expiryNotificationDate = null;
       }
 
-      if (selectedNotifications.includes("restock")) {
+      if (selectedNotifications.includes('restock')) {
         updates.restockThreshold = restockQuantity;
         updates.restockerId = assignedUser;
       } else {
@@ -107,9 +107,9 @@ export default function NotificationPopover({ groceryItem }) {
       dispatch(updateGroceryAsync(updates));
 
       toast({
-        title: "Notifications updated.",
-        description: "Your notifications have been successfully updated.",
-        status: "success",
+        title: 'Notifications updated.',
+        description: 'Your notifications have been successfully updated.',
+        status: 'success',
         duration: 5000,
         isClosable: true,
       });
@@ -117,9 +117,9 @@ export default function NotificationPopover({ groceryItem }) {
       onClose();
     } catch (error) {
       toast({
-        title: "An error occurred.",
-        description: "Unable to update notifications.",
-        status: "error",
+        title: 'An error occurred.',
+        description: 'Unable to update notifications.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
@@ -130,84 +130,84 @@ export default function NotificationPopover({ groceryItem }) {
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
         <IconButton
-          aria-label="Notifications"
+          aria-label='Notifications'
           icon={
-            <span className="material-symbols-outlined">notifications</span>
+            <span className='material-symbols-outlined'>notifications</span>
           }
-          bg="transparent"
+          bg='transparent'
           onClick={onOpen}
-          color={selectedNotifications.length > 0 ? "yellow.500" : "gray.600"}
-          _hover={{ color: "yellow.300" }}
-          _active={{ color: "yellow.700" }}
+          color={selectedNotifications.length > 0 ? 'yellow.500' : 'gray.600'}
+          _hover={{ color: 'yellow.300' }}
+          _active={{ color: 'yellow.700' }}
         />
       </PopoverTrigger>
-      <PopoverContent shadow="lg" pt={0} pb={2} position="relative">
+      <PopoverContent shadow='lg' pt={0} pb={2} position='relative'>
         <PopoverArrow />
         <PopoverHeader>
           <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
           >
             <Text>Notifications</Text>
             <ButtonGroup>
               <Button
-                className="material-symbols-outlined"
-                size="sm"
+                className='material-symbols-outlined'
+                size='sm'
                 onClick={handleSave}
               >
                 Save
               </Button>
-              <PopoverCloseButton position="static" size="md" />
+              <PopoverCloseButton position='static' size='md' />
             </ButtonGroup>
           </Box>
         </PopoverHeader>
         <PopoverBody ref={ref}>
           <Stack spacing={4}>
             <Text>
-              Expiry Date:{" "}
-              {moment(groceryItem.expiryDate).format("MMMM Do YYYY")}
+              Expiry Date:{' '}
+              {moment(groceryItem.expiryDate).format('MMMM Do YYYY')}
             </Text>
             <CheckboxGroup
-              colorScheme="green"
+              colorScheme='green'
               onChange={setSelectedNotifications}
               value={selectedNotifications}
             >
-              <Stack direction="column">
-                <Checkbox value="expiry">Expiry Date Notification</Checkbox>
+              <Stack direction='column'>
+                <Checkbox value='expiry'>Expiry Date Notification</Checkbox>
                 {groceryItem.expiryNotificationDate && (
                   <Text>
-                    Expiry Notification Date:{" "}
+                    Expiry Notification Date:{' '}
                     {moment(groceryItem.expiryNotificationDate).format(
-                      "MMMM Do YYYY"
+                      'MMMM Do YYYY'
                     )}
                   </Text>
                 )}
-                {selectedNotifications.includes("expiry") && (
+                {selectedNotifications.includes('expiry') && (
                   <RadioGroup
-                    colorScheme="green"
+                    colorScheme='green'
                     onChange={setExpiryNotificationTime}
                     value={expiryNotificationTime}
                   >
-                    <Stack direction="column">
-                      <Radio value="7">1 Week Before</Radio>
-                      <Radio value="3">3 Days Before</Radio>
-                      <Radio value="1">1 Day Before</Radio>
+                    <Stack direction='column'>
+                      <Radio value='7'>1 Week Before</Radio>
+                      <Radio value='3'>3 Days Before</Radio>
+                      <Radio value='1'>1 Day Before</Radio>
                     </Stack>
                   </RadioGroup>
                 )}
-                <Checkbox value="restock">Restock Notification</Checkbox>
+                <Checkbox value='restock'>Restock Notification</Checkbox>
                 {groceryItem.restockNotificationDate && (
                   <Text>
-                    Restock Notification Date:{" "}
+                    Restock Notification Date:{' '}
                     {moment(groceryItem.restockNotificationDate).format(
-                      "MMMM Do YYYY"
+                      'MMMM Do YYYY'
                     )}
                   </Text>
                 )}
               </Stack>
             </CheckboxGroup>
-            {selectedNotifications.includes("restock") && (
+            {selectedNotifications.includes('restock') && (
               <NumberInput
                 min={0}
                 onChange={(valueString) =>
@@ -215,12 +215,12 @@ export default function NotificationPopover({ groceryItem }) {
                 }
                 value={Number(restockQuantity)}
               >
-                <NumberInputField placeholder="Restock Quantity" />
+                <NumberInputField placeholder='Restock Quantity' />
               </NumberInput>
             )}
-            {selectedNotifications.includes("restock") && (
+            {selectedNotifications.includes('restock') && (
               <Select
-                placeholder="Assign Restocker"
+                placeholder='Assign Restocker'
                 onChange={(e) => setAssignedUser(e.target.value)}
                 value={assignedUser}
               >

@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import EventService from "./service";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import EventService from './service';
 
 export const getEventsAsync = createAsyncThunk(
   actionTypes.GET_EVENTS,

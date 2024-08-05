@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -10,8 +10,8 @@ import {
   Button,
   useDisclosure,
   IconButton,
-} from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
+} from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 export default function DeleteAlert({ handleDelete, type, style }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,9 +19,9 @@ export default function DeleteAlert({ handleDelete, type, style }) {
 
   return (
     <>
-      <IconButton size="xs" onClick={onOpen} icon={<DeleteIcon />} sx={style} />
+      <IconButton size='xs' onClick={onOpen} icon={<DeleteIcon />} sx={style} />
       <AlertDialog
-        motionPreset="slideInBottom"
+        motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         isOpen={isOpen}
@@ -33,15 +33,15 @@ export default function DeleteAlert({ handleDelete, type, style }) {
           <AlertDialogHeader>Delete this {type}?</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            Are you sure you want to delete this {type}? All related{" "}
-            {type === "chore" ? "events" : "groceries"} will be deleted as well.
+            Are you sure you want to delete this {type}? All related{' '}
+            {type === 'chore' ? 'events' : 'groceries'} will be deleted as well.
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
               No
             </Button>
             <Button
-              colorScheme="red"
+              colorScheme='red'
               onClick={() => {
                 handleDelete();
                 onClose();

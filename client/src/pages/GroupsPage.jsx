@@ -1,9 +1,9 @@
-import '../components/Login/LoginPage.css'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import LoginSidebar from '../components/Login/LoginSidebar'
-import CreateGroupForm from '../components/Groups/CreateGroupForm'
-import JoinGroupForm from '../components/Groups/JoinGroupForm'
+import '../components/Login/LoginPage.css';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoginSidebar from '../components/Login/LoginSidebar';
+import CreateGroupForm from '../components/Groups/CreateGroupForm';
+import JoinGroupForm from '../components/Groups/JoinGroupForm';
 import useCurrentUser from '../hooks/useCurrentUser';
 
 export default function GroupPage() {

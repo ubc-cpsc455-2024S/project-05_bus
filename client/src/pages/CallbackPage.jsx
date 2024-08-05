@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch } from "react-redux";
+import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { postUserByEmailAsync } from "../redux/users/thunks";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { setCurrentUserID, setCurrentUserName } from "../redux/users/usersSlice";
+import { postUserByEmailAsync } from '../redux/users/thunks';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 import { setSelectedMemberID } from '../redux/groups/groupsSlice';
 
 export function CallbackPage() {
@@ -22,12 +22,12 @@ export function CallbackPage() {
             console.log(newUser);
             dispatch(setCurrentUserID(newUser._id));
             dispatch(setSelectedMemberID(newUser._id));
-            const name = newUser.firstName + " " + newUser.lastName;
+            const name = newUser.firstName + ' ' + newUser.lastName;
             dispatch(setCurrentUserName(name));
             navigate('/home');
           }
         } catch (error) {
-          console.error("Error processing user after login:", error);
+          console.error('Error processing user after login:', error);
         }
       }
     };

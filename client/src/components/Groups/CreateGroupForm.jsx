@@ -73,7 +73,7 @@ export default function CreateGroupForm() {
       name: groupName,
       memberIDs,
       adminIDs: [currentUser._id]
-    }
+    };
      
     try {
       await dispatch(createGroupAsync(group)).unwrap();
@@ -82,7 +82,7 @@ export default function CreateGroupForm() {
     } catch (error) {
       setError('Could not create group.');
     }
-  }
+  };
 
   return (
     <Box width="400px" mt="20px" className="create-group-container">

@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { REQUEST_STATE } from "../utils";
+import { REQUEST_STATE } from '../utils';
 import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, deleteUserAsync} from './thunks';
 
 const initialState = {
   users: [],
-  currentUserID: "668de09e1cecc096caffda9e",
-  currentUserName: "",
+  currentUserID: '668de09e1cecc096caffda9e',
+  currentUserName: '',
   getUsers: REQUEST_STATE.IDLE,
   getGroupMembers: REQUEST_STATE.IDLE,
   getUser: REQUEST_STATE.IDLE,
   addUser: REQUEST_STATE.IDLE,
   deleteUser: REQUEST_STATE.IDLE,
-}
+};
 
 
 const usersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
   reducers: {
     setCurrentUserID: (state, action) => {

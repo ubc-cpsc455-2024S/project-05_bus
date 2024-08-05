@@ -1,6 +1,6 @@
 import './Chores.css';
-import { useRef, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useRef, useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { 
   Box,
   Heading,
@@ -12,13 +12,13 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverCloseButton,
-} from "@chakra-ui/react";
-import { Draggable } from "@fullcalendar/interaction";
-import CreateChore from "./CreateChore";
-import CalendarPeople from "./CalendarPeople";
-import EventList from "./EventList";
-import { deleteChoreAsync } from "../../redux/chores/thunks";
-import Chore from "./Chore";
+} from '@chakra-ui/react';
+import { Draggable } from '@fullcalendar/interaction';
+import CreateChore from './CreateChore';
+import CalendarPeople from './CalendarPeople';
+import EventList from './EventList';
+import { deleteChoreAsync } from '../../redux/chores/thunks';
+import Chore from './Chore';
 
 export default function CalendarChores() {
   const eventsRef = useRef(null);
@@ -41,10 +41,10 @@ export default function CalendarChores() {
     if (selectedMemberID) {
       const containerEl = eventsRef.current;
       const draggable = new Draggable(containerEl, {
-        itemSelector: ".event",
+        itemSelector: '.event',
         eventData: (eventEl) => {
-          const choreId = eventEl.getAttribute("data-chore-id");
-          const eventTitleEl = eventEl.querySelector(".event-title");
+          const choreId = eventEl.getAttribute('data-chore-id');
+          const eventTitleEl = eventEl.querySelector('.event-title');
           const data = {
             title: eventTitleEl.innerText,
             allDay: true,
@@ -53,7 +53,7 @@ export default function CalendarChores() {
             textColor: eventTitleEl.style.color,
             extendedProps: {
               choreId: choreId,
-              type: "chore",
+              type: 'chore',
               memberId: selectedMemberID,
               done: false,
             },
@@ -72,26 +72,26 @@ export default function CalendarChores() {
   return (
     <Box
       bg="white"
-      flex={["1", "1", "1", "2"]}
+      flex={['1', '1', '1', '2']}
       p="4"
       overflowY="auto"
-      height={["50vh", "50vh", "100vh"]}
+      height={['50vh', '50vh', '100vh']}
     >
       <Box
         p={4}
-        flex="1"
-        borderRadius="md"
+        flex='1'
+        borderRadius='md'
         marginBottom={4}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
       >
         <CalendarPeople />
       </Box>
       <Box
         p={5}
-        flex="1"
-        borderRadius="md"
+        flex='1'
+        borderRadius='md'
         marginBottom={4}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
       >
         <div className="chores-heading-container">
           <Heading size="lg" color="black">Chore Templates</Heading>

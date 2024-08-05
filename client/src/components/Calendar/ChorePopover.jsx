@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Popover,
   PopoverTrigger,
@@ -19,19 +19,19 @@ import {
   Box,
   useDisclosure,
   Portal,
-} from "@chakra-ui/react";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
-import useCurrentGroup from "../../hooks/useCurrentGroup";
-import { useDispatch } from "react-redux";
-import moment from "moment";
-import { addEventAsync } from "../../redux/events/thunks";
-import getTextColour from "./utils/getTextColour";
+} from '@chakra-ui/react';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { useDispatch } from 'react-redux';
+import moment from 'moment';
+import { addEventAsync } from '../../redux/events/thunks';
+import getTextColour from './utils/getTextColour';
 
 export default function ChorePopover({ chore }) {
-  const [eventType, setEventType] = useState("one-time");
-  const [assignee, setAssignee] = useState("");
+  const [eventType, setEventType] = useState('one-time');
+  const [assignee, setAssignee] = useState('');
   const [repeatInterval, setRepeatInterval] = useState(1);
-  const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
+  const [startDate, setStartDate] = useState(moment().format('YYYY-MM-DD'));
   const group = useCurrentGroup();
   const members = useCurrentGroupMembers();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,39 +44,39 @@ export default function ChorePopover({ chore }) {
   }, [members]);
 
   const handleSave = () => {
-    if (eventType === "one-time") {
+    if (eventType === 'one-time') {
       dispatchEvent(moment(startDate).format());
-    } else if (eventType === "daily") {
+    } else if (eventType === 'daily') {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment(startDate).add(i, "days").format());
+        dispatchEvent(moment(startDate).add(i, 'days').format());
       }
-    } else if (eventType === "weekly") {
+    } else if (eventType === 'weekly') {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment(startDate).add(i, "weeks").format());
+        dispatchEvent(moment(startDate).add(i, 'weeks').format());
       }
-    } else if (eventType === "monthly") {
+    } else if (eventType === 'monthly') {
       for (let i = 0; i < repeatInterval; i++) {
-        dispatchEvent(moment(startDate).add(i, "months").format());
+        dispatchEvent(moment(startDate).add(i, 'months').format());
       }
     }
     onClose();
   };
 
   const calculateEndDate = () => {
-    if (eventType === "one-time") {
+    if (eventType === 'one-time') {
       return startDate;
-    } else if (eventType === "daily") {
+    } else if (eventType === 'daily') {
       return moment(startDate)
-        .add(repeatInterval - 1, "days")
-        .format("YYYY-MM-DD");
-    } else if (eventType === "weekly") {
+        .add(repeatInterval - 1, 'days')
+        .format('YYYY-MM-DD');
+    } else if (eventType === 'weekly') {
       return moment(startDate)
-        .add(repeatInterval - 1, "weeks")
-        .format("YYYY-MM-DD");
-    } else if (eventType === "monthly") {
+        .add(repeatInterval - 1, 'weeks')
+        .format('YYYY-MM-DD');
+    } else if (eventType === 'monthly') {
       return moment(startDate)
-        .add(repeatInterval - 1, "months")
-        .format("YYYY-MM-DD");
+        .add(repeatInterval - 1, 'months')
+        .format('YYYY-MM-DD');
     }
   };
 
@@ -91,7 +91,7 @@ export default function ChorePopover({ chore }) {
         textColor: getTextColour(chore.colour),
         groupID: group._id,
         extendedProps: {
-          type: "chore",
+          type: 'chore',
           choreId: chore.id,
           memberId: assignee,
           done: false,
@@ -101,58 +101,58 @@ export default function ChorePopover({ chore }) {
   };
 
   return (
-    <Popover isOpen={isOpen} onClose={onClose} placement="left" boxShadow="md">
+    <Popover isOpen={isOpen} onClose={onClose} placement='left' boxShadow='md'>
       <PopoverTrigger>
         <Button
           onClick={onOpen}
-          size="xs"
-          backgroundColor="whiteAlpha.500"
-          className="material-symbols-outlined"
+          size='xs'
+          backgroundColor='whiteAlpha.500'
+          className='material-symbols-outlined'
         >
           calendar_add_on
         </Button>
       </PopoverTrigger>
       <Portal>
-        <PopoverContent boxShadow="lg">
+        <PopoverContent boxShadow='lg'>
           <PopoverArrow />
           <PopoverCloseButton />
           <PopoverHeader>{chore.title}</PopoverHeader>
           <PopoverBody>
-            <FormControl as="fieldset" mb="4">
-              <FormLabel as="legend">Event Frequency</FormLabel>
+            <FormControl as='fieldset' mb='4'>
+              <FormLabel as='legend'>Event Frequency</FormLabel>
               <RadioGroup value={eventType} onChange={setEventType}>
-                <Stack direction="column">
-                  <Radio value="one-time">One-Time</Radio>
-                  <Radio value="daily">Daily</Radio>
-                  <Radio value="weekly">Weekly</Radio>
-                  <Radio value="monthly">Monthly</Radio>
+                <Stack direction='column'>
+                  <Radio value='one-time'>One-Time</Radio>
+                  <Radio value='daily'>Daily</Radio>
+                  <Radio value='weekly'>Weekly</Radio>
+                  <Radio value='monthly'>Monthly</Radio>
                 </Stack>
               </RadioGroup>
             </FormControl>
-            {eventType !== "one-time" && (
-              <FormControl mb="4">
+            {eventType !== 'one-time' && (
+              <FormControl mb='4'>
                 <FormLabel>Interval (Number of Times)</FormLabel>
                 <Input
-                  type="number"
+                  type='number'
                   min={1}
                   value={repeatInterval}
                   onChange={(e) => setRepeatInterval(Number(e.target.value))}
                 />
               </FormControl>
             )}
-            <FormControl mb="4">
+            <FormControl mb='4'>
               <FormLabel>Start Date</FormLabel>
               <Input
-                type="date"
+                type='date'
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
             </FormControl>
-            <FormControl mb="4">
+            <FormControl mb='4'>
               <FormLabel>End Date</FormLabel>
-              <Input type="date" value={calculateEndDate()} readOnly />
+              <Input type='date' value={calculateEndDate()} readOnly />
             </FormControl>
-            <FormControl mb="4">
+            <FormControl mb='4'>
               <FormLabel>Assign to</FormLabel>
               <Select
                 value={assignee}
@@ -167,8 +167,8 @@ export default function ChorePopover({ chore }) {
             </FormControl>
           </PopoverBody>
           <PopoverFooter>
-            <Box display="flex" justifyContent="flex-end" w="100%">
-              <Button colorScheme="blue" onClick={handleSave} mr="4">
+            <Box display='flex' justifyContent='flex-end' w='100%'>
+              <Button colorScheme='blue' onClick={handleSave} mr='4'>
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>

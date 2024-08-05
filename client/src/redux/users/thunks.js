@@ -1,6 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import UsersService from "./service";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import UsersService from './service';
 
 export const getUsersAsync = createAsyncThunk(
   actionTypes.GET_USERS,
@@ -22,7 +22,7 @@ export const getUserAsync = createAsyncThunk(actionTypes.GET_USER, async (id) =>
 
 export const postUserByEmailAsync = createAsyncThunk(actionTypes.POST_USER, async (email) => {
   return await UsersService.postUserByEmail(email);
-})
+});
 
 export const addUserAsync = createAsyncThunk(
   actionTypes.ADD_USER,

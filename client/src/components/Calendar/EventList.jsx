@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -16,13 +16,13 @@ import {
   Circle,
   Spacer,
   Tooltip,
-} from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
-import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
-import { updateEventAsync } from "../../redux/events/thunks";
-import ChoreBadge from "./ChoreBadge";
+} from '@chakra-ui/react';
+import { CheckCircleIcon } from '@chakra-ui/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
+import { updateEventAsync } from '../../redux/events/thunks';
+import ChoreBadge from './ChoreBadge';
 
 export default function ChoresList() {
   const [dailyMode, setDailyMode] = useState(false);
@@ -44,7 +44,7 @@ export default function ChoresList() {
   const filteredEvents = events.filter((event) => {
     const eventStart = moment(event.start);
     return (
-      eventStart.isBetween(currentStart, currentEnd, null, "[]") &&
+      eventStart.isBetween(currentStart, currentEnd, null, '[]') &&
       (showDone || !event.extendedProps.done)
     );
   });
@@ -64,7 +64,7 @@ export default function ChoresList() {
     );
     if (dailyMode) {
       return sortedChores.reduce((acc, chore) => {
-        const date = moment(chore.start).format("MMMM D, YYYY");
+        const date = moment(chore.start).format('MMMM D, YYYY');
         if (!acc[date]) {
           acc[date] = [];
         }
@@ -73,10 +73,10 @@ export default function ChoresList() {
       }, {});
     } else {
       return sortedChores.reduce((acc, chore) => {
-        const startOfWeek = moment(chore.start).startOf("week");
-        const endOfWeek = moment(chore.start).endOf("week");
-        const weekRange = `${startOfWeek.format("MMMM D")} - ${endOfWeek.format(
-          "MMMM D, YYYY"
+        const startOfWeek = moment(chore.start).startOf('week');
+        const endOfWeek = moment(chore.start).endOf('week');
+        const weekRange = `${startOfWeek.format('MMMM D')} - ${endOfWeek.format(
+          'MMMM D, YYYY'
         )}`;
 
         if (!acc[weekRange]) {
@@ -104,37 +104,37 @@ export default function ChoresList() {
   return (
     <Box
       p={5}
-      flex="1"
-      borderRadius="md"
-      boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+      flex='1'
+      borderRadius='md'
+      boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
     >
       <HStack>
-        <Heading size="lg" my={2} color="black">
+        <Heading size='lg' my={2} color='black'>
           Chores by Member
         </Heading>
         <Spacer />
         <Tooltip
-          label={dailyMode ? "Group Chores by Week" : "Group Chores by Day"}
+          label={dailyMode ? 'Group Chores by Week' : 'Group Chores by Day'}
         >
           <Button
-            className="material-symbols-outlined"
-            variant={dailyMode ? "solid" : "outline"}
-            colorScheme={dailyMode ? "teal" : "gray"}
-            size="sm"
+            className='material-symbols-outlined'
+            variant={dailyMode ? 'solid' : 'outline'}
+            colorScheme={dailyMode ? 'teal' : 'gray'}
+            size='sm'
             onClick={toggleDailyMode}
           >
-            {dailyMode ? "today" : "date_range"}
+            {dailyMode ? 'today' : 'date_range'}
           </Button>
         </Tooltip>
-        <Tooltip label={showDone ? "Hide Done Chores" : "Show Done Chores"}>
+        <Tooltip label={showDone ? 'Hide Done Chores' : 'Show Done Chores'}>
           <Button
-            className="material-symbols-outlined"
-            variant={showDone ? "solid" : "outline"}
-            colorScheme={showDone ? "teal" : "gray"}
-            size="sm"
+            className='material-symbols-outlined'
+            variant={showDone ? 'solid' : 'outline'}
+            colorScheme={showDone ? 'teal' : 'gray'}
+            size='sm'
             onClick={toggleShowDone}
           >
-            {showDone ? "done_all" : "remove_done"}
+            {showDone ? 'done_all' : 'remove_done'}
           </Button>
         </Tooltip>
       </HStack>
@@ -149,27 +149,27 @@ export default function ChoresList() {
               <AccordionItem key={memberId}>
                 <h2>
                   <AccordionButton
-                    _expanded={{ bg: "teal.700", color: "white" }}
-                    bg="teal.600"
-                    color="white"
-                    _hover={{ bg: "teal.500" }}
-                    borderRadius="md"
+                    _expanded={{ bg: 'teal.700', color: 'white' }}
+                    bg='teal.600'
+                    color='white'
+                    _hover={{ bg: 'teal.500' }}
+                    borderRadius='md'
                     px={4}
                     py={2}
                     my={2}
-                    boxShadow="md"
+                    boxShadow='md'
                   >
                     <Box
-                      flex="1"
-                      textAlign="left"
-                      fontSize="xl"
-                      fontWeight="bold"
+                      flex='1'
+                      textAlign='left'
+                      fontSize='xl'
+                      fontWeight='bold'
                     >
                       {(() => {
                         const member = members.find(
                           (member) => member._id === memberId
                         );
-                        const memberName = member ? `${member.firstName} ${member.lastName}` : "Unassigned Chore";
+                        const memberName = member ? `${member.firstName} ${member.lastName}` : 'Unassigned Chore';
                         return memberName;
                       })()}
                     </Box>
@@ -184,11 +184,11 @@ export default function ChoresList() {
                           <h2>
                             <AccordionButton>
                               <Box
-                                flex="1"
-                                textAlign="left"
-                                fontSize="lg"
-                                fontWeight="semibold"
-                                color="black"
+                                flex='1'
+                                textAlign='left'
+                                fontSize='lg'
+                                fontWeight='semibold'
+                                color='black'
                               >
                                 {date}
                               </Box>
@@ -200,30 +200,30 @@ export default function ChoresList() {
                               {choresOnDate.map((chore) => (
                                 <ListItem
                                   key={chore._id}
-                                  display="flex"
-                                  alignItems="center"
-                                  bg="teal.50"
+                                  display='flex'
+                                  alignItems='center'
+                                  bg='teal.50'
                                   p={2}
-                                  borderRadius="md"
-                                  boxShadow="xs"
-                                  cursor="pointer"
+                                  borderRadius='md'
+                                  boxShadow='xs'
+                                  cursor='pointer'
                                   onClick={() => markAsDone(chore)}
                                 >
                                   {chore.extendedProps.done ? (
                                     <ListIcon
                                       as={CheckCircleIcon}
-                                      color="green.500"
+                                      color='green.500'
                                     />
                                   ) : (
                                     <Circle
-                                      size="16px"
-                                      border="2px"
+                                      size='16px'
+                                      border='2px'
                                       mr={2}
-                                      borderColor="teal.400"
+                                      borderColor='teal.400'
                                     />
                                   )}
-                                  <Box flex="1" ml={3}>
-                                    <Text fontSize="md">{chore.title}</Text>
+                                  <Box flex='1' ml={3}>
+                                    <Text fontSize='md'>{chore.title}</Text>
                                   </Box>
                                   {!dailyMode && <ChoreBadge chore={chore} />}
                                 </ListItem>
@@ -239,7 +239,7 @@ export default function ChoresList() {
             );
           })
         ) : (
-          <Text fontSize="md" color="gray.500" textAlign="center">
+          <Text fontSize='md' color='gray.500' textAlign='center'>
             No chores found
           </Text>
         )}

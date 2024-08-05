@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Tabs,
   TabList,
@@ -13,13 +13,13 @@ import {
   DrawerFooter,
   Button,
   useDisclosure,
-} from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import MiniGroceryList from "./MiniGroceryList";
-import FloatingAddButton from "./AddButton";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
-import { addCategoryAsync, addLocationAsync } from "../../../redux/groceries/thunks";
-import getRandomMutedColour from "./generateColours";
+} from '@chakra-ui/react';
+import { useSelector, useDispatch } from 'react-redux';
+import MiniGroceryList from './MiniGroceryList';
+import FloatingAddButton from './AddButton';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
+import { addCategoryAsync, addLocationAsync } from '../../../redux/groceries/thunks';
+import getRandomMutedColour from './generateColours';
 
 export default function GroceriesDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -62,46 +62,46 @@ export default function GroceriesDrawer() {
   return (
     <>
       <Button
-        className="material-symbols-outlined"
-        colorScheme="teal"
+        className='material-symbols-outlined'
+        colorScheme='teal'
         onClick={onOpen}
       >
         Overview
       </Button>
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="lg">
+      <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='lg'>
         <DrawerOverlay>
-          <DrawerContent overflowY="auto">
+          <DrawerContent overflowY='auto'>
             <Tabs
               index={tabIndex}
               onChange={handleTabsChange}
-              size="lg"
+              size='lg'
               isLazy
-              variant="enclosed"
+              variant='enclosed'
             >
               <DrawerCloseButton />
               <TabList>
                 <Tab>Locations</Tab>
                 <Tab>Categories</Tab>
               </TabList>
-              <DrawerBody height="calc(100vh - 120px)">
+              <DrawerBody height='calc(100vh - 120px)'>
                 <TabPanels>
                   <TabPanel>
                     <MiniGroceryList
                       data={locations}
-                      type="location"
+                      type='location'
                       groceries={groceries}
                     />
                   </TabPanel>
                   <TabPanel>
                     <MiniGroceryList
                       data={categories}
-                      type="category"
+                      type='category'
                       groceries={groceries}
                     />
                   </TabPanel>
                 </TabPanels>
               </DrawerBody>
-              <DrawerFooter justifyContent={"flex-end"}>
+              <DrawerFooter justifyContent={'flex-end'}>
                 <FloatingAddButton onAdd={handleAdd} error={error} />
               </DrawerFooter>
             </Tabs>

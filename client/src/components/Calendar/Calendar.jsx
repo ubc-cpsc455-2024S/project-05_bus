@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getEventsAsync,
   updateEventAsync,
   addEventAsync,
   deleteEventAsync,
-} from "../../redux/events/thunks";
-import EventPopover from "./EventPopover";
-import { Box, useBreakpointValue } from "@chakra-ui/react";
-import useCurrentGroup from "../../hooks/useCurrentGroup";
-import { updateMonthView } from "../../redux/events/calendarSlice";
-import moment from "moment";
-import { getChoresAsync } from "../../redux/chores/thunks";
-import { getGroceryAsync } from "../../redux/groceries/thunks";
+} from '../../redux/events/thunks';
+import EventPopover from './EventPopover';
+import { Box, useBreakpointValue } from '@chakra-ui/react';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { updateMonthView } from '../../redux/events/calendarSlice';
+import moment from 'moment';
+import { getChoresAsync } from '../../redux/chores/thunks';
+import { getGroceryAsync } from '../../redux/groceries/thunks';
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -59,7 +59,7 @@ export default function Calendar() {
 
   const handleDeleteEvent = async (event) => {
     await dispatch(deleteEventAsync(event.id));
-    if (event.extendedProps.type !== "chore") {
+    if (event.extendedProps.type !== 'chore') {
       await dispatch(getGroceryAsync(event.extendedProps.groceryId));
     }
     closePopover();
@@ -93,7 +93,7 @@ export default function Calendar() {
         })
       );
       closePopover();
-    } else if (eventDetails.type !== "chore") {
+    } else if (eventDetails.type !== 'chore') {
       dispatch(
         updateEventAsync({
           _id: eventDetails._id,
@@ -128,16 +128,16 @@ export default function Calendar() {
   return (
     <Box
       p={4}
-      flex={["1", "1", "1", "4"]}
+      flex={['1', '1', '1', '4']}
       bg="white"
       className="calendar-container"
-      minHeight={["50vh", "50vh", "100vh"]}
+      minHeight={['50vh', '50vh', '100vh']}
     >
       <FullCalendar
         aspectRatio={aspectRatio}
         titleFormat={titleFormat}
         plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        initialView='dayGridMonth'
         datesSet={(dateInfo) => {
           dispatch(
             updateMonthView({
@@ -147,15 +147,15 @@ export default function Calendar() {
           );
         }}
         eventStartEditable={(info) => {
-          return info.event.extendedProps.type == "chore";
+          return info.event.extendedProps.type == 'chore';
         }}
         droppable
         eventDurationEditable={false}
         events={
           isFiltered
             ? events.filter(
-                (event) => event.extendedProps.memberId === selectedMemberID
-              )
+              (event) => event.extendedProps.memberId === selectedMemberID
+            )
             : events
         }
         eventReceive={(info) => {
@@ -175,7 +175,7 @@ export default function Calendar() {
         }}
         eventClick={handleEventClick}
         eventDrop={(info) => {
-          if (info.event.extendedProps.type == "chore") {
+          if (info.event.extendedProps.type == 'chore') {
             handleDragEvent(info);
           }
         }}

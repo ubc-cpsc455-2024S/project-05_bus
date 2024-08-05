@@ -31,19 +31,19 @@ function LeaveGroupModal({ isOnlyMember, isOnlyAdmin, isOpen, onClose, onConfirm
         <ModalFooter>
           {!isOnlyAdmin || isOnlyMember ? (
             <Button 
-              bgColor={"rgba(253, 163, 163, 0.631)"}
-              _hover={{background: "rgba(246, 134, 134, 0.631)"}}
+              bgColor={'rgba(253, 163, 163, 0.631)'}
+              _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
               mr={3}
               onClick={onConfirm}
             >
               Confirm
             </Button>
           ) : null}
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button variant='outline' onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 
@@ -60,15 +60,15 @@ function DeleteGroupAlert({ isOpen, onClose, onConfirm }) {
           <Text>Are you sure you want to delete this group? This action cannot be undone.</Text>
         </ModalBody>
         <ModalFooter>
-        <Button 
-            bgColor={"rgba(253, 163, 163, 0.631)"}
-            _hover={{background: "rgba(246, 134, 134, 0.631)"}}
+          <Button 
+            bgColor={'rgba(253, 163, 163, 0.631)'}
+            _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
             mr={3}
             onClick={onConfirm}
           >
             Delete Group
           </Button>
-          <Button variant="outline" onClick={onClose}>Cancel</Button>
+          <Button variant='outline' onClick={onClose}>Cancel</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -132,42 +132,42 @@ export default function Settings() {
     } catch (error) {
       setError('Could not save changes');
     }
-  }
+  };
 
   return (
-    <Box className="settings-container">
+    <Box className='settings-container'>
       {currentGroup && 
         <div>
-          <Card className="group-settings-card">
+          <Card className='group-settings-card'>
             <CardHeader>
-              <div className="group-settings-header">
-                <div className="group-settings-heading">
-                  <span className="material-symbols-outlined settings-group-icon icon">house</span>
-                  <h1 className="group-settings-heading-text">Group Settings</h1>
+              <div className='group-settings-header'>
+                <div className='group-settings-heading'>
+                  <span className='material-symbols-outlined settings-group-icon icon'>house</span>
+                  <h1 className='group-settings-heading-text'>Group Settings</h1>
                 </div>
-                <div className="group-settings-edit-container">
+                <div className='group-settings-edit-container'>
                   {isEditMode ? 
-                    <Button className="group-settings-edit-button" onClick={handleSave}>
-                      <span className="material-symbols-outlined group-settings-done-icon">priority</span>
+                    <Button className='group-settings-edit-button' onClick={handleSave}>
+                      <span className='material-symbols-outlined group-settings-done-icon'>priority</span>
                     </Button>
                     :
-                    <Tooltip label="Only admins can edit groups." isDisabled={isAdmin}>
-                      <Button className="group-settings-edit-button" isDisabled={!isAdmin} onClick={() => setIsEditMode(true)}>
-                        <span className="material-symbols-outlined group-settings-edit-icon">edit_square</span>
+                    <Tooltip label='Only admins can edit groups.' isDisabled={isAdmin}>
+                      <Button className='group-settings-edit-button' isDisabled={!isAdmin} onClick={() => setIsEditMode(true)}>
+                        <span className='material-symbols-outlined group-settings-edit-icon'>edit_square</span>
                       </Button>
                     </Tooltip>
                   }
                 </div>
               </div>
             </CardHeader>
-            <CardBody className="home-card-body">
+            <CardBody className='home-card-body'>
               <GroupNameSettings 
                 group={currentGroup}
                 isEditMode={isEditMode}
                 groupName={groupName}
                 setGroupName={setGroupName}
               />
-              <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
+              <Divider borderColor='rgba(0, 128, 128, 0.631)' borderRadius='5px'/>
               <MembersSettings 
                 isEditMode={isEditMode}
                 currentUserID={currentUserID}
@@ -175,7 +175,7 @@ export default function Settings() {
                 openLeaveGroupModal={openLeaveGroupModal} 
                 setError={setError}
               />
-              <Divider borderColor="rgba(0, 128, 128, 0.631)" borderRadius="5px"/>
+              <Divider borderColor='rgba(0, 128, 128, 0.631)' borderRadius='5px'/>
               <AdminsSettings 
                 group={currentGroup}
                 isEditMode={isEditMode}
@@ -185,23 +185,23 @@ export default function Settings() {
                 setError={setError}
               />
             </CardBody>
-            <CardFooter className="group-settings-footer">
-              <Button className="group-settings-leave-button" onClick={openLeaveGroupModal}>
+            <CardFooter className='group-settings-footer'>
+              <Button className='group-settings-leave-button' onClick={openLeaveGroupModal}>
                 Leave Group
               </Button>
-              <Tooltip label="Only admins can delete groups." isDisabled={isAdmin}>
+              <Tooltip label='Only admins can delete groups.' isDisabled={isAdmin}>
                 <Button 
-                  className="group-settings-delete-button" 
+                  className='group-settings-delete-button' 
                   isDisabled={!isAdmin} 
-                  bgColor={"rgba(253, 163, 163, 0.631)"} 
-                  _hover={{background: "rgba(246, 134, 134, 0.631)"}}
+                  bgColor={'rgba(253, 163, 163, 0.631)'} 
+                  _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
                   onClick={openDeleteGroupModal}
                 >
                   Delete Group
                 </Button>
               </Tooltip>
               {error && (
-                <Text color="red.500" mb="10px">
+                <Text color='red.500' mb='10px'>
                   {error}
                 </Text>
               )}
@@ -209,26 +209,26 @@ export default function Settings() {
           </Card>
 
           <LeaveGroupModal 
-          isOpen={isLeaveGroupOpen} 
-          onClose={closeLeaveGroupModal}
-          onConfirm={async () => {
-            closeLeaveGroupModal();
-            await handleLeaveGroup();
-          }}
-          isOnlyMember={isOnlyMember}
-          isOnlyAdmin={isOnlyAdmin}
-        />
+            isOpen={isLeaveGroupOpen} 
+            onClose={closeLeaveGroupModal}
+            onConfirm={async () => {
+              closeLeaveGroupModal();
+              await handleLeaveGroup();
+            }}
+            isOnlyMember={isOnlyMember}
+            isOnlyAdmin={isOnlyAdmin}
+          />
 
-        <DeleteGroupAlert 
-          isOpen={isDeleteGroupOpen} 
-          onClose={closeDeleteGroupModal} 
-          onConfirm={async () => {
-            closeDeleteGroupModal();
-            await handleDeleteGroup();
-          }}
-        />
-      </div>
+          <DeleteGroupAlert 
+            isOpen={isDeleteGroupOpen} 
+            onClose={closeDeleteGroupModal} 
+            onConfirm={async () => {
+              closeDeleteGroupModal();
+              await handleDeleteGroup();
+            }}
+          />
+        </div>
       }
     </Box>
-  )
+  );
 }
