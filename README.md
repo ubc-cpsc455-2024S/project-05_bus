@@ -38,6 +38,11 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 
 ## Usage of Tech from Units 1-5 - TODO
 "Usage of tech includes best practices. Code is clean and clear. Description of usage explains in-depth how the technology has made the app better. Possibly a mention of how it compares to other similar tech. Documentation demonstrates a solid understanding of the tech learned throughout the term, and its purpose in creating a production-level full-stack web application."
+- Unit 1: HTML, CSS, JS
+- Unit 2: React, Redux
+- Unit 3: Node, Express
+- Unit 4: MongoDB
+- Unit 5: CI/CD, Github Actions
 
 ## Above and Beyond Functionality - TODO
 "Please give a clear description and in-depth explanation of how you went above and beyond the requirements of the course. This will help us awards marks for rubric item #4."
