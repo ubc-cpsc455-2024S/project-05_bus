@@ -34,5 +34,5 @@ export default function GroupNameSettings({ group, isEditMode, groupName, setGro
         </Button>
       </div>
     </Box>
-  )
+  );
 }

@@ -1,11 +1,11 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import calendarReducer from "./events/calendarSlice";
-import choresReducer from "./chores/choresSlice";
-import groceriesReducer from "./groceries/groceriesSlice";
-import recipeReducer from "./recipes/recipeSlice";
-import usersReducer from "./users/usersSlice";
-import groupsReducer from "./groups/groupsSlice";
-import { persistStore, persistReducer } from 'redux-persist'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import calendarReducer from './events/calendarSlice';
+import choresReducer from './chores/choresSlice';
+import groceriesReducer from './groceries/groceriesSlice';
+import recipeReducer from './recipes/recipeSlice';
+import usersReducer from './users/usersSlice';
+import groupsReducer from './groups/groupsSlice';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {
   FLUSH,
@@ -29,7 +29,7 @@ const persistConfig = {
   key: 'root',
   storage,
 };
- 
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({

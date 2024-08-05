@@ -1,22 +1,22 @@
-import { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getEventsAsync,
   updateEventAsync,
   addEventAsync,
   deleteEventAsync,
-} from "../../redux/events/thunks";
-import EventPopover from "./EventPopover";
-import { Box, Tooltip } from "@chakra-ui/react";
-import useCurrentGroupMembers from "../../hooks/useCurrentGroupMembers";
-import useCurrentGroup from "../../hooks/useCurrentGroup";
-import { updateMonthView } from "../../redux/events/calendarSlice";
-import moment from "moment";
-import { getChoresAsync } from "../../redux/chores/thunks";
-import { getGroceryAsync } from "../../redux/groceries/thunks";
+} from '../../redux/events/thunks';
+import EventPopover from './EventPopover';
+import { Box, Tooltip } from '@chakra-ui/react';
+import useCurrentGroupMembers from '../../hooks/useCurrentGroupMembers';
+import useCurrentGroup from '../../hooks/useCurrentGroup';
+import { updateMonthView } from '../../redux/events/calendarSlice';
+import moment from 'moment';
+import { getChoresAsync } from '../../redux/chores/thunks';
+import { getGroceryAsync } from '../../redux/groceries/thunks';
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -62,7 +62,7 @@ export default function Calendar() {
   const handleDeleteEvent = async () => {
     if (popoverInfo.event) {
       await dispatch(deleteEventAsync(popoverInfo.event.id));
-      if (popoverInfo.event.extendedProps.type !== "chore") {
+      if (popoverInfo.event.extendedProps.type !== 'chore') {
         await dispatch(getGroceryAsync(popoverInfo.event.extendedProps.groceryId));
       }
       popoverInfo.event.remove();
@@ -99,7 +99,7 @@ export default function Calendar() {
           })
         );
         closePopover();
-      } else if (eventDetails.type !== "chore") {
+      } else if (eventDetails.type !== 'chore') {
         dispatch(
           updateEventAsync({
             _id: eventDetails._id,
@@ -125,28 +125,28 @@ export default function Calendar() {
     const isDone = eventInfo.event.extendedProps.done;
 
     return (
-      <div className="event-wrapper">
+      <div className='event-wrapper'>
         <div
-          className="event-background"
+          className='event-background'
           style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            borderRadius: "4px",
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            borderRadius: '4px',
             backgroundColor: eventInfo.event.backgroundColor,
-            boxShadow: "0 1px 2px rgba(0, 0, 0, 0.3)",
+            boxShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
           }}
         ></div>
         <Tooltip label={eventInfo.event.title}>
           <div
-            className="event-title"
+            className='event-title'
             style={{
-              color: "white",
-              mixBlendMode: "difference",
-              position: "relative",
-              padding: "2px 2px 0px 4px",
-              textDecoration: isDone ? "line-through" : "none",
-              overflow: "hidden",
+              color: 'white',
+              mixBlendMode: 'difference',
+              position: 'relative',
+              padding: '2px 2px 0px 4px',
+              textDecoration: isDone ? 'line-through' : 'none',
+              overflow: 'hidden',
             }}
           >
             {`${member.firstName} ${member.lastName} - ${eventInfo.event.title}`}
@@ -159,15 +159,15 @@ export default function Calendar() {
   return (
     <Box
       p={5}
-      flex="7"
-      boxShadow="base"
-      bg="white"
-      className="calendar-container"
-      height="100vh"
+      flex='7'
+      boxShadow='base'
+      bg='white'
+      className='calendar-container'
+      height='100vh'
     >
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
+        initialView='dayGridMonth'
         datesSet={(dateInfo) => {
           dispatch(
             updateMonthView({
@@ -177,15 +177,15 @@ export default function Calendar() {
           );
         }}
         eventStartEditable={(info) => {
-          return info.event.extendedProps.type == "chore";
+          return info.event.extendedProps.type == 'chore';
         }}
         droppable
         eventDurationEditable={false}
         events={
           isFiltered
             ? events.filter(
-                (event) => event.extendedProps.memberId === selectedMemberID
-              )
+              (event) => event.extendedProps.memberId === selectedMemberID
+            )
             : events
         }
         eventReceive={(info) => {
@@ -205,12 +205,12 @@ export default function Calendar() {
         }}
         eventClick={handleEventClick}
         eventDrop={(info) => {
-          if (info.event.extendedProps.type == "chore") {
+          if (info.event.extendedProps.type == 'chore') {
             handleDragEvent(info);
           }
         }}
         eventContent={renderEventContent}
-        height="100%"
+        height='100%'
       />
       {popoverInfo.visible && (
         <EventPopover

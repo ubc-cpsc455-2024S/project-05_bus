@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Button,
   Menu,
@@ -9,13 +9,13 @@ import {
   HStack,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+} from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import {
   cheapReceiptProcessor,
   imageReceiptProcessor,
   groceryImageReceiptProcessor,
-} from "./receiptService";
+} from './receiptService';
 
 const SubmitButton = ({
   croppedImageBlob,
@@ -25,7 +25,7 @@ const SubmitButton = ({
   setLoading,
   setModalOpen,
 }) => {
-  const [selectedMode, setSelectedMode] = useState("cheap");
+  const [selectedMode, setSelectedMode] = useState('cheap');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const categories = useSelector((state) => state.groceries.categories);
   const locations = useSelector((state) => state.groceries.locations);
@@ -38,8 +38,8 @@ const SubmitButton = ({
   const handleSubmit = async () => {
     if (!croppedImageBlob) {
       toast({
-        title: "No image selected",
-        status: "error",
+        title: 'No image selected',
+        status: 'error',
         duration: 1000,
         isClosable: true,
       });
@@ -47,13 +47,13 @@ const SubmitButton = ({
     }
 
     let processorFunction;
-    if (type === "Receipt") {
-      if (selectedMode === "cheap") {
+    if (type === 'Receipt') {
+      if (selectedMode === 'cheap') {
         processorFunction = cheapReceiptProcessor;
-      } else if (selectedMode === "image") {
+      } else if (selectedMode === 'image') {
         processorFunction = imageReceiptProcessor;
       }
-    } else if (type === "Groceries") {
+    } else if (type === 'Groceries') {
       processorFunction = groceryImageReceiptProcessor;
     }
 
@@ -71,13 +71,13 @@ const SubmitButton = ({
           setGroceries(jsonData.groceries);
           setLoading(false);
         } else {
-          throw new Error("Invalid JSON data");
+          throw new Error('Invalid JSON data');
         }
       } catch (error) {
         toast({
-          title: "Error processing image",
+          title: 'Error processing image',
           description: error.message,
-          status: "error",
+          status: 'error',
           duration: 3000,
           isClosable: true,
         });
@@ -88,15 +88,15 @@ const SubmitButton = ({
 
   function extractAndParseJson(data) {
     const jsonString = data.trim();
-    const startIndex = jsonString.indexOf("{");
-    const endIndex = jsonString.lastIndexOf("}");
+    const startIndex = jsonString.indexOf('{');
+    const endIndex = jsonString.lastIndexOf('}');
     const cleanedJsonString = jsonString.substring(startIndex, endIndex + 1);
     try {
       return JSON.parse(cleanedJsonString);
     } catch (error) {
       toast({
-        title: "Please try submitting again",
-        status: "error",
+        title: 'Please try submitting again',
+        status: 'error',
         duration: 1000,
         isClosable: true,
       });
@@ -106,10 +106,10 @@ const SubmitButton = ({
 
   return (
     <>
-      {type === "Groceries" ? (
+      {type === 'Groceries' ? (
         <Button
-          mt="4"
-          colorScheme="blue"
+          mt='4'
+          colorScheme='blue'
           onClick={handleSubmit}
           disabled={!croppedImageBlob}
         >
@@ -119,24 +119,24 @@ const SubmitButton = ({
         <Menu isOpen={isOpen}>
           <MenuButton
             as={Button}
-            mt="4"
-            colorScheme="blue"
+            mt='4'
+            colorScheme='blue'
             onMouseEnter={onOpen}
             onMouseLeave={onClose}
             onClick={handleSubmit}
           >
             <HStack>
               <Text>Submit</Text>
-              <Text className="material-symbols-outlined">
-                {selectedMode === "cheap" ? "attach_money" : "image"}
+              <Text className='material-symbols-outlined'>
+                {selectedMode === 'cheap' ? 'attach_money' : 'image'}
               </Text>
             </HStack>
           </MenuButton>
           <MenuList onMouseEnter={onOpen} onMouseLeave={onClose}>
-            <MenuItem onClick={() => handleSelectMode("cheap")}>
+            <MenuItem onClick={() => handleSelectMode('cheap')}>
               Cheap Processing
             </MenuItem>
-            <MenuItem onClick={() => handleSelectMode("image")}>
+            <MenuItem onClick={() => handleSelectMode('image')}>
               Image Processing
             </MenuItem>
           </MenuList>

@@ -1,4 +1,4 @@
-import { GroceryLocations } from "../models/grocerySchema.js";
+import { GroceryLocations } from '../models/grocerySchema.js';
 
 const groceryLocationQueries = {
   getAllLocations: async function (groupID) {
@@ -6,7 +6,7 @@ const groceryLocationQueries = {
       const locations = await GroceryLocations.find({ groupID });
       return locations;
     } catch (error) {
-      console.error("Error fetching locations:", error);
+      console.error('Error fetching locations:', error);
       throw error;
     }
   },
@@ -25,7 +25,7 @@ const groceryLocationQueries = {
       const savedLocation = await newLocation.save();
       return savedLocation;
     } catch (error) {
-      console.error("Error saving new location:", error);
+      console.error('Error saving new location:', error);
       throw error;
     }
   },

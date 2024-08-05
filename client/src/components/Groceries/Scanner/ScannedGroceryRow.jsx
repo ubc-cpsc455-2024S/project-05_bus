@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   HStack,
   FormControl,
@@ -10,26 +10,26 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   FormLabel,
-} from "@chakra-ui/react";
-import { CreatableSelect } from "chakra-react-select";
-import { useSelector, useDispatch } from "react-redux";
-import moment from "moment";
-import useCurrentGroupMembers from "../../../hooks/useCurrentGroupMembers";
-import { COMMON_UNITS } from "../utils/commonUnits";
+} from '@chakra-ui/react';
+import { CreatableSelect } from 'chakra-react-select';
+import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
+import useCurrentGroupMembers from '../../../hooks/useCurrentGroupMembers';
+import { COMMON_UNITS } from '../utils/commonUnits';
 import {
   handleCreateCategory,
   isValidNewCategory,
   handleCreateLocation,
   isValidNewLocation,
-} from "../utils/CreateNewSelectOptions";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
+} from '../utils/CreateNewSelectOptions';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
 
 export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
-  const [name, setName] = useState(grocery.name || "");
+  const [name, setName] = useState(grocery.name || '');
   const [locationId, setLocationId] = useState(grocery.locationId || null);
   const [categoryId, setCategoryId] = useState(grocery.categoryId || null);
   const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || null);
-  const [quantity, setQuantity] = useState(grocery.quantity || "");
+  const [quantity, setQuantity] = useState(grocery.quantity || '');
   const [quantityUnit, setQuantityUnit] = useState(
     grocery.quantityUnit || null
   );
@@ -67,33 +67,33 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
   };
 
   const handleOwnerChange = (e) => {
-    const newOwnerId = e.target.value === "" ? null : e.target.value;
+    const newOwnerId = e.target.value === '' ? null : e.target.value;
     setOwnerId(newOwnerId);
     setUpdatedGrocery({ ...grocery, ownerId: newOwnerId });
   };
 
   const handleDateChange = (e) => {
     const newExpiryDate = e.target.value;
-    setExpiryDate(moment(newExpiryDate).format("YYYY-MM-DD"));
+    setExpiryDate(moment(newExpiryDate).format('YYYY-MM-DD'));
     setUpdatedGrocery({ ...grocery, expiryDate: newExpiryDate });
   };
 
   return (
     <HStack
       spacing={2}
-      justifyContent="space-between"
-      width="100%"
-      display="flex"
+      justifyContent='space-between'
+      width='100%'
+      display='flex'
     >
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Name</FormLabel>}
-        <Input placeholder="Name" value={name} onChange={handleNameChange} />
+        <Input placeholder='Name' value={name} onChange={handleNameChange} />
       </FormControl>
 
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Location</FormLabel>}
         <CreatableSelect
-          placeholder="Location"
+          placeholder='Location'
           options={locations.map((loc) => ({
             value: loc._id,
             label: loc.name,
@@ -116,7 +116,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
-              width: "16px",
+              width: '16px',
             }),
           }}
         />
@@ -125,7 +125,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Category</FormLabel>}
         <CreatableSelect
-          placeholder="Category"
+          placeholder='Category'
           options={categories.map((cat) => ({
             value: cat._id,
             label: cat.name,
@@ -148,7 +148,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
           chakraStyles={{
             dropdownIndicator: (provided) => ({
               ...provided,
-              width: "16px",
+              width: '16px',
             }),
           }}
         />
@@ -157,8 +157,8 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Expiry Date</FormLabel>}
         <Input
-          placeholder="Expiry Date"
-          type="date"
+          placeholder='Expiry Date'
+          type='date'
           value={expiryDate}
           onChange={handleDateChange}
         />
@@ -167,7 +167,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Owner</FormLabel>}
         <Select value={ownerId} onChange={handleOwnerChange}>
-          <option value={""}>Shared</option>
+          <option value={''}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
               {`${member.firstName} ${member.lastName}`}
@@ -178,9 +178,9 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
 
       <FormControl flex={1}>
         {index === 0 && <FormLabel>Quantity</FormLabel>}
-        <HStack display="flex" spacing={2}>
+        <HStack display='flex' spacing={2}>
           <NumberInput
-            placeholder="Quantity"
+            placeholder='Quantity'
             value={quantity}
             onChange={handleQuantityChange}
             min={0}
@@ -192,7 +192,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
             </NumberInputStepper>
           </NumberInput>
           <Select
-            placeholder="Unit"
+            placeholder='Unit'
             value={quantityUnit}
             onChange={(e) => setQuantityUnit(e.target.value)}
             flex={1}

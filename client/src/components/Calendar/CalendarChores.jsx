@@ -1,12 +1,12 @@
-import { useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Box, Heading, VStack } from "@chakra-ui/react";
-import { Draggable } from "@fullcalendar/interaction";
-import CreateChore from "./CreateChore";
-import CalendarPeople from "./CalendarPeople";
-import EventList from "./EventList";
-import { deleteChoreAsync } from "../../redux/chores/thunks";
-import Chore from "./Chore";
+import { useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Box, Heading, VStack } from '@chakra-ui/react';
+import { Draggable } from '@fullcalendar/interaction';
+import CreateChore from './CreateChore';
+import CalendarPeople from './CalendarPeople';
+import EventList from './EventList';
+import { deleteChoreAsync } from '../../redux/chores/thunks';
+import Chore from './Chore';
 
 export default function CalendarChores() {
   const eventsRef = useRef(null);
@@ -22,10 +22,10 @@ export default function CalendarChores() {
     if (selectedMemberID) {
       const containerEl = eventsRef.current;
       const draggable = new Draggable(containerEl, {
-        itemSelector: ".event",
+        itemSelector: '.event',
         eventData: (eventEl) => {
-          const choreId = eventEl.getAttribute("data-chore-id");
-          const eventTitleEl = eventEl.querySelector(".event-title");
+          const choreId = eventEl.getAttribute('data-chore-id');
+          const eventTitleEl = eventEl.querySelector('.event-title');
           return {
             title: eventTitleEl.innerText,
             allDay: true,
@@ -33,7 +33,7 @@ export default function CalendarChores() {
             borderColor: eventEl.style.backgroundColor,
             extendedProps: {
               choreId: choreId,
-              type: "chore",
+              type: 'chore',
               memberId: selectedMemberID,
               done: false,
             },
@@ -48,27 +48,27 @@ export default function CalendarChores() {
   }, [chores, selectedMemberID]);
 
   return (
-    <Box bg="white" flex="3" p="4" overflowY="auto" height="100vh">
+    <Box bg='white' flex='3' p='4' overflowY='auto' height='100vh'>
       <Box
         p={5}
-        flex="1"
-        borderRadius="md"
+        flex='1'
+        borderRadius='md'
         marginBottom={4}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
       >
         <CalendarPeople />
       </Box>
       <Box
         p={5}
-        flex="1"
-        borderRadius="md"
+        flex='1'
+        borderRadius='md'
         marginBottom={4}
-        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
       >
-        <Heading size="lg" mb={4} color="black">
+        <Heading size='lg' mb={4} color='black'>
           Chores
         </Heading>
-        <VStack id="events" ref={eventsRef} spacing={4}>
+        <VStack id='events' ref={eventsRef} spacing={4}>
           {chores.map((chore, index) => (
             <Chore chore={chore} key={index} handleDelete={handleDelete} />
           ))}

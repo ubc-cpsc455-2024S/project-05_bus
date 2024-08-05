@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -9,12 +9,12 @@ import {
   Button,
   SkeletonText,
   useToast
-} from "@chakra-ui/react";
-import GroceryRow from "./ScannedGroceryRow";
-import SubmitButton from "./SubmitButton";
-import { useDispatch } from "react-redux";
-import { addGroceriesAsync } from "../../../redux/groceries/thunks";
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
+} from '@chakra-ui/react';
+import GroceryRow from './ScannedGroceryRow';
+import SubmitButton from './SubmitButton';
+import { useDispatch } from 'react-redux';
+import { addGroceriesAsync } from '../../../redux/groceries/thunks';
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
 
 export default function ScannedGroceriesList({
   croppedImageBlob,
@@ -58,7 +58,7 @@ export default function ScannedGroceriesList({
         const sanitizedGrocery = { ...grocery };
   
         Object.keys(sanitizedGrocery).forEach((key) => {
-          if (sanitizedGrocery[key] === "") {
+          if (sanitizedGrocery[key] === '') {
             sanitizedGrocery[key] = null;
           }
         });
@@ -72,7 +72,7 @@ export default function ScannedGroceriesList({
       dispatch(addGroceriesAsync(groceriesToSubmit));
       toast({
         title: `${groceries.length} Groceries added`,
-        status: "success",
+        status: 'success',
         duration: 1000,
         isClosable: true,
       });
@@ -80,9 +80,9 @@ export default function ScannedGroceriesList({
     } else {
       validation.errorMessages.forEach((message) => {
         toast({
-          title: "Validation Error",
+          title: 'Validation Error',
           description: message,
-          status: "error",
+          status: 'error',
           duration: 5000,
           isClosable: true,
         });
@@ -105,16 +105,16 @@ export default function ScannedGroceriesList({
         setLoading={setLoading}
         setModalOpen={setIsOpen}
       />
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size="6xl">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size='6xl'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scanned Groceries</ModalHeader>
           <SkeletonText
             isLoaded={!loading}
-            m="3"
+            m='3'
             noOfLines={4}
-            spacing="4"
-            skeletonHeight="2"
+            spacing='4'
+            skeletonHeight='2'
           >
             <ModalBody>
               {groceries.map((grocery, index) => (
@@ -132,10 +132,10 @@ export default function ScannedGroceriesList({
             </ModalBody>
           </SkeletonText>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+            <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
               Submit
             </Button>
-            <Button colorScheme="red" mr={3} onClick={handleClose}>
+            <Button colorScheme='red' mr={3} onClick={handleClose}>
               Close
             </Button>
           </ModalFooter>
