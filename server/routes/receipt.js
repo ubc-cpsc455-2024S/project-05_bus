@@ -1,24 +1,10 @@
 import express from 'express';
 import multer from 'multer';
-import { receiptImgPreprocess, groceryImgPreprocess, processReceipt } from '../receipt/receiptParser.js';
-import { chatCompletion, chatCompletionImage, chatCompletionGroceryImage } from '../receipt/openAi.js';
+import { receiptImgPreprocess, groceryImgPreprocess } from '../receipt/receiptParser.js';
+import { chatCompletionImage, chatCompletionGroceryImage } from '../receipt/openAi.js';
 
 const router = express.Router();
 const upload = multer();
-
-router.post('/cheap', upload.single('img'), async (req, res) => {
-  try {
-    const text = await processReceipt(req.file.buffer);
-    const response = await chatCompletion(
-      text,
-      JSON.parse(req.body.locations),
-      JSON.parse(req.body.categories)
-    );
-    return res.json(response);
-  } catch (error) {
-    return res.status(500).send(error.message);
-  }
-});
 
 router.post('/image', upload.single('img'), async (req, res) => {
   try {
