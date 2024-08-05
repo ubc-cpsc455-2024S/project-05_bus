@@ -1,0 +1,20 @@
+.chores-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.info-button {
+  padding: 0;
+  background: none !important;
+}
+
+.info-icon {
+  color: lightgray;
+  font-size: 25px;
+}
+
+.info-text {
+  font-size: 14px;
+}

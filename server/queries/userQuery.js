@@ -15,7 +15,7 @@ const userQueries = {
     return user;
   },
   postUserByEmail: async function (email) {
-    const user = await Users.findOne({ email: email });
+    const user = await Users.findOne({ email });
     return user;
   },
   postUser: async function (userData) {

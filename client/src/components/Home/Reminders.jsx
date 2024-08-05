@@ -72,6 +72,13 @@ const ReminderCard = ({ dismissedEvents }) => {
           </Tr>
         </Thead>
         <Tbody>
+          {dismissedEvents.length === 0 && (
+            <Tr>
+              <Td colSpan={5} textAlign='center'>
+                No reminders yet
+              </Td>
+            </Tr>
+          )}
           {dismissedEvents.map((event, index) => (
             <Tr key={index}>
               <Td

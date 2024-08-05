@@ -80,7 +80,7 @@ export default function Scanner({ isOpen, onClose, type }) {
                       <Text className='material-symbols-outlined'>crop</Text>
                     }
                   >
-                    Crop Image
+                    Edit Cropped Image
                   </Button>
                   <ScannedGroceriesList
                     croppedImageBlob={croppedImageBlob}

@@ -25,6 +25,13 @@ const GroceryList = ({ groceries }) => {
           </Tr>
         </Thead>
         <Tbody>
+          {groceries.length === 0 && (
+            <Tr>
+              <Td colSpan={3} textAlign='center'>
+                No groceries added yet
+              </Td>
+            </Tr>
+          )}
           {groceries.map((grocery, index) => (
             <Tr key={index}>
               <Td>

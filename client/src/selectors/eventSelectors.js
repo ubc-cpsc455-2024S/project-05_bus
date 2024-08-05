@@ -13,7 +13,7 @@ export const selectActiveEvents = createSelector(
         return (
           memberId === userId &&
           done === false &&
-          (dismissedBy !== userId || !!reminder) &&
+          (dismissedBy !== userId || reminder) &&
           !(reminder && reminded === false && dismissedBy === userId)
         );
       })
@@ -28,7 +28,7 @@ export const selectDismissedEvents = createSelector(
         (event) =>
           event.extendedProps.memberId !== userId &&
           event.extendedProps.done === false &&
-          !!event.extendedProps.dismissedBy &&
+          event.extendedProps.dismissedBy &&
           event.extendedProps.reminded === false
       )
       .sort((a, b) => new Date(a.start) - new Date(b.start))

@@ -129,7 +129,7 @@ export default function HomeNotifications() {
                   : 'Show Older Notifications'}
               </Button>
             )}
-            {groceries.length !== 0 && <GroceryCard groceries={groceries} />}
+            <GroceryCard groceries={groceries} />
             <ReminderCard dismissedEvents={dismissedEvents} />
           </VStack>
         </CardBody>
