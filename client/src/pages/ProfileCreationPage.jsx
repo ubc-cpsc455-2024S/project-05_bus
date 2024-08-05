@@ -32,7 +32,6 @@ export default function ProfileCreationPage() {
       lastName: profileData.get('lastName'),
       email: user.email
     };
-    console.log(`userData: ${JSON.stringify(userData)}`);
     const result = await dispatch(addUserAsync(userData));
     const newUser = unwrapResult(result);
     dispatch(setCurrentUserID(newUser._id));
