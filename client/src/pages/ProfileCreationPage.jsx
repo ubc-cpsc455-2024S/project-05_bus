@@ -35,7 +35,7 @@ export default function ProfileCreationPage() {
     const result = await dispatch(addUserAsync(userData));
     const newUser = unwrapResult(result);
     dispatch(setCurrentUserID(newUser._id));
-    const name = newUser.firstName + newUser.lastName;
+    const name = newUser.firstName + ' ' + newUser.lastName;
     dispatch(setCurrentUserName(name));
     navigate('/groups');
   };

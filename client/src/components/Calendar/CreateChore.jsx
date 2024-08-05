@@ -21,7 +21,7 @@ import useCurrentGroup from '../../hooks/useCurrentGroup';
 
 export default function CreateChore() {
   const [newChore, setNewChore] = useState('');
-  const [newColor, setNewColor] = useState('#aabbcc');
+  const [newColor, setNewColor] = useState('#58c1ff');
   const { onOpen, onClose, isOpen } = useDisclosure();
   const group = useCurrentGroup();
 
