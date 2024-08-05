@@ -52,7 +52,6 @@ const postUserByEmail = async (email) => {
 
 const addUser = async (user) => {
   try {
-    console.log(`user: ${JSON.stringify(user)}`);
     const response = await fetch(`${SERVER_URL}/users`, {
       method: 'POST',
       headers: {
@@ -61,7 +60,6 @@ const addUser = async (user) => {
       body: JSON.stringify(user)
     });
     const data = await response.json();
-    console.log(`data: ${data}`);
     return data;
   } catch (error) {
     console.error(`Error adding user: ${error}`);
