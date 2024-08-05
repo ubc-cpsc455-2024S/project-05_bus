@@ -1,14 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
-import "./index.css";
-import { store, persistor } from "./redux/store";
-import { ChakraProvider } from "@chakra-ui/react";
-import { Provider } from "react-redux";
-import { PersistGate } from 'redux-persist/integration/react'
-import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+import { store, persistor } from './redux/store';
+import { ChakraProvider } from '@chakra-ui/react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Auth0ProviderWithNavigate } from './auth0-provider-with-navigate';
 import { BrowserRouter } from 'react-router-dom';
-import Theme from './theme.js';
+import Theme from './theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

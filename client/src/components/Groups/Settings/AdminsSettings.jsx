@@ -59,8 +59,6 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
     }
   };
 
-  const avatarSize = { base: 'xs', sm: 'sm'};
-
   return (
     <Box className='admins-settings-container'>
       <h1 className='admins-settings-heading'>Admins</h1>
