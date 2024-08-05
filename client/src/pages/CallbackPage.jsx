@@ -25,6 +25,10 @@ export function CallbackPage() {
     navigate('/home');
   };
 
+  const handleNoName = () => {
+    navigate('/profile-creation');
+  }
+
   useEffect(() => {
     const handleAuth = async () => {
       if (!isLoading) {
@@ -40,7 +44,7 @@ export function CallbackPage() {
           }
         } catch (error) {
           console.error('Error processing user after login:', error);
-          navigate('/');
+          handleNoName();
         }
       }
     };
