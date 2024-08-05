@@ -37,7 +37,7 @@ export default function JoinGroupForm() {
     const group = groups.find(group => group._id === groupInput);
     if (group) {
       try {
-        await dispatch(addMemberAsync({groupID: group._id, userID: currentUserID})).unwrap();
+        await dispatch(addMemberAsync({ groupID: group._id, userID: currentUserID })).unwrap();
         await dispatch(getUsersAsync()).unwrap();
         await dispatch(getGroupsAsync()).unwrap();
       } catch (error) {
@@ -56,6 +56,7 @@ export default function JoinGroupForm() {
       </div>
       <Input
         value={groupInput}
+        borderColor="brand.lightGrey" focusBorderColor="brand.grey"
         onChange={handleGroupChange}
         onKeyDown={handleKeyPress}
         placeholder="Group ID (e.g. GTCqAx1EblTelfU0CJACa)"
@@ -65,7 +66,7 @@ export default function JoinGroupForm() {
           {error}
         </Text>
       )}
-      <Button mt="20px" isDisabled={!groupInput} onClick={handleJoinGroup}>
+      <Button mt="20px" isDisabled={!groupInput} bg="brand.midGreen" color="white" size="lg" _hover={{ bg: 'brand.forestGreen' }} onClick={handleJoinGroup}>
         Join
       </Button>
     </Box>

@@ -12,8 +12,8 @@ export default function Profile() {
   }
 
   return (
-    <Box padding='30px'>
-      <Text fontSize='xx-large'>Profile</Text>
+    <Box padding="50px" backgroundColor="brand.cream" minHeight="100vh">
+      <Text fontSize="xx-large" color="brand.forestGreen" as='b'>Profile</Text>
       {isAuthenticated && (
         <Stack spacing='20px' paddingY='30px'>
           <Box borderWidth='1px' borderRadius='lg' padding='10px'> 

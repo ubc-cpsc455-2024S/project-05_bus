@@ -95,6 +95,7 @@ export default function CreateGroupForm() {
         <Input
           placeholder="Roommates"
           mb="10px"
+          borderColor="brand.lightGrey" focusBorderColor="brand.grey"
           value={groupName}
           onChange={handleGroupNameChange}
         />
@@ -103,6 +104,7 @@ export default function CreateGroupForm() {
       <HStack mb="10px">
         <Input
           value={emailInput}
+          borderColor="brand.lightGrey" focusBorderColor="brand.grey"
           onChange={handleEmailChange}
           onKeyDown={handleKeyPress}
           placeholder="janedoe@gmail.com"
@@ -118,13 +120,13 @@ export default function CreateGroupForm() {
       )}
       <VStack align="start" mt="10px">
         {selectedUsers.map((user) => (
-          <Tag key={user._id} size="lg" variant="solid" colorScheme="teal">
+          <Tag key={user._id} size="lg" variant="solid" bg="brand.forestGreen">
             <TagLabel>{user.email}</TagLabel>
             <TagCloseButton onClick={() => handleRemoveUser(user._id)} />
           </Tag>
         ))}
       </VStack>
-      <Button mt="20px" isDisabled={!groupName} onClick={handleCreateGroup}>
+      <Button mt="20px" isDisabled={!groupName} bg="brand.midGreen" color="white" size="md" _hover={{ bg: 'brand.forestGreen' }} onClick={handleCreateGroup}>
         Create
       </Button>
     </Box>

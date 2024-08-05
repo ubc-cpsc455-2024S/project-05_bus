@@ -34,50 +34,50 @@ export default function Navbar() {
 
   return (
     isAuthenticated && (
-      <div className='container'>
-        <h1 className='page-name'>{pageName}</h1>
-        <ButtonGroup className='page-buttons'>
+      <div className="container">
+        <h1 className="page-name">{pageName}</h1>
+        <ButtonGroup className="page-buttons">
           <nav>
-            <div className='page-button-container'>
-              <Button className='page-button' as={Link} to='/home' size='lg'>
-                <span className='material-symbols-outlined icon'>home</span>
+            <div className="page-button-container">
+              <Button className="page-button" as={Link} to="/home" size="lg">
+                <span className="material-symbols-outlined icon">home</span>
               </Button>
-              <p className='page-label'>Home</p>
+              <p className="page-label">Home</p>
             </div>
-            <div className='page-button-container'>
-              <Button className='page-button' as={Link} to='/calendar' size='lg'>
-                <span className='material-symbols-outlined icon'>calendar_month</span>
+            <div className="page-button-container">
+              <Button className="page-button" as={Link} to="/calendar" size="lg">
+                <span className="material-symbols-outlined icon">calendar_month</span>
               </Button>
-              <p className='page-label'>Calendar</p>
+              <p className="page-label">Calendar</p>
             </div>
-            <div className='page-button-container'>
-              <Button className='page-button' as={Link} to='/groceries' size='lg'>
-                <span className='material-symbols-outlined icon'>restaurant</span>
+            <div className="page-button-container">
+              <Button className="page-button" as={Link} to="/groceries" size="lg">
+                <span className="material-symbols-outlined icon">restaurant</span>
               </Button>
-              <p className='page-label'>Groceries</p>
+              <p className="page-label">Groceries</p>
             </div>
           </nav>
         </ButtonGroup>
-        <Popover placement='right-start' isLazy>
+        <Popover placement="right-start" isLazy>
           <PopoverTrigger>
-            <Button className='profile-button' size='lg'>
+            <Button className="profile-button" size="lg">
               <Avatar 
-                size='sm'
-                bg='none'
-                icon={<span className='icon profile-icon material-symbols-outlined'>person</span>}
+                size="sm"
+                bg="none"
+                icon={<span className="icon profile-icon material-symbols-outlined">person</span>}
               />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className='profile-popover-content'>
-            <PopoverHeader className='profile-popover-header'>
-              <Avatar className='profile-popover-avatar' size='sm' />
-              <h2 className='profile-popover-name'>{`${user.name}`}</h2>
+          <PopoverContent className="profile-popover-content">
+            <PopoverHeader className="profile-popover-header">
+              <Avatar className="profile-popover-avatar" size="sm" />
+              <h2 className="profile-popover-name">{`${user.name}`}</h2>
             </PopoverHeader>
-            <PopoverCloseButton className='profile-popover-close'/>
-            <PopoverBody className='profile-popover-links'>
-              <Link to='/profile'>Profile</Link>
-              <Link to='/settings'>Settings</Link>
-              <Button className='profile-popover-logout' onClick={handleLogout}>Logout</Button>
+            <PopoverCloseButton className="profile-popover-close"/>
+            <PopoverBody className="profile-popover-links">
+              <Link to="/profile">Profile</Link>
+              <Link to="/settings">Settings</Link>
+              <Button className='profile-popover-logout' size="sm" bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })} onClick={handleLogout}>Logout</Button>
             </PopoverBody>
           </PopoverContent>
         </Popover>

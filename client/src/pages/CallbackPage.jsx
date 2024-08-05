@@ -8,9 +8,22 @@ import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice'
 import { setSelectedMemberID } from '../redux/groups/groupsSlice';
 
 export function CallbackPage() {
-  const { user, isAuthenticated, isLoading, error } = useAuth0();
+  const { user, isAuthenticated, isLoading, error, logout } = useAuth0();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleError = () => {
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+    navigate('/');
+  };
+
+  const handleSuccess = () => {
+    navigate('/home');
+  };
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -19,7 +32,6 @@ export function CallbackPage() {
           if (isAuthenticated && user) {
             const result = await dispatch(postUserByEmailAsync(user.email));
             const newUser = unwrapResult(result);
-            console.log(newUser);
             dispatch(setCurrentUserID(newUser._id));
             dispatch(setSelectedMemberID(newUser._id));
             const name = newUser.firstName + ' ' + newUser.lastName;
@@ -28,6 +40,7 @@ export function CallbackPage() {
           }
         } catch (error) {
           console.error('Error processing user after login:', error);
+          navigate('/');
         }
       }
     };
@@ -37,12 +50,15 @@ export function CallbackPage() {
 
   if (error) {
     return (
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-      </div>
+      <>
+        {handleError()}
+      </>
+    );
+  } else {
+    return (
+      <>
+        {handleSuccess()}
+      </>
     );
   }
-
-  return <h1>Success</h1>;
 }

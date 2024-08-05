@@ -187,6 +187,8 @@ export default function MealPlanBox() {
                 color='white'
                 _hover={{ bg: 'teal.600' }}
                 onClick={generateRecipe}
+                p={4}
+                minWidth={{ base: 'auto', md: '150px' }}
               >
                 Generate Recipe
               </Button>

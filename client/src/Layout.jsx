@@ -16,7 +16,7 @@ import ProfileCreationPage from './pages/ProfileCreationPage';
 
 export default function Layout() {
   const location = useLocation();
-  const noNavbarPaths = ['/', '/loading', '/profile-creation', '/groups'];
+  const noNavbarPaths = ['/', '/loading', '/callback', '/profile-creation', '/groups'];
   const { isLoading } = useAuth0();
 
   if (isLoading) {
