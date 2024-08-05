@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { REQUEST_STATE } from "../utils";
-import { getChoresAsync, getChoreAsync, addChoreAsync, updateChoreAsync, deleteChoreAsync } from "./thunks";
+import { createSlice } from '@reduxjs/toolkit';
+import { REQUEST_STATE } from '../utils';
+import { getChoresAsync, getChoreAsync, addChoreAsync, updateChoreAsync, deleteChoreAsync } from './thunks';
 
 const initialState = {
   chores: [],
@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const choresSlice = createSlice({
-  name: "chores",
+  name: 'chores',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

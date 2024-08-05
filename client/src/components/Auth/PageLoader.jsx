@@ -1,5 +1,5 @@
-import { Box } from "@chakra-ui/react";
-import { Circles } from "react-loader-spinner";
+import { Box } from '@chakra-ui/react';
+import { Circles } from 'react-loader-spinner';
 
 export const PageLoader = () => {
   return (
@@ -23,4 +23,4 @@ export const PageLoader = () => {
       />
     </Box>
   );
-}
+};

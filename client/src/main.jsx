@@ -10,7 +10,7 @@ import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate";
 import { BrowserRouter } from 'react-router-dom';
 import Theme from './theme.js';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Auth0ProviderWithNavigate>

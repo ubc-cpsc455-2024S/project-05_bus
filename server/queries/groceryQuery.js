@@ -1,6 +1,6 @@
-import { Groceries } from "../models/grocerySchema.js";
-import Events from "../models/eventSchema.js";
-import eventQueries from "./eventQuery.js";
+import { Groceries } from '../models/grocerySchema.js';
+import Events from '../models/eventSchema.js';
+import eventQueries from './eventQuery.js';
 
 const groceryQueries = {
   getAllGroceries: async function (groupID) {
@@ -8,7 +8,7 @@ const groceryQueries = {
       const groceries = await Groceries.find({ groupID });
       return groceries;
     } catch (error) {
-      console.error("Error fetching groceries:", error);
+      console.error('Error fetching groceries:', error);
       throw error;
     }
   },
@@ -27,7 +27,7 @@ const groceryQueries = {
       const savedGrocery = await newGrocery.save();
       return savedGrocery;
     } catch (error) {
-      console.error("Error saving new grocery:", error);
+      console.error('Error saving new grocery:', error);
       throw error;
     }
   },
@@ -36,7 +36,7 @@ const groceryQueries = {
       const savedGroceries = await Groceries.insertMany(groceryData);
       return savedGroceries;
     } catch (error) {
-      console.error("Error saving new groceries:", error);
+      console.error('Error saving new groceries:', error);
       throw error;
     }
   },
@@ -63,8 +63,8 @@ const groceryQueries = {
 
       if (updatedGrocery && updatedGrocery.restockNotificationDate) {
         const existingNotification = await Events.findOne({
-          "extendedProps.groceryId": updatedGrocery._id,
-          "extendedProps.type": "restock"
+          'extendedProps.groceryId': updatedGrocery._id,
+          'extendedProps.type': 'restock'
         });
   
         if (!existingNotification) {
@@ -115,8 +115,8 @@ const shouldDeleteGrocery = (groceryData, existingGrocery) =>
 
 const handleExpiryEvents = async (groceryData, existingGrocery) => {
   if (
-    "expiryDate" in groceryData ||
-    ("expiryNotificationDate" in groceryData &&
+    'expiryDate' in groceryData ||
+    ('expiryNotificationDate' in groceryData &&
       !groceryData.expiryNotificationDate)
   ) {
     await eventQueries.deleteExpiryEvents(existingGrocery._id);
@@ -125,7 +125,7 @@ const handleExpiryEvents = async (groceryData, existingGrocery) => {
 };
 
 const handleRestockNotifications = async (groceryData, existingGrocery) => {
-  if ("quantity" in groceryData) {
+  if ('quantity' in groceryData) {
     if (
       groceryData.quantity <= existingGrocery.restockThreshold &&
       existingGrocery.restockerId
@@ -137,7 +137,7 @@ const handleRestockNotifications = async (groceryData, existingGrocery) => {
   }
 
   if (
-    "restockNotificationDate" in groceryData &&
+    'restockNotificationDate' in groceryData &&
     !groceryData.restockNotificationDate
   ) {
     await eventQueries.deleteRestockNotifications(existingGrocery._id);
@@ -149,12 +149,12 @@ const createRestockNotification = async (groceryItem) => {
     title: `Restock ${groceryItem.name}`,
     start: new Date(),
     allDay: true,
-    backgroundColor: "#c49bad",
-    borderColor: "#c49bad",
+    backgroundColor: '#c49bad',
+    borderColor: '#c49bad',
     groupID: groceryItem.groupID,
     extendedProps: {
       groceryId: groceryItem._id,
-      type: "restock",
+      type: 'restock',
       memberId: groceryItem.restockerId,
       done: false,
     },

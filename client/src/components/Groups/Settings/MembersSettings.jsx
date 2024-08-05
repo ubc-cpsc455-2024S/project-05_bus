@@ -20,9 +20,9 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
         setError('Could not remove user from group');
       }
     }
-  }
+  };
 
-  const avatarSize = { base: "xs", sm: "sm"};
+  const avatarSize = { base: 'xs', sm: 'sm'};
 
   return (
     <Box className="members-settings-container">
@@ -41,5 +41,5 @@ export default function MembersSettings({ isEditMode, currentUserID, currentGrou
         ))}
       </ul>
     </Box>
-  )
+  );
 }

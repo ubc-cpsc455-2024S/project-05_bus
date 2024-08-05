@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { IconButton } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { updateMealSelect } from "../../../redux/groceries/groceriesSlice";
+import { useEffect, useState } from 'react';
+import { IconButton } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 
 export default function SelectMealButton({ groceryItem }) {
   const [isSelect, setSelect] = useState(groceryItem.selectMeal);
@@ -18,13 +18,13 @@ export default function SelectMealButton({ groceryItem }) {
 
   return (
     <IconButton
-      aria-label="Toggle Select"
-      icon={<span className="material-symbols-outlined">skillet</span>}
-      color={isSelect ? "orange.500" : "gray.600"}
+      aria-label='Toggle Select'
+      icon={<span className='material-symbols-outlined'>skillet</span>}
+      color={isSelect ? 'orange.500' : 'gray.600'}
       onClick={toggleSelect}
-      bg="transparent"
-      _hover={{ color: "orange.300" }}
-      _active={{ color: "orange.700" }}
+      bg='transparent'
+      _hover={{ color: 'orange.300' }}
+      _active={{ color: 'orange.700' }}
     />
   );
 }

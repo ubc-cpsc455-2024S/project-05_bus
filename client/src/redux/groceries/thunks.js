@@ -1,8 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { actionTypes } from "./actionTypes";
-import GroceryService from "./service";
-import { getEventsAsync } from "../events/thunks";
-import { deleteGrocery } from "./groceriesSlice";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { actionTypes } from './actionTypes';
+import GroceryService from './service';
+import { getEventsAsync } from '../events/thunks';
+import { deleteGrocery } from './groceriesSlice';
 
 export const getGroceriesAsync = createAsyncThunk(
   actionTypes.GET_GROCERIES,

@@ -1,5 +1,5 @@
-import "./Home.css";
-import { useState } from "react";
+import './Home.css';
+import { useState } from 'react';
 import {
   Box,
   Card,
@@ -7,33 +7,32 @@ import {
   CardBody,
   VStack,
   Button,
-} from "@chakra-ui/react";
-import NotificationCard from "./NotificationCard";
-import { useSelector, useDispatch } from "react-redux";
-import { selectCurrentUserGroceries } from "../../selectors/userSelectors";
-import GroceryCard from "./GroceryCard";
-import useCurrentUser from "../../hooks/useCurrentUser";
-import { updateEventAsync } from "../../redux/events/thunks";
-import ReminderCard from "./Reminders";
+} from '@chakra-ui/react';
+import NotificationCard from './NotificationCard';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUserGroceries } from '../../selectors/userSelectors';
+import GroceryCard from './GroceryCard';
+import useCurrentUser from '../../hooks/useCurrentUser';
+import { updateEventAsync } from '../../redux/events/thunks';
+import ReminderCard from './Reminders';
 import {
   selectActiveEvents,
   selectDismissedEvents,
-} from "../../selectors/eventSelectors";
-import moment from "moment";
+} from '../../selectors/eventSelectors';
+import moment from 'moment';
 
 export default function HomeNotifications() {
   const userId = useCurrentUser()._id;
   const activeEvents = useSelector(selectActiveEvents);
   const dismissedEvents = useSelector(selectDismissedEvents);
-  console.log("dismissedEvents", dismissedEvents)
   const groceries = useSelector(selectCurrentUserGroceries);
   const dispatch = useDispatch();
 
   const [showFutureNotifications, setShowFutureNotifications] = useState(false);
   const [showOlderNotifications, setShowOlderNotifications] = useState(false);
 
-  const oneMonthBack = moment().subtract(1, "months");
-  const oneMonthAhead = moment().add(1, "months");
+  const oneMonthBack = moment().subtract(1, 'months');
+  const oneMonthAhead = moment().add(1, 'months');
 
   const filteredActiveEvents = activeEvents.filter((event) => {
     const eventDate = moment(event.start);
@@ -70,13 +69,13 @@ export default function HomeNotifications() {
   };
 
   return (
-    <Box className="home-card-container home-notifications-container">
-      <Card className="home-card">
-        <CardHeader className="home-card-header">
-          <h1 className="home-heading">Notifications</h1>
-          <span className="material-symbols-outlined icon">notifications</span>
+    <Box className='home-card-container home-notifications-container'>
+      <Card className='home-card'>
+        <CardHeader className='home-card-header'>
+          <h1 className='home-heading'>Notifications</h1>
+          <span className='material-symbols-outlined icon'>notifications</span>
         </CardHeader>
-        <CardBody className="home-card-body">
+        <CardBody className='home-card-body'>
           <VStack spacing={4}>
             {filteredActiveEvents.length !== 0 ? (
               filteredActiveEvents.map((event) => (
@@ -88,7 +87,7 @@ export default function HomeNotifications() {
                 />
               ))
             ) : (
-              <p className="notifications-placeholder">No new notifications</p>
+              <p className='notifications-placeholder'>No new notifications</p>
             )}
             {showFutureNotifications &&
               futureNotifications.map((event) => (
@@ -106,8 +105,8 @@ export default function HomeNotifications() {
                 }
               >
                 {showFutureNotifications
-                  ? "Hide Future Notifications"
-                  : "Show Future Notifications"}
+                  ? 'Hide Future Notifications'
+                  : 'Show Future Notifications'}
               </Button>
             )}
             {showOlderNotifications &&
@@ -126,8 +125,8 @@ export default function HomeNotifications() {
                 }
               >
                 {showOlderNotifications
-                  ? "Hide Older Notifications"
-                  : "Show Older Notifications"}
+                  ? 'Hide Older Notifications'
+                  : 'Show Older Notifications'}
               </Button>
             )}
             {groceries.length !== 0 && <GroceryCard groceries={groceries} />}

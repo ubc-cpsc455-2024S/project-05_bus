@@ -1,5 +1,5 @@
-import { Badge } from "@chakra-ui/react";
-import moment from "moment";
+import { Badge } from '@chakra-ui/react';
+import moment from 'moment';
 
 const ChoreBadge = ({ chore }) => {
   const currentDate = moment();
@@ -8,16 +8,16 @@ const ChoreBadge = ({ chore }) => {
 
   let colorScheme;
   if (daysDifference > 7) {
-    colorScheme = "green";
+    colorScheme = 'green';
   } else if (daysDifference > 3) {
-    colorScheme = "yellow";
+    colorScheme = 'yellow';
   } else {
-    colorScheme = "red";
+    colorScheme = 'red';
   }
 
   return (
-    <Badge variant="solid" colorScheme={colorScheme}>
-      {moment(chore.start).format("MMM Do")}
+    <Badge variant='solid' colorScheme={colorScheme}>
+      {moment(chore.start).format('MMM Do')}
     </Badge>
   );
 };
