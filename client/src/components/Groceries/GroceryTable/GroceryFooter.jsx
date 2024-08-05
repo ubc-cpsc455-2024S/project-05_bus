@@ -10,7 +10,6 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
-  IconButton,
   FormControl,
   FormErrorMessage,
   useToast,
@@ -20,6 +19,7 @@ import {
   MenuItem,
   Text,
   Select,
+  Tooltip,
 } from '@chakra-ui/react';
 import { CreatableSelect } from 'chakra-react-select';
 import { AddIcon } from '@chakra-ui/icons';
@@ -116,7 +116,7 @@ export default function GroceryFooter() {
 
   return (
     <Grid
-      templateColumns={{ base: 'repeat(6, 1fr)', lg: 'repeat(14, 1fr)' }}
+      templateColumns={{ base: 'repeat(6, 1fr)', xl: 'repeat(14, 1fr)' }}
       gap={2}
       alignItems="center"
     >
@@ -211,7 +211,7 @@ export default function GroceryFooter() {
         </FormErrorMessage>
         <HStack spacing={2}>
           <NumberInput
-            placeholder='Quantity'
+            placeholder='Qty'
             value={quantity}
             onChange={(value) => setQuantity(value)}
             min={0}
@@ -239,19 +239,25 @@ export default function GroceryFooter() {
       </FormControl>
 
       <Box
-        gridColumn={{ base: 'span 6', lg: 'span 2' }}
+        gridColumn={{ base: 'span 6', xl: 'span 2' }}
         display="flex"
         justifyContent="space-between"
         alignItems="center"
       >
-        <IconButton onClick={handleAdd}>
-          <AddIcon />
-        </IconButton>
+        <Tooltip label="Add Grocery" aria-label="Add Grocery">
+          <Button onClick={handleAdd}>
+            <AddIcon />
+            <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Add Grocery</Text>
+          </Button>
+        </Tooltip>
         <Menu>
           <MenuButton as={Button}>
-            <Text color="gray.600" className="material-symbols-outlined">
+            <HStack>
+              <Text color="gray.600" className="material-symbols-outlined">
               add_a_photo
-            </Text>
+              </Text>
+              <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
+            </HStack>
           </MenuButton>
           <MenuList>
             <MenuItem

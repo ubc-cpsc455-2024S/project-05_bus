@@ -54,8 +54,8 @@ export default function Calendar() {
     });
   };
 
-  const aspectRatio = useBreakpointValue({ base: 0.8, md: 1.35 });
-  const titleFormat = useBreakpointValue({ base: { year: 'numeric', month: 'short' }, md: { year: 'numeric', month: 'long' } });
+  const contentHeight = useBreakpointValue({ base: '40vh', md: '85vh' });
+  const titleFormat = useBreakpointValue({ base: { year: 'numeric', month: 'short' }, lg: { year: 'numeric', month: 'long' } });
 
   const handleDeleteEvent = async (event) => {
     await dispatch(deleteEventAsync(event.id));
@@ -129,12 +129,12 @@ export default function Calendar() {
     <Box
       p={4}
       flex={['1', '1', '1', '4']}
-      bg="white"
-      className="calendar-container"
+      bg='white'
+      className='calendar-container'
       minHeight={['50vh', '50vh', '100vh']}
     >
       <FullCalendar
-        aspectRatio={aspectRatio}
+        contentHeight={contentHeight}
         titleFormat={titleFormat}
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
