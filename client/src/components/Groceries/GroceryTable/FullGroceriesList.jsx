@@ -48,7 +48,7 @@ import NotePopover from './NotePopover';
 export default function GroceriesTable() {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 12 });
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
   const [openFilter, setOpenFilter] = useState('');
   const [dateFilterType, setDateFilterType] = useState('on');
 
@@ -92,6 +92,9 @@ export default function GroceriesTable() {
     getPaginationRowModel: getPaginationRowModel(),
     autoResetPageIndex: false,
   });
+
+  const pageCount = table.getPageCount();
+  const currentPage = pageCount > 0 ? table.getState().pagination.pageIndex + 1 : 1;
 
   return (
     <Box
@@ -259,8 +262,7 @@ export default function GroceriesTable() {
             aria-label='Previous Page'
           />
           <Text>
-            Page {table.getState().pagination.pageIndex + 1} of{' '}
-            {table.getPageCount()}
+            Page {currentPage} of {pageCount > 0 ? pageCount : 1}
           </Text>
           <IconButton
             onClick={() => {
