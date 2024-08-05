@@ -77,25 +77,28 @@ export default function GroceryFooter() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      dispatch(
-        addGroceryAsync({
-          name,
-          locationId: location,
-          categoryId: category,
-          expiryDate,
-          quantity,
-          quantityUnit,
-          ownerId,
-          groupID: group._id,
-        })
-      );
+      const groceryData = {
+        name,
+        expiryDate,
+        quantity,
+        quantityUnit,
+        groupID: group._id,
+      };
+  
+      if (category) {
+        groceryData.categoryId = category;
+      }
+      if (location) {
+        groceryData.locationId = location;
+      }
+      if (ownerId) {
+        groceryData.ownerId = ownerId;
+      }
+  
+      dispatch(addGroceryAsync(groceryData));
+
       toast({
-        title: "Grocery Added",
-        description: `${name}${
-          quantity > 1 ? "'s" : ""
-        } has been added to the ${
-          locations.find((l) => l._id === location).name
-        }`,
+        title: "Grocery Successfully Added",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -189,13 +192,12 @@ export default function GroceryFooter() {
 
       <FormControl gridColumn={{ base: "span 2", lg: "span 2" }}>
         <Select
-          placeholder="Owner"
+          placeholder="Shared"
           value={ownerId}
           onChange={(e) =>
-            setOwnerId(e.target.value === "" ? null : e.target.value)
+            setOwnerId(e.target.value === "" ? undefined : e.target.value)
           }
         >
-          <option value={""}>Shared</option>
           {members.map((member) => (
             <option key={member._id} value={member._id}>
               {`${member.firstName} ${member.lastName}`}

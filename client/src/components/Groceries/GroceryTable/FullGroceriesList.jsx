@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import {
   Box,
   TableContainer,
@@ -183,8 +183,8 @@ export default function GroceriesTable() {
               </Thead>
               <Tbody>
                 {table.getRowModel().rows.map((row) => (
-                  <>
-                    <Tr key={row.id}>
+                  <React.Fragment key={row.id}>
+                    <Tr>
                       {row.getVisibleCells().map((cell) => (
                         <Td key={cell.id} maxWidth="180px">
                           {tooltipColumns.includes(cell.column.id) ? (
@@ -244,7 +244,7 @@ export default function GroceriesTable() {
                         </HStack>
                       </Td>
                     </Tr>
-                  </>
+                  </React.Fragment>
                 ))}
               </Tbody>
             </Table>
