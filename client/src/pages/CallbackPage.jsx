@@ -19,7 +19,6 @@ export function CallbackPage() {
           if (isAuthenticated && user) {
             const result = await dispatch(postUserByEmailAsync(user.email));
             const newUser = unwrapResult(result);
-            console.log(newUser);
             dispatch(setCurrentUserID(newUser._id));
             dispatch(setSelectedMemberID(newUser._id));
             const name = newUser.firstName + ' ' + newUser.lastName;

@@ -22,6 +22,9 @@ export default function Layout() {
 
   const GroupPrivateRoutes = () => {
     const currentUser = useCurrentUser();
+    
+    if (!currentUser) return <Navigate to='/' />;
+
     return currentUser.groupID ? <Outlet /> : <Navigate to='/groups' />;
   };
   
