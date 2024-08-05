@@ -148,7 +148,7 @@ export default function GroceryFooter() {
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement='auto'
           onCreateOption={(input) =>
-            handleCreateLocation(input, dispatch, group._id)
+            handleCreateLocation(input, dispatch, group._id, setLocation)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
@@ -170,7 +170,7 @@ export default function GroceryFooter() {
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement='auto'
           onCreateOption={(input) =>
-            handleCreateCategory(input, dispatch, group._id)
+            handleCreateCategory(input, dispatch, group._id, setCategory)
           }
           chakraStyles={{
             dropdownIndicator: (provided) => ({
