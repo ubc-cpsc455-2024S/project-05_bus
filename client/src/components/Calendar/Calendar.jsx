@@ -54,7 +54,7 @@ export default function Calendar() {
     });
   };
 
-  const contentHeight = useBreakpointValue({ base: '40vh', md: '85vh' });
+  const contentHeight = useBreakpointValue({ sm: '40vh', md: '85vh' });
   const titleFormat = useBreakpointValue({ base: { year: 'numeric', month: 'short' }, lg: { year: 'numeric', month: 'long' } });
 
   const handleDeleteEvent = async (event) => {

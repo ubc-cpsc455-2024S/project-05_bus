@@ -11,6 +11,13 @@ const customTheme = extendTheme({
       beige: '#c7af98',
     },
   },
+  breakpoints: {
+    base: '0px',     
+    sm: '480px',     
+    md: '768px',    
+    lg: '1024px',   
+    xl: '1280px',
+  },
 });
 
 export default customTheme;

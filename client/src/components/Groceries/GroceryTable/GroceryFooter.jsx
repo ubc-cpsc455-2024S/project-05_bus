@@ -98,8 +98,8 @@ export default function GroceryFooter() {
       dispatch(addGroceryAsync(groceryData));
 
       toast({
-        title: "Grocery Successfully Added",
-        status: "success",
+        title: 'Grocery Successfully Added',
+        status: 'success',
         duration: 3000,
         isClosable: true,
       });
@@ -195,7 +195,7 @@ export default function GroceryFooter() {
           placeholder="Shared"
           value={ownerId}
           onChange={(e) =>
-            setOwnerId(e.target.value === "" ? undefined : e.target.value)
+            setOwnerId(e.target.value === '' ? undefined : e.target.value)
           }
         >
           {members.map((member) => (

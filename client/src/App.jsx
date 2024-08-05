@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import './App.css';
 import Layout from './Layout';
-import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getUsersAsync } from './redux/users/thunks';
 import { getGroupsAsync } from './redux/groups/thunks';

@@ -38,6 +38,9 @@ const ReminderCard = ({ dismissedEvents }) => {
     );
   };
 
+  const titleFontSize = { base: 'md', sm: 'xl'};
+  const bodyFontSize = { base: 'xs', sm: 'sm'};
+
   return (
     <Box
       p={4}
@@ -47,22 +50,22 @@ const ReminderCard = ({ dismissedEvents }) => {
       borderTop='2px solid'
       borderColor='gray.200'
     >
-      <Text fontSize='xl' fontWeight='bold' mb={4}>
+      <Text fontSize={titleFontSize} fontWeight="bold" mb={4}>
         Reminders
       </Text>
       <Table variant='simple'>
         <Thead>
           <Tr>
-            <Th whiteSpace='nowrap' fontSize='sm'>
+            <Th whiteSpace="nowrap" fontSize={bodyFontSize}>
               Name
             </Th>
-            <Th whiteSpace='nowrap' fontSize='sm'>
+            <Th whiteSpace="nowrap" fontSize={bodyFontSize}>
               Date
             </Th>
-            <Th whiteSpace='nowrap' fontSize='sm'>
+            <Th whiteSpace="nowrap" fontSize={bodyFontSize}>
               Assigned To
             </Th>
-            <Th whiteSpace='nowrap' fontSize='sm'>
+            <Th whiteSpace="nowrap" fontSize={bodyFontSize}>
               Last Reminded
             </Th>
             <Th />
