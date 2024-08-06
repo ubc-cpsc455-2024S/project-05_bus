@@ -186,22 +186,20 @@ export default function Settings() {
               />
             </CardBody>
             <CardFooter className='group-settings-footer'>
-              <Button className='group-settings-leave-button' onClick={openLeaveGroupModal}>
+              <Button borderColor="teal.600" color="teal.600" variant="outline" _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }} onClick={openLeaveGroupModal}>
                 Leave Group
               </Button>
               <Tooltip label='Only admins can delete groups.' isDisabled={isAdmin}>
                 <Button 
-                  className='group-settings-delete-button' 
                   isDisabled={!isAdmin} 
-                  bgColor={'rgba(253, 163, 163, 0.631)'} 
-                  _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
+                  bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })}
                   onClick={openDeleteGroupModal}
                 >
                   Delete Group
                 </Button>
               </Tooltip>
               {error && (
-                <Text color='red.500' mb='10px'>
+                <Text color='brand.red' mb='10px'>
                   {error}
                 </Text>
               )}

@@ -66,7 +66,7 @@ export default function JoinGroupForm() {
           {error}
         </Text>
       )}
-      <Button mt="20px" isDisabled={!groupInput} bg="brand.midGreen" color="white" size="lg" _hover={{ bg: 'brand.forestGreen' }} onClick={handleJoinGroup}>
+      <Button mt="20px" isDisabled={!groupInput} bg="teal.500" color="white" size="md" _hover={{ bg: 'teal.700' }} onClick={handleJoinGroup}>
         Join
       </Button>
     </Box>

@@ -126,7 +126,7 @@ export default function CreateGroupForm() {
           </Tag>
         ))}
       </VStack>
-      <Button mt="20px" isDisabled={!groupName} bg="brand.midGreen" color="white" size="md" _hover={{ bg: 'brand.forestGreen' }} onClick={handleCreateGroup}>
+      <Button mt="20px" isDisabled={!groupName} bg="teal.500" color="white" size="md" _hover={{ bg: 'teal.700' }} onClick={handleCreateGroup}>
         Create
       </Button>
     </Box>

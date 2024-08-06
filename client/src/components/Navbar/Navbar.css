@@ -5,7 +5,7 @@
   z-index: 1000;
   top: 0;
   left: 0;
-  background-color: #003E29; 
+  background-color: teal; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;

@@ -50,9 +50,9 @@ export default function ProfileCreationPage() {
   };
 
   return (
-    <Box paddingY="100px" paddingX={{ base: '100px', lg: '200px' }} display="flex" flexDirection="column" minHeight="100vh" justifyContent="space-between" backgroundColor="brand.cream">
+    <Box paddingY="100px" paddingX={{ base: '100px', lg: '200px' }} display="flex" flexDirection="column" minHeight="100vh" justifyContent="space-between">
       <Stack spacing="none">
-        <Text fontSize="xx-large" color="brand.midGreen" as='b'>Create your profile</Text>
+        <Text fontSize="xx-large" color="teal.600" as='b'>Create your profile</Text>
         <Box borderColor="brand.lightGrey" borderWidth='1px' borderRadius='lg' marginY="10px" padding="10px" width="fit-content">
           <Text fontSize="large"><strong>Email:</strong> {user.email}</Text>
         </Box>
@@ -69,14 +69,14 @@ export default function ProfileCreationPage() {
             </Box>
             {error && (<Text color="brand.red" as='b'>Please fill in all fields before submitting</Text>)}
             <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" borderColor="brand.forestGreen" focusBorderColor="brand.darkGrey" color="brand.forestGreen" variant="outline" size="lg" _hover={{ bg: 'brand.forestGreen', borderColor: 'brand.forestGreen', color: 'white' }}>Submit</Button>
+              <Button type="submit" borderColor="teal.600" color="teal.600" variant="outline" size={{ base: "md", lg: "lg"}} _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }}>Submit</Button>
             </Box>
           </Stack>
         </form >
       </Stack >
 
       <Box display="flex" justifyContent="center">
-        <Button onClick={handleLogout} bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })}>Logout</Button>
+        <Button onClick={handleLogout} bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })} size={{ base: "md", lg: "lg"}}>Logout</Button>
       </Box>
     </Box >
   );

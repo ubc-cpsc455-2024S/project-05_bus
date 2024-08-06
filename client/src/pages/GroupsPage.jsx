@@ -26,7 +26,7 @@ export default function GroupPage() {
   };
 
   return (
-    <Box paddingY="100px" display="flex" flexDirection="column" minHeight="100vh" justifyContent="space-between" backgroundColor="brand.cream">
+    <Box paddingY="100px" display="flex" flexDirection="column" minHeight="100vh" justifyContent="space-between">
       <Stack>
         <Box>
           <CreateGroupForm />
