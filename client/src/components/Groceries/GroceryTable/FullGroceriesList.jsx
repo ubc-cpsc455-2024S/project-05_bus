@@ -107,7 +107,7 @@ export default function GroceriesTable() {
       <VStack spacing={4} height='100%'>
         <Box overflow='auto' width='100%' height='100%'>
           <TableContainer>
-            <Table variant='simple' colorScheme='teal" bg="teal.50' size='sm'>
+            <Table variant='simple' colorScheme='teal' bg='teal.50' size='sm'>
               <Thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <Tr key={headerGroup.id} bg='gray.100'>

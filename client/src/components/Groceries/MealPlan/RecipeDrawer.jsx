@@ -73,7 +73,7 @@ export default function RecipeDrawer() {
               {selectedRecipe ? (
                 <Box p={4}>
                   <Text fontSize='2xl' color='teal.500' fontWeight='bold' mb={4}>{selectedRecipe.recipe}</Text>
-                  <Text fontSize='lg' color='red.500' fontWeight='bold' mb={4}>{selectedRecipe.estimatedtime}</Text>
+                  <Text fontSize='lg' color='red.500' fontWeight='bold' mb={4}>Estimated Time: {selectedRecipe.estimatedtime}</Text>
                   <Text fontSize='lg' mb={2} color='teal.500' fontWeight='bold'>Ingredients:</Text>
                   <Box mb={4}>
                     {selectedRecipe.ingredients && selectedRecipe.ingredients.map((ingredient, index) => (

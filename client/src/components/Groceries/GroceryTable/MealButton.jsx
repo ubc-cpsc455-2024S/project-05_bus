@@ -17,7 +17,7 @@ export default function SelectMealButton({ groceryItem }) {
   };
 
   return (
-    <Tooltip label="Get Cooking" aria-label="Get Cooking">
+    <Tooltip label="Get Cooking" aria-label="Get Cooking" placement="auto">
       <IconButton
         aria-label='Toggle Select'
         icon={<span className='material-symbols-outlined'>skillet</span>}

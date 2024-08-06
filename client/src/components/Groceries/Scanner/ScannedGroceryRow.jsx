@@ -26,14 +26,14 @@ import useCurrentGroup from '../../../hooks/useCurrentGroup';
 
 export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
   const [name, setName] = useState(grocery.name || '');
-  const [locationId, setLocationId] = useState(grocery.locationId || null);
-  const [categoryId, setCategoryId] = useState(grocery.categoryId || null);
-  const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || null);
+  const [locationId, setLocationId] = useState(grocery.locationId || undefined);
+  const [categoryId, setCategoryId] = useState(grocery.categoryId || undefined);
+  const [expiryDate, setExpiryDate] = useState(grocery.expiryDate || undefined);
   const [quantity, setQuantity] = useState(grocery.quantity || '');
   const [quantityUnit, setQuantityUnit] = useState(
-    grocery.quantityUnit || null
+    grocery.quantityUnit || undefined
   );
-  const [ownerId, setOwnerId] = useState(grocery.ownerId || null);
+  const [ownerId, setOwnerId] = useState(grocery.ownerId || undefined);
   const dispatch = useDispatch();
   const group = useCurrentGroup();
 
@@ -101,7 +101,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
           value={
             currentLocation
               ? { value: currentLocation._id, label: currentLocation.name }
-              : null
+              : undefined
           }
           onChange={(e) => handleLocationChange(e.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
@@ -133,7 +133,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
           value={
             currentCategory
               ? { value: currentCategory._id, label: currentCategory.name }
-              : null
+              : undefined
           }
           onChange={(e) => handleCategoryChange(e.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}

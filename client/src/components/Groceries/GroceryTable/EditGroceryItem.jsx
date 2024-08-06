@@ -127,7 +127,7 @@ export default function EditGroceryPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
-        <Tooltip label="Edit Item" aria-label="Edit Item">
+        <Tooltip label="Edit Item" aria-label="Edit Item" placement="auto">
           <IconButton
             aria-label='Edit Grocery Item'
             icon={<span className='material-symbols-outlined'>edit</span>}

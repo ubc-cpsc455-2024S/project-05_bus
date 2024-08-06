@@ -130,7 +130,7 @@ export default function NotificationPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
-        <Tooltip label="Set Notifications" aria-label="Set Notifications">
+        <Tooltip label="Set Notifications" aria-label="Set Notifications" placement="auto">
           <IconButton
             aria-label='Notifications'
             icon={
