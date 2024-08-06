@@ -2,7 +2,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { PageLoader } from '../components/Auth/PageLoader';
 import {
   Box, Button, Stack, Text, Modal, ModalOverlay, ModalContent, ModalHeader,
-  ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Input
+  ModalFooter, ModalBody, ModalCloseButton, useDisclosure, Input,
+  Card
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -37,7 +38,10 @@ export default function Profile() {
 
   return (
     <Box padding="50px" minHeight="100vh">
-      <Text fontSize="xx-large" color="teal.600" as='b'>Profile</Text>
+      <Box display="flex" alignItems="center">
+        <span className='material-symbols-outlined settings-group-icon icon'>person</span>
+        <Text fontSize="xx-large" color="teal.600" as='b'>Profile</Text>
+      </Box>
       {isAuthenticated && (
         <Stack spacing='20px' paddingY='30px'>
           <Box borderWidth='1px' borderRadius='lg' padding='10px' display="flex" justifyContent="space-between" alignItems="center" p={2}> 

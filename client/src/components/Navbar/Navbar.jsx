@@ -67,7 +67,7 @@ export default function Navbar() {
             <Avatar 
               size="sm"
               bg="none"
-              icon={<span className="profile-icon material-symbols-outlined">person</span>}
+              icon={<span className="profile-icon material-symbols-outlined">manage_accounts</span>}
             />
           </Button>
         </PopoverTrigger>
