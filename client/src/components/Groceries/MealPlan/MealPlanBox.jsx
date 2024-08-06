@@ -118,6 +118,7 @@ export default function MealPlanBox() {
             />
           </Box>
           <Text textAlign='center' color='teal.500' fontSize='2xl' mb={4}><strong>{recipe.Recipe}</strong><br /></Text>
+          <Text textAlign='center' color='red.500' fontSize='md' mb={4}><strong>Estimated Time: {recipe.EstimatedTime}</strong><br /></Text>
           <Text><strong>Ingredients:</strong></Text>
           <Text>
             {recipe.Ingredients && recipe.Ingredients.map((ingredient, index) => (
