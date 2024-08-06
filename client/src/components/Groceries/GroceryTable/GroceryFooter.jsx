@@ -119,7 +119,7 @@ export default function GroceryFooter() {
 
   return (
     <Grid
-      templateColumns={{ base: 'repeat(6, 1fr)', xl: 'repeat(14, 1fr)' }}
+      templateColumns={{ base: 'repeat(6, 1fr)', lg: 'repeat(13, 1fr)', xl: 'repeat(16, 1fr)' }}
       gap={2}
       alignItems="center"
     >
@@ -144,6 +144,13 @@ export default function GroceryFooter() {
             value: loc._id,
             label: loc.name,
           }))}
+          value={
+            location
+              ? locations.find((loc) => loc._id === location)
+                ? { value: location, label: locations.find((loc) => loc._id === location).name }
+                : null
+              : null
+          }
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement='auto'
@@ -166,6 +173,13 @@ export default function GroceryFooter() {
             value: cat._id,
             label: cat.name,
           }))}
+          value={
+            category
+              ? categories.find((loc) => loc._id === category)
+                ? { value: category, label: categories.find((cat) => cat._id === category).name }
+                : null
+              : null
+          }
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement='auto'
@@ -207,7 +221,7 @@ export default function GroceryFooter() {
       </FormControl>
 
       <FormControl
-        gridColumn={{ base: 'span 2', lg: 'span 2' }}
+        gridColumn={{ base: 'span 2', lg: 'span 3' }}
         isInvalid={errors.quantity}
       >
         <FormErrorMessage position='absolute' bottom='100%' left='0'>
@@ -243,7 +257,8 @@ export default function GroceryFooter() {
       </FormControl>
 
       <Box
-        gridColumn={{ base: 'span 6', xl: 'span 2' }}
+        gridColumn={{ base: 'span 6', lg: 'span 13', xl: 'span 3' }}
+
         display="flex"
         justifyContent="space-between"
         alignItems="center"
@@ -255,14 +270,16 @@ export default function GroceryFooter() {
           </Button>
         </Tooltip>
         <Menu>
-          <MenuButton as={Button}>
-            <HStack>
-              <Text color="gray.600" className="material-symbols-outlined">
+          <Tooltip label="Scan Groceries" aria-label="Scan Groceries">
+            <MenuButton as={Button}>
+              <HStack>
+                <Text color="gray.600" className="material-symbols-outlined">
               add_a_photo
-              </Text>
-              <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
-            </HStack>
-          </MenuButton>
+                </Text>
+                <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
+              </HStack>
+            </MenuButton>
+          </Tooltip>
           <MenuList>
             <MenuItem
               onClick={() => openScanner('Receipt')}

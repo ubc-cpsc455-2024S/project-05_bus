@@ -26,6 +26,7 @@ import {
   useOutsideClick,
   Select,
   HStack,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { CreatableSelect } from 'chakra-react-select';
@@ -126,6 +127,7 @@ export default function EditGroceryPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
+      <Tooltip label="Edit Item" aria-label="Edit Item">
         <IconButton
           aria-label='Edit Grocery Item'
           icon={<span className='material-symbols-outlined'>edit</span>}
@@ -134,6 +136,7 @@ export default function EditGroceryPopover({ groceryItem }) {
           _hover={{ color: 'teal.300' }}
           _active={{ color: 'teal.700' }}
         />
+        </Tooltip>
       </PopoverTrigger>
       <PopoverContent shadow='lg'>
         <PopoverArrow />

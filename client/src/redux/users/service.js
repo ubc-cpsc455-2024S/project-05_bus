@@ -80,4 +80,26 @@ const deleteUser = async (id) => {
   }
 };
 
-export default { getAllUsers, getGroupMembers, getUser, addUser, postUserByEmail, deleteUser};
+const updateUserName = async (id, nameData) => {
+  try {
+    const response = await fetch(`${SERVER_URL}/users/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(nameData),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      const errorMessage = data.error || 'An error occurred';
+      throw new Error(errorMessage);
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error updating user name: ', error);
+    throw error;
+  }
+};
+
+export default { getAllUsers, getGroupMembers, getUser, addUser, postUserByEmail, deleteUser, updateUserName};

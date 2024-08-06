@@ -12,6 +12,7 @@ import {
   Textarea,
   Flex,
   Spacer,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { updateGroceryAsync } from '../../../redux/groceries/thunks';
@@ -28,6 +29,7 @@ export default function NotePopover({ groceryItem }) {
   return (
     <Popover onClose={() => setNote(groceryItem.note)}>
       <PopoverTrigger>
+      <Tooltip label="Add Note" aria-label="Add Note">
         <IconButton
           aria-label='Notifications'
           icon={
@@ -38,6 +40,7 @@ export default function NotePopover({ groceryItem }) {
           _hover={{ color: 'teal.300' }}
           _active={{ color: 'teal.700' }}
         />
+        </Tooltip>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />

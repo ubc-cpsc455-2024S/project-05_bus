@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
-import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, deleteUserAsync} from './thunks';
+import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, deleteUserAsync, updateUserNameAsync} from './thunks';
 
 const initialState = {
   users: [],
@@ -11,6 +11,7 @@ const initialState = {
   getUser: REQUEST_STATE.IDLE,
   addUser: REQUEST_STATE.IDLE,
   deleteUser: REQUEST_STATE.IDLE,
+  updateUserName: REQUEST_STATE.IDLE,
 };
 
 
@@ -82,6 +83,24 @@ const usersSlice = createSlice({
       })
       .addCase(deleteUserAsync.rejected, (state) => {
         state.deleteUser = REQUEST_STATE.REJECTED;
+      })
+      .addCase(updateUserNameAsync.pending, (state) => {
+        state.updateUserName = REQUEST_STATE.PENDING;
+      })
+      .addCase(updateUserNameAsync.fulfilled, (state, action) => {
+        const index = state.users.findIndex(
+          (user) => user._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.users[index] = action.payload;
+          if (state.currentUserID === action.payload._id) {
+            state.currentUserName = `${action.payload.firstName} ${action.payload.lastName}`;
+          }
+          state.updateUserName = REQUEST_STATE.FULFILLED;
+        }
+      })
+      .addCase(updateUserNameAsync.rejected, (state) => {
+        state.updateUserName = REQUEST_STATE.REJECTED;
       });
   }
 });

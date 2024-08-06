@@ -2,12 +2,14 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addRecipeAsync, generateRecipeAsync } from '../../../redux/recipes/thunks';
 import RecipeDrawer from './RecipeDrawer';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
   const toast = useToast();
+  const group = useCurrentGroup();
   const items = useSelector((state) => state.groceries.groceries);
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,12 +32,15 @@ export default function MealPlanBox() {
   const saveMeal = () => {
     const newRecipe = {
       recipe: recipe.Recipe,
+      estimatedtime: recipe.EstimatedTime,
       ingredients: recipe.Ingredients,
       instructions: recipe.Instructions,
+      groupID: group._id,
     };
     dispatch(addRecipeAsync(newRecipe));
     toast({
-      title: 'Recipe Successfully Added to Favourites',
+      title: 'Favourited Recipe.',
+      description: 'Recipe was added to favourites list.',
       status: 'success',
       duration: 3000,
       isClosable: true,
@@ -114,6 +119,7 @@ export default function MealPlanBox() {
             />
           </Box>
           <Text textAlign='center' color='teal.500' fontSize='2xl' mb={4}><strong>{recipe.Recipe}</strong><br /></Text>
+          <Text textAlign='center' color='red.500' fontSize='md' mb={6}><strong>Estimated Time: {recipe.EstimatedTime}</strong><br /></Text>
           <Text><strong>Ingredients:</strong></Text>
           <Text>
             {recipe.Ingredients && recipe.Ingredients.map((ingredient, index) => (
@@ -141,7 +147,7 @@ export default function MealPlanBox() {
             <Heading mb={4} size='sm' color='teal' textAlign='center'>
               Select from the table the grocery items you would like to incorporate
             </Heading>
-            <VStack align='start' spacing={3}>
+            <VStack align='center' spacing={3}>
               {selectedMealItems.map((item) => (
                 <Box
                   key={item._id}
@@ -188,7 +194,7 @@ export default function MealPlanBox() {
                 _hover={{ bg: 'teal.600' }}
                 onClick={generateRecipe}
                 p={4}
-                minWidth={{ base: 'auto', md: '150px' }}
+                minWidth={{ base: "auto", md: "150px" }}
               >
                 Generate Recipe
               </Button>

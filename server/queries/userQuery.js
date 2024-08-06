@@ -34,6 +34,10 @@ const userQueries = {
   updateUserGroup: async function (userID, groupID) {
     const result = await Users.findByIdAndUpdate(userID, {groupID});
     return result;
+  },
+  updateName: async function (userID, firstName, lastName) {
+    const result = await Users.findByIdAndUpdate(userID, {firstName: firstName, lastName: lastName}, {new: true});
+    return result;
   }
 };
 

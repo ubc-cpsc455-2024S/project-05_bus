@@ -38,35 +38,75 @@ export default function LandingPage() {
       padding={4}
     >
       <Box
-        width={450}
+        flex={{ base: 3, md: 2 }}
         display='flex'
         flexDirection='column'
         justifyContent='center'
         padding={4}
       >
-        <Heading size="4xl" color="teal.500" textAlign="center" mb="50px" style={{ textShadow: 'px 2px 1px #125845' }}>
-          roommates
+        <Heading
+          size={{ base: '2xl' }}
+          color='black'
+          textAlign='center'
+          mb={3}
+        >
+          A better way to 
         </Heading>
-        <Heading size='xl' color='black' textAlign='center'>
-          The best way to navigate living
+        <Heading
+          size={{ base: '2xl' }}
+          color='black'
+          textAlign='center'
+          mb={3}
+        >
+          navigate living
         </Heading>
-        <Heading size='xl' color='teal.500' textAlign='center'>
+        <Heading
+          size={{ base: '2xl' }}
+          color='teal'
+          textAlign='center'
+          mb={5}
+        >
           together
         </Heading>
+        <Text
+          textAlign="center"
+          marginTop={7}
+          fontSize={{ base: 'md', md: 'lg' }}
+        >
+          <b>A lil app for roommates</b>
+        </Text>
         <Box
           display='flex'
           flexDirection='row'
-          gap={12}
-          justifyContent='center'
-          marginTop={20}>
-          <Button borderColor="teal.600" color="teal.600" variant="outline" size="lg" _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }} onClick={handleLogin}>Login</Button>
-          <Button bg="teal.500" color="white" size="lg" _hover={{ bg: 'teal.700' }} onClick={handleSignup}> Sign Up
+          gap={20}
+          justifyContent="center"
+          marginTop={24}
+        >
+          <Button 
+            onClick={handleLogin} 
+            size="lg" 
+            borderColor="teal.700" 
+            color="teal.600" 
+            variant="outline" 
+            _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }}
+          > 
+            <b>Login</b>
+          </Button>
+          <Button
+            bg="teal.500" 
+            color="white" 
+            _hover={{ bg: 'teal.700' }}
+            onClick={handleSignup}
+            size="lg"
+          >
+            <b>Sign Up</b>
           </Button>
         </Box>
       </Box>
       <Box
-        width={950}
-        display='flex'
+        flex={4.5}
+        width="auto"
+        display={{ base: 'none', md: 'flex' }}
         justifyContent='center'
         alignItems='center'
         padding={4}

@@ -4,7 +4,7 @@ import CalendarChores from '../components/Calendar/CalendarChores';
 
 export default function CalendarPage() {
   return (
-    <Box display="flex" flexDirection={['column', 'column', 'row']} className="calendar-page">
+    <Box display="flex" flexDirection={{ base: 'column', md: 'row' }} className="calendar-page">
       <Calendar />
       <CalendarChores />
     </Box>

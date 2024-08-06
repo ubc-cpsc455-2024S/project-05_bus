@@ -174,7 +174,7 @@ export default function GroceriesTable() {
                       bg='teal.500'
                       color='white'
                       py={3}
-                      px={4}
+                      px={2}
                       borderTopRightRadius='md'
                       display={{ base: 'none', md: 'table-cell' }}
                       _hover={{ bg: 'teal.600' }}

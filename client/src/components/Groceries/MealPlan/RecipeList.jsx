@@ -2,20 +2,20 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, List, ListItem, Spinner } from '@chakra-ui/react';
 import { getRecipesAsync } from '../../../redux/recipes/thunks';
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 
 const RecipeList = ({ onRecipeSelect }) => {
   const dispatch = useDispatch();
+  const group = useCurrentGroup();
   const recipes = useSelector((state) => state.recipes.list);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchRecipes = async () => {
-      await dispatch(getRecipesAsync());
+    if (group?._id) {
+      dispatch(getRecipesAsync(group._id));
       setLoading(false);
-    };
-
-    fetchRecipes();
-  }, [dispatch]);
+    }
+  }, [dispatch, group]);
 
   if (loading) {
     return (
