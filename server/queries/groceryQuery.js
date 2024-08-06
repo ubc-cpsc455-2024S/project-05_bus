@@ -1,6 +1,7 @@
 import { Groceries } from '../models/grocerySchema.js';
 import Events from '../models/eventSchema.js';
 import eventQueries from './eventQuery.js';
+import mongoose from 'mongoose';
 
 const groceryQueries = {
   getAllGroceries: async function (groupID) {
@@ -23,7 +24,13 @@ const groceryQueries = {
   },
   postGrocery: async function (groceryData) {
     try {
-      const newGrocery = new Groceries(groceryData);
+      const processedGroceryData = {
+        ...groceryData,
+        locationId: mongoose.Types.ObjectId.isValid(groceryData.locationId) ? groceryData.locationId : null,
+        categoryId: mongoose.Types.ObjectId.isValid(groceryData.categoryId) ? groceryData.categoryId : null,
+      };
+  
+      const newGrocery = new Groceries(processedGroceryData);
       const savedGrocery = await newGrocery.save();
       return savedGrocery;
     } catch (error) {
@@ -33,7 +40,15 @@ const groceryQueries = {
   },
   postManyGroceries: async function (groceryData) {
     try {
-      const savedGroceries = await Groceries.insertMany(groceryData);
+      const processedGroceryData = groceryData.map(grocery => {
+        return {
+          ...grocery,
+          locationId: mongoose.Types.ObjectId.isValid(grocery.locationId) ? grocery.locationId : null,
+          categoryId: mongoose.Types.ObjectId.isValid(grocery.categoryId) ? grocery.categoryId : null,
+        };
+      });
+  
+      const savedGroceries = await Groceries.insertMany(processedGroceryData);
       return savedGroceries;
     } catch (error) {
       console.error('Error saving new groceries:', error);
