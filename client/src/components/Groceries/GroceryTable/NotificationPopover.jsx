@@ -23,6 +23,7 @@ import {
   useOutsideClick,
   ButtonGroup,
   useToast,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -129,6 +130,7 @@ export default function NotificationPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
+      <Tooltip label="Set Notifications" aria-label="Set Notifications">
         <IconButton
           aria-label='Notifications'
           icon={
@@ -140,6 +142,7 @@ export default function NotificationPopover({ groceryItem }) {
           _hover={{ color: 'yellow.300' }}
           _active={{ color: 'yellow.700' }}
         />
+        </Tooltip>
       </PopoverTrigger>
       <PopoverContent shadow='lg' pt={0} pb={2} position='relative'>
         <PopoverArrow />

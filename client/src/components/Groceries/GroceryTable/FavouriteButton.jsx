@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IconButton } from '@chakra-ui/react';
+import { IconButton, Tooltip } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { updateGroceryAsync } from '../../../redux/groceries/thunks';
 
@@ -15,6 +15,7 @@ export default function FavoriteButton({ groceryItem }) {
   };
 
   return (
+    <Tooltip label="Favourite" aria-label="Favourite">
     <IconButton
       aria-label='Toggle Favorite'
       icon={<span className='material-symbols-outlined'>favorite</span>}
@@ -24,5 +25,6 @@ export default function FavoriteButton({ groceryItem }) {
       _hover={{ color: 'red.400' }}
       _active={{ color: 'red.700' }}
     />
+    </Tooltip>
   );
 }
