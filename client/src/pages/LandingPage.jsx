@@ -36,34 +36,57 @@ export default function LandingPage() {
       padding={4}
     >
       <Box
-        width={450}
+        flex={{ base: 3, md: 2 }}
         display='flex'
         flexDirection='column'
         justifyContent='center'
         padding={4}
       >
-        <Heading size='xl' color='black' textAlign='center'>
-          The best way to navigate living
+        <Heading
+          size={{ base: '2xl' }}
+          color='black'
+          textAlign='center'
+          mb={3}
+        >
+          A better way to 
         </Heading>
-        <Heading size='xl' color='teal' textAlign='center'>
+        <Heading
+          size={{ base: '2xl' }}
+          color='black'
+          textAlign='center'
+          mb={3}
+        >
+          navigate living
+        </Heading>
+        <Heading
+          size={{ base: '2xl' }}
+          color='teal'
+          textAlign='center'
+          mb={5}
+        >
           together
         </Heading>
-        <Text textAlign="center" marginTop={7}>
+        <Text
+          textAlign="center"
+          marginTop={7}
+          fontSize={{ base: 'md', md: 'lg' }}
+        >
           <b>A lil app for roommates</b>
         </Text>
         <Box
           display='flex'
           flexDirection='row'
-          gap={12}
+          gap={20}
           justifyContent="center"
-          marginTop={20}
+          marginTop={24}
         >
-          <Button onClick={handleLogin}> Login</Button>
+          <Button onClick={handleLogin} size="lg"> Login</Button>
           <Button
             bg="teal.500"
             color="white"
             _hover={{ bg: 'teal.600' }}
             onClick={handleSignup}
+            size="lg"
           >
             {' '}
             Sign Up
@@ -71,8 +94,9 @@ export default function LandingPage() {
         </Box>
       </Box>
       <Box
-        width={950}
-        display='flex'
+        flex={4.5}
+        width="auto"
+        display={{ base: 'none', md: 'flex' }}
         justifyContent='center'
         alignItems='center'
         padding={4}
