@@ -59,7 +59,7 @@ export default function Profile() {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader color="teal.700"><b>Edit Name</b></ModalHeader>
+          <ModalHeader>Edit Name</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box borderColor="brand.lightGrey" borderWidth='1px' borderRadius='lg' padding="5px" mb={5}>
