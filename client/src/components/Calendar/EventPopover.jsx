@@ -64,6 +64,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
       title: selectedChore ? selectedChore.title : eventDetails.title,
       extendedProps: {
         ...event.extendedProps,
+        choreId: eventDetails.choreId,
         memberId: eventDetails.memberId,
         done: eventDetails.done,
         type: eventDetails.type,
@@ -76,7 +77,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
   };
 
   return (
-    <Popover isOpen={isOpen} onClose={onClose}>
+    <Popover isOpen={isOpen} onClose={onClose} placement="auto">
       <PopoverTrigger>
         <Box
           position="relative"
