@@ -69,8 +69,8 @@ export default function Calendar() {
     dispatch(
       updateEventAsync({
         _id: info.event.id,
-        start: info.event.start,
-        end: info.event.end,
+        start: moment(info.event.start).format(),
+        end: moment(info.event.end).format(),
       })
     );
   };
@@ -82,8 +82,8 @@ export default function Calendar() {
         updateEventAsync({
           _id: popoverInfo.event.id,
           title: eventDetails.title,
-          start: eventDetails.start,
-          end: eventDetails.end,
+          start: moment(eventDetails.start).format(),
+          end: moment(eventDetails.end).format(),
           backgroundColor: chore.colour,
           borderColor: chore.colour,
           extendedProps: {
@@ -98,8 +98,8 @@ export default function Calendar() {
         updateEventAsync({
           _id: eventDetails._id,
           title: eventDetails.title,
-          start: eventDetails.start,
-          end: eventDetails.end,
+          start: moment(eventDetails.start).format(),
+          end: moment(eventDetails.end).format(),
           backgroundColor: eventDetails.backgroundColor,
           borderColor: eventDetails.borderColor,
           extendedProps: {
@@ -162,8 +162,8 @@ export default function Calendar() {
           dispatch(
             addEventAsync({
               title: info.event.title,
-              start: info.event.start,
-              end: info.event.end,
+              start: moment(info.event.start).format(),
+              end: moment(info.event.end).format(),
               allDay: true,
               backgroundColor: info.event.backgroundColor,
               borderColor: info.event.backgroundColor,
