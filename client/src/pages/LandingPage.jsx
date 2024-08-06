@@ -1,8 +1,10 @@
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useDispatch } from 'react-redux';
 
 export default function LandingPage() {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const dispatch = useDispatch();
 
   const handleSignup = async () => {
     await loginWithRedirect({
@@ -80,16 +82,24 @@ export default function LandingPage() {
           justifyContent="center"
           marginTop={24}
         >
-          <Button onClick={handleLogin} size="lg"> Login</Button>
+          <Button 
+            onClick={handleLogin} 
+            size="lg" 
+            borderColor="teal.700" 
+            color="teal.600" 
+            variant="outline" 
+            _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }}
+          > 
+            <b>Login</b>
+          </Button>
           <Button
-            bg="teal.500"
-            color="white"
-            _hover={{ bg: 'teal.600' }}
+            bg="teal.500" 
+            color="white" 
+            _hover={{ bg: 'teal.700' }}
             onClick={handleSignup}
             size="lg"
           >
-            {' '}
-            Sign Up
+            <b>Sign Up</b>
           </Button>
         </Box>
       </Box>

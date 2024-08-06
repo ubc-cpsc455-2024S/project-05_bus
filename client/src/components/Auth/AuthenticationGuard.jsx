@@ -6,6 +6,7 @@ export const AuthenticationGuard = ({ component }) => {
     onRedirecting: () => (
       <PageLoader />
     ),
+    returnTo: window.location.origin,
   });
 
   return <Component />;

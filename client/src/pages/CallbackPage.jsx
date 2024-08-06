@@ -8,9 +8,26 @@ import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice'
 import { setSelectedMemberID } from '../redux/groups/groupsSlice';
 
 export function CallbackPage() {
-  const { user, isAuthenticated, isLoading, error } = useAuth0();
+  const { user, isAuthenticated, isLoading, error, logout } = useAuth0();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleError = () => {
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+    navigate('/');
+  };
+
+  const handleSuccess = () => {
+    navigate('/home');
+  };
+
+  const handleNoName = () => {
+    navigate('/profile-creation');
+  };
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -27,6 +44,7 @@ export function CallbackPage() {
           }
         } catch (error) {
           console.error('Error processing user after login:', error);
+          handleNoName();
         }
       }
     };
@@ -36,12 +54,15 @@ export function CallbackPage() {
 
   if (error) {
     return (
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-      </div>
+      <>
+        {handleError()}
+      </>
+    );
+  } else {
+    return (
+      <>
+        {handleSuccess()}
+      </>
     );
   }
-
-  return <h1>Success</h1>;
 }

@@ -77,8 +77,8 @@ export default function Navbar() {
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">
             <Link to="/profile">Profile</Link>
-            <Link to="/settings">Settings</Link>
-            <Button className='profile-popover-logout' onClick={handleLogout}>Logout</Button>
+            <Link to="/settings">Group Settings</Link>
+            <Button className='profile-popover-logout' bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })} size="sm" onClick={handleLogout}>Logout</Button>
           </PopoverBody>
         </PopoverContent>
       </Popover>
