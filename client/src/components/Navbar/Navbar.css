@@ -80,6 +80,7 @@ nav {
 
 .profile-popover-content {
   width: fit-content !important;
+  min-width: 200px;
 }
 
 .profile-popover-avatar {
