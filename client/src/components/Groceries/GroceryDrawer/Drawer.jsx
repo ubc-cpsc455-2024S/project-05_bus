@@ -62,7 +62,7 @@ export default function GroceriesDrawer() {
 
   return (
     <>
-    <Tooltip label="Grocery Overview" aria-label="Grocery Overview">
+    <Tooltip label="Location and Category Overview" aria-label="Location and Category Overview">
       <Button
         className='material-symbols-outlined'
         colorScheme='teal'
