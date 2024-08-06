@@ -107,10 +107,10 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
           border='none'
           boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'
         >
-          <PopoverArrow />
+          <PopoverArrow bg='gray.100' boxShadow='0 4px 8px rgba(0, 0, 0, 0.3)'/>
           <PopoverCloseButton color='black' onClick={onClose} />
-          <PopoverHeader color='black'>Edit Chore</PopoverHeader>
-          <PopoverBody>
+          <PopoverHeader color='black' bg='gray.100'>Edit Chore</PopoverHeader>
+          <PopoverBody bg='gray.100'>
             <FormControl pb={2}>
               <FormLabel color='black'>Person</FormLabel>
               <Select
