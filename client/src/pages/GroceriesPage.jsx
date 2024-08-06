@@ -1,4 +1,4 @@
-import { Box, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import FullGroceriesList from '../components/Groceries/GroceryTable/FullGroceriesList';
 import MealPlanBox from '../components/Groceries/MealPlan/MealPlanBox';
 import { useEffect } from 'react';
@@ -16,28 +16,25 @@ export default function GroceriesPage() {
     }
   }, [dispatch, group]);
 
-  const showMealPlanBox = useBreakpointValue({
-    base: true,
-    sm: true,
-    md: true,
-    lg: true,
-  });
-
   return (
-    <Box display="flex" flexDirection="row" className="calendar-page">
+    <Flex
+      direction={{ base: "column", lg: "row" }}
+      wrap="wrap"
+      overflow="auto"
+      className="groceries-page"
+    >
       <Box flex="3" overflow="auto">
         <FullGroceriesList />
       </Box>
-      {showMealPlanBox && (
-        <Box
-          flex="1"
-          borderRadius="md"
-          boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
-          overflow="auto"
-        >
-          <MealPlanBox />
-        </Box>
-      )}
-    </Box>
+      <Box
+        flex="1"
+        borderRadius="md"
+        boxShadow="0 4px 8px rgba(0, 0, 0, 0.3)"
+        overflow="auto"
+        mt={{ base: 4, lg: 0 }}
+      >
+        <MealPlanBox />
+      </Box>
+    </Flex>
   );
 }
