@@ -38,3 +38,10 @@ export const deleteUserAsync = createAsyncThunk(
     return response;
   }
 );
+
+export const updateUserNameAsync = createAsyncThunk(
+  actionTypes.UPDATE_USER_NAME,
+  async ({id, firstName, lastName}) => {
+    return await UsersService.updateUserName(id, {firstName: firstName, lastName: lastName});
+  }
+);

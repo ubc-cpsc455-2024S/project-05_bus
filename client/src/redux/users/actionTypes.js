@@ -5,4 +5,5 @@ export const actionTypes = {
   ADD_USER: 'users/addUser',
   POST_USER: 'users/postUserByEmail',
   DELETE_USER: 'users/deleteUser',
+  UPDATE_USER_NAME: 'users/updateUserName',
 };

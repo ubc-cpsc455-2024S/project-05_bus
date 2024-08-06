@@ -48,7 +48,6 @@ router.post('/generateRecipe', async (req, res) => {
         { role: 'user', content: user_message },
       ],
     });
-    console.log(response.choices[0].message.content);
     const recipeObject = JSON.parse(response.choices[0].message.content);
     return res.status(200).json(recipeObject);
   } catch (err) {

@@ -146,7 +146,7 @@ export default function MealPlanBox() {
             <Heading mb={4} size='sm' color='teal' textAlign='center'>
               Select from the table the grocery items you would like to incorporate
             </Heading>
-            <VStack align='start' spacing={3}>
+            <VStack align='center' spacing={3}>
               {selectedMealItems.map((item) => (
                 <Box
                   key={item._id}

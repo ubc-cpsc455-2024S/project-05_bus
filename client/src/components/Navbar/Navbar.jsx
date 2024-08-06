@@ -12,9 +12,11 @@ import {
 } from '@chakra-ui/react';
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
   const location = useLocation();
+  const currentUserName = useSelector(state => state.users.currentUserName);
   const { user, isAuthenticated, logout } = useAuth0();
 
   const getPageName = (pathname) => {
@@ -72,7 +74,7 @@ export default function Navbar() {
         <PopoverContent className="profile-popover-content">
           <PopoverHeader className="profile-popover-header">
             <Avatar className="profile-popover-avatar" size="sm" />
-            <h2 className="profile-popover-name">{`${user.name}`}</h2>
+            <h2 className="profile-popover-name">{`${currentUserName}`}</h2>
           </PopoverHeader>
           <PopoverCloseButton className="profile-popover-close"/>
           <PopoverBody className="profile-popover-links">

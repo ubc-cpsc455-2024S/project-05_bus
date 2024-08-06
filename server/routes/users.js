@@ -75,4 +75,14 @@ router.delete('/:id', async function(req, res) {
   }
 });
 
+router.patch('/:id', async function(req, res) {
+  try {
+    const result = await userQueries.updateName(req.params.id, req.body.firstName, req.body.lastName);
+    return res.status(200).json(result);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: err.message });
+  }
+});
+
 export default router;
