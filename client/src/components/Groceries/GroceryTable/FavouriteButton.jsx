@@ -15,7 +15,7 @@ export default function FavoriteButton({ groceryItem }) {
   };
 
   return (
-    <Tooltip label="Favourite" aria-label="Favourite">
+    <Tooltip label="Favourite" aria-label="Favourite" placement='auto'>
       <IconButton
         aria-label='Toggle Favorite'
         icon={<span className='material-symbols-outlined'>favorite</span>}
