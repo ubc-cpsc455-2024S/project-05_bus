@@ -13,6 +13,7 @@ import {
   DrawerFooter,
   Button,
   useDisclosure,
+  Tooltip,
 } from '@chakra-ui/react';
 import { useSelector, useDispatch } from 'react-redux';
 import MiniGroceryList from './MiniGroceryList';
@@ -61,6 +62,7 @@ export default function GroceriesDrawer() {
 
   return (
     <>
+    <Tooltip label="Grocery Overview" aria-label="Grocery Overview">
       <Button
         className='material-symbols-outlined'
         colorScheme='teal'
@@ -68,6 +70,7 @@ export default function GroceriesDrawer() {
       >
         Overview
       </Button>
+      </Tooltip>
       <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='lg'>
         <DrawerOverlay>
           <DrawerContent overflowY='auto'>

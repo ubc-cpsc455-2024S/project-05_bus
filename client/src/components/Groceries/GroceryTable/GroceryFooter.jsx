@@ -256,6 +256,7 @@ export default function GroceryFooter() {
           </Button>
         </Tooltip>
         <Menu>
+        <Tooltip label="Scan Groceries" aria-label="Scan Groceries">
           <MenuButton as={Button}>
             <HStack>
               <Text color="gray.600" className="material-symbols-outlined">
@@ -264,6 +265,7 @@ export default function GroceryFooter() {
               <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
             </HStack>
           </MenuButton>
+          </Tooltip>
           <MenuList>
             <MenuItem
               onClick={() => openScanner('Receipt')}
