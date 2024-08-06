@@ -32,7 +32,7 @@ function LeaveGroupModal({ isOnlyMember, isOnlyAdmin, isOpen, onClose, onConfirm
           {!isOnlyAdmin || isOnlyMember ? (
             <Button 
               bgColor={'rgba(253, 163, 163, 0.631)'}
-              _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
+              _hover={{background: 'brand.red', color: "white"}}
               mr={3}
               onClick={onConfirm}
             >
@@ -62,7 +62,7 @@ function DeleteGroupAlert({ isOpen, onClose, onConfirm }) {
         <ModalFooter>
           <Button 
             bgColor={'rgba(253, 163, 163, 0.631)'}
-            _hover={{background: 'rgba(246, 134, 134, 0.631)'}}
+            _hover={{background: 'brand.red', color: "white"}}
             mr={3}
             onClick={onConfirm}
           >
