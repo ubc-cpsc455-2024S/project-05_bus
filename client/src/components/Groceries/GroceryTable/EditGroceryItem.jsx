@@ -253,7 +253,7 @@ export default function EditGroceryPopover({ groceryItem }) {
             <Input
               type='date'
               value={moment(expiryDate).format('YYYY-MM-DD')}
-              onChange={(e) => setExpiryDate(e.target.value)}
+              onChange={(e) => setExpiryDate(moment(e.target.value).format())}
             />
           </FormControl>
           <HStack spacing={4}>
