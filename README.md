@@ -37,12 +37,28 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 - ✅ Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
 ## Usage of Tech from Units 1-5 - TODO
-"Usage of tech includes best practices. Code is clean and clear. Description of usage explains in-depth how the technology has made the app better. Possibly a mention of how it compares to other similar tech. Documentation demonstrates a solid understanding of the tech learned throughout the term, and its purpose in creating a production-level full-stack web application."
-- Unit 1: HTML, CSS, JS
-- Unit 2: React, Redux
-- Unit 3: Node, Express
-- Unit 4: MongoDB
-- Unit 5: CI/CD, Github Actions
+
+### HTML, CSS, JS
+
+In our project, HTML, CSS, and JavaScript played crucial roles in building the core of our application. JavaScript, in particular, was leveraged for dynamic functionalities such as interactive chore reminders and real-time grocery tracking. We adhered to best practices in coding style to ensure clean and maintainable code. JavaScript's features like dynamic typing and asynchronous operations allowed us to create a responsive and interactive user experience.
+
+### React & Redux
+
+We utilized React to build a dynamic and efficient user interface. React's component-based architecture enabled us to develop reusable and modular components, reducing code redundancy and simplifying frontend logic. Redux was employed for centralized state management, which helped in maintaining a consistent and predictable state across the application. By managing state globally, Redux reduced the complexity associated with passing props through multiple layers of components, making the codebase easier to maintain and scale.
+
+### Node & Express
+
+Node.js and Express were instrumental in setting up our application server. Express handled API requests for critical functionalities such as user authentication, calendar events, and chore management. User authentication was managed through API calls to Auth0, which provided a secure and scalable authentication solution. We implemented secure practices by restricting data access based on user roles and ensuring sensitive information was protected.
+
+### MongoDB
+
+MongoDB was chosen for its flexible and scalable data storage capabilities. It stored essential data like user profiles, household groups, and grocery lists. MongoDB's NoSQL nature allowed for dynamic schema design, which was advantageous for handling varying data structures. We used Mongoose to enforce data validation and schema constraints, ensuring data consistency and integrity across the application.
+
+### CI/CD and GitHub Actions
+
+For continuous integration and deployment, we relied on GitHub Actions to automate our build, test, and deployment processes. This setup ensured that every code change was tested and deployed smoothly, reducing manual effort and minimizing errors. By automating these processes, we maintained a reliable deployment pipeline, which facilitated consistent updates and improvements to the application.
+
+The application was deployed to Render, a cloud-based platform that provided scalable hosting and easy deployment. Render's deployment process seamlessly integrated with our CI/CD pipeline, allowing us to push updates and ensure high availability for users with minimal downtime.
 
 ## Above and Beyond Functionality - TODO
 "Please give a clear description and in-depth explanation of how you went above and beyond the requirements of the course. This will help us awards marks for rubric item #4."
