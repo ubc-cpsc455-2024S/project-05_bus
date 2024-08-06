@@ -46,7 +46,13 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const updatedValue = type === 'checkbox' ? checked : value;
-    setEventDetails({ ...eventDetails, [name]: updatedValue });
+
+    if (name === 'start' && type === 'date') {
+      const formattedDate = moment(updatedValue).format();
+      setEventDetails({ ...eventDetails, [name]: formattedDate });
+    } else {
+      setEventDetails({ ...eventDetails, [name]: updatedValue });
+    }
   };
 
   const handleSubmit = () => {
@@ -143,7 +149,7 @@ function EventPopover({ isOpen, event, onClose, onDelete, onEdit }) {
                   type='date'
                   name='start'
                   bg='white'
-                  value={eventDetails.start.split('T')[0]}
+                  value={moment(eventDetails.start).format('YYYY-MM-DD')}
                   onChange={handleChange}
                 />
               </FormControl>
