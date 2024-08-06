@@ -18,11 +18,17 @@ const addRecipe = async (newRecipe) => {
   return data;
 };
   
-const getRecipes = async () => {
-  const response = await fetch(`${SERVER_URL}/recipes`, {
+const getRecipes = async (groupID) => {
+  const response = await fetch(`${SERVER_URL}/recipes/group/${groupID}`, {
     method: 'GET'
   });
-  return response.json();
+  const data = await response.json();
+    if (!response.ok) {
+      const errorMsg = data?.message;
+      throw new Error(errorMsg)
+    }
+
+    return data;
 };
 
 const deleteRecipe = async (id) => {

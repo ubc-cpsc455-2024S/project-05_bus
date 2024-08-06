@@ -2,12 +2,14 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
+import useCurrentGroup from "../../../hooks/useCurrentGroup";
 import { addRecipeAsync, generateRecipeAsync } from '../../../redux/recipes/thunks';
 import RecipeDrawer from './RecipeDrawer';
 
 export default function MealPlanBox() {
   const dispatch = useDispatch();
   const toast = useToast();
+  const group = useCurrentGroup();
   const items = useSelector((state) => state.groceries.groceries);
   const [showRecipe, setShowRecipe] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,8 +32,10 @@ export default function MealPlanBox() {
   const saveMeal = () => {
     const newRecipe = {
       recipe: recipe.Recipe,
+      estimatedtime: recipe.EstimatedTime,
       ingredients: recipe.Ingredients,
       instructions: recipe.Instructions,
+      groupID: group._id,
     };
     dispatch(addRecipeAsync(newRecipe));
     toast({
@@ -187,6 +191,8 @@ export default function MealPlanBox() {
                 color='white'
                 _hover={{ bg: 'teal.600' }}
                 onClick={generateRecipe}
+                p={4}
+                minWidth={{ base: "auto", md: "150px" }}
               >
                 Generate Recipe
               </Button>

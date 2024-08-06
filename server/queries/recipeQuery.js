@@ -1,9 +1,9 @@
 import Recipes from '../models/recipeSchema.js';
 
 const recipeQueries = {
-  getAllRecipes: async function () {
+  getAllRecipes: async function (groupID) {
     try {
-      const recipes = await Recipes.find();
+      const recipes = await Recipes.find({ groupID });
       return recipes;
     } catch (error) {
       console.error('Error fetching recipes:', error);

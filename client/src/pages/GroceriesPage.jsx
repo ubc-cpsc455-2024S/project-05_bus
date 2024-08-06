@@ -17,9 +17,9 @@ export default function GroceriesPage() {
   }, [dispatch, group]);
 
   const showMealPlanBox = useBreakpointValue({
-    base: false,
-    sm: false,
-    md: false,
+    base: true,
+    sm: true,
+    md: true,
     lg: true,
   });
 

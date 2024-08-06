@@ -4,8 +4,8 @@ import { actionTypes } from './actionTypes';
 
 export const getRecipesAsync = createAsyncThunk(
   actionTypes.GET_RECIPES,
-  async () => {
-    return await RecipeService.getRecipes();
+  async (groupID) => {
+    return await RecipeService.getRecipes(groupID);
   }
 );
 
