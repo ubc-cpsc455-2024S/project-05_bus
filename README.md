@@ -48,7 +48,7 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 "Please give a clear description and in-depth explanation of how you went above and beyond the requirements of the course. This will help us awards marks for rubric item #4."
 
 ## Next Steps
-Going forward, we'd like to add the budgeting page we originally had as a stretch requirement, where groups can track and split costs for groceries and other items (similar to splitwise). We'd also like to add some functionality to the profile settings page (e.g. changing name/email, deleting an account). In terms of design, we're planning on revamping the landing page so it's a bit more engaging and improving the responsivness of all of the pages. 
+Going forward, we'd like to add the budgeting page we originally had as a stretch requirement, where groups can track and split costs for groceries and other items (similar to splitwise). We'd also like to add some functionality to the profile settings page (e.g. changing email/password, deleting an account). In terms of design, we're planning on revamping the landing page so it's a bit more engaging and improving the responsivness of all of the pages. 
 
 ## Contributions
 - Amy Chen: 4th year BCS student
