@@ -23,12 +23,12 @@ const getRecipes = async (groupID) => {
     method: 'GET'
   });
   const data = await response.json();
-    if (!response.ok) {
-      const errorMsg = data?.message;
-      throw new Error(errorMsg)
-    }
+  if (!response.ok) {
+    const errorMsg = data?.message;
+    throw new Error(errorMsg);
+  }
 
-    return data;
+  return data;
 };
 
 const deleteRecipe = async (id) => {

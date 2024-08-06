@@ -2,7 +2,7 @@ import { Box, Button, Heading, IconButton, NumberDecrementStepper, NumberIncreme
 import { useDispatch, useSelector } from 'react-redux';
 import { updateMealSelect } from '../../../redux/groceries/groceriesSlice';
 import React, { useState, useEffect } from 'react';
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
 import { addRecipeAsync, generateRecipeAsync } from '../../../redux/recipes/thunks';
 import RecipeDrawer from './RecipeDrawer';
 
@@ -194,7 +194,7 @@ export default function MealPlanBox() {
                 _hover={{ bg: 'teal.600' }}
                 onClick={generateRecipe}
                 p={4}
-                minWidth={{ base: "auto", md: "150px" }}
+                minWidth={{ base: 'auto', md: '150px' }}
               >
                 Generate Recipe
               </Button>

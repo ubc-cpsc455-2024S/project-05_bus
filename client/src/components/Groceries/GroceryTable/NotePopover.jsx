@@ -29,17 +29,17 @@ export default function NotePopover({ groceryItem }) {
   return (
     <Popover onClose={() => setNote(groceryItem.note)}>
       <PopoverTrigger>
-      <Tooltip label="Add Note" aria-label="Add Note">
-        <IconButton
-          aria-label='Notifications'
-          icon={
-            <span className='material-symbols-outlined'>sticky_note_2</span>
-          }
-          bg='transparent'
-          color={note ? 'teal.500' : 'gray.600'}
-          _hover={{ color: 'teal.300' }}
-          _active={{ color: 'teal.700' }}
-        />
+        <Tooltip label="Add Note" aria-label="Add Note">
+          <IconButton
+            aria-label='Notifications'
+            icon={
+              <span className='material-symbols-outlined'>sticky_note_2</span>
+            }
+            bg='transparent'
+            color={note ? 'teal.500' : 'gray.600'}
+            _hover={{ color: 'teal.300' }}
+            _active={{ color: 'teal.700' }}
+          />
         </Tooltip>
       </PopoverTrigger>
       <PopoverContent>

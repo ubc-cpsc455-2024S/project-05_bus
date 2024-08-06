@@ -9,7 +9,7 @@ import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice'
 import { unwrapResult } from '@reduxjs/toolkit';
 
 export default function ProfileCreationPage() {
-  const { user, isAuthenticated, isLoading, logout } = useAuth0();
+  const { user, isLoading, logout } = useAuth0();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState(false);
@@ -21,7 +21,7 @@ export default function ProfileCreationPage() {
   const handleLogout = () => {
     logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: window.location.pathname,
       },
     });
   };

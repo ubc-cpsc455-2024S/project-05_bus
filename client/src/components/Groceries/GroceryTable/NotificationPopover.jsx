@@ -130,18 +130,18 @@ export default function NotificationPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
-      <Tooltip label="Set Notifications" aria-label="Set Notifications">
-        <IconButton
-          aria-label='Notifications'
-          icon={
-            <span className='material-symbols-outlined'>notifications</span>
-          }
-          bg='transparent'
-          onClick={onOpen}
-          color={selectedNotifications.length > 0 ? 'yellow.500' : 'gray.600'}
-          _hover={{ color: 'yellow.300' }}
-          _active={{ color: 'yellow.700' }}
-        />
+        <Tooltip label="Set Notifications" aria-label="Set Notifications">
+          <IconButton
+            aria-label='Notifications'
+            icon={
+              <span className='material-symbols-outlined'>notifications</span>
+            }
+            bg='transparent'
+            onClick={onOpen}
+            color={selectedNotifications.length > 0 ? 'yellow.500' : 'gray.600'}
+            _hover={{ color: 'yellow.300' }}
+            _active={{ color: 'yellow.700' }}
+          />
         </Tooltip>
       </PopoverTrigger>
       <PopoverContent shadow='lg' pt={0} pb={2} position='relative'>

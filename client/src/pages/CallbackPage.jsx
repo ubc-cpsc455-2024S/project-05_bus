@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postUserByEmailAsync } from '../redux/users/thunks';
-import { unwrapResult } from '@reduxjs/toolkit';
 import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 import { setSelectedMemberID } from '../redux/groups/groupsSlice';
 
@@ -15,7 +14,7 @@ export function CallbackPage() {
   const handleError = () => {
     logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: window.location.pathname,
       },
     });
     navigate('/');
@@ -34,8 +33,7 @@ export function CallbackPage() {
       if (!isLoading) {
         try {
           if (isAuthenticated && user) {
-            const result = await dispatch(postUserByEmailAsync(user.email));
-            const newUser = unwrapResult(result);
+            const newUser = await dispatch(postUserByEmailAsync(user.email)).unwrap();
             dispatch(setCurrentUserID(newUser._id));
             dispatch(setSelectedMemberID(newUser._id));
             const name = newUser.firstName + ' ' + newUser.lastName;

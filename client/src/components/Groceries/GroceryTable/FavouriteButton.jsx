@@ -16,15 +16,15 @@ export default function FavoriteButton({ groceryItem }) {
 
   return (
     <Tooltip label="Favourite" aria-label="Favourite">
-    <IconButton
-      aria-label='Toggle Favorite'
-      icon={<span className='material-symbols-outlined'>favorite</span>}
-      color={isFavourite ? 'red.500' : 'gray.600'}
-      onClick={toggleFavourite}
-      bg='transparent'
-      _hover={{ color: 'red.400' }}
-      _active={{ color: 'red.700' }}
-    />
+      <IconButton
+        aria-label='Toggle Favorite'
+        icon={<span className='material-symbols-outlined'>favorite</span>}
+        color={isFavourite ? 'red.500' : 'gray.600'}
+        onClick={toggleFavourite}
+        bg='transparent'
+        _hover={{ color: 'red.400' }}
+        _active={{ color: 'red.700' }}
+      />
     </Tooltip>
   );
 }

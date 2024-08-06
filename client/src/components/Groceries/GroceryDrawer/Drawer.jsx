@@ -62,14 +62,14 @@ export default function GroceriesDrawer() {
 
   return (
     <>
-    <Tooltip label="Location and Category Overview" aria-label="Location and Category Overview">
-      <Button
-        className='material-symbols-outlined'
-        colorScheme='teal'
-        onClick={onOpen}
-      >
+      <Tooltip label="Location and Category Overview" aria-label="Location and Category Overview">
+        <Button
+          className='material-symbols-outlined'
+          colorScheme='teal'
+          onClick={onOpen}
+        >
         Overview
-      </Button>
+        </Button>
       </Tooltip>
       <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='lg'>
         <DrawerOverlay>

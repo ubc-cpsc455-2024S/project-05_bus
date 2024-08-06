@@ -85,7 +85,7 @@ export default function Profile() {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="teal" _hover={{ bg:"teal.700" }} mr={3} onClick={handleSave}>
+            <Button colorScheme="teal" _hover={{ bg:'teal.700' }} mr={3} onClick={handleSave}>
               Save
             </Button>
             <Button variant="ghost" onClick={onClose}>Cancel</Button>

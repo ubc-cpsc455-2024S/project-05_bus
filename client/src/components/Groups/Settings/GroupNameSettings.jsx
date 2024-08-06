@@ -41,10 +41,10 @@ export default function GroupNameSettings({ group, isEditMode, groupName, setGro
           <span className="material-symbols-outlined copy-icon">content_copy</span>
         </Button>
         {copied && (
-        <Box ml={2}>
-          <Text fontSize="sm" color="teal.500">Copied!</Text>
-        </Box>
-      )}
+          <Box ml={2}>
+            <Text fontSize="sm" color="teal.500">Copied!</Text>
+          </Box>
+        )}
       </div>
     </Box>
   );

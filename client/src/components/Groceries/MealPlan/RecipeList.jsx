@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, List, ListItem, Spinner } from '@chakra-ui/react';
 import { getRecipesAsync } from '../../../redux/recipes/thunks';
-import useCurrentGroup from "../../../hooks/useCurrentGroup";
+import useCurrentGroup from '../../../hooks/useCurrentGroup';
 
 const RecipeList = ({ onRecipeSelect }) => {
   const dispatch = useDispatch();

@@ -18,7 +18,7 @@ export default function GroceriesPage() {
 
   return (
     <Flex
-      direction={{ base: "column", lg: "row" }}
+      direction={{ base: 'column', lg: 'row' }}
       wrap="wrap"
       overflow="auto"
       className="groceries-page"

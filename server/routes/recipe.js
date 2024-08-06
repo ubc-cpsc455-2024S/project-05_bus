@@ -11,7 +11,7 @@ const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 const router = express.Router();
 
 // Grocery Meal Planning Routes
-router.get("/group/:groupID", async (req, res) => {  
+router.get('/group/:groupID', async (req, res) => {  
   try {
     const recipes = await recipeQueries.getAllRecipes(req.params.groupID);
     return res.json(recipes);

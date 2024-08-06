@@ -127,15 +127,15 @@ export default function EditGroceryPopover({ groceryItem }) {
   return (
     <Popover isOpen={isOpen} onClose={onClose} closeOnBlur={false}>
       <PopoverTrigger>
-      <Tooltip label="Edit Item" aria-label="Edit Item">
-        <IconButton
-          aria-label='Edit Grocery Item'
-          icon={<span className='material-symbols-outlined'>edit</span>}
-          bg='transparent'
-          onClick={onOpen}
-          _hover={{ color: 'teal.300' }}
-          _active={{ color: 'teal.700' }}
-        />
+        <Tooltip label="Edit Item" aria-label="Edit Item">
+          <IconButton
+            aria-label='Edit Grocery Item'
+            icon={<span className='material-symbols-outlined'>edit</span>}
+            bg='transparent'
+            onClick={onOpen}
+            _hover={{ color: 'teal.300' }}
+            _active={{ color: 'teal.700' }}
+          />
         </Tooltip>
       </PopoverTrigger>
       <PopoverContent shadow='lg'>

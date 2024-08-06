@@ -1,10 +1,8 @@
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useDispatch } from 'react-redux';
 
 export default function LandingPage() {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-  const dispatch = useDispatch();
+  const { loginWithRedirect } = useAuth0();
 
   const handleSignup = async () => {
     await loginWithRedirect({

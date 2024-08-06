@@ -20,7 +20,7 @@ export default function GroupPage() {
   const handleLogout = () => {
     logout({
       logoutParams: {
-        returnTo: window.location.origin,
+        returnTo: window.location.pathname,
       },
     });
   };
