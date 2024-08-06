@@ -27,7 +27,7 @@ export function CallbackPage() {
 
   const handleNoName = () => {
     navigate('/profile-creation');
-  }
+  };
 
   useEffect(() => {
     const handleAuth = async () => {
