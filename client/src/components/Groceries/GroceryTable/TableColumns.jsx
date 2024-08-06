@@ -42,7 +42,7 @@ const columns = (locations, categories, members, dateFilterType, breakpoint) => 
         const dateValue = info.getValue();
         return dateValue
           ? moment(dateValue).format('MMMM DD, YYYY')
-          : 'No Expiry Date Provided';
+          : 'No Date Provided';
       },
       filterFn: (row, columnId, filterValue) => {
         return DateFilter(row, columnId, filterValue, dateFilterType);
@@ -70,7 +70,7 @@ const columns = (locations, categories, members, dateFilterType, breakpoint) => 
 
   const visibleColumns = allColumns.filter((column) => {
     if (breakpoint === 'base' || breakpoint === 'sm') {
-      return column.accessorKey === 'name' || column.accessorKey === 'quantity';
+      return column.accessorKey === 'name' || column.accessorKey === 'quantity' || column.accessorKey === 'expiryDate';
     }
     if (breakpoint === 'md' || breakpoint === 'lg') {
       return column.accessorKey === 'name' || column.accessorKey === 'quantity' || column.accessorKey === 'categoryId';

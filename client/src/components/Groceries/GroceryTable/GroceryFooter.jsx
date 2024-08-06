@@ -119,7 +119,7 @@ export default function GroceryFooter() {
 
   return (
     <Grid
-      templateColumns={{ base: 'repeat(6, 1fr)', xl: 'repeat(14, 1fr)' }}
+      templateColumns={{ base: 'repeat(6, 1fr)', lg: 'repeat(13, 1fr)', xl: 'repeat(16, 1fr)' }}
       gap={2}
       alignItems="center"
     >
@@ -207,7 +207,7 @@ export default function GroceryFooter() {
       </FormControl>
 
       <FormControl
-        gridColumn={{ base: 'span 2', lg: 'span 2' }}
+        gridColumn={{ base: 'span 2', lg: 'span 3' }}
         isInvalid={errors.quantity}
       >
         <FormErrorMessage position='absolute' bottom='100%' left='0'>
@@ -243,7 +243,8 @@ export default function GroceryFooter() {
       </FormControl>
 
       <Box
-        gridColumn={{ base: 'span 6', xl: 'span 2' }}
+        gridColumn={{ base: 'span 6', lg: 'span 13', xl: 'span 3' }}
+
         display="flex"
         justifyContent="space-between"
         alignItems="center"
