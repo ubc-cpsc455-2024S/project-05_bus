@@ -32,10 +32,10 @@ export default function GroupPage() {
           <CreateGroupForm />
           <JoinGroupForm />
         </Box>
-        <Box display="flex" justifyContent="center">
-          <Button onClick={handleLogout} bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })}>Logout</Button>
-        </Box>
       </Stack>
+      <Box display="flex" justifyContent="center">
+        <Button onClick={handleLogout} bg="brand.red" color="white" size="md" _hover={({ bg: 'brand.pink' })}>Logout</Button>
+      </Box>
     </Box>
 
   );
