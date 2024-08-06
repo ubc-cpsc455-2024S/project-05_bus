@@ -144,6 +144,13 @@ export default function GroceryFooter() {
             value: loc._id,
             label: loc.name,
           }))}
+          value={
+            location
+              ? locations.find((loc) => loc._id === location)
+                ? { value: location, label: locations.find((loc) => loc._id === location).name }
+                : null
+              : null
+          }
           onChange={(option) => setLocation(option.value)}
           isValidNewOption={(input) => isValidNewLocation(input, locations)}
           menuPlacement='auto'
@@ -166,6 +173,13 @@ export default function GroceryFooter() {
             value: cat._id,
             label: cat.name,
           }))}
+          value={
+            category
+              ? categories.find((loc) => loc._id === category)
+                ? { value: category, label: categories.find((cat) => cat._id === category).name }
+                : null
+              : null
+          }
           onChange={(option) => setCategory(option.value)}
           isValidNewOption={(input) => isValidNewCategory(input, categories)}
           menuPlacement='auto'
@@ -256,15 +270,15 @@ export default function GroceryFooter() {
           </Button>
         </Tooltip>
         <Menu>
-        <Tooltip label="Scan Groceries" aria-label="Scan Groceries">
-          <MenuButton as={Button}>
-            <HStack>
-              <Text color="gray.600" className="material-symbols-outlined">
+          <Tooltip label="Scan Groceries" aria-label="Scan Groceries">
+            <MenuButton as={Button}>
+              <HStack>
+                <Text color="gray.600" className="material-symbols-outlined">
               add_a_photo
-              </Text>
-              <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
-            </HStack>
-          </MenuButton>
+                </Text>
+                <Text fontSize="sm" display={{ base: 'inline', xl: 'none' }} ml={2}>Scan Groceries</Text>
+              </HStack>
+            </MenuButton>
           </Tooltip>
           <MenuList>
             <MenuItem
