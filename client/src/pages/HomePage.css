@@ -3,3 +3,9 @@
   justify-content: space-between;
   margin: 5%;
 }
+
+@media (max-width: 768px) {
+  .home-container {
+    flex-direction: column;
+  }
+}

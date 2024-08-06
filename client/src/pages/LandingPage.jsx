@@ -18,7 +18,6 @@ export default function LandingPage() {
   };
 
   const handleLogin = async () => {
-    console.log('Login clicked');
     try {
       await loginWithRedirect({
         appState: {

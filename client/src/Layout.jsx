@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Outlet, Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { AuthenticationGuard } from './components/Auth/AuthenticationGuard';
 import HomePage from './pages/HomePage';
@@ -13,12 +13,21 @@ import LandingPage from './pages/LandingPage';
 import GroupsPage from './pages/GroupsPage';
 import { PageLoader } from './components/Auth/PageLoader';
 import ProfileCreationPage from './pages/ProfileCreationPage';
+import useCurrentUser from './hooks/useCurrentUser';
 
 export default function Layout() {
   const location = useLocation();
   const noNavbarPaths = ['/', '/loading', '/callback', '/profile-creation', '/groups'];
   const { isLoading } = useAuth0();
 
+  const GroupPrivateRoutes = () => {
+    const currentUser = useCurrentUser();
+    
+    if (!currentUser) return <Navigate to='/' />;
+
+    return currentUser.groupID ? <Outlet /> : <Navigate to='/groups' />;
+  };
+  
   if (isLoading) {
     return (
       <PageLoader />
@@ -30,15 +39,17 @@ export default function Layout() {
       {noNavbarPaths.includes(location.pathname) ? null : <Navbar />}
       <div className={noNavbarPaths.includes(location.pathname) ? '' : 'navbar-padding'}>
         <Routes>
+          <Route element={<GroupPrivateRoutes />} >
+            <Route path='/home' element={<AuthenticationGuard component={HomePage} />} />
+            <Route path='/calendar' element={<AuthenticationGuard component={CalendarPage} />} />
+            <Route path='/groceries' element={<AuthenticationGuard component={GroceriesPage} />} />
+            <Route path='/profile' element={<AuthenticationGuard component={ProfilePage} />} />
+            <Route path='/settings' element={<AuthenticationGuard component={SettingsPage} />} />
+          </Route>
           <Route exact path='/' element={<LandingPage />} />
           <Route path='/loading' element={<PageLoader />} />
           <Route path='/callback' element={<CallbackPage />} />
           <Route path='profile-creation' element={<AuthenticationGuard component={ProfileCreationPage} />} />
-          <Route path='/home' element={<AuthenticationGuard component={HomePage} />} />
-          <Route path='/calendar' element={<AuthenticationGuard component={CalendarPage} />} />
-          <Route path='/groceries' element={<AuthenticationGuard component={GroceriesPage} />} />
-          <Route path='/profile' element={<AuthenticationGuard component={ProfilePage} />} />
-          <Route path='/settings' element={<AuthenticationGuard component={SettingsPage} />} />
           <Route path='/groups' element={<AuthenticationGuard component={GroupsPage} />} />
         </Routes>
       </div>

@@ -23,12 +23,14 @@
   font-size: 25px;
   color: teal;
   margin-bottom: 5px;
+  overflow: hidden;
 }
 
 .home-card-group-id {
   color: grey;
   display: flex;
   align-items: center;
+  overflow: auto;
 }
 
 .icon {
@@ -70,4 +72,33 @@
 .settings-icon {
   color: rgba(0, 128, 128, 0.631);
   font-size: 25px;
+}
+
+@media (max-width: 768px) {
+  .home-card-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-heading {
+    font-size: 20px;
+    margin-bottom: 2px;
+  }
+
+  .home-card-group-id {
+    font-size: 12px;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .settings-icon {
+    font-size: 20px;
+  }
+
+  .home-card-body {
+    font-size: 15px;
+  }
 }
