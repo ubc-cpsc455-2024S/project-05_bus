@@ -93,7 +93,9 @@ const usersSlice = createSlice({
         );
         if (index !== -1) {
           state.users[index] = action.payload;
-          state.currentUserName = `${action.payload.firstName} ${action.payload.lastName}`;
+          if (state.currentUserID === action.payload._id) {
+            state.currentUserName = `${action.payload.firstName} ${action.payload.lastName}`;
+          }
           state.updateUserName = REQUEST_STATE.FULFILLED;
         }
       })
