@@ -16,6 +16,7 @@ import { updateMonthView } from '../../redux/events/calendarSlice';
 import moment from 'moment';
 import { getChoresAsync } from '../../redux/chores/thunks';
 import { getGroceryAsync } from '../../redux/groceries/thunks';
+import getTextColour from './utils/getTextColour';
 
 export default function Calendar() {
   const events = useSelector((state) => state.events.events);
@@ -69,8 +70,8 @@ export default function Calendar() {
     dispatch(
       updateEventAsync({
         _id: info.event.id,
-        start: info.event.start,
-        end: info.event.end,
+        start: moment(info.event.start).format(),
+        end: moment(info.event.end).format(),
       })
     );
   };
@@ -82,10 +83,11 @@ export default function Calendar() {
         updateEventAsync({
           _id: popoverInfo.event.id,
           title: eventDetails.title,
-          start: eventDetails.start,
-          end: eventDetails.end,
+          start: moment(eventDetails.start).format(),
+          end: moment(eventDetails.end).format(),
           backgroundColor: chore.colour,
           borderColor: chore.colour,
+          textColor: getTextColour(chore.colour),
           extendedProps: {
             choreId: chore.id,
             ...eventDetails.extendedProps,
@@ -98,10 +100,11 @@ export default function Calendar() {
         updateEventAsync({
           _id: eventDetails._id,
           title: eventDetails.title,
-          start: eventDetails.start,
-          end: eventDetails.end,
+          start: moment(eventDetails.start).format(),
+          end: moment(eventDetails.end).format(),
           backgroundColor: eventDetails.backgroundColor,
           borderColor: eventDetails.borderColor,
+          textColor: getTextColour(eventDetails.backgroundColor),
           extendedProps: {
             ...eventDetails.extendedProps,
           },
@@ -162,8 +165,8 @@ export default function Calendar() {
           dispatch(
             addEventAsync({
               title: info.event.title,
-              start: info.event.start,
-              end: info.event.end,
+              start: moment(info.event.start).format(),
+              end: moment(info.event.end).format(),
               allDay: true,
               backgroundColor: info.event.backgroundColor,
               borderColor: info.event.backgroundColor,

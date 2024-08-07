@@ -200,7 +200,7 @@ export default function GroceryFooter() {
           placeholder='Expiry Date'
           type='date'
           value={expiryDate ? moment(expiryDate).format('YYYY-MM-DD') : ''}
-          onChange={(e) => setExpiryDate(moment(e.target.value))}
+          onChange={(e) => setExpiryDate(moment(e.target.value).format())}
         />
       </FormControl>
 

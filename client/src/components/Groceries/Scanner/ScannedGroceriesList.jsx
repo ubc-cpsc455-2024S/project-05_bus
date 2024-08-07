@@ -88,7 +88,13 @@ export default function ScannedGroceriesList({
         });
       });
     }
-  };  
+  };
+
+  const handleDelete = (index) => {
+    setGroceries((prevGroceries) =>
+      prevGroceries.filter((_, i) => i !== index)
+    );
+  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -105,7 +111,7 @@ export default function ScannedGroceriesList({
         setLoading={setLoading}
         setModalOpen={setIsOpen}
       />
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} size='6xl'>
+      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={() => setIsOpen(false)} size='6xl'>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Scanned Groceries</ModalHeader>
@@ -127,6 +133,7 @@ export default function ScannedGroceriesList({
                     newUpdatedGroceries[index] = updatedGrocery;
                     setGroceries(newUpdatedGroceries);
                   }}
+                  onDelete={handleDelete}
                 />
               ))}
             </ModalBody>

@@ -70,16 +70,17 @@ export default function ProfileCreationPage() {
               <Input borderColor="brand.lightGrey" focusBorderColor="brand.grey" name="lastName"></Input>
             </Box>
             {error && (<Text color="brand.red" as='b'>Please fill in all fields before submitting</Text>)}
-            <Box display="flex" justifyContent="flex-end">
-              <Button type="submit" borderColor="teal.600" color="teal.600" variant="outline" size="md" _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }}><b>Submit</b></Button>
+            <Box display="flex" justifyContent="space-between">
+              <Box display="flex" justifyContent="flex-end">
+                <Button type="submit" borderColor="teal.600" color="teal.600" variant="outline" size="md" _hover={{ bg: 'teal.700', borderColor: 'teal.700', color: 'white' }}><b>Submit</b></Button>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <Button onClick={handleLogout} bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })} size="md">Logout</Button>
+              </Box>
             </Box>
           </Stack>
         </form >
       </Stack >
-
-      <Box display="flex" justifyContent="center">
-        <Button onClick={handleLogout} bg="brand.red" color="white" _hover={({ bg: 'brand.pink' })} size="md">Logout</Button>
-      </Box>
     </Box >
   );
 }

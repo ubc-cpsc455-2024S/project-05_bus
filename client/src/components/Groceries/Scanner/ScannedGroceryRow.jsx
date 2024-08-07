@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Button,
   HStack,
   FormControl,
   Input,
@@ -24,7 +25,7 @@ import {
 } from '../utils/CreateNewSelectOptions';
 import useCurrentGroup from '../../../hooks/useCurrentGroup';
 
-export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
+export default function GroceryRow({ index, grocery, setUpdatedGrocery, onDelete }) {
   const [name, setName] = useState(grocery.name || '');
   const [locationId, setLocationId] = useState(grocery.locationId || undefined);
   const [categoryId, setCategoryId] = useState(grocery.categoryId || undefined);
@@ -84,14 +85,15 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       justifyContent='space-between'
       width='100%'
       display='flex'
+      alignItems={'center'}
     >
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Name</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Name</FormLabel>
         <Input placeholder='Name' value={name} onChange={handleNameChange} />
       </FormControl>
 
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Location</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Location</FormLabel>
         <CreatableSelect
           placeholder='Location'
           options={locations.map((loc) => ({
@@ -123,7 +125,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       </FormControl>
 
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Category</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Category</FormLabel>
         <CreatableSelect
           placeholder='Category'
           options={categories.map((cat) => ({
@@ -155,7 +157,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       </FormControl>
 
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Expiry Date</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Expiry Date</FormLabel>
         <Input
           placeholder='Expiry Date'
           type='date'
@@ -165,7 +167,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       </FormControl>
 
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Owner</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Owner</FormLabel>
         <Select value={ownerId} onChange={handleOwnerChange}>
           <option value={''}>Shared</option>
           {members.map((member) => (
@@ -177,7 +179,7 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
       </FormControl>
 
       <FormControl flex={1}>
-        {index === 0 && <FormLabel>Quantity</FormLabel>}
+        <FormLabel display={index === 0 ? 'block' : 'none'}>Quantity</FormLabel>
         <HStack display='flex' spacing={2}>
           <NumberInput
             placeholder='Quantity'
@@ -205,6 +207,15 @@ export default function GroceryRow({ index, grocery, setUpdatedGrocery }) {
           </Select>
         </HStack>
       </FormControl>
+      <Button
+        size='xs'
+        colorScheme='red'
+        variant='ghost'
+        transform={index === 0 ? 'translateY(60%)' : 'none'}
+        onClick={() => onDelete(index)}
+      >
+        <span className='material-symbols-outlined'>delete</span>
+      </Button>
     </HStack>
   );
 }
