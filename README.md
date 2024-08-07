@@ -70,7 +70,7 @@ Going forward, we'd like to add the budgeting page we originally had as a stretc
 - Amy Chen: 4th year BCS student
   - Highlight areas where each team member contributed significantly. [2-3 sentences per team member]
 - Jennifer Wong: 4th year BCS student with a black cat.
-  - Highlight areas where each team member contributed significantly. [2-3 sentences per team member]
+  - I built the frontend and backend for the meal planning feature (all CRUD operations + AI processing to generate a recipe based on given ingredients selected by the user). I also connected the database and set up the structure, added the feature to edit the user's name, and designed the landing page.
 - Jocelyn Bachmann: 4th year BUCS student.
   - I built the frontend and backend infrastructure for groups (e.g. creating/deleting groups, adding/removing members, adding/removing admins, setting/fetching the current group and its members with custom hooks). I also set up persistence and protected routes, and built the navbar, home page, and settings page.
 - Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
