@@ -105,7 +105,7 @@ export default function AdminsSettings({ group, isEditMode, setIsEditMode, curre
             {!isOnlyAdmin && (
               <Button
                 bgColor={'rgba(253, 163, 163, 0.631)'}
-                _hover={{ background: 'rgba(246, 134, 134, 0.631)' }}
+                _hover={{background: 'brand.red', color: 'white'}}
                 mr={3}
                 onClick={handleConfirmRemoveAdmin}
               >

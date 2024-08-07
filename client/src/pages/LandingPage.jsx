@@ -42,37 +42,18 @@ export default function LandingPage() {
         justifyContent='center'
         padding={4}
       >
-        <Heading
-          size={{ base: '2xl' }}
-          color='black'
-          textAlign='center'
-          mb={3}
-        >
-          A better way to 
+        <Heading size="4xl" color="teal.600" textAlign="center" mb="50px" style={{ textShadow: '1px 2px 1px #235057' }}>
+          roommates
         </Heading>
-        <Heading
-          size={{ base: '2xl' }}
-          color='black'
-          textAlign='center'
-          mb={3}
-        >
+        <Heading size='xl' color='black' textAlign='center'>
+          A better way to
+        </Heading>
+        <Heading size='xl' color='black' textAlign='center'>
           navigate living
         </Heading>
-        <Heading
-          size={{ base: '2xl' }}
-          color='teal'
-          textAlign='center'
-          mb={5}
-        >
+        <Heading size='xl' color='teal.500' textAlign='center'>
           together
         </Heading>
-        <Text
-          textAlign="center"
-          marginTop={7}
-          fontSize={{ base: 'md', md: 'lg' }}
-        >
-          <b>A lil app for roommates</b>
-        </Text>
         <Box
           display='flex'
           flexDirection='row'
