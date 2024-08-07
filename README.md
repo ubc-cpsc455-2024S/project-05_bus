@@ -36,7 +36,7 @@ The Roommates app helps users track groceries and expiring food, meal plan based
 - ❌ Budgeting functionality (similar to Splitwise)
 - ✅ Ability to “nudge” a roommate to complete a chore (similar to Facebook poking)
 
-## Usage of Tech from Units 1-5 - TODO
+## Usage of Tech from Units 1-5
 
 ### HTML, CSS, JS
 
@@ -60,7 +60,7 @@ For continuous integration and deployment, we relied on GitHub Actions to automa
 
 The application was deployed to Render, a cloud-based platform that provided scalable hosting and easy deployment. Render's deployment process seamlessly integrated with our CI/CD pipeline, allowing us to push updates and ensure high availability for users with minimal downtime.
 
-## Above and Beyond Functionality - TODO
+## Above and Beyond Functionality
 "Please give a clear description and in-depth explanation of how you went above and beyond the requirements of the course. This will help us awards marks for rubric item #4."
 
 ## Next Steps
