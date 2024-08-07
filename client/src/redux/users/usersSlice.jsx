@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
 import { getUsersAsync, getGroupMembersAsync, getUserAsync, addUserAsync, deleteUserAsync, updateUserNameAsync} from './thunks';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   users: [],
@@ -101,7 +102,8 @@ const usersSlice = createSlice({
       })
       .addCase(updateUserNameAsync.rejected, (state) => {
         state.updateUserName = REQUEST_STATE.REJECTED;
-      });
+      })
+      .addCase(PURGE, () => initialState);
   }
 });
 

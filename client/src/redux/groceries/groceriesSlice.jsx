@@ -18,6 +18,7 @@ import {
   updateLocationAsync,
   deleteLocationAsync,
 } from './thunks';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   groceries: [],
@@ -145,7 +146,8 @@ const handleGroceriesCases = (builder) => {
     })
     .addCase(deleteGroceryAsync.rejected, (state) => {
       state.deleteGrocery = REQUEST_STATE.REJECTED;
-    });
+    })
+    .addCase(PURGE, () => initialState);
 };
 
 const handleCategoriesCases = (builder) => {

@@ -5,6 +5,7 @@ import JoinGroupForm from '../components/Groups/JoinGroupForm';
 import useCurrentUser from '../hooks/useCurrentUser';
 import { Box, Button, Stack } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { persistor } from '../redux/store';
 
 export default function GroupPage() {
   const currentUser = useCurrentUser();
@@ -17,7 +18,8 @@ export default function GroupPage() {
     }
   }, [currentUser.groupID, navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await persistor.purge();
     logout({
       logoutParams: {
         returnTo: window.location.pathname,

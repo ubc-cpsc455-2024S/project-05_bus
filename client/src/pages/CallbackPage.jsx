@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { postUserByEmailAsync } from '../redux/users/thunks';
 import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 import { setSelectedMemberID } from '../redux/groups/groupsSlice';
+import { persistor } from '../redux/store';
 
 export function CallbackPage() {
   const { user, isAuthenticated, isLoading, error, logout } = useAuth0();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleError = () => {
+  const handleError = async () => {
+    await persistor.purge();
     logout({
       logoutParams: {
         returnTo: window.location.pathname,

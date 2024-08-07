@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
 import { addRecipeAsync, getRecipesAsync, deleteRecipeAsync, generateRecipeAsync } from './thunks';
+import { PURGE } from 'redux-persist';
 
 const INITIAL_STATE = {
   list: [],
@@ -63,7 +64,8 @@ const recipeSlice = createSlice({
       .addCase(generateRecipeAsync.rejected, (state, action) => {
         state.generateRecipe = REQUEST_STATE.REJECTED;
         state.error = action.error;
-      });
+      })
+      .addCase(PURGE, () => INITIAL_STATE);
   }
 });
 

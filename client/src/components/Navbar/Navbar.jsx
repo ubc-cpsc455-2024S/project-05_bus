@@ -13,6 +13,7 @@ import {
 import { useLocation, Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
+import { persistor } from '../../redux/store';
 
 export default function Navbar() {
   const location = useLocation();
@@ -26,7 +27,8 @@ export default function Navbar() {
 
   const pageName = getPageName(location.pathname);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await persistor.purge();
     logout({
       logoutParams: {
         returnTo: window.location.origin,

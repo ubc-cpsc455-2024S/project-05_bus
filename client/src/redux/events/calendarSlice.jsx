@@ -7,6 +7,7 @@ import {
   deleteEventAsync,
   updateEventAsync,
 } from './thunks';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   events: [],
@@ -91,7 +92,8 @@ const calendarSlice = createSlice({
       })
       .addCase(deleteEventAsync.rejected, (state) => {
         state.deleteEvent = REQUEST_STATE.REJECTED;
-      });
+      })
+      .addCase(PURGE, () => initialState);
   },
 });
 

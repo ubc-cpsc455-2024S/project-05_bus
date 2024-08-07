@@ -11,6 +11,7 @@ import {
   removeAdminAsync,
   deleteGroupAsync 
 } from './thunks';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   groups: [],
@@ -149,7 +150,8 @@ const groupsSlice = createSlice({
       })
       .addCase(deleteGroupAsync.rejected, (state) => {
         state.deleteGroup = REQUEST_STATE.REJECTED;
-      });
+      })
+      .addCase(PURGE, () => initialState);
   }
 });
 

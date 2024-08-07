@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { addUserAsync } from '../redux/users/thunks';
 import { setCurrentUserID, setCurrentUserName } from '../redux/users/usersSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { persistor } from '../redux/store';
 
 export default function ProfileCreationPage() {
   const { user, isLoading, logout } = useAuth0();
@@ -18,7 +19,8 @@ export default function ProfileCreationPage() {
     return <PageLoader />;
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await persistor.purge();
     logout({
       logoutParams: {
         returnTo: window.location.pathname,

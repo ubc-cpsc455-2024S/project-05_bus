@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../utils';
 import { getChoresAsync, getChoreAsync, addChoreAsync, updateChoreAsync, deleteChoreAsync } from './thunks';
+import { PURGE } from 'redux-persist';
 
 const initialState = {
   chores: [],
@@ -71,7 +72,8 @@ const choresSlice = createSlice({
       })
       .addCase(deleteChoreAsync.rejected, (state) => {
         state.deleteChore = REQUEST_STATE.REJECTED;
-      });
+      })
+      .addCase(PURGE, () => initialState);
   }
 });
 
