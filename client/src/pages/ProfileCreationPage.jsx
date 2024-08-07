@@ -23,7 +23,7 @@ export default function ProfileCreationPage() {
     await persistor.purge();
     logout({
       logoutParams: {
-        returnTo: window.location.pathname,
+        returnTo: window.location.origin,
       },
     });
   };
