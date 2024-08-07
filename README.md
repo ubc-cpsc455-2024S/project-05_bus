@@ -74,7 +74,7 @@ Going forward, we'd like to add the budgeting page we originally had as a stretc
 - Jocelyn Bachmann: 4th year BUCS student.
   - I built the frontend and backend infrastructure for groups (e.g. creating/deleting groups, adding/removing members, adding/removing admins, setting/fetching the current group and its members with custom hooks). I also set up persistence and protected routes, and built the navbar, home page, and settings page.
 - Douglas Zhong: 4th Year BCS student, previously completed B.Sc in Microbiology and Immunology.
-  - Highlight areas where each team member contributed significantly. [2-3 sentences per team member]
+  - I built the frontend and backend for the calendar page (all CRUD operations), groceries page (CRUD operations + AI image processing for quickly adding groceries), and home page notification system. I also wrote the GitHub Actions workflow and handled deploying our application to Render.
 
 ## Site Mockup
 <img src ="images/prototype.png">
