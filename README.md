@@ -15,7 +15,7 @@ The Roommates app helps users track groceries and expiring food, meal plan based
   - Create user login and signup page (front end)
   - Set up MongoDB connection in back end
   - Set up MongoDB collection for users
-  - Enable OAuth in the back end for user verification
+  - Enable OAuth in the front end for user verification
 - ✅ Users can create a household (group), which other users can join
 - ✅ Users can create a list to track food items and expiry dates in their household
   - Food items can be tagged for 'shared' or 'personal' use in this list
@@ -61,14 +61,23 @@ For continuous integration and deployment, we relied on GitHub Actions to automa
 The application was deployed to Render, a cloud-based platform that provided scalable hosting and easy deployment. Render's deployment process seamlessly integrated with our CI/CD pipeline, allowing us to push updates and ensure high availability for users with minimal downtime.
 
 ## Above and Beyond Functionality
-"Please give a clear description and in-depth explanation of how you went above and beyond the requirements of the course. This will help us awards marks for rubric item #4."
+
+### OAuth
+
+We integrated OAuth through Auth0, which hosts universal login and signup pages, and provides social login options. In our app, we allow users to login with Google, providing flexibility for users who don't want to have to create a new account and store a new password just to use Roommates. It would have been much easier to keep our own signup and login pages and then encrypt passwords using something like bycrypt, but we wanted to go above and beyond in terms of security.
+
+### Generative AI
+
+We used generative AI with the OpenAI API in 2 places: the grocery receipt scanner and meal planner. 
+While we have the functionality for users to input every grocery item individually, we wanted to make it easier to add bulk items. When the user makes a grocery trip, they can easily add all the items they just purchased by uploading a photo of the receipt. AI will analyze the items on the receipt and show a preview with the name and any other field it is able to populate. Users are then able to edit any information before adding the items to the grocery table.
+We knew that coming up with recipes can be challenging, so we added a feature that utilized the grocery table and AI to create custom recipes. Users can select any item on the grocery table to add to the recipe generator. AI will then take into account the items added and the quantity to generate a recipe with other ingredients that are likely already around the kitchen. 
 
 ## Next Steps
 Going forward, we'd like to add the budgeting page we originally had as a stretch requirement, where groups can track and split costs for groceries and other items (similar to splitwise). We'd also like to add some functionality to the profile settings page (e.g. changing email/password, deleting an account). In terms of design, we're planning on revamping the landing page so it's a bit more engaging and improving the responsivness of all of the pages. 
 
 ## Contributions
 - Amy Chen: 4th year BCS student
-  - Highlight areas where each team member contributed significantly. [2-3 sentences per team member]
+  - I added OAuth using Auth0 (research, platform set up) for the login/sign up, logout, and protected routes. I also worked on the frontend/backend infrastructure to integrate this external user validation with our existing database, such as adding a profile creation feature, as well as various design mocks.
 - Jennifer Wong: 4th year BCS student with a black cat.
   - I built the frontend and backend for the meal planning feature (all CRUD operations + AI processing to generate a recipe based on given ingredients selected by the user). I also connected the database and set up the structure, added the feature to edit the user's name, and designed the landing page.
 - Jocelyn Bachmann: 4th year BUCS student.
