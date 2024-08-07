@@ -16,7 +16,7 @@ export function CallbackPage() {
     await persistor.purge();
     logout({
       logoutParams: {
-        returnTo: window.location.pathname,
+        returnTo: window.location.origin,
       },
     });
     navigate('/');
