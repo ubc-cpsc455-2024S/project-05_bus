@@ -68,8 +68,8 @@ We integrated OAuth through Auth0, which hosts universal login and signup pages,
 
 ### Generative AI
 
-We used generative AI with the OpenAI API in 2 places: the grocery receipt scanner and meal planner. 
-While we have the functionality for users to input every grocery item individually, we wanted to make it easier to add bulk items. When the user makes a grocery trip, they can easily add all the items they just purchased by uploading a photo of the receipt. AI will analyze the items on the receipt and show a preview with the name and any other field it is able to populate. Users are then able to edit any information before adding the items to the grocery table.
+We used generative AI with the OpenAI API in 2 places: the grocery receipt scanner and meal planner.\
+While we have the functionality for users to input every grocery item individually, we wanted to make it easier to add bulk items. When the user makes a grocery trip, they can easily add all the items they just purchased by uploading a photo of the receipt. AI will analyze the items on the receipt and show a preview with the name and any other field it is able to populate. Users are then able to edit any information before adding the items to the grocery table.\
 We knew that coming up with recipes can be challenging, so we added a feature that utilized the grocery table and AI to create custom recipes. Users can select any item on the grocery table to add to the recipe generator. AI will then take into account the items added and the quantity to generate a recipe with other ingredients that are likely already around the kitchen. 
 
 ## Next Steps
